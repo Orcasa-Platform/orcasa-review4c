@@ -1,0 +1,27 @@
+@font-face {
+  font-family: "Roboto";
+  font-style: "normal";
+  font-weight: 400;
+  src: local("Roboto"), url("/assets/roboto/Roboto-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: "normal";
+  font-weight: 600;
+  src: local("Roboto"), url("/assets/roboto/Roboto-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Roboto Slab";
+  font-style: "normal";
+  font-weight: 400;
+  src: local("Roboto Slab"), url("/assets/roboto-slab/RobotoSlab-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Roboto Slab";
+  font-style: "normal";
+  font-weight: 600;
+  src: local("Roboto Slab"), url("/assets/roboto-slab/RobotoSlab-SemiBold.ttf");
+}

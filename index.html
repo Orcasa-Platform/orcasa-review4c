@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Scientific Evidence</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+  <script src='script.js'></script>
+  <!--
+    NOTE: This script is not needed if Tailwind CSS is directly configured in Symfony:
+    https://tailwindcss.com/docs/guides/symfony
+    Please note that the same plugins need to be included. See `tailwind.config.js` for more info.
+  -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+  <!--
+    NOTE: This script is must be moved if using the Symfony integration:
+    https://tailwindcss.com/docs/guides/symfony
+  -->
+  <script src='tailwind.config.js'></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body class="text-main">
+  <h1 class="text-3.5xl font-serif">Explore the <span class="font-semibold">impact of different interventions</span> on soil organic carbon</h1>
+  <!-- FILTERS -->
+  <div class="flex gap-2 py-6 my-6 border-gray-200 border-y">
+    <!-- NOTE: When the button is active, `aria-pressed` must be set to `true` -->
+    <button type="button" class="p-2 transition-all bg-gray-50 aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:mod-sc-ev-dark" aria-pressed="false"><span class="font-semibold">All</span> <span class="text-xs">(13,632)</span></button>
+    <button type="button" class="p-2 transition-all bg-gray-50 aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:mod-sc-ev-dark" aria-pressed="true"><span class="font-semibold">Cropland</span> <span class="text-xs">(5,632)</span></button>
+    <button type="button" class="p-2 transition-all bg-gray-50 aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:mod-sc-ev-dark" aria-pressed="false"><span class="font-semibold">Forest land</span> <span class="text-xs">(3,500)</span></button>
+    <button type="button" class="p-2 transition-all bg-gray-50 aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:mod-sc-ev-dark" aria-pressed="false"><span class="font-semibold">Grassland</span> <span class="text-xs">(1,000)</span></button>
+    <button type="button" class="p-2 transition-all bg-gray-50 aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:mod-sc-ev-dark" aria-pressed="false"><span class="font-semibold">Wetlands</span> <span class="text-xs">(1,000)</span></button>
+    <button type="button" class="p-2 transition-all bg-gray-50 aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:mod-sc-ev-dark" aria-pressed="false"><span class="font-semibold">Other land</span> <span class="text-xs">(500)</span></button>
+  </div>
+  <!-- INTRO -->
+  <p class="text-2xl">These insights come from the analysis of <span class="font-semibold">5,632 scientific publications</span> and 100 meta-analyses related to <span class="font-semibold">cropland</span> interventions on SOC.</p>
+  <!-- BUTTONS -->
+  <div class="flex gap-4 my-8">
+    <button type="button" class="p-4 font-semibold text-white transition-all border border-mod-sc-ev bg-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:bg-mod-sc-ev-dark hover:border-mod-sc-ev-dark focus-visible:outline-mod-sc-ev-dark">See publications</button>
+    <button type="button" class="p-4 font-semibold transition-all bg-transparent border border-mod-sc-ev text-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev hover:text-white focus-visible:outline-mod-sc-ev-dark">See methodology</button>
+  </div>
+  <!-- CARDS -->
+  <div class="flex flex-col gap-2">
+    <div class="p-6 bg-gray-50">
+      <header class="mb-6">
+        Impact of <span class="font-semibold">climate change</span> on soil organic carbon for <span class="font-semibold">cropland</span>.
+        <button type="button" class="inline-block ml-2 align-middle transition-all rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none"><span class="sr-only">Info</span><i data-lucide="info" class="w-5 h-5"></i></button>
+      </header>
+      <div class="flex items-center justify-center py-40 font-semibold uppercase bg-gray-200">chart</div>
+    </div>
+    <div class="p-6 bg-gray-50">
+      <header class="mb-6">
+        Impact of <span class="font-semibold">land-use change</span> on soil organic carbon for <span class="font-semibold">cropland</span>.
+        <button type="button" class="inline-block ml-2 align-middle transition-all rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none"><span class="sr-only">Info</span><i data-lucide="info" class="w-5 h-5"></i></button>
+      </header>
+      <div class="flex items-center justify-center py-40 font-semibold uppercase bg-gray-200">chart</div>
+    </div>
+  </div>
+
+  <!-- NOTE: Must be at the very end -->
+  <script>
+    lucide.createIcons();
+  </script>
+
+
+  <!-- TODO: factor as classes -->
+</body>
+</html>
