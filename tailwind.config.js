@@ -16,6 +16,7 @@ tailwind.config = {
       },
       colors: {
         'main': '#3C4363',
+        'gray-50': '#F7F7F9',
         'mod-sc-ev': '#2BB3A7',
         'mod-sc-ev-light': '#CEEEE3',
         'mod-sc-ev-dark': '#1E6B65',
