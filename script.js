@@ -71,7 +71,7 @@ const createSVGChart = () => {
   .style("text-anchor", "start");
 
   const buttonHTML = (title, number) =>
-    `<button type="button" class='btn-filter-white'>
+    `<button type="button" class='btn-filter-chart'>
       <span class="font-semibold text-slate-700">${title}</span>
       <span class="text-xs font-normal">(${number})</span>
     </button>`;

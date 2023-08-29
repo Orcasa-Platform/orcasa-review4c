@@ -22,7 +22,7 @@
 
   <!-- This style tag defines the custom grouped classes for tailwind -->
   <!-- On the first case btn-primary will apply all the subsequent classes when applied to an element -->
-  <!-- Is not possible for now to extract this code to a different file -->
+  <!-- If the code is integrated with Symfony this script could be moved to a different file -->
   <style type="text/tailwindcss">
     @layer utilities {
       .btn-primary {
@@ -34,11 +34,12 @@
       }
 
       .btn-filter {
-        @apply p-2 transition-all bg-gray-50 aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:outline-mod-sc-ev-dark;
+        @apply p-2 transition-all bg-gray-50 aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:outline-mod-sc-ev-dark;
       }
 
-      .btn-filter-white {
-        @apply p-2 transition-all bg-white aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:outline-mod-sc-ev-dark;
+      /* focus-visible:outline-offset-[-2px] to fix the foreignObject outline */
+      .btn-filter-chart {
+        @apply p-2 transition-all bg-white aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] box-border disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:outline-mod-sc-ev-dark;
       }
 
       .btn-icon {
@@ -46,26 +47,26 @@
       }
 
       .checkbox {
-        @apply w-4 h-4 justify-center items-center flex appearance-none rounded border border-slate-700 bg-slate-700 checked:bg-slate-700 checked:border-slate-700 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-600;
+        @apply w-4 h-4 justify-center items-center flex appearance-none rounded border border-slate-700 bg-slate-700 checked:bg-slate-700 checked:border-slate-700 text-mod-sc-ev hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-600;
       }
     }
   </style>
 
   <body class="text-main">
     <div class="m-6">
-      <div class="text-2xl my-6 text-teal-500 uppercase">Template examples</div>
-      <div class="text-2xl my-6 text-teal-500 uppercase">Text</div>
+      <div class="text-2xl my-6 text-mod-sc-ev uppercase">Template examples</div>
+      <div class="text-2xl my-6 text-mod-sc-ev uppercase">Text</div>
       <h1 class="text-3.5xl font-serif">Explore the <span class="font-semibold">impact of different interventions</span> on soil organic carbon</h1>
 
       <!-- INTRO -->
       <p class="text-2xl">These insights come from the analysis of <span class="font-semibold">5,632 scientific publications</span> and 100 meta-analyses related to <span class="font-semibold">cropland</span> interventions on SOC.</p>
 
       <!-- FILTERS -->
-      <div class="text-2xl my-6 text-teal-500 uppercase">Filters</div>
+      <div class="text-2xl my-6 text-mod-sc-ev uppercase">Filters</div>
 
       <div class="flex gap-2 py-6 my-6 border-gray-200 border-y">
         <!-- NOTE: When the button is active, `aria-pressed` must be set to `true` -->
-        <button type="button" class="btn-filter" aria-pressed="false"><span class="font-semibold">All</span> <span class="text-xs">(13,632)</span></button>
+        <button type="button" class="btn-filter-white" aria-pressed="false"><span class="font-semibold">All</span> <span class="text-xs">(13,632)</span></button>
         <button type="button" class="btn-filter" aria-pressed="true"><span class="font-semibold">Cropland</span> <span class="text-xs">(5,632)</span></button>
         <button type="button" class="btn-filter" aria-pressed="false"><span class="font-semibold">Forest land</span> <span class="text-xs">(3,500)</span></button>
         <button type="button" class="btn-filter" aria-pressed="false"><span class="font-semibold">Grassland</span> <span class="text-xs">(1,000)</span></button>
@@ -92,7 +93,7 @@
 
       <div class="mb-6"></div>
         <!-- BUTTONS -->
-        <div class="text-2xl my-6 text-teal-500 uppercase">Buttons</div>
+        <div class="text-2xl my-6 text-mod-sc-ev uppercase">Buttons</div>
 
         <div class="flex gap-4 my-8">
           <button type="button" class="btn-primary">See publications</button>
@@ -102,12 +103,12 @@
         <!-- ICON -->
         <!-- To add different icons just change the data-lucide parameter -->
         <!-- Find all the icons needed here: https://lucide.dev/icons/ -->
-        <div class="text-2xl my-6 text-teal-500 uppercase">Icon</div>
+        <div class="text-2xl my-6 text-mod-sc-ev uppercase">Icon</div>
         <i data-lucide="coffee" class="w-5 h-5"></i>
 
 
         <!-- CARDS -->
-        <div class="text-2xl my-6 text-teal-500 uppercase">Cards with chart</div>
+        <div class="text-2xl my-6 text-mod-sc-ev uppercase">Cards with chart</div>
 
         <div class="flex flex-col gap-2 mb-2">
           <div class="p-6 bg-gray-50">
@@ -122,7 +123,7 @@
           </div>
         </div>
 
-        <div class="text-2xl my-6 text-teal-500 uppercase">Other Card</div>
+        <div class="text-2xl my-6 text-mod-sc-ev uppercase">Other Card</div>
 
         <div class="flex p-6 bg-gray-50 flex-col gap-6">
           <!-- BADGE -->
@@ -154,15 +155,14 @@
               <div class="text-slate-500">Widespread land degradation has strengthened the urgent need to restore overgrazing grasslands. China has implemented the program ‘Returning...</div>
           </div>
           <div class="inline-flex self-stretch justify-end items-center gap-4">
-            <div class="flex pr-1 justify-center items-center gap-1">
-                <div class="text-teal-500 text-base font-semibold leading-normal">Learn more</div>
-                <i data-lucide="arrow-right" class="text-teal-500 w-5 h-5"></i>
+            <a href="#" rel="noreferrer noopener" class="flex pr-1 justify-center items-center gap-1">
+                <div class="text-mod-sc-ev text-base font-semibold leading-normal">Learn more</div>
+                <i data-lucide="arrow-right" class="text-mod-sc-ev w-5 h-5"></i>
             </div>
           </div>
       </div>
     </div>
     <!-- NOTE: Must be at the very end: -->
-    <!-- script.js needs Plotly to be loaded first -->
     <!-- The custom-classes file needs the html classes to be rendered -->
     <!-- lucide js needs the icon html to be rendered -->
 
@@ -170,8 +170,5 @@
     <script>
       lucide.createIcons();
     </script>
-
-
-    <!-- TODO: factor as classes -->
   </body>
 </html>
