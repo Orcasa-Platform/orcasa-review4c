@@ -18,7 +18,12 @@
     https://tailwindcss.com/docs/guides/symfony
   -->
   <script src='tailwind.config.js'></script>
+
+  <!-- Icons -->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <!-- Map -->
+  <script src="https://unpkg.com/maplibre-gl@%5E3.3.0/dist/maplibre-gl.js"></script>
+  <link href='https://unpkg.com/maplibre-gl@3.3.0/dist/maplibre-gl.css' rel='stylesheet' />
 
   <!-- This style tag defines the custom grouped classes for tailwind -->
   <!-- On the first case btn-primary will apply all the subsequent classes when applied to an element -->
@@ -51,7 +56,6 @@
       }
     }
   </style>
-
   <body class="text-main">
     <div class="m-6">
       <div class="text-2xl my-6 text-mod-sc-ev uppercase">Template examples</div>
@@ -106,6 +110,9 @@
         <div class="text-2xl my-6 text-mod-sc-ev uppercase">Icon</div>
         <i data-lucide="coffee" class="w-5 h-5"></i>
 
+        <!-- MAP -->
+        <div class="text-2xl my-6 text-mod-sc-ev uppercase">Map</div>
+        <div id='map' style='width: 400px; height: 300px;'></div>
 
         <!-- CARDS -->
         <div class="text-2xl my-6 text-mod-sc-ev uppercase">Cards with chart</div>
@@ -166,7 +173,8 @@
     <!-- The custom-classes file needs the html classes to be rendered -->
     <!-- lucide js needs the icon html to be rendered -->
 
-    <script src='script.js'></script>
+    <script src='d3-chart.js'></script>
+    <script src='map.js'></script>
     <script>
       lucide.createIcons();
     </script>
