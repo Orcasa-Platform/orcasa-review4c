@@ -57,120 +57,24 @@
     }
   </style>
   <body class="text-main">
-    <div class="m-6">
-      <div class="text-2xl my-6 text-mod-sc-ev uppercase">Template examples</div>
-      <div class="text-2xl my-6 text-mod-sc-ev uppercase">Text</div>
-      <h1 class="text-3.5xl font-serif">Explore the <span class="font-semibold">impact of different interventions</span> on soil organic carbon</h1>
 
-      <!-- INTRO -->
-      <p class="text-2xl">These insights come from the analysis of <span class="font-semibold">5,632 scientific publications</span> and 100 meta-analyses related to <span class="font-semibold">cropland</span> interventions on SOC.</p>
-
-      <!-- FILTERS -->
-      <div class="text-2xl my-6 text-mod-sc-ev uppercase">Filters</div>
-
-      <div class="flex gap-2 py-6 my-6 border-gray-200 border-y">
-        <!-- NOTE: When the button is active, `aria-pressed` must be set to `true` -->
-        <button type="button" class="btn-filter" aria-pressed="false"><span class="font-semibold">All</span> <span class="text-xs">(13,632)</span></button>
-        <button type="button" class="btn-filter" aria-pressed="true"><span class="font-semibold">Cropland</span> <span class="text-xs">(5,632)</span></button>
-        <button type="button" class="btn-filter" aria-pressed="false"><span class="font-semibold">Forest land</span> <span class="text-xs">(3,500)</span></button>
-        <button type="button" class="btn-filter" aria-pressed="false"><span class="font-semibold">Grassland</span> <span class="text-xs">(1,000)</span></button>
-        <button type="button" class="btn-filter" aria-pressed="false"><span class="font-semibold">Wetlands</span> <span class="text-xs">(1,000)</span></button>
-        <button type="button" class="btn-filter" aria-pressed="false"><span class="font-semibold">Other land</span> <span class="text-xs">(500)</span></button>
-      </div>
-
-      <!-- Checkboxes -->
-      <div role="group" aria-labelledby="publication-type" class="flex h-24 flex-col justify-center gap-4">
-        <div id="publication-type" class="font-serif text-slate-700 font-semibold">Type of publication</div>
-        <div class="flex h-14 px-4 flex-col justify-center gap-2">
-          <label class="inline-flex items-center gap-2">
-            <input type="checkbox" class="checkbox">
-            <span class="text-slate-700">Primary paper</span>
-          </label>
-          <div class="inline-flex items-center gap-2">
-            <label class="inline-flex items-center gap-2">
-                <input type="checkbox" class="checkbox">
-                <span class="text-slate-700">Meta-analysis</span>
-            </label>
-          </div>
+    <!-- START -->
+    <div class="absolute left-0 top-0 flex h-full w-full max-w-[823px] flex-col bg-white shadow-lg transition-transform duration-500 translate-x-0 z-10">
+      <div class="flex grow flex-col overflow-y-auto">
+        <div class="space-y-5 p-5 text-slate-700">
+          <h2 class="text-3.5xl font-serif">
+            Explore the <span class="font-semibold">impact of different interventions</span> on soil organic carbon
+          </h2>
         </div>
       </div>
-
-      <div class="mb-6"></div>
-        <!-- BUTTONS -->
-        <div class="text-2xl my-6 text-mod-sc-ev uppercase">Buttons</div>
-
-        <div class="flex gap-4 my-8">
-          <button type="button" class="btn-primary">See publications</button>
-          <button type="button" class="btn-secondary">See methodology</button>
-        </div>
-
-        <!-- ICON -->
-        <!-- To add different icons just change the data-lucide parameter -->
-        <!-- Find all the icons needed here: https://lucide.dev/icons/ -->
-        <div class="text-2xl my-6 text-mod-sc-ev uppercase">Icon</div>
-        <i data-lucide="coffee" class="w-5 h-5"></i>
-
-        <!-- MAP -->
-        <div class="text-2xl my-6 text-mod-sc-ev uppercase">Map</div>
-        <div id='map' style='width: 400px; height: 300px;'></div>
-
-        <!-- CARDS -->
-        <div class="text-2xl my-6 text-mod-sc-ev uppercase">Cards with chart</div>
-
-        <div class="flex flex-col gap-2 mb-2">
-          <div class="p-6 bg-gray-50">
-            <header class="mb-6">
-              Impact of <span class="font-semibold">climate change</span> on soil organic carbon for <span class="font-semibold">cropland</span>.
-              <button type="button" class="btn-icon"><span class="sr-only">Info</span><i data-lucide="info" class="w-5 h-5"></i></button>
-            </header>
-            <!-- CHART -->
-            <div class="flex items-center justify-center font-semibold uppercase bg-gray-50">
-              <div id="chart-1" class="w-full h-full"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="text-2xl my-6 text-mod-sc-ev uppercase">Other Card</div>
-
-        <div class="flex p-6 bg-gray-50 flex-col gap-6">
-          <!-- BADGE -->
-          <div class="w-[115px] h-8">
-            <div class="px-2 py-1 bg-green-100">
-              <div class="text-teal-600">Meta-analysis</div>
-            </div>
-          </div>
-          <!-- BADGES WITH ICONS -->
-          <div class="inline-flex items-center gap-2">
-              <div class="flex h-6 gap-4">
-                  <div class="flex gap-2">
-                      <i data-lucide="newspaper" class="w-5 h-5"></i>
-                      <div class="text-slate-500">Ecological Engineering</div>
-                  </div>
-                  <div class="flex gap-2">
-                    <i data-lucide="calendar" class="w-5 h-5"></i>
-                    <div class="text-slate-500">2013</div>
-                </div>
-                <div class="flex gap-2">
-                  <i data-lucide="globe" class="w-5 h-5"></i>
-                  <div class="text-slate-500">France</div>
-                </div>
-              </div>
-          </div>
-          <div class="flex flex-col gap-4">
-              <div class="text-slate-700 text-2xl font-semibold leading-10">Effects of grazing exclusion on carbon sequestration and plant diversity in grasslands of China</div>
-              <div class="text-slate-700">Xiong DP, Shi PL, Zhang XZ, Zou CB</div>
-              <div class="text-slate-500">Widespread land degradation has strengthened the urgent need to restore overgrazing grasslands. China has implemented the program ‘Returning...</div>
-          </div>
-          <div class="inline-flex self-stretch justify-end items-center gap-4">
-            <a href="#" rel="noreferrer noopener" class="flex pr-1 justify-center items-center gap-1">
-                <div class="text-mod-sc-ev text-base font-semibold leading-normal">Learn more</div>
-                <i data-lucide="arrow-right" class="text-mod-sc-ev w-5 h-5"></i>
-            </div>
-          </div>
+      <div class="absolute -right-10 -ml-px top-0 ">
+        <button class="text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none bg-white border-l border-gray-300 justify-center items-center flex h-10 w-10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 transition-transform"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
       </div>
     </div>
+    <div id='map' style='width: 100wh; height: 100vh'></div>
+    <!-- END -->
+
     <!-- NOTE: Must be at the very end: -->
-    <!-- The custom-classes file needs the html classes to be rendered -->
     <!-- lucide js needs the icon html to be rendered -->
 
     <script src='d3-chart.js'></script>
