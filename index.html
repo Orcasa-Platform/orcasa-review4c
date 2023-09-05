@@ -19,6 +19,8 @@
   -->
   <script src='tailwind.config.js'></script>
 
+  <script src='javascript/state.js'></script>
+
   <!-- Icons -->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <!-- Map -->
@@ -76,7 +78,7 @@
       </div>
     </div>
     <!-- SIDEBAR -->
-    <div class="absolute left-[117px] top-0 flex h-full w-full max-w-[823px] flex-col bg-white shadow-lg transition-transform duration-500 translate-x-0 z-10">
+    <div id="sidebar" class="absolute left-[117px] top-0 flex h-full w-full max-w-[823px] flex-col bg-white shadow-lg transition-transform duration-500 translate-x-0 z-10">
       <div class="flex grow flex-col overflow-y-auto">
         <div class="space-y-5 p-5 text-slate-700">
           <h2 class="text-3.5xl font-serif">
@@ -85,7 +87,8 @@
         </div>
       </div>
       <div class="absolute -right-10 -ml-px top-0 ">
-        <button class="text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none bg-white border-l border-gray-300 justify-center items-center flex h-10 w-10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 transition-transform"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <button id="sidebar-toggle" class="text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none bg-white border-l border-gray-300 justify-center items-center flex h-10 w-10">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 transition-transform"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
       </div>
     </div>
     <!-- MAP -->
@@ -93,10 +96,12 @@
     <!-- END -->
 
     <!-- NOTE: Must be at the very end: -->
-    <!-- lucide js needs the icon html to be rendered -->
+    <script src='javascript/d3-chart.js'></script>
+    <script src='javascript/map.js'></script>
 
-    <script src='d3-chart.js'></script>
-    <script src='map.js'></script>
+    <script src='javascript/event-listeners.js'></script>
+
+    <!-- lucide js needs the icon html to be rendered -->
     <script>
       lucide.createIcons();
     </script>
