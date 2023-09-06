@@ -58,6 +58,14 @@
         .checkbox {
           @apply w-4 h-4 justify-center items-center flex appearance-none rounded border border-slate-700 bg-slate-700 checked:bg-slate-700 checked:border-slate-700 text-mod-sc-ev hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-600;
         }
+
+        .navbar-item {
+          @apply flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 bg-slate-700 text-white;
+        }
+
+        .navbar-item-active {
+          @apply flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 bg-white text-slate-700;
+        }
       }
     </style>
   </head>
@@ -72,20 +80,21 @@
         </a>
         <div class="flex flex-col gap-px bg-slate-600 py-px">
           <a
-            class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-yellow-400 bg-white text-slate-700"
+            class="navbar-item border-yellow-400"
             href="/map-layers">
             Map Layers
           </a>
           <a
-            class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-teal-500 bg-slate-700 text-white"
-            href="/scientific-evidence">Scientific Evidence</a><a
-            class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-yellow-600 bg-slate-700 text-white"
+            class="navbar-item-active border-teal-500"
+            href="/scientific-evidence">Scientific Evidence</a>
+          <a
+            class="navbar-item border-yellow-600"
             href="/practices">Practices</a>
           <a
-            class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-blue-500 bg-slate-700 text-white"
+            class="navbar-item border-blue-500"
             href="/network">Network</a>
           <a
-            class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-indigo-500 bg-slate-700 text-white"
+            class="navbar-item border-indigo-500"
             href="/datasets">
             Datasets
           </a>
@@ -152,7 +161,7 @@
                 <div
                   class="flex w-full items-center justify-between space-x-8">
                   <button
-                    class="group grow" type="button"
+                    type="button"
                     id="satellite-basemap-button">
                     <div class="space-y-2">
                       <div
@@ -173,7 +182,7 @@
                 <div
                   class="flex w-full items-center justify-between space-x-8">
                   <button
-                    class="group grow" type="button" id="light-basemap-button">
+                    type="button" id="light-basemap-button">
                     <div class="space-y-2">
                       <div
                         id="light-basemap-container"
@@ -194,12 +203,12 @@
               <div class="col-span-6">
                 <div
                   role="radiogroup" aria-required="false" dir="ltr"
-                  class="grid gap-3" tabindex="0" style="outline: none;">
+                  class="grid gap-3 outline-none" tabindex="0">
                   <div
                     class="group flex cursor-pointer items-center space-x-2">
                     <button
                       type="button" role="radio" aria-checked="true"
-                      data-state="checked" value="labels-dark"
+                      data-state="checked"
                       class="border-primary text-primary ring-offset-background focus-visible:ring-ring aspect-square h-4 w-4 rounded-full border focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       id="labels-dark" tabindex="-1" data-radix-collection-item>
                       <span
@@ -261,14 +270,8 @@
             class="h-6 w-6">
         </button>
         <span
-          style="position: absolute; right: 0px; transform-origin: 100% 0px; transform: translateY(50%) rotate(-90deg) translateX(50%); top: 13.5px;">
-          <svg
-            class="fill-white" width="10" height="5" viewBox="0 0 30 10"
-            preserveAspectRatio="none" style="display: block;">
-            <polygon
-              points="0,0 30,0 15,10">
-            </polygon>
-          </svg>
+          class="absolute right-0 transform origin-top-right -translate-y-1/2 -rotate-90 top-4">
+          <img src="/assets/arrow.svg" alt="Arrow">
         </span>
       </div>
     </div>
