@@ -42,12 +42,30 @@ elements.satelliteBasemapButton.addEventListener("click", function() {
   mutations.setBasemap('satellite');
   elements.lightBasemapContainer.classList.remove('outline');
   elements.satelliteBasemapContainer.classList.add('outline');
-  map.setStyle('https://demotiles.maplibre.org/style.json');
+  map.setPaintProperty(
+    'basemap-light',
+    'raster-opacity',
+    0
+  );
+  map.setPaintProperty(
+    'basemap-satellite',
+    'raster-opacity',
+    1
+  );
 });
 
 elements.lightBasemapButton.addEventListener("click", function() {
   mutations.setBasemap('light');
   elements.lightBasemapContainer.classList.add('outline');
   elements.satelliteBasemapContainer.classList.remove('outline');
-  map.setStyle('https://demotiles.maplibre.org/style.json');
+  map.setPaintProperty(
+    'basemap-light',
+    'raster-opacity',
+    1
+  );
+  map.setPaintProperty(
+    'basemap-satellite',
+    'raster-opacity',
+    0
+  );
 });
