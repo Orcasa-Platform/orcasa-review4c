@@ -8,7 +8,10 @@ const elements = {
   lightBasemapButton: document.getElementById('light-basemap-button'),
   satelliteBasemapContainer: document.getElementById('satellite-basemap-container'),
   lightBasemapContainer: document.getElementById('light-basemap-container'),
+  maplibreControls: document.getElementsByClassName('maplibregl-ctrl'),
 }
+
+// SIDEBAR
 
 elements.sidebarToggle.addEventListener("click", function() {
   mutations.toggleSidebar();
@@ -20,6 +23,8 @@ elements.sidebarToggle.addEventListener("click", function() {
     elements.sidebarToggle.classList.remove('rotate-180');
   }
 });
+
+// MAP SETTINGS
 
 elements.mapSettingsButton.addEventListener("click", function() {
   mutations.toggleMapSettings();
@@ -40,8 +45,23 @@ elements.closeMapSettingsButton.addEventListener("click", function() {
 
 elements.satelliteBasemapButton.addEventListener("click", function() {
   mutations.setBasemap('satellite');
+
+  // Change theme in buttons
+  if (elements.maplibreControls) {
+    for (let element of elements.maplibreControls) {
+      element.classList.add('theme-light');
+    };
+  }
+  elements.sidebarToggle.classList.remove('btn-theme-dark');
+  elements.sidebarToggle.classList.add('btn-theme-light');
+  elements.mapSettingsButton.classList.remove('btn-theme-dark');
+  elements.mapSettingsButton.classList.add('btn-theme-light');
+
+  // Update map settings popup
   elements.lightBasemapContainer.classList.remove('outline');
   elements.satelliteBasemapContainer.classList.add('outline');
+
+  // Change basemap
   map.setPaintProperty(
     'basemap-light',
     'raster-opacity',
@@ -55,9 +75,24 @@ elements.satelliteBasemapButton.addEventListener("click", function() {
 });
 
 elements.lightBasemapButton.addEventListener("click", function() {
+
+  // Change theme in buttons
   mutations.setBasemap('light');
+  if (elements.maplibreControls) {
+    for (let element of elements.maplibreControls) {
+      element.classList.remove('theme-light');
+    }
+  }
+  elements.mapSettingsButton.classList.add('btn-theme-dark');
+  elements.mapSettingsButton.classList.remove('btn-theme-light');
+  elements.sidebarToggle.classList.add('btn-theme-dark');
+  elements.sidebarToggle.classList.remove('btn-theme-light');
+
+  // Update map settings popup
   elements.lightBasemapContainer.classList.add('outline');
   elements.satelliteBasemapContainer.classList.remove('outline');
+
+  // Change basemap
   map.setPaintProperty(
     'basemap-light',
     'raster-opacity',

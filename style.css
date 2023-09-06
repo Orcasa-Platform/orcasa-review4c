@@ -1,3 +1,8 @@
+:root {
+  --main: #334154;
+  --hover-main: #475569;
+}
+
 @font-face {
   font-family: "Roboto";
   font-style: "normal";

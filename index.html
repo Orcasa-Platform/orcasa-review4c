@@ -66,6 +66,14 @@
         .navbar-item-active {
           @apply flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 bg-white text-slate-700;
         }
+
+        .btn-theme-light {
+          @apply text-slate-700 bg-white border-white hover:bg-slate-200;
+        }
+
+        .btn-theme-dark {
+          @apply text-white bg-slate-700 border-slate-200 hover:bg-slate-500;
+        }
       }
     </style>
   </head>
@@ -114,7 +122,7 @@
       </div>
       <div class="absolute -right-10 -ml-px top-0 ">
         <button id="sidebar-toggle"
-          class="text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none bg-white border-l border-gray-300 justify-center items-center flex h-10 w-10">
+          class="text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none border-l border-gray-300 justify-center items-center flex h-10 w-10 btn-theme-dark">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -128,11 +136,19 @@
     <div class="flex flex-col space-y-2 absolute right-6 top-6 z-40">
       <button
         id="map-settings-button"
-        class="relative flex h-8 w-8 items-center bg-white p-1.5 text-slate-500 transition-colors border border-slate-200 shadow-sm hover:bg-slate-200 active:bg-white active:outline active:outline-2 active:outline-white/50"
+        class="relative flex h-8 w-8 items-center p-1.5 transition-colors border shadow-sm active:outline active:outline-2 btn-theme-dark"
         aria-label="Map settings" type="button" data-state="open"
-        aria-haspopup="dialog" aria-expanded="true" aria-controls="radix-:rc:">
-        <img src="/assets/map-settings.svg" alt="Map settings"
+        aria-haspopup="dialog" aria-expanded="true">
+        <!-- Map settings icons can not be imported as it has to change color -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
           class="h-full w-full">
+          <path
+            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
+          </path>
+          <circle cx="12" cy="12" r="3"></circle>
+        </svg>
       </button>
     </div>
 
@@ -266,12 +282,12 @@
         <button
           id="close-map-settings-button" type="button"
           class="absolute right-4 top-4" aria-label="Close map settings">
-          <img src="/assets/close.svg" alt="Close map settings"
+          <img src="/assets/icons/close.svg" alt="Close map settings"
             class="h-6 w-6">
         </button>
         <span
           class="absolute right-0 transform origin-top-right -translate-y-1/2 -rotate-90 top-4">
-          <img src="/assets/arrow.svg" alt="Arrow">
+          <img src="/assets/icons/arrow.svg" alt="Arrow">
         </span>
       </div>
     </div>

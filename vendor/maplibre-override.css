@@ -9,22 +9,23 @@
 }
 
 .maplibregl-ctrl button:not(:disabled):hover {
-  background-color: #E2E8F0;
-  /* background-color: rgb(255 255 255/5%); */
+  background-color: var(--hover-main);
 }
 
 .maplibregl-ctrl button {
-  background-color: white;
+  background-color: var(--main);
+  color: white;
   width: 30px;
   height: 30px;
 }
 
-.maplibregl-ctrl button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon {
-  background-image: url("/assets/zoom-in.svg");
-  background-size: 16px;
+.theme-light.maplibregl-ctrl button {
+  background-color: white;
+  color: var(--main);
+  stroke: none;
 }
 
-.maplibregl-ctrl button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon {
-  background-image: url("/assets/zoom-out.svg");
-  background-size: 16px;
+.maplibregl-ctrl-icon {
+  padding: 6px;
+  background-image: none !important;
 }
