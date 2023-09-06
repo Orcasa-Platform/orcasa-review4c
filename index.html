@@ -1,104 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset='utf-8'>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <title>Scientific Evidence</title>
-  <meta name='viewport' content='width=device-width, initial-scale=1'>
-  <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <!--
-    NOTE: This script is not needed if Tailwind CSS is directly configured in Symfony:
-    https://tailwindcss.com/docs/guides/symfony
-    Please note that the same plugins need to be included. See `tailwind.config.js` for more info.
-  -->
-  <script src="https://cdn.tailwindcss.com/3.3.3?plugins=forms,typography,aspect-ratio"></script>
-  <!--
-    NOTE: This script is must be moved if using the Symfony integration:
-    https://tailwindcss.com/docs/guides/symfony
-  -->
-  <script src='tailwind.config.js'></script>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Scientific Evidence</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!--
+      NOTE: This script is not needed if Tailwind CSS is directly configured in Symfony:
+      https://tailwindcss.com/docs/guides/symfony
+      Please note that the same plugins need to be included. See `tailwind.config.js` for more info.
+    -->
+    <script
+      src="https://cdn.tailwindcss.com/3.3.3?plugins=forms,typography,aspect-ratio"></script>
+    <!--
+      NOTE: This script is must be moved if using the Symfony integration:
+      https://tailwindcss.com/docs/guides/symfony
+    -->
+    <script src='tailwind.config.js'></script>
 
-  <script src='javascript/state.js'></script>
+    <script src='javascript/state.js'></script>
 
-  <!-- Icons -->
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-  <!-- Map -->
-  <script src="https://unpkg.com/maplibre-gl@%5E3.3.0/dist/maplibre-gl.js"></script>
-  <link href='https://unpkg.com/maplibre-gl@3.3.0/dist/maplibre-gl.css' rel='stylesheet' />
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <!-- Map -->
+    <script src="https://unpkg.com/maplibre-gl@%5E3.3.0/dist/maplibre-gl.js"></script>
+    <link href='https://unpkg.com/maplibre-gl@3.3.0/dist/maplibre-gl.css'
+      rel='stylesheet' />
 
-  <!-- This style tag defines the custom grouped classes for tailwind -->
-  <!-- On the first case btn-primary will apply all the subsequent classes when applied to an element -->
-  <!-- If the code is integrated with Symfony this script could be moved to a different file -->
-  <style type="text/tailwindcss">
-    @layer utilities {
-      .btn-primary {
-        @apply p-4 font-semibold text-white transition-all border border-mod-sc-ev bg-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:bg-mod-sc-ev-dark hover:border-mod-sc-ev-dark focus-visible:outline-mod-sc-ev-dark;
+    <!-- This style tag defines the custom grouped classes for tailwind -->
+    <!-- On the first case btn-primary will apply all the subsequent classes when applied to an element -->
+    <!-- If the code is integrated with Symfony this script could be moved to a different file -->
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .btn-primary {
+          @apply p-4 font-semibold text-white transition-all border border-mod-sc-ev bg-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:bg-mod-sc-ev-dark hover:border-mod-sc-ev-dark focus-visible:outline-mod-sc-ev-dark;
+        }
+
+        .btn-secondary {
+          @apply p-4 font-semibold transition-all bg-transparent border border-mod-sc-ev text-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev hover:text-white focus-visible:outline-mod-sc-ev-dark;
+        }
+
+        .btn-filter {
+          @apply p-2 transition-all bg-gray-50 aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:outline-mod-sc-ev-dark;
+        }
+
+        /* focus-visible:outline-offset-[-2px] to fix the foreignObject outline */
+        .btn-filter-chart {
+          @apply p-2 transition-all bg-white aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] box-border disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:outline-mod-sc-ev-dark;
+        }
+
+        .btn-icon {
+          @apply inline-block ml-2 align-middle transition-all rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none;
+        }
+
+        .checkbox {
+          @apply w-4 h-4 justify-center items-center flex appearance-none rounded border border-slate-700 bg-slate-700 checked:bg-slate-700 checked:border-slate-700 text-mod-sc-ev hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-600;
+        }
       }
-
-      .btn-secondary {
-        @apply p-4 font-semibold transition-all bg-transparent border border-mod-sc-ev text-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev hover:text-white focus-visible:outline-mod-sc-ev-dark;
-      }
-
-      .btn-filter {
-        @apply p-2 transition-all bg-gray-50 aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:outline-mod-sc-ev-dark;
-      }
-
-      /* focus-visible:outline-offset-[-2px] to fix the foreignObject outline */
-      .btn-filter-chart {
-        @apply p-2 transition-all bg-white aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] box-border disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:outline-mod-sc-ev-dark;
-      }
-
-      .btn-icon {
-        @apply inline-block ml-2 align-middle transition-all rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none;
-      }
-
-      .checkbox {
-        @apply w-4 h-4 justify-center items-center flex appearance-none rounded border border-slate-700 bg-slate-700 checked:bg-slate-700 checked:border-slate-700 text-mod-sc-ev hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-600;
-      }
-    }
-  </style>
+    </style>
+  </head>
   <body class="text-main">
     <!-- NAVBAR -->
     <div class="absolute left-0 z-50 h-full w-[117px]">
-      <div class="flex h-full w-full flex-col items-center justify-start gap-20 bg-slate-700 py-6">
+      <div
+        class="flex h-full w-full flex-col items-center justify-start gap-20 bg-slate-700 py-6">
         <a href="/">
-          <img src="/assets/logo.svg" alt="KP4 Soil Carbon logo" class="h-[68-px] w-[68-px]">
+          <img src="/assets/logo.svg" alt="KP4 Soil Carbon logo"
+            class="h-[68-px] w-[68-px]">
         </a>
         <div class="flex flex-col gap-px bg-slate-600 py-px">
-          <a class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-yellow-400 bg-white text-slate-700" href="/map-layers">
+          <a
+            class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-yellow-400 bg-white text-slate-700"
+            href="/map-layers">
             Map Layers
           </a>
-          <a class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-teal-500 bg-slate-700 text-white" href="/scientific-evidence">Scientific Evidence</a><a class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-yellow-600 bg-slate-700 text-white" href="/practices">Practices</a>
-          <a class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-blue-500 bg-slate-700 text-white" href="/network">Network</a>
-          <a class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-indigo-500 bg-slate-700 text-white" href="/datasets">
+          <a
+            class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-teal-500 bg-slate-700 text-white"
+            href="/scientific-evidence">Scientific Evidence</a><a
+            class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-yellow-600 bg-slate-700 text-white"
+            href="/practices">Practices</a>
+          <a
+            class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-blue-500 bg-slate-700 text-white"
+            href="/network">Network</a>
+          <a
+            class="flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 border-indigo-500 bg-slate-700 text-white"
+            href="/datasets">
             Datasets
           </a>
         </div>
       </div>
     </div>
     <!-- SIDEBAR -->
-    <div id="sidebar" class="absolute left-[117px] top-0 flex h-full w-full max-w-[823px] flex-col bg-white shadow-lg transition-transform duration-500 translate-x-0 z-10">
+    <div id="sidebar"
+      class="absolute left-[117px] top-0 flex h-full w-full max-w-[823px] flex-col bg-white shadow-lg transition-transform duration-500 translate-x-0 z-10">
       <div class="flex grow flex-col overflow-y-auto">
         <div class="space-y-5 p-5 text-slate-700">
           <h2 class="text-3.5xl font-serif">
-            Explore the <span class="font-semibold">impact of different interventions</span> on soil organic carbon
+            Explore the <span class="font-semibold">impact of different
+              interventions</span> on soil organic carbon
           </h2>
         </div>
       </div>
       <div class="absolute -right-10 -ml-px top-0 ">
-        <button id="sidebar-toggle" class="text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none bg-white border-l border-gray-300 justify-center items-center flex h-10 w-10">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 transition-transform"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <button id="sidebar-toggle"
+          class="text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none bg-white border-l border-gray-300 justify-center items-center flex h-10 w-10">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="h-6 w-6 transition-transform"><polyline
+              points="15 18 9 12 15 6"></polyline></svg></button>
       </div>
     </div>
     <!-- MAP -->
     <div id='map' style='width: 100wh; height: 100vh'></div>
-    <!-- END -->
+    <!-- MAP SETTINGS BUTTON -->
+    <div class="flex flex-col space-y-2 absolute right-6 top-6 z-40">
+      <button
+        id="map-settings-button"
+        class="relative flex h-8 w-8 items-center bg-white p-1.5 text-slate-500 transition-colors border border-slate-200 shadow-sm hover:bg-slate-200 active:bg-white active:outline active:outline-2 active:outline-white/50"
+        aria-label="Map settings" type="button" data-state="open"
+        aria-haspopup="dialog" aria-expanded="true" aria-controls="radix-:rc:">
+        <img src="/assets/map-settings.svg" alt="Map settings"
+          class="h-full w-full">
+      </button>
+    </div>
+
+    <!-- MAP SETTINGS POPUP -->
+    <div
+      class="fixed z-40 flex items-center justify-center right-6 top-11 w-[370px] h-[280px] opacity-0"
+      id="map-settings-overlay">
+      <div
+        role="dialog" aria-label="Map settings"
+        aria-modal="true" aria-expanded="true"
+        id="map-settings-modal"
+        class="relative bg-white text-slate-700 z-50 w-72 rounded-sm border p-4 outline-none"
+        tabindex="-1">
+        <div
+          class="space-y-3">
+          <div class="mb-6 flex items-center justify-between">
+            <h3
+              class="font-serif font-semibold">Map style
+            </h3>
+          </div>
+          <div
+            class="space-y-6">
+            <ul class="grid grid-flow-col gap-4">
+              <li
+                class="col-span-6">
+                <div
+                  class="flex w-full items-center justify-between space-x-8">
+                  <button
+                    class="group grow" type="button"
+                    id="satellite-basemap-button">
+                    <div class="space-y-2">
+                      <div
+                        id="satellite-basemap-container"
+                        class="shrink-0 overflow-hidden transition-opacity outline-2 outline-offset-4 outline-yellow-500 group-hover:opacity-100 group-active:outline-slate-500">
+                        <img
+                          alt="Satellite basemap" loading="lazy" width="104"
+                          height="104" decoding="async"
+                          class="w-full"
+                          src="/assets/satellite.webp">
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </li>
+              <li
+                class="col-span-6">
+                <div
+                  class="flex w-full items-center justify-between space-x-8">
+                  <button
+                    class="group grow" type="button" id="light-basemap-button">
+                    <div class="space-y-2">
+                      <div
+                        id="light-basemap-container"
+                        class="shrink-0 overflow-hidden transition-opacity outline outline-2 outline-offset-4 outline-yellow-500">
+                        <img
+                          alt="Light basemap" loading="lazy" width="104"
+                          height="104" decoding="async"
+                          class="w-full"
+                          src="/assets/light.webp">
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </li>
+            </ul>
+            <div
+              class="grid grid-flow-col gap-4 pt-5">
+              <div class="col-span-6">
+                <div
+                  role="radiogroup" aria-required="false" dir="ltr"
+                  class="grid gap-3" tabindex="0" style="outline: none;">
+                  <div
+                    class="group flex cursor-pointer items-center space-x-2">
+                    <button
+                      type="button" role="radio" aria-checked="true"
+                      data-state="checked" value="labels-dark"
+                      class="border-primary text-primary ring-offset-background focus-visible:ring-ring aspect-square h-4 w-4 rounded-full border focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      id="labels-dark" tabindex="-1" data-radix-collection-item>
+                      <span
+                        data-state="checked"
+                        class="flex items-center justify-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg" width="24"
+                          height="24" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round"
+                          class="h-2.5 w-2.5 fill-current text-current">
+                          <circle
+                            cx="12" cy="12" r="10">
+                          </circle>
+                        </svg>
+                      </span>
+                    </button>
+                    <label
+                      class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer font-light transition-colors group-hover:text-slate-400"
+                      for="labels-dark">
+                      Dark labels</label>
+                  </div>
+                  <div
+                    class="group flex cursor-pointer items-center space-x-2">
+                    <button
+                      aria-label="Labels light"
+                      type="button" role="radio" aria-checked="false"
+                      class="border-primary text-primary ring-offset-background focus-visible:ring-ring aspect-square h-4 w-4 rounded-full border focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      id="labels-light" tabindex="-1" data-radix-collection-item>
+                    </button>
+                    <label
+                      class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer font-light transition-colors group-hover:text-slate-400"
+                      for="labels-light">
+                      Light labels</label>
+                  </div>
+                  <div
+                    class="group flex cursor-pointer items-center space-x-2">
+                    <button
+                      aria-label="Labels none"
+                      type="button" role="radio" aria-checked="false"
+                      data-state="unchecked" value="labels-none"
+                      class="border-primary text-primary ring-offset-background focus-visible:ring-ring aspect-square h-4 w-4 rounded-full border focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      id="labels-none" tabindex="-1" data-radix-collection-item>
+                    </button>
+                    <label
+                      class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer font-light transition-colors group-hover:text-slate-400"
+                      for="labels-none">
+                      No labels</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          id="close-map-settings-button" type="button"
+          class="absolute right-4 top-4" aria-label="Close map settings">
+          <img src="/assets/close.svg" alt="Close map settings"
+            class="h-6 w-6">
+        </button>
+        <span
+          style="position: absolute; right: 0px; transform-origin: 100% 0px; transform: translateY(50%) rotate(-90deg) translateX(50%); top: 13.5px;">
+          <svg
+            class="fill-white" width="10" height="5" viewBox="0 0 30 10"
+            preserveAspectRatio="none" style="display: block;">
+            <polygon
+              points="0,0 30,0 15,10">
+            </polygon>
+          </svg>
+        </span>
+      </div>
+    </div>
 
     <!-- NOTE: Must be at the very end: -->
     <script src='javascript/d3-chart.js'></script>
     <script src='javascript/map.js'></script>
-
+    <link rel='stylesheet' type='text/css' media='screen'
+      href='vendor/maplibre-override.css'>
     <script src='javascript/event-listeners.js'></script>
 
     <!-- lucide js needs the icon html to be rendered -->

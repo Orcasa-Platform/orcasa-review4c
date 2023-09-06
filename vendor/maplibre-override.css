@@ -1,0 +1,30 @@
+.maplibregl-ctrl-top-right .maplibregl-ctrl {
+  margin: 60px 25px 0 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.maplibregl-ctrl-group:not(:empty) {
+  box-shadow: none;
+}
+
+.maplibregl-ctrl button:not(:disabled):hover {
+  background-color: #E2E8F0;
+  /* background-color: rgb(255 255 255/5%); */
+}
+
+.maplibregl-ctrl button {
+  background-color: white;
+  width: 30px;
+  height: 30px;
+}
+
+.maplibregl-ctrl button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon {
+  background-image: url("/assets/zoom-in.svg");
+  background-size: 16px;
+}
+
+.maplibregl-ctrl button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon {
+  background-image: url("/assets/zoom-out.svg");
+  background-size: 16px;
+}

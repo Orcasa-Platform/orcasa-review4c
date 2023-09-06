@@ -4,3 +4,5 @@ const map = new maplibregl.Map({
   center: [-74.5, 40], // starting position [lng, lat]
   zoom: 1 // starting zoom
 });
+
+map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
