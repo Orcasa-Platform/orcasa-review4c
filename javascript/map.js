@@ -9,8 +9,9 @@ map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
 
 map.on('load', function() {
   map.addSource('basemap-satellite', {
-    'type': 'raster',
-    "tiles": ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],
+    type: 'raster',
+    tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
+    tileSize: 256
   });
 
   map.addLayer(
