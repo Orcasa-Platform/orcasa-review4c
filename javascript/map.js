@@ -22,8 +22,9 @@ map.on('load', function() {
   });
 
   map.addSource('basemap-light', {
-    'type': 'raster',
-    "tiles": ["https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"],
+    type: 'raster',
+    tiles: ['https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png'],
+    tileSize: 256
   });
 
   map.addLayer(
