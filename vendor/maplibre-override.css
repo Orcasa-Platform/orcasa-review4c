@@ -17,6 +17,13 @@
   color: white;
   width: 30px;
   height: 30px;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.maplibregl-ctrl button:focus {
+  border-radius: 0 !important;
 }
 
 .theme-light.maplibregl-ctrl button {
