@@ -38,8 +38,7 @@ elements.mapSettingsButton.addEventListener("click", function() {
 
 elements.closeMapSettingsButton.addEventListener("click", function() {
   mutations.closeMapSettings();
-  elements.mapSettingsOverlay.classList.add('opacity-0');
-  elements.mapSettingsOverlay.classList.remove('opacity-100');
+  elements.mapSettingsOverlay.classList.add('hidden');
 });
 
 elements.satelliteBasemapButton.addEventListener("click", function() {
