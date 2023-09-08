@@ -29,8 +29,7 @@ elements.sidebarToggle.addEventListener("click", function() {
 elements.mapSettingsButton.addEventListener("click", function() {
   mutations.toggleMapSettings();
   if (state.mapSettingsOpen) {
-    elements.mapSettingsOverlay.classList.add('opacity-100');
-    elements.mapSettingsOverlay.classList.remove('opacity-0');
+    elements.mapSettingsOverlay.classList.remove('hidden');
   } else {
     elements.mapSettingsOverlay.classList.add('opacity-0');
     elements.mapSettingsOverlay.classList.remove('opacity-100');
