@@ -31,8 +31,7 @@ elements.mapSettingsButton.addEventListener("click", function() {
   if (state.mapSettingsOpen) {
     elements.mapSettingsOverlay.classList.remove('hidden');
   } else {
-    elements.mapSettingsOverlay.classList.add('opacity-0');
-    elements.mapSettingsOverlay.classList.remove('opacity-100');
+    elements.mapSettingsOverlay.classList.add('hidden');
   }
 });
 
