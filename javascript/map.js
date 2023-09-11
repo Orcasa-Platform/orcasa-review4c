@@ -1,6 +1,6 @@
 const map = new maplibregl.Map({
   container: 'map',
-  style: 'https://demotiles.maplibre.org/style.json', // stylesheet location
+  style: mapStyle, // stylesheet location
   center: [-74.5, 40], // starting position [lng, lat]
   zoom: 1 // starting zoom
 });
@@ -8,14 +8,16 @@ const map = new maplibregl.Map({
 map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
 
 map.on('load', function() {
-  map.addLayer(
-    {
-      id: 'basemap-satellite',
-      type: 'raster',
-      source: 'basemap-satellite',
-      paint: {
-        'raster-opacity': 0,
-      },
+  map.addSource('basemap-satellite', {
+    type: 'raster',
+    tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
+    tileSize: 256,
+  });
+
+  map.addSource('basemap-light', {
+    type: 'raster',
+    tiles: ['https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png'],
+    tileSize: 256,
   });
 
   map.addLayer(
@@ -26,7 +28,17 @@ map.on('load', function() {
       paint: {
         'raster-opacity': 1,
       },
-  });
+  }, 'countries-labels');
+
+  map.addLayer(
+    {
+      id: 'basemap-satellite',
+      type: 'raster',
+      source: 'basemap-satellite',
+      paint: {
+        'raster-opacity': 0,
+      },
+  }, 'countries-labels');
 
   const zoomInButton = document.querySelector('button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon');
   const zoomOutButton = document.querySelector('button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon');
