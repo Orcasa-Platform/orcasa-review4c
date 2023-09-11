@@ -79,7 +79,7 @@
   </head>
   <body class="text-main">
     <!-- NAVBAR -->
-    <div class="absolute left-0 z-50 h-full w-[117px]">
+    <div class="absolute left-0 z-40 h-full w-[117px]">
       <div
         class="flex h-full w-full flex-col items-center justify-start gap-20 bg-slate-700 py-6">
         <a href="/">
@@ -111,7 +111,7 @@
     </div>
     <!-- SIDEBAR -->
     <div id="sidebar"
-      class="absolute left-[117px] top-0 flex h-full w-full max-w-[823px] flex-col bg-white shadow-lg transition-transform duration-500 translate-x-0 z-10">
+      class="absolute left-[117px] top-0 flex h-full w-full max-w-[40%] flex-col bg-white shadow-lg transition-transform duration-500 translate-x-0 z-10">
       <div class="flex grow flex-col overflow-y-auto">
         <div class="space-y-5 p-5 text-slate-700">
           <h2 class="text-3.5xl font-serif">
@@ -131,7 +131,18 @@
       </div>
     </div>
     <!-- MAP -->
-    <div id='map' style='width: 100wh; height: 100vh'></div>
+    <div id='map' style='width: 100wh; height: 100vh'>
+    </div>
+    <!-- ATTRIBUTION -->
+    <div
+      id="attribution"
+      class="absolute z-40 right-0 bottom-0 px-2 py-1 bg-gray-50/25 justify-end items-center flex z-40 gap-1">
+      <div class="text-sm leading-tight">Powered by</div>
+      <a id="attribution-link" class="hover:underline"
+        href="https://www.carto.com/"
+        rel="noreferrer noopener"
+        target="_blank">Carto</a>
+    </div>
     <!-- MAP SETTINGS BUTTON -->
     <div class="flex flex-col space-y-2 absolute right-6 top-6 z-40">
       <button
@@ -291,9 +302,9 @@
         </span>
       </div>
     </div>
-
     <!-- NOTE: Must be at the very end: -->
     <script src='javascript/d3-chart.js'></script>
+    <script src='javascript/map-style.js'></script>
     <script src='javascript/map.js'></script>
     <script src='javascript/event-listeners.js'></script>
     <style type="text/tailwindcss">

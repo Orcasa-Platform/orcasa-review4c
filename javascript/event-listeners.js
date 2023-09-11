@@ -9,6 +9,8 @@ const elements = {
   satelliteBasemapContainer: document.getElementById('satellite-basemap-container'),
   lightBasemapContainer: document.getElementById('light-basemap-container'),
   maplibreControls: document.getElementsByClassName('maplibregl-ctrl'),
+  attribution: document.getElementById('attribution'),
+  attributionLink: document.getElementById('attribution-link'),
 }
 
 // SIDEBAR
@@ -43,7 +45,7 @@ elements.closeMapSettingsButton.addEventListener("click", function() {
 elements.satelliteBasemapButton.addEventListener("click", function() {
   mutations.setBasemap('satellite');
 
-  // Change theme in buttons
+  // Change theme in buttons and attribution
   if (elements.maplibreControls) {
     for (let element of elements.maplibreControls) {
       element.classList.add('theme-light');
@@ -53,6 +55,13 @@ elements.satelliteBasemapButton.addEventListener("click", function() {
   elements.sidebarToggle.classList.add('btn-theme-light');
   elements.mapSettingsButton.classList.remove('btn-theme-dark');
   elements.mapSettingsButton.classList.add('btn-theme-light');
+
+  elements.attribution.classList.add('text-white');
+  elements.attribution.classList.remove('text-black');
+
+  // Update attribution link
+  elements.attributionLink.innerHTML = 'ESRI';
+  elements.attributionLink.href = 'https://www.esri.com/home';
 
   // Update map settings popup
   elements.lightBasemapContainer.classList.remove('outline');
@@ -73,7 +82,7 @@ elements.satelliteBasemapButton.addEventListener("click", function() {
 
 elements.lightBasemapButton.addEventListener("click", function() {
 
-  // Change theme in buttons
+  // Change theme in buttons and attribution
   mutations.setBasemap('light');
   if (elements.maplibreControls) {
     for (let element of elements.maplibreControls) {
@@ -84,6 +93,13 @@ elements.lightBasemapButton.addEventListener("click", function() {
   elements.mapSettingsButton.classList.remove('btn-theme-light');
   elements.sidebarToggle.classList.add('btn-theme-dark');
   elements.sidebarToggle.classList.remove('btn-theme-light');
+
+  elements.attribution.classList.add('text-black');
+  elements.attribution.classList.remove('text-white');
+
+  // Update attribution link
+  elements.attributionLink.innerHTML = 'Carto';
+  elements.attributionLink.href = 'https://carto.com';
 
   // Update map settings popup
   elements.lightBasemapContainer.classList.add('outline');
