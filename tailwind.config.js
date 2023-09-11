@@ -16,6 +16,8 @@ tailwind.config = {
       },
       colors: {
         'main': '#3C4363',
+        'hover-main': '#64748b',
+        'hover-light': '#e2e8f0',
         'gray-50': '#F7F7F9',
         'mod-sc-ev': '#2BB3A7',
         'mod-sc-ev-light': '#CEEEE3',
