@@ -68,11 +68,19 @@
         }
 
         .btn-theme-light {
-          @apply text-slate-700 bg-white border-white hover:bg-slate-200;
+          @apply text-slate-700 bg-white hover:bg-slate-200;
         }
 
         .btn-theme-dark {
-          @apply text-white bg-slate-700 border-slate-200 hover:bg-slate-500;
+          @apply text-white bg-slate-700 hover:bg-slate-500;
+        }
+
+        .sidebar-toggle-theme-light {
+          @apply text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none justify-center items-center flex h-10 w-10 text-slate-700 bg-white hover:bg-slate-200 border-l border-gray-300;
+        }
+
+        .sidebar-toggle-theme-dark {
+          @apply text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none justify-center items-center flex h-10 w-10 text-white bg-slate-700 hover:bg-slate-500;
         }
       }
     </style>
@@ -120,9 +128,9 @@
           </h2>
         </div>
       </div>
-      <div class="absolute -right-10 -ml-px top-0 ">
+      <div class="absolute -right-10 -ml-px top-0">
         <button id="sidebar-toggle"
-          class="text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none border-l border-gray-300 justify-center items-center flex h-10 w-10 btn-theme-dark">
+          class="sidebar-toggle-theme-dark">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -136,12 +144,25 @@
     <!-- ATTRIBUTION -->
     <div
       id="attribution"
-      class="absolute z-40 right-0 bottom-0 px-2 py-1 bg-gray-50 bg-opacity-25 justify-end items-center gap-1 inline-flex z-50">
-      <div class="text-sm font-normal leading-tight">Powered by</div>
-      <a id="attribution-link" class="hover:underline"
-        href="https://www.carto.com/"
-        rel="noreferrer noopener"
-        target="_blank">Carto</a>
+      class="absolute bottom-0 right-0 z-40 max-w-[50%] gap-1 bg-gray-50/25 px-2 py-1 text-sm leading-tight">
+      <span id="attribution-content">
+        ©
+        <a
+          class="hover:underline"
+          rel="noopener noreferrer"
+          target="_blank"
+          href="https://www.openstreetmap.org/">
+          OpenStreetMap
+        </a>
+        contributors ©
+        <a
+          class="hover:underline"
+          rel="noopener noreferrer"
+          target="_blank"
+          href="https://carto.com/">
+          CARTO
+        </a>
+      </span>
     </div>
     <!-- MAP SETTINGS BUTTON -->
     <div class="flex flex-col space-y-2 absolute right-6 top-6 z-40">
@@ -344,7 +365,11 @@
         }
 
         .maplibregl-ctrl-icon {
-          @apply p-1.5 bg-no-repeat bg-center bg-contain !bg-none;
+          @apply !flex justify-center items-center p-1.5 bg-no-repeat bg-center bg-contain !bg-none;
+        }
+
+        .maplibregl-ctrl-group button+button {
+          @apply border-gray-300;
         }
       }
     </style>

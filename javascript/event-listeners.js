@@ -10,7 +10,7 @@ const elements = {
   lightBasemapContainer: document.getElementById('light-basemap-container'),
   maplibreControls: document.getElementsByClassName('maplibregl-ctrl'),
   attribution: document.getElementById('attribution'),
-  attributionLink: document.getElementById('attribution-link'),
+  attributionContent: document.getElementById('attribution-content'),
 }
 
 // SIDEBAR
@@ -51,17 +51,27 @@ elements.satelliteBasemapButton.addEventListener("click", function() {
       element.classList.add('theme-light');
     };
   }
-  elements.sidebarToggle.classList.remove('btn-theme-dark');
-  elements.sidebarToggle.classList.add('btn-theme-light');
+  elements.sidebarToggle.classList.remove('sidebar-toggle-theme-dark');
+  elements.sidebarToggle.classList.add('sidebar-toggle-theme-light');
   elements.mapSettingsButton.classList.remove('btn-theme-dark');
   elements.mapSettingsButton.classList.add('btn-theme-light');
 
   elements.attribution.classList.add('text-white');
   elements.attribution.classList.remove('text-black');
 
-  // Update attribution link
-  elements.attributionLink.innerHTML = 'ESRI';
-  elements.attributionLink.href = 'https://www.esri.com/home';
+  // Update attribution content
+  elements.attributionContent.innerHTML = `<span>
+  Tiles ©
+  <a
+    className="hover:underline"
+    rel="noopener noreferrer"
+    target="_blank"
+    href="https://esri.com"
+  >
+    Esri
+  </a>
+  — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP,
+  and the GIS User Community</span>`;
 
   // Update map settings popup
   elements.lightBasemapContainer.classList.remove('outline');
@@ -91,15 +101,29 @@ elements.lightBasemapButton.addEventListener("click", function() {
   }
   elements.mapSettingsButton.classList.add('btn-theme-dark');
   elements.mapSettingsButton.classList.remove('btn-theme-light');
-  elements.sidebarToggle.classList.add('btn-theme-dark');
-  elements.sidebarToggle.classList.remove('btn-theme-light');
+  elements.sidebarToggle.classList.add('sidebar-toggle-theme-dark');
+  elements.sidebarToggle.classList.remove('sidebar-toggle-theme-light');
 
   elements.attribution.classList.add('text-black');
   elements.attribution.classList.remove('text-white');
 
-  // Update attribution link
-  elements.attributionLink.innerHTML = 'Carto';
-  elements.attributionLink.href = 'https://carto.com';
+  // Update attribution content
+  elements.attributionContent.innerHTML = `<span>©
+  <a
+    class="hover:underline"
+    rel="noopener noreferrer"
+    target="_blank"
+    href="https://www.openstreetmap.org/">
+    OpenStreetMap
+  </a>
+  contributors ©
+  <a
+    class="hover:underline"
+    rel="noopener noreferrer"
+    target="_blank"
+    href="https://carto.com/">
+    CARTO
+  </a></span>`;
 
   // Update map settings popup
   elements.lightBasemapContainer.classList.add('outline');
