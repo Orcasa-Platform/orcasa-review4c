@@ -51,8 +51,8 @@ elements.satelliteBasemapButton.addEventListener("click", function() {
       element.classList.add('theme-light');
     };
   }
-  elements.sidebarToggle.classList.remove('btn-theme-dark');
-  elements.sidebarToggle.classList.add('btn-theme-light');
+  elements.sidebarToggle.classList.remove('sidebar-toggle-theme-dark');
+  elements.sidebarToggle.classList.add('sidebar-toggle-theme-light');
   elements.mapSettingsButton.classList.remove('btn-theme-dark');
   elements.mapSettingsButton.classList.add('btn-theme-light');
 
@@ -101,8 +101,8 @@ elements.lightBasemapButton.addEventListener("click", function() {
   }
   elements.mapSettingsButton.classList.add('btn-theme-dark');
   elements.mapSettingsButton.classList.remove('btn-theme-light');
-  elements.sidebarToggle.classList.add('btn-theme-dark');
-  elements.sidebarToggle.classList.remove('btn-theme-light');
+  elements.sidebarToggle.classList.add('sidebar-toggle-theme-dark');
+  elements.sidebarToggle.classList.remove('sidebar-toggle-theme-light');
 
   elements.attribution.classList.add('text-black');
   elements.attribution.classList.remove('text-white');

@@ -68,11 +68,19 @@
         }
 
         .btn-theme-light {
-          @apply text-slate-700 bg-white border-white hover:bg-slate-200;
+          @apply text-slate-700 bg-white hover:bg-slate-200;
         }
 
         .btn-theme-dark {
-          @apply text-white bg-slate-700 border-slate-200 hover:bg-slate-500;
+          @apply text-white bg-slate-700 hover:bg-slate-500;
+        }
+
+        .sidebar-toggle-theme-light {
+          @apply text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none justify-center items-center flex h-10 w-10 text-slate-700 bg-white hover:bg-slate-200 border-l border-gray-300;
+        }
+
+        .sidebar-toggle-theme-dark {
+          @apply text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none justify-center items-center flex h-10 w-10 text-white bg-slate-700 hover:bg-slate-500;
         }
       }
     </style>
@@ -120,9 +128,9 @@
           </h2>
         </div>
       </div>
-      <div class="absolute -right-[calc(2.5rem+1px)] -ml-px top-0 ">
+      <div class="absolute -right-10 -ml-px top-0">
         <button id="sidebar-toggle"
-          class="text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none border-l border-gray-300 justify-center items-center flex h-10 w-10 btn-theme-dark">
+          class="sidebar-toggle-theme-dark">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
