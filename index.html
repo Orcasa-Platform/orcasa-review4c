@@ -323,16 +323,21 @@
         </span>
       </div>
     </div>
-    <!-- NOTE: All these must be at the very end: -->
+    <!-- NOTE: All these must be at the very end. Be careful maintaining the import order -->
 
     <script src='javascript/d3-chart.js'></script>
 
     <!-- MOCKS FOR CALLS -->
     <script src='javascript/mocks/all-layer-mock.js'></script>
 
+    <!-- MAP -->
     <script src='javascript/api-service.js'></script>
-    <script src='javascript/map-style.js'></script>
-    <script src='javascript/map.js'></script>
+    <script src='javascript/map/map-style.js'></script>
+    <script src='javascript/map/map-utils.js'></script>
+    <script src='javascript/map/map-layers.js'></script>
+    <script src='javascript/map/map.js'></script>
+
+    <!-- EVENT LISTENERS -->
     <script src='javascript/event-listeners.js'></script>
 
     <style type="text/tailwindcss">
@@ -377,6 +382,10 @@
 
         .maplibregl-ctrl-group button+button {
           @apply border-gray-300;
+        }
+
+        .maplibregl-popup-content {
+          @apply z-50 w-[365px] h-[214px] flex max-w-[300px] p-4 rounded backdrop-blur-sm flex-col gap-4;
         }
       }
     </style>

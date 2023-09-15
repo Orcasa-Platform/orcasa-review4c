@@ -9,7 +9,7 @@ const getLayer = async () => {
     const response = await fetch(URLS.allLayer);
     layer = await response.json();
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 
   return layer || allLayerMock;
