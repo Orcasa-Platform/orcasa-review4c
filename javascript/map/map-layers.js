@@ -52,9 +52,9 @@ const addMainLayer = (map) => {
         'icon-color': [
           'step',
           ['get', 'number_primary_studies'],
-          '#63C5B9',
+          '#6EE7B7',
           10,
-          '#2BB3A7',
+          '#14B8A6',
           50,
           '#288F86',
           100,

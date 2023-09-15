@@ -9,7 +9,7 @@ const addSquareIcon = (map) => {
       data[offset + 0] = 0; // red
       data[offset + 1] = 0; // green
       data[offset + 2] = 0; // blue
-      data[offset + 3] = 200; // alpha
+      data[offset + 3] = 255; // alpha
     }
   }
   // sdf is needed to be able to change icon color
