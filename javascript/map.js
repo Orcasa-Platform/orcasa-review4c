@@ -2,10 +2,28 @@ const map = new maplibregl.Map({
   container: 'map',
   style: mapStyle, // stylesheet location
   center: [-74.5, 40], // starting position [lng, lat]
-  zoom: 1 // starting zoom
+  zoom: 1, // starting zoom
+  minZoom: 1,
 });
 
 map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
+
+const addSquareIcon = (map) => {
+  const width = 64; // The image will be 64 pixels square
+  const bytesPerPixel = 4; // Each pixel is represented by 4 bytes: red, green, blue, and alpha.
+  const data = new Uint8Array(width * width * bytesPerPixel);
+  for (let x = 0; x < width; x++) {
+    for (let y = 0; y < width; y++) {
+      const offset = (y * width + x) * bytesPerPixel;
+      data[offset + 0] = 0; // red
+      data[offset + 1] = 0; // green
+      data[offset + 2] = 0; // blue
+      data[offset + 3] = 200; // alpha
+    }
+  }
+  // sdf is needed to be able to change icon color
+  map.addImage('square', { width, height: width, data}, { sdf: true } );
+}
 
 map.on('load', function() {
   map.addSource('basemap-satellite', {
@@ -40,6 +58,70 @@ map.on('load', function() {
       },
   }, 'countries-labels');
 
+  // Fetch main layer
+  getLayer().then(layer => {
+    const countryValues = layer && Object.values(layer);
+    const features = countryValues && countryValues.map(country => {
+      const geom = country.geom && JSON.parse(country.geom)?.[0];
+      return ({
+        type: "Feature",
+        geometry: geom.geometry,
+        properties: {
+          number_primary_studies: country.number_primary_studies,
+          effect_outcomes: country.effect_outcomes,
+          country_name: geom?.properties?.long_name,
+          id: geom?.properties?.id,
+        }
+      }
+  )});
+    const geoJSONContent = {
+      type: 'FeatureCollection',
+      features: features,
+    };
+    console.log(geoJSONContent)
+    map.addSource('layer', {
+      'type': 'geojson',
+      'data': geoJSONContent
+    });
+
+    addSquareIcon(map);
+
+    map.addLayer({
+      'id': 'all-layer-text',
+      'source': 'layer',
+      'type': 'symbol',
+      'layout': {
+        'text-field': '{number_primary_studies}',
+        'text-size': 10,
+        'text-offset': [0, -0.5],
+        'text-anchor': 'top',
+        'icon-image': 'square',
+        'icon-size': [
+          'interpolate',
+          ['linear'],
+          ['get', 'number_primary_studies'],
+          0, 0.4,
+          50000, 2
+        ],
+        'icon-allow-overlap': true,
+        'icon-ignore-placement': true,
+      },
+      'paint': {
+        'text-color': '#fff',
+        'icon-color': [
+          'step',
+          ['get', 'number_primary_studies'],
+          '#63C5B9',
+          10,
+          '#2BB3A7',
+          50,
+          '#288F86',
+          100,
+          '#1E6B65'
+        ]
+      }
+    });
+  });
   const zoomInButton = document.querySelector('button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon');
   const zoomOutButton = document.querySelector('button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon');
 
