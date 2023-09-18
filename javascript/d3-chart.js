@@ -158,7 +158,7 @@ const createSVGChart = () => {
     .attr("cx", d => xScale(d.value))
     .attr("cy", d => yScale(d.title) + yScale.bandwidth() / 2)
     .attr("r", 5)
-    .attr("fill", d => d.value > 0 ? primaryColor : red);
+    .attr("fill", d => d.value >= 0 ? primaryColor : red);
   };
 
 createSVGChart();
