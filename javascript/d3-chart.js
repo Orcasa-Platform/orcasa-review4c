@@ -1,10 +1,12 @@
 const primaryColor = "#2BB3A7";
+const red = "#FA545D";
 const gray400 = '#8B90A4';
 
 const dataSource = [
   { title: 'Warming', number: 32, value: -10, min: -20, max: 40, action: () => console.log('Warming') },
   { title: 'Fire', number: 40, value: 50, min: 30, max: 60, action: () => console.log('Fire') },
   { title: 'Flood', number: 52, value: 0, min: -10, max: 20, action: () => console.log('Flood') },
+  { title: 'Test', number: 52, value: -10, min: -20, max: -5, action: () => console.log('Flood') },
 ];
 
 const heightValue = (dataSource.length) * 35 + 100;
@@ -77,8 +79,8 @@ const createSVGChart = () => {
     </button>`;
   ;
 
-  const yTickHeight = 40;
-  const yTickWidth = 100;
+  const yTickHeight = 44;
+  const yTickWidth = 120;
   const yAxisTicks = svg.append("g")
   .attr("transform", `translate(${width + 30}, ${-yTickHeight / 2})`)
 
@@ -122,14 +124,30 @@ const createSVGChart = () => {
   svg.selectAll(".error-bar")
     .data(dataSource)
     .enter()
-    .append("line")
+    .append("g")
     .attr("class", "error-bar")
-    .attr("x1", d => xScale(d.min))
-    .attr("x2", d => xScale(d.max))
-    .attr("y1", d => yScale(d.title) + yScale.bandwidth() / 2)
-    .attr("y2", d => yScale(d.title) + yScale.bandwidth() / 2)
-    .attr("stroke", primaryColor)
-    .attr("stroke-width", 2);
+    .each(function(d) {
+      const g = d3.select(this);
+      // Over zero
+        g
+        .append("line")
+        .attr("x1", xScale(d.min < 0 ? 0 : d.min))
+        .attr("x2", xScale(Math.max(d.max, 0)))
+        .attr("y1", yScale(d.title) + yScale.bandwidth() / 2)
+        .attr("y2", yScale(d.title) + yScale.bandwidth() / 2)
+        .attr("stroke", primaryColor)
+        .attr("stroke-width", 2);
+
+      // Under zero
+        g
+        .append("line")
+        .attr("x1", xScale(Math.min(d.min, 0)))
+        .attr("x2", xScale(d.max > 0 ? 0 : d.max))
+        .attr("y1", yScale(d.title) + yScale.bandwidth() / 2)
+        .attr("y2", yScale(d.title) + yScale.bandwidth() / 2)
+        .attr("stroke", red)
+        .attr("stroke-width", 2);
+    });
 
   // Create data points
   svg.selectAll(".data-point")
@@ -140,7 +158,7 @@ const createSVGChart = () => {
     .attr("cx", d => xScale(d.value))
     .attr("cy", d => yScale(d.title) + yScale.bandwidth() / 2)
     .attr("r", 5)
-    .attr("fill", primaryColor);
+    .attr("fill", d => d.value > 0 ? primaryColor : red);
   };
 
 createSVGChart();

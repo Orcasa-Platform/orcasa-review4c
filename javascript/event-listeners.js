@@ -13,20 +13,8 @@ const elements = {
   maplibreControls: document.getElementsByClassName('maplibregl-ctrl'),
   attribution: document.getElementById('attribution'),
   attributionContent: document.getElementById('attribution-content'),
+  interventionButtons: document.getElementsByClassName('btn-intervention'),
 }
-
-// SIDEBAR
-
-elements.sidebarToggle.addEventListener("click", function() {
-  mutations.toggleSidebar();
-  if (state.sidebarOpen) {
-    elements.sidebar.classList.add('-translate-x-full');
-    elements.sidebarToggle.classList.add('rotate-180');
-  } else {
-    elements.sidebar.classList.remove('-translate-x-full');
-    elements.sidebarToggle.classList.remove('rotate-180');
-  }
-});
 
 // LEGEND
 
@@ -156,3 +144,35 @@ elements.lightBasemapButton.addEventListener("click", function() {
     0
   );
 });
+
+// SIDEBAR
+
+elements.sidebarToggle.addEventListener("click", function() {
+  mutations.toggleSidebar();
+  if (state.sidebarOpen) {
+    elements.sidebar.classList.add('-translate-x-full');
+    elements.sidebarToggle.classList.add('rotate-180');
+  } else {
+    elements.sidebar.classList.remove('-translate-x-full');
+    elements.sidebarToggle.classList.remove('rotate-180');
+  }
+});
+
+// SIDEBAR CONTENT
+
+// INTERVENTION BUTTONS
+
+if (elements.interventionButtons) {
+  for (let element of elements.interventionButtons) {
+    element.addEventListener("click", function() {
+      const slug = element.getAttribute('data-slug');
+      mutations.setIntervention(slug);
+
+      // TODO: Update sidebar content (fetch data from API)
+
+      element.setAttribute('aria-pressed', 'true');
+      const otherButtons = Array.from(elements.interventionButtons).filter(button => button !== element);
+      otherButtons.forEach(button => button.setAttribute('aria-pressed', 'false'));
+    });
+  };
+}

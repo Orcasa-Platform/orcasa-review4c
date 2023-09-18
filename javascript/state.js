@@ -3,6 +3,7 @@ const state = {
   legendOpen: true,
   mapSettingsOpen: false,
   basemap: 'light',
+  intervention: 'cropland',
 };
 
 const mutations = {
@@ -20,6 +21,9 @@ const mutations = {
   },
   setBasemap(basemap) {
     state.basemap = basemap;
+  },
+  setIntervention(intervention) {
+    state.intervention = intervention;
   }
 };
 
