@@ -1,6 +1,8 @@
 const elements = {
   sidebar: document.getElementById('sidebar'),
+  legend: document.getElementById('legend'),
   sidebarToggle: document.getElementById('sidebar-toggle'),
+  legendToggle: document.getElementById('legend-toggle'),
   mapSettingsButton: document.getElementById('map-settings-button'),
   mapSettingsOverlay: document.getElementById('map-settings-overlay'),
   closeMapSettingsButton: document.getElementById('close-map-settings-button'),
@@ -23,6 +25,19 @@ elements.sidebarToggle.addEventListener("click", function() {
   } else {
     elements.sidebar.classList.remove('-translate-x-full');
     elements.sidebarToggle.classList.remove('rotate-180');
+  }
+});
+
+// LEGEND
+
+elements.legendToggle.addEventListener("click", function() {
+  mutations.toggleLegend();
+  if (!state.legendOpen) {
+    elements.legend.classList.add('h-0');
+    elements.legendToggle.classList.add('rotate-180');
+  } else {
+    elements.legend.classList.remove('h-0');
+    elements.legendToggle.classList.remove('rotate-180');
   }
 });
 

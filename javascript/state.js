@@ -1,5 +1,6 @@
 const state = {
   sidebarOpen: false,
+  legendOpen: true,
   mapSettingsOpen: false,
   basemap: 'light',
 };
@@ -7,6 +8,9 @@ const state = {
 const mutations = {
   toggleSidebar() {
     state.sidebarOpen = !state.sidebarOpen;
+  },
+  toggleLegend() {
+    state.legendOpen = !state.legendOpen;
   },
   toggleMapSettings() {
     state.mapSettingsOpen = !state.mapSettingsOpen;
