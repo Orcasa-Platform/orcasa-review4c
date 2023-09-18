@@ -2,22 +2,17 @@ const primaryColor = "#2BB3A7";
 const red = "#FA545D";
 const gray400 = '#8B90A4';
 
-const dataSource = [
-  { title: 'Warming', number: 32, value: -10, min: -20, max: 40, action: () => console.log('Warming') },
-  { title: 'Fire', number: 40, value: 50, min: 30, max: 60, action: () => console.log('Fire') },
-  { title: 'Flood', number: 52, value: 0, min: -10, max: 20, action: () => console.log('Flood') },
-  { title: 'Test', number: 52, value: -10, min: -20, max: -5, action: () => console.log('Flood') },
-];
-
-const heightValue = (dataSource.length) * 35 + 100;
-const widthValue = 500;
-
 // Create the SVG container
-const createSVGChart = () => {
+const createSVGChart = (slug, data) => {
+  if(!data || data.length === 0) return;
+
+  const heightValue = (data.length) * 35 + 100;
+  const widthValue = 500;
+
   const RIGHT_AXIS_PADDING = 140;
   const AXIS_PADDING = 20;
   const margin = { top: 0, right: 0, bottom: 0, left: 0 };
-  const chart = d3.select("#chart-1")
+  const chart = d3.select(`#chart-${slug}`)
     .style("text-align", 'center')
     .append("svg")
     .attr("viewBox", `-${AXIS_PADDING} -${AXIS_PADDING} ${widthValue + RIGHT_AXIS_PADDING} ${heightValue}`)
@@ -35,7 +30,7 @@ const createSVGChart = () => {
 
   // Create y scale
   const yScale = d3.scaleBand()
-    .domain(dataSource.map(d => d.title))
+    .domain(data.map(d => d.title))
     .range([0, height])
     .padding(1);
 
@@ -72,10 +67,10 @@ const createSVGChart = () => {
   .attr("dy", "0.32em")
   .style("text-anchor", "start");
 
-  const buttonHTML = (title, number) =>
+  const buttonHTML = (title, publications) =>
     `<button type="button" class='btn-filter-chart'>
       <span class="font-semibold text-slate-700">${title}</span>
-      <span class="text-xs font-normal">(${number})</span>
+      <span class="text-xs font-normal">(${publications})</span>
     </button>`;
   ;
 
@@ -92,10 +87,10 @@ const createSVGChart = () => {
     .attr("height", yTickHeight)
     .style("text-align", 'left')
     .html(title => {
-      const dataNumber = dataSource.find((item) => item.title === title)?.number;
-      return buttonHTML(title, dataNumber);
+      const dataPublications = data.find((item) => item.title === title)?.publications;
+      return buttonHTML(title, dataPublications);
     }).on("click", function(_, title){
-      const dataAction = dataSource.find((item) => item.title === title)?.action;
+      const dataAction = data.find((item) => item.title === title)?.action;
       return dataAction && dataAction();
     });
 
@@ -122,7 +117,7 @@ const createSVGChart = () => {
 
   // Create error bars
   svg.selectAll(".error-bar")
-    .data(dataSource)
+    .data(data)
     .enter()
     .append("g")
     .attr("class", "error-bar")
@@ -131,8 +126,8 @@ const createSVGChart = () => {
       // Over zero
         g
         .append("line")
-        .attr("x1", xScale(d.min < 0 ? 0 : d.min))
-        .attr("x2", xScale(Math.max(d.max, 0)))
+        .attr("x1", xScale(d.low < 0 ? 0 : d.low))
+        .attr("x2", xScale(Math.max(d.high, 0)))
         .attr("y1", yScale(d.title) + yScale.bandwidth() / 2)
         .attr("y2", yScale(d.title) + yScale.bandwidth() / 2)
         .attr("stroke", primaryColor)
@@ -141,8 +136,8 @@ const createSVGChart = () => {
       // Under zero
         g
         .append("line")
-        .attr("x1", xScale(Math.min(d.min, 0)))
-        .attr("x2", xScale(d.max > 0 ? 0 : d.max))
+        .attr("x1", xScale(Math.min(d.low, 0)))
+        .attr("x2", xScale(d.high > 0 ? 0 : d.high))
         .attr("y1", yScale(d.title) + yScale.bandwidth() / 2)
         .attr("y2", yScale(d.title) + yScale.bandwidth() / 2)
         .attr("stroke", red)
@@ -151,7 +146,7 @@ const createSVGChart = () => {
 
   // Create data points
   svg.selectAll(".data-point")
-    .data(dataSource)
+    .data(data)
     .enter()
     .append("circle")
     .attr("class", "data-point")
@@ -160,5 +155,3 @@ const createSVGChart = () => {
     .attr("r", 5)
     .attr("fill", d => d.value >= 0 ? primaryColor : red);
   };
-
-createSVGChart();

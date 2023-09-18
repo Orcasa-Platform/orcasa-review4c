@@ -18,4 +18,5 @@ const elements = {
   landUseText: document.getElementById('land-use-text'),
   landUsePublications: document.getElementById('land-use-publications'),
   landUseMetaAnalysis: document.getElementById('land-use-meta-analysis'),
+  chartCards: document.getElementById('chart-cards'),
 }

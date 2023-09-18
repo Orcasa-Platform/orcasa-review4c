@@ -19,7 +19,7 @@ const getLayer = async () => {
 const getData = async () => {
   let data;
   try {
-    // Currently we have CORS errors when fetching so we are using a mock
+    // Using a mock until we have real data
     // const response = await fetch(URLS.data);
     // layer = await response.json();
   } catch (error) {
@@ -27,4 +27,20 @@ const getData = async () => {
   }
 
   return data || interventionData;
+};
+
+const getIntervention = async (intervention) => {
+  const {
+    // URL,
+    slug
+  } = intervention;
+  let interventionData;
+  try {
+    // Using a mock until we have real data
+    // const response = await fetch(URL);
+    // layer = await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+  return interventionData || interventionMocks[slug];
 };

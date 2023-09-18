@@ -5,6 +5,7 @@ const state = {
   basemap: 'light',
   landUse: 'cropland',
   landUses: null,
+  interventions: null,
 };
 
 const mutations = {
@@ -28,10 +29,14 @@ const mutations = {
   },
   setLandUses(landUses) {
     state.landUses = landUses;
+  },
+  setInterventions(interventions) {
+    state.interventions = interventions;
   }
 };
 
 const getters = {
   sidebarOpen: () => state.sidebarOpen,
   landUses: () => state.landUses,
+  interventions: () => state.interventions,
 };
