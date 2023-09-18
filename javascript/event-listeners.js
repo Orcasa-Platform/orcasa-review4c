@@ -21,10 +21,10 @@ const elements = {
 elements.legendToggle.addEventListener("click", function() {
   mutations.toggleLegend();
   if (!state.legendOpen) {
-    elements.legend.classList.add('h-0');
+    elements.legend.classList.add('h-9');
     elements.legendToggle.classList.add('rotate-180');
   } else {
-    elements.legend.classList.remove('h-0');
+    elements.legend.classList.remove('h-9');
     elements.legendToggle.classList.remove('rotate-180');
   }
 });
