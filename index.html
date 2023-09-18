@@ -128,29 +128,9 @@
               interventions</span> on soil organic carbon
           </h2>
           <!-- INTERVENTIONS MENU -->
-          <div class="flex gap-2 py-6 my-6 border-gray-200 border-y">
-            <button type="button" data-slug="cropland"
-              class="btn-filter btn-intervention"
-              aria-pressed="true"><span
-                class="font-semibold">Cropland</span> <span class="text-xs">(5,632)</span></button>
-            <button type="button" data-slug="forest-land"
-              class="btn-filter btn-intervention"
-              aria-pressed="false"><span
-                class="font-semibold">Forest land</span> <span class="text-xs">(3,500)</span></button>
-            <button type="button" data-slug="grassland"
-              class="btn-filter btn-intervention"
-              aria-pressed="false"><span
-                class="font-semibold">Grassland</span> <span class="text-xs">(1,000)</span></button>
-            <button type="button" data-slug="wetlands"
-              class="btn-filter btn-intervention"
-              aria-pressed="false"><span
-                class="font-semibold">Wetlands</span> <span class="text-xs">(1,000)</span></button>
-            <button type="button" data-slug="other-land"
-              class="btn-filter btn-intervention"
-              aria-pressed="false"><span
-                class="font-semibold">Other land</span> <span class="text-xs">(500)</span></button>
-          </div>
-
+          <!-- Loaded dynamically on dynamic-data.js -->
+          <div class="flex gap-2 py-6 my-6 border-gray-200 border-y"
+            id="land-use-menu"></div>
           <div
             class="font-serif leading-10 text-2xl"><span>These
               insights come from the analysis of</span><span
@@ -431,10 +411,12 @@
     <script src='javascript/d3-chart.js'></script>
 
     <!-- MOCKS FOR CALLS -->
-    <script src='javascript/mocks/all-layer-mock.js'></script>
+    <script src='javascript/mocks/layer-mocks.js'></script>
+    <script src='javascript/mocks/data-mocks.js'></script>
 
     <!-- MAP -->
     <script src='javascript/api-service.js'></script>
+    <script src='javascript/dynamic-data.js'></script>
     <script src='javascript/map/map-style.js'></script>
     <script src='javascript/map/map-utils.js'></script>
     <script src='javascript/map/map-layers.js'></script>
