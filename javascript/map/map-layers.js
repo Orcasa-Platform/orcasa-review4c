@@ -1,5 +1,7 @@
-const addMainLayer = (map) => {
-  getLayer().then(layer => {
+const addLayer = (map, layerSlug) => {
+  const currentLayers = map.getStyle().layers;
+  const currentSources = map.getStyle().sources;
+  getLayer(layerSlug).then(layer => {
     const countryValues = layer && Object.values(layer);
     const features = countryValues && countryValues.map(country => {
       const geom = country.geom && JSON.parse(country.geom)?.[0];
@@ -18,50 +20,55 @@ const addMainLayer = (map) => {
       type: 'FeatureCollection',
       features: features,
     };
-    map.addSource('layer', {
-      'type': 'geojson',
-      'data': geoJSONContent
-    });
+    const layerName = layerSlug ? `layer-${layerSlug}` : 'layer-all';
 
-    addSquareIcon(map);
+    if (!currentSources[layerName]) {
+      map.addSource(layerName, {
+        'type': 'geojson',
+        'data': geoJSONContent
+      });
+    }
 
-    map.addLayer({
-      'id': 'all-layer-text',
-      'source': 'layer',
-      'type': 'symbol',
-      'layout': {
-        'text-field': '{number_primary_studies}',
-        'text-size': 10,
-        'text-offset': [0, -0.5],
-        'text-anchor': 'top',
-        'text-allow-overlap': true,
-        'text-ignore-placement': true,
-        'icon-image': 'square',
-        'icon-size': [
-          'interpolate',
-          ['linear'],
-          ['get', 'number_primary_studies'],
-          0, 0.4,
-          50000, 2
-        ],
-        'icon-allow-overlap': true,
-        'icon-ignore-placement': true,
-      },
-      'paint': {
-        'text-color': '#fff',
-        'icon-color': [
-          'step',
-          ['get', 'number_primary_studies'],
-          '#6EE7B7',
-          10,
-          '#14B8A6',
-          50,
-          '#288F86',
-          100,
-          '#1E6B65'
-        ]
-      }
-    });
+    const textLayerName = `${layerName}-text`;
+    if (!currentLayers.find(l => l.id === textLayerName)) {
+      map.addLayer({
+        'id': `${layerName}-text`,
+        'source': layerName,
+        'type': 'symbol',
+        'layout': {
+          'text-field': '{number_primary_studies}',
+          'text-size': 10,
+          'text-offset': [0, -0.5],
+          'text-anchor': 'top',
+          'text-allow-overlap': true,
+          'text-ignore-placement': true,
+          'icon-image': 'square',
+          'icon-size': [
+            'interpolate',
+            ['linear'],
+            ['get', 'number_primary_studies'],
+            0, 0.4,
+            50000, 2
+          ],
+          'icon-allow-overlap': true,
+          'icon-ignore-placement': true,
+        },
+        'paint': {
+          'text-color': '#fff',
+          'icon-color': [
+            'step',
+            ['get', 'number_primary_studies'],
+            '#6EE7B7',
+            10,
+            '#14B8A6',
+            50,
+            '#288F86',
+            100,
+            '#1E6B65'
+          ]
+        }
+      });
+    }
   });
 
   // TOOLTIP

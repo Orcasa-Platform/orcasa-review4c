@@ -3,7 +3,12 @@ const URLS = {
     // ...
 }
 
-const getLayer = async () => {
+const mockLayers = {
+  cropland: croplandMock,
+  "forest-land": forestLandMock,
+};
+
+const getLayer = async (layerSlug) => {
   let layer;
   try {
     // Currently we have CORS errors when fetching so we are using a mock
@@ -13,7 +18,7 @@ const getLayer = async () => {
     console.error(error);
   }
 
-  return layer || allLayerMock;
+  return layer || mockLayers[layerSlug] || allLayerMock;
 };
 
 const getData = async () => {

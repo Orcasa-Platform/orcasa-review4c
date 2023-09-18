@@ -40,7 +40,7 @@ map.on('load', function() {
         'raster-opacity': 0,
       },
   }, 'countries-labels');
-
-  addMainLayer(map);
+  addSquareIcon(map);
+  addLayer(map);
   zoomButtonStyling();
 });

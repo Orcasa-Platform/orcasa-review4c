@@ -38,6 +38,9 @@ const loadData = (landUseSlug) => {
   // Set on state the first land use
   mutations.setLandUse(slug);
 
+  // Update the map
+  addLayer(map, slug);
+
   // Update the description with the land use publications and meta-analysis
   const publicationsNumber = publications?.toLocaleString() || '-';
   const metaAnalysisNumber = metaAnalysis?.toLocaleString() || '-';
