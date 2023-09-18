@@ -1,21 +1,3 @@
-const elements = {
-  sidebar: document.getElementById('sidebar'),
-  legend: document.getElementById('legend'),
-  sidebarToggle: document.getElementById('sidebar-toggle'),
-  legendToggle: document.getElementById('legend-toggle'),
-  mapSettingsButton: document.getElementById('map-settings-button'),
-  mapSettingsOverlay: document.getElementById('map-settings-overlay'),
-  closeMapSettingsButton: document.getElementById('close-map-settings-button'),
-  satelliteBasemapButton: document.getElementById('satellite-basemap-button'),
-  lightBasemapButton: document.getElementById('light-basemap-button'),
-  satelliteBasemapContainer: document.getElementById('satellite-basemap-container'),
-  lightBasemapContainer: document.getElementById('light-basemap-container'),
-  maplibreControls: document.getElementsByClassName('maplibregl-ctrl'),
-  attribution: document.getElementById('attribution'),
-  attributionContent: document.getElementById('attribution-content'),
-  interventionButtons: document.getElementsByClassName('btn-intervention'),
-}
-
 // LEGEND
 
 elements.legendToggle.addEventListener("click", function() {
@@ -166,9 +148,9 @@ if (elements.interventionButtons) {
   for (let element of elements.interventionButtons) {
     element.addEventListener("click", function() {
       const slug = element.getAttribute('data-slug');
-      mutations.setIntervention(slug);
+      mutations.setLandUse(slug);
 
-      // TODO: Update sidebar content (fetch data from API)
+      loadData(slug);
 
       element.setAttribute('aria-pressed', 'true');
       const otherButtons = Array.from(elements.interventionButtons).filter(button => button !== element);

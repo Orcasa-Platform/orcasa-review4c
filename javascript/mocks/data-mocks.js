@@ -1,7 +1,8 @@
 const interventionData = {
   "cropland": {
     "name": "Cropland",
-    "documents": 5632,
+    "publications": 5632,
+    "metaAnalysis": 563,
     "interventions": [
       {
         "name": "climate change",
@@ -19,7 +20,9 @@ const interventionData = {
   },
   "forest-land": {
     "name": "Forest Land",
-    "documents": 3500,
+    "publications": 3500,
+    "metaAnalysis": 350,
+    "default": false,
     "interventions": [
       {
         "name": "climate change",
@@ -38,7 +41,8 @@ const interventionData = {
 
   "grassland": {
     "name": "Grassland",
-    "documents": 1000,
+    "publications": 1000,
+    "metaAnalysis": 100,
     "interventions": [
       {
         "name": "climate change",
@@ -56,7 +60,8 @@ const interventionData = {
   },
   "wetlands": {
     "name": "Wetlands",
-    "documents": 900,
+    "publications": 900,
+    "metaAnalysis": 90,
     "interventions": [
       {
         "name": "Wetlands",
@@ -74,7 +79,8 @@ const interventionData = {
   },
   "other-land": {
     "name": "Other Land",
-    "documents": 563,
+    "publications": 563,
+    "metaAnalysis": 56,
     "interventions": [
       {
         "name": "Wetlands",
@@ -101,14 +107,14 @@ const croplandData = {
         "value": -5,
         "low": -11,
         "high": 11,
-        documents: 23
+        publications: 23
       },
       "fire": {
         name: "Fire",
         "value": 11,
         "low": -23,
         "high": 31,
-        documents: 512
+        publications: 512
       },
     }
   },
@@ -120,21 +126,21 @@ const croplandData = {
         "value": 37,
         "low": -26,
         "high": 50,
-        documents: 112
+        publications: 112
       },
       "cropland-to-grassland": {
         name: "Cropland to Grassland",
         "value": 11,
         "low": -23,
         "high": 31,
-        documents: 51
+        publications: 51
       },
       "cropland-to-other-land": {
         name: "Cropland to Other Land",
         "value": 27,
         "low": 23,
         "high": 91,
-        documents: 51
+        publications: 51
       },
     }
   },
@@ -146,14 +152,14 @@ const croplandData = {
         "value": 11,
         "low": -23,
         "high": 31,
-        documents: 51
+        publications: 51
       },
       "agroforestry": {
         name: "Agroforestry",
         "value": 27,
         "low": 23,
         "high": 91,
-        documents: 51
+        publications: 51
       },
     }
   }

@@ -3,7 +3,8 @@ const state = {
   legendOpen: true,
   mapSettingsOpen: false,
   basemap: 'light',
-  intervention: 'cropland',
+  landUse: 'cropland',
+  landUses: null,
 };
 
 const mutations = {
@@ -22,11 +23,15 @@ const mutations = {
   setBasemap(basemap) {
     state.basemap = basemap;
   },
-  setIntervention(intervention) {
-    state.intervention = intervention;
+  setLandUse(landUse) {
+    state.landUse = landUse;
+  },
+  setLandUses(landUses) {
+    state.landUses = landUses;
   }
 };
 
 const getters = {
   sidebarOpen: () => state.sidebarOpen,
+  landUses: () => state.landUses,
 };

@@ -135,9 +135,11 @@
             class="font-serif leading-10 text-2xl"><span>These
               insights come from the analysis of</span><span
               class="font-semibold">
-              5,632 scientific publications</span><span>
-              and 100 meta-analyses related to </span><span
-              class="font-semibold">cropland</span><span>
+              <span id="land-use-publications"></span> scientific publications</span><span>
+              and <span id="land-use-meta-analysis"></span> meta-analysis
+              related
+              to </span><span
+              class="font-semibold" id="land-use-text"></span><span>
               interventions on SOC.</span>
           </div>
 
@@ -414,9 +416,13 @@
     <script src='javascript/mocks/layer-mocks.js'></script>
     <script src='javascript/mocks/data-mocks.js'></script>
 
-    <!-- MAP -->
+    <!-- ELEMENT QUERIES -->
+    <script src='javascript/document-elements.js'></script>
+    <!-- DYNAMIC DATA -->
     <script src='javascript/api-service.js'></script>
     <script src='javascript/dynamic-data.js'></script>
+
+    <!-- MAP -->
     <script src='javascript/map/map-style.js'></script>
     <script src='javascript/map/map-utils.js'></script>
     <script src='javascript/map/map-layers.js'></script>
