@@ -194,6 +194,21 @@ const createSVGChart = (slug, data) => {
 
   xGridElement.select(".domain").remove();
   const getOpacity = (d) => (!selected || selected?.type !== 'detail' || selected?.value === d.title) ? 1 : 0.5;
+
+
+  const chartTooltip = d3.select('#chart-tooltip');
+
+  const addTooltip = (event, d) =>  {
+    const top = event.clientY;
+    const TOP_PADDING = 64;
+    chartTooltip
+      .style("top", top - TOP_PADDING + "px")
+      .style("left", (event.clientX - chart.node().getBoundingClientRect().left) + "px")
+      .classed('hidden', false);
+
+    chartTooltip.html(`<div>min: ${d.low}% median: ${d.value}% max: ${d.high}%</div>`);
+  }
+
   // Create error bars
   svg.selectAll(".error-bar")
     .data(dataWithDetails)
@@ -212,7 +227,9 @@ const createSVGChart = (slug, data) => {
         .attr("y2", yScale(d.title) + yScale.bandwidth() / 2)
         .attr("stroke", primaryColor)
         .attr("opacity", getOpacity)
-        .attr("stroke-width", 2);
+        .attr("stroke-width", 2)
+        .on("mouseover", addTooltip)
+        .on("mouseout", () => chartTooltip.classed('hidden', true));
 
       // Under zero
         g
@@ -223,7 +240,9 @@ const createSVGChart = (slug, data) => {
         .attr("y2", yScale(d.title) + yScale.bandwidth() / 2)
         .attr("stroke", red)
         .attr("opacity", getOpacity)
-        .attr("stroke-width", 2);
+        .attr("stroke-width", 2)
+        .on("mouseover", addTooltip)
+        .on("mouseout", () => chartTooltip.classed('hidden', true));
     });
 
   // Create data points
@@ -236,8 +255,11 @@ const createSVGChart = (slug, data) => {
     .attr("cy", d => yScale(d.title) + yScale.bandwidth() / 2)
     .attr("r", 5)
     .attr("opacity", getOpacity)
-    .attr("fill", d => d.value >= 0 ? primaryColor : red);
+    .attr("fill", d => d.value >= 0 ? primaryColor : red)
+    .on("mouseover", addTooltip)
+    .on("mouseout", () => chartTooltip.classed('hidden', true));
 };
+
 
 const onResize = () => {
   const charts = document.querySelectorAll('.chart');
