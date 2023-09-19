@@ -1,17 +1,68 @@
 const primaryColor = "#2BB3A7";
 const red = "#FA545D";
 const gray400 = '#8B90A4';
+const gray100 = '#F0F0F5';
+
+const getSubcategoryByTitle = (data, title) => data.find((item) => item.title === title);
+
+const getSlugByTitle = (data, title) => {
+  const isSubcategory = !!getSubcategoryByTitle(data, title);
+  const activeSubcategoryItem = !isSubcategory && data.find((item) => item.active);
+  return isSubcategory ? kebabCase(title) : kebabCase(`${activeSubcategoryItem.title}-${title}`);
+};
+
+const click = (_, title, slug, data, isSubcategory) => {
+  if (isSubcategory) {
+    // Rerender chart to show details
+    const updatedData = data.map(d => {
+      if (d.title === title) {
+        return {
+          ...d,
+          active: true,
+        };
+      }
+      return {
+        ...d,
+        active: false,
+      };
+    });
+    createSVGChart(slug, updatedData);
+  }
+
+  mutations.setFilter(isSubcategory ? 'sub-category' : 'detail', title);
+
+  // Change aria pressed to true
+  const buttons = document.querySelectorAll('.btn-filter-chart');
+  buttons.forEach(button => button.setAttribute('aria-pressed', 'false'));
+  const button = document.querySelector(`#btn-${getSlugByTitle(data, title)}`);
+  button.setAttribute('aria-pressed', 'true');
+};
 
 // Create the SVG container
 const createSVGChart = (slug, data) => {
   if(!data || data.length === 0) return;
 
-  const heightValue = (data.length) * 35 + 100;
+  // Data with active details
+  const activeData = data.find(d => d.active);
+
+  const dataWithDetails = data.map(d =>
+    d.active ? [d].concat(d.details) : d
+  ).flat();
+
+  const ITEM_HEIGHT = 35;
+  const HEIGHT_PADDING = 100;
+
+  const activeDataHeight = !!activeData ? activeData.details.length * ITEM_HEIGHT : 0; // Assuming each detail is 20 pixels tall
+  const heightValue = (data.length) * ITEM_HEIGHT + activeDataHeight + HEIGHT_PADDING;
   const widthValue = 500;
 
   const RIGHT_AXIS_PADDING = 140;
   const AXIS_PADDING = 20;
   const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+
+  // Remove any existing chart
+  d3.select(`#chart-${slug}`).selectAll("*").remove();
+
   const chart = d3.select(`#chart-${slug}`)
     .style("text-align", 'center')
     .append("svg")
@@ -28,9 +79,10 @@ const createSVGChart = (slug, data) => {
     .domain([-100, 100])
     .range([0, width]);
 
+    const domainTitles = data.map(d => d.active ? [d.title].concat(d.details.map(dt => dt.title)) : d.title).flat();
   // Create y scale
   const yScale = d3.scaleBand()
-    .domain(data.map(d => d.title))
+    .domain(domainTitles)
     .range([0, height])
     .padding(1);
 
@@ -57,18 +109,8 @@ const createSVGChart = (slug, data) => {
     .tickPadding(10)
     .tickFormat(() => '');
 
-  const yAxisGroup = svg.append("g")
-  .attr("class", "y-axis")
-  .call(yAxis);
-
-  yAxisGroup.selectAll(".tick text")
-  .attr("class", "tick-text")
-  .attr("x", -10)
-  .attr("dy", "0.32em")
-  .style("text-anchor", "start");
-
-  const buttonHTML = (title, publications) =>
-    `<button type="button" class='btn-filter btn-filter-chart' aria-pressed="false" id="btn-${kebabCase(title)}">
+  const buttonHTML = (title, publications, slug) =>
+    `<button type="button" class='btn-filter btn-filter-chart' aria-pressed="false" id="btn-${kebabCase(slug)}">
       <span class="font-semibold text-slate-700">${title}</span>
       <span class="text-xs font-normal">(${publications})</span>
     </button>`;
@@ -76,9 +118,30 @@ const createSVGChart = (slug, data) => {
 
   const yTickHeight = 44;
   const yTickWidth = 120;
-  const yAxisTicks = svg.append("g")
-  .attr("transform", `translate(${width + 30}, ${-yTickHeight / 2})`)
 
+  const yAxisRegions = svg
+  .append("g")
+  .attr("class", "y-axis-regions")
+  .attr("transform", `translate(0, ${-yTickHeight / 2})`)
+
+  const yAxisTicks = svg
+    .append("g")
+    .attr("class", "y-axis-ticks")
+    .attr("transform", `translate(${width + 30}, ${-yTickHeight / 2})`)
+
+  yAxisRegions.selectAll(".y-axis-region")
+    .data(dataWithDetails)
+    .enter()
+    .append("rect")
+    .attr("class", "y-axis-region pointer-events-none")
+    .attr("x", -AXIS_PADDING)
+    .attr("y", d => yScale(d.title))
+    .attr("width", width + 30 + RIGHT_AXIS_PADDING)
+    // .attr("height", 0)
+    // .transition()
+    // .duration(500)
+    .attr("height", ITEM_HEIGHT + AXIS_PADDING)
+    .attr("fill", (d) => d.details ? 'transparent' : gray100)
 
   yAxisTicks.call(yAxis)
   .selectAll(".tick")
@@ -86,21 +149,13 @@ const createSVGChart = (slug, data) => {
     .attr("width", yTickWidth)
     .attr("height", yTickHeight)
     .style("text-align", 'left')
-    .html(title => {
-      const dataPublications = data.find((item) => item.title === title)?.publications;
-      return buttonHTML(title, dataPublications);
-    }).on("click", function(_, title){
-      mutations.setFilter('sub-category', title);
-
-      // Change aria pressed to true
-      const buttons = document.querySelectorAll('.btn-filter-chart');
-      buttons.forEach(button => button.setAttribute('aria-pressed', 'false'));
-      const button = document.querySelector(`#btn-${kebabCase(title)}`);
-      button.setAttribute('aria-pressed', 'true');
-
-      const dataAction = data.find((item) => item.title === title)?.action;
-      return dataAction && dataAction();
-    });
+    .html((title) => {
+      const subCategoryItem = getSubcategoryByTitle(data, title);
+      const activeSubcategoryItem = !subCategoryItem && data.find((item) => item.active);
+      const dataItem = subCategoryItem || activeSubcategoryItem.details.find(detail => detail.title === title);
+      const slug = getSlugByTitle(data, title);
+      return buttonHTML(title, dataItem?.publications, slug);
+    }).on("click", (_, title) => click(_, title, slug, data, !!getSubcategoryByTitle(data, title)));
 
   // Remove all domain lines
   svg.selectAll('.domain').attr('stroke-width', 0);
@@ -125,10 +180,11 @@ const createSVGChart = (slug, data) => {
 
   // Create error bars
   svg.selectAll(".error-bar")
-    .data(data)
+    .data(dataWithDetails)
     .enter()
     .append("g")
     .attr("class", "error-bar")
+    .attr("id", d => `error-bar-${getSlugByTitle(data, d.title)}`)
     .each(function(d) {
       const g = d3.select(this);
       // Over zero
@@ -154,7 +210,7 @@ const createSVGChart = (slug, data) => {
 
   // Create data points
   svg.selectAll(".data-point")
-    .data(data)
+    .data(dataWithDetails)
     .enter()
     .append("circle")
     .attr("class", "data-point")
@@ -162,4 +218,4 @@ const createSVGChart = (slug, data) => {
     .attr("cy", d => yScale(d.title) + yScale.bandwidth() / 2)
     .attr("r", 5)
     .attr("fill", d => d.value >= 0 ? primaryColor : red);
-  };
+};

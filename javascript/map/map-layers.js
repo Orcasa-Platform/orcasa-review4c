@@ -1,6 +1,6 @@
 const addLayer = (map, layerSlug) => {
-  const currentLayers = map.getStyle().layers;
-  const currentSources = map.getStyle().sources;
+  const currentLayers = map.getStyle()?.layers;
+  const currentSources = map.getStyle()?.sources;
   getLayer(layerSlug).then(layer => {
     const countryValues = layer && Object.values(layer);
     const features = countryValues && countryValues.map(country => {
