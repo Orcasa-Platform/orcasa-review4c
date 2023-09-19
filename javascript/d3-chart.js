@@ -12,6 +12,8 @@ const getSlugByTitle = (data, title) => {
 };
 
 const click = (_, title, slug, data, isSubcategory) => {
+  window.mutations.setFilter(isSubcategory ? 'sub-category' : 'detail', title);
+
   if (isSubcategory) {
     // Rerender chart to show details
     const updatedData = data.map(d => {
@@ -29,7 +31,10 @@ const click = (_, title, slug, data, isSubcategory) => {
     createSVGChart(slug, updatedData);
   }
 
-  mutations.setFilter(isSubcategory ? 'sub-category' : 'detail', title);
+  if(!isSubcategory) {
+    // Rerender to filter opacity of error bars
+    createSVGChart(slug, data);
+  }
 
   // Change aria pressed to true
   const buttons = document.querySelectorAll('.btn-filter-chart');
@@ -42,6 +47,12 @@ const click = (_, title, slug, data, isSubcategory) => {
 const createSVGChart = (slug, data) => {
   if(!data || data.length === 0) return;
 
+  // Save data for resize
+  const savedData = window.getters.chartData();
+  window.mutations.setChartData({...savedData, [slug]: data });
+
+  const selected = window.getters.filter();
+
   // Data with active details
   const activeData = data.find(d => d.active);
 
@@ -49,14 +60,14 @@ const createSVGChart = (slug, data) => {
     d.active ? [d].concat(d.details) : d
   ).flat();
 
-  const ITEM_HEIGHT = 35;
+  const ITEM_HEIGHT = 80;
   const HEIGHT_PADDING = 100;
 
   const activeDataHeight = !!activeData ? activeData.details.length * ITEM_HEIGHT : 0; // Assuming each detail is 20 pixels tall
   const heightValue = (data.length) * ITEM_HEIGHT + activeDataHeight + HEIGHT_PADDING;
   const widthValue = 500;
 
-  const RIGHT_AXIS_PADDING = 140;
+  const RIGHT_AXIS_PADDING = 200;
   const AXIS_PADDING = 20;
   const margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -117,7 +128,7 @@ const createSVGChart = (slug, data) => {
   ;
 
   const yTickHeight = 44;
-  const yTickWidth = 120;
+  const yTickWidth = 240;
 
   const yAxisRegions = svg
   .append("g")
@@ -140,14 +151,14 @@ const createSVGChart = (slug, data) => {
     // .attr("height", 0)
     // .transition()
     // .duration(500)
-    .attr("height", ITEM_HEIGHT + AXIS_PADDING)
+    .attr("height", ITEM_HEIGHT + 4)
     .attr("fill", (d) => d.details ? 'transparent' : gray100)
 
   yAxisTicks.call(yAxis)
   .selectAll(".tick")
   .append("foreignObject")
     .attr("width", yTickWidth)
-    .attr("height", yTickHeight)
+    .attr("height", ITEM_HEIGHT + yTickHeight)
     .style("text-align", 'left')
     .html((title) => {
       const subCategoryItem = getSubcategoryByTitle(data, title);
@@ -156,6 +167,9 @@ const createSVGChart = (slug, data) => {
       const slug = getSlugByTitle(data, title);
       return buttonHTML(title, dataItem?.publications, slug);
     }).on("click", (_, title) => click(_, title, slug, data, !!getSubcategoryByTitle(data, title)));
+
+    const foreignObjects = document.getElementsByTagName("foreignObject");
+    fixedSizeForeignObjects(...foreignObjects);
 
   // Remove all domain lines
   svg.selectAll('.domain').attr('stroke-width', 0);
@@ -177,7 +191,7 @@ const createSVGChart = (slug, data) => {
   .attr("stroke", (d) => d === 0 ? 'black' : gray400);
 
   xGridElement.select(".domain").remove();
-
+  const getOpacity = (d) => (!selected || selected?.type !== 'detail' || selected?.value === d.title) ? 1 : 0.5;
   // Create error bars
   svg.selectAll(".error-bar")
     .data(dataWithDetails)
@@ -195,6 +209,7 @@ const createSVGChart = (slug, data) => {
         .attr("y1", yScale(d.title) + yScale.bandwidth() / 2)
         .attr("y2", yScale(d.title) + yScale.bandwidth() / 2)
         .attr("stroke", primaryColor)
+        .attr("opacity", getOpacity)
         .attr("stroke-width", 2);
 
       // Under zero
@@ -205,6 +220,7 @@ const createSVGChart = (slug, data) => {
         .attr("y1", yScale(d.title) + yScale.bandwidth() / 2)
         .attr("y2", yScale(d.title) + yScale.bandwidth() / 2)
         .attr("stroke", red)
+        .attr("opacity", getOpacity)
         .attr("stroke-width", 2);
     });
 
@@ -217,5 +233,19 @@ const createSVGChart = (slug, data) => {
     .attr("cx", d => xScale(d.value))
     .attr("cy", d => yScale(d.title) + yScale.bandwidth() / 2)
     .attr("r", 5)
+    .attr("opacity", getOpacity)
     .attr("fill", d => d.value >= 0 ? primaryColor : red);
 };
+
+const onResize = () => {
+  const charts = document.querySelectorAll('.chart');
+  const chartData = window.getters.chartData();
+  charts.forEach(chart => {
+    const slug = chart.id.replace('chart-', '');
+    const data = chartData[slug];
+    createSVGChart(slug, data);
+  });
+};
+
+// Rerender charts on window resize
+window.addEventListener('resize', onResize );
