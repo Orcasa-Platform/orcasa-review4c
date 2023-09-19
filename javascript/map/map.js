@@ -40,7 +40,9 @@ map.on('load', function() {
         'raster-opacity': 0,
       },
   }, 'countries-labels');
+
   addSquareIcon(map);
-  addLayer(map);
+  // Not need to load the main layer if we select Croplands by default
+  // addLayer(map);
   zoomButtonStyling();
 });

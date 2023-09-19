@@ -4,8 +4,11 @@ const URLS = {
 }
 
 const mockLayers = {
-  cropland: croplandMock,
+  cropland: cropLandMock,
   "forest-land": forestLandMock,
+  'grassland': grassLandMock,
+  'wetlands': wetLandMock,
+  'other-land': otherLandMock,
 };
 
 const getLayer = async (layerSlug) => {

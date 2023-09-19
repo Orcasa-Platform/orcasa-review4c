@@ -3360,7 +3360,7 @@ const allLayerMock = {
   }
 };
 
-const croplandMock = {
+const cropLandMock = {
   "BR": {
       "number_primary_studies": 5292,
       "geom": "[{\"type\":\"Feature\",\"id\":103,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-53.0887365610034,-10.7723250928083]},\"properties\":{\"long_name\":\"Brazil\"}}]",
@@ -5001,6 +5001,7 @@ const croplandMock = {
       }
   }
 };
+
 const forestLandMock = {
   "IT": {
       "number_primary_studies": 1216,
@@ -5783,6 +5784,1123 @@ const forestLandMock = {
       "geom": "[{\"type\":\"Feature\",\"id\":131,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-41.3910123220457,74.7190215648767]},\"properties\":{\"long_name\":\"Greenland\"}}]",
       "effect_outcomes": {
           "warming experiments": 30
+      }
+  }
+};
+
+const grassLandMock = {
+  "IN": {
+      "number_primary_studies": 95,
+      "geom": "[{\"type\":\"Feature\",\"id\":146,\"geometry\":{\"type\":\"Point\",\"coordinates\":[79.6188660674667,22.8813691826695]},\"properties\":{\"long_name\":\"India\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 38,
+          "grazing": 35,
+          "intercropping/species mixtures": 20,
+          "mineral fertilization ; grazing ; liming": 2
+      }
+  },
+  "BR": {
+      "number_primary_studies": 161,
+      "geom": "[{\"type\":\"Feature\",\"id\":103,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-53.0887365610034,-10.7723250928083]},\"properties\":{\"long_name\":\"Brazil\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 21,
+          "grazing": 56,
+          "intercropping/species mixtures": 76,
+          "mineral fertilization ; grazing ; liming": 6,
+          "residues management": 2
+      }
+  },
+  "US": {
+      "number_primary_studies": 2502,
+      "geom": "[{\"type\":\"Feature\",\"id\":135,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-112.493532187673,45.695381857143]},\"properties\":{\"long_name\":\"United States\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 21,
+          "co2 enrichment": 48,
+          "grazing": 1293,
+          "intercropping/species mixtures": 380,
+          "mineral fertilization ; grazing ; liming": 34,
+          "residues management": 40,
+          "shrub encroachment": 28,
+          "warming experiments": 658
+      }
+  },
+  "ET": {
+      "number_primary_studies": 52,
+      "geom": "[{\"type\":\"Feature\",\"id\":80,\"geometry\":{\"type\":\"Point\",\"coordinates\":[39.616065214302,8.62611419188303]},\"properties\":{\"long_name\":\"Ethiopia\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 10,
+          "grazing": 38,
+          "mineral fertilization ; grazing ; liming": 4
+      }
+  },
+  "GH": {
+      "number_primary_studies": 11,
+      "geom": "[{\"type\":\"Feature\",\"id\":93,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-1.20707957395663,7.95972037879835]},\"properties\":{\"long_name\":\"Ghana\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 11
+      }
+  },
+  "CA": {
+      "number_primary_studies": 415,
+      "geom": "[{\"type\":\"Feature\",\"id\":6,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-98.2610993286887,61.3927417486694]},\"properties\":{\"long_name\":\"Canada\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 23,
+          "co2 enrichment": 4,
+          "grazing": 294,
+          "intercropping/species mixtures": 32,
+          "mineral fertilization ; grazing ; liming": 14,
+          "residues management": 4,
+          "shrub encroachment": 2,
+          "warming experiments": 42
+      }
+  },
+  "FR": {
+      "number_primary_studies": 220,
+      "geom": "[{\"type\":\"Feature\",\"id\":24,\"geometry\":{\"type\":\"Point\",\"coordinates\":[2.55042982501832,46.5648681707654]},\"properties\":{\"long_name\":\"France\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 3,
+          "amendments non-pyrogenic": 7,
+          "co2 enrichment": 4,
+          "grazing": 142,
+          "intercropping/species mixtures": 44,
+          "mineral fertilization ; grazing ; liming": 4,
+          "residues management": 2,
+          "warming experiments": 14
+      }
+  },
+  "CL": {
+      "number_primary_studies": 61,
+      "geom": "[{\"type\":\"Feature\",\"id\":243,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-71.3797619077096,-37.8664780570802]},\"properties\":{\"long_name\":\"Chile\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 6,
+          "grazing": 55
+      }
+  },
+  "BJ": {
+      "number_primary_studies": 3,
+      "geom": "[{\"type\":\"Feature\",\"id\":94,\"geometry\":{\"type\":\"Point\",\"coordinates\":[2.34321313063592,9.64757231857075]},\"properties\":{\"long_name\":\"Benin\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 3
+      }
+  },
+  "CR": {
+      "number_primary_studies": 41,
+      "geom": "[{\"type\":\"Feature\",\"id\":88,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-84.1890532213732,9.97056913526161]},\"properties\":{\"long_name\":\"Costa Rica\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 31,
+          "residues management": 10
+      }
+  },
+  "ID": {
+      "number_primary_studies": 12,
+      "geom": "[{\"type\":\"Feature\",\"id\":215,\"geometry\":{\"type\":\"Point\",\"coordinates\":[117.311610756535,-2.22979378402477]},\"properties\":{\"long_name\":\"Indonesia\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 10,
+          "residues management": 2
+      }
+  },
+  "ES": {
+      "number_primary_studies": 146,
+      "geom": "[{\"type\":\"Feature\",\"id\":28,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-3.64926554373003,40.2275897809659]},\"properties\":{\"long_name\":\"Spain\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 3,
+          "amendments non-pyrogenic": 1,
+          "grazing": 4,
+          "intercropping/species mixtures": 12,
+          "mineral fertilization ; grazing ; liming": 4,
+          "residues management": 2,
+          "shrub encroachment": 8,
+          "warming experiments": 112
+      }
+  },
+  "BO": {
+      "number_primary_studies": 41,
+      "geom": "[{\"type\":\"Feature\",\"id\":119,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-64.6704694283692,-16.7151050258305]},\"properties\":{\"long_name\":\"Bolivia\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 3,
+          "grazing": 38
+      }
+  },
+  "EC": {
+      "number_primary_studies": 8,
+      "geom": "[{\"type\":\"Feature\",\"id\":110,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-78.7806918947223,-1.42521925422544]},\"properties\":{\"long_name\":\"Ecuador\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 6,
+          "mineral fertilization ; grazing ; liming": 2
+      }
+  },
+  "CN": {
+      "number_primary_studies": 9844,
+      "geom": "[{\"type\":\"Feature\",\"id\":47,\"geometry\":{\"type\":\"Point\",\"coordinates\":[103.834685245701,36.5633690091615]},\"properties\":{\"long_name\":\"China\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 6,
+          "amendments non-pyrogenic": 3,
+          "co2 enrichment": 4,
+          "grazing": 9235,
+          "intercropping/species mixtures": 156,
+          "mineral fertilization ; grazing ; liming": 144,
+          "residues management": 26,
+          "shrub encroachment": 4,
+          "warming experiments": 266
+      }
+  },
+  "MW": {
+      "number_primary_studies": 5,
+      "geom": "[{\"type\":\"Feature\",\"id\":120,\"geometry\":{\"type\":\"Point\",\"coordinates\":[34.3069787387773,-13.2151559491619]},\"properties\":{\"long_name\":\"Malawi\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 5
+      }
+  },
+  "CM": {
+      "number_primary_studies": 9,
+      "geom": "[{\"type\":\"Feature\",\"id\":100,\"geometry\":{\"type\":\"Point\",\"coordinates\":[12.7433099861085,5.68582489963154]},\"properties\":{\"long_name\":\"Cameroon\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 9
+      }
+  },
+  "GT": {
+      "number_primary_studies": 5,
+      "geom": "[{\"type\":\"Feature\",\"id\":77,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-90.3567968547685,15.7021871155341]},\"properties\":{\"long_name\":\"Guatemala\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 5
+      }
+  },
+  "IT": {
+      "number_primary_studies": 72,
+      "geom": "[{\"type\":\"Feature\",\"id\":21,\"geometry\":{\"type\":\"Point\",\"coordinates\":[12.0717489315058,42.7911387408423]},\"properties\":{\"long_name\":\"Italy\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 3,
+          "amendments non-pyrogenic": 1,
+          "intercropping/species mixtures": 24,
+          "residues management": 2,
+          "warming experiments": 42
+      }
+  },
+  "ML": {
+      "number_primary_studies": 5,
+      "geom": "[{\"type\":\"Feature\",\"id\":73,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-3.52437802289376,17.3501975952094]},\"properties\":{\"long_name\":\"Mali\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 5
+      }
+  },
+  "UG": {
+      "number_primary_studies": 6,
+      "geom": "[{\"type\":\"Feature\",\"id\":109,\"geometry\":{\"type\":\"Point\",\"coordinates\":[32.3862798264681,1.28017950058414]},\"properties\":{\"long_name\":\"Uganda\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 6
+      }
+  },
+  "GB": {
+      "number_primary_studies": 757,
+      "geom": "[{\"type\":\"Feature\",\"id\":166,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-2.90032697743179,54.1599103645581]},\"properties\":{\"long_name\":\"United Kingdom\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 3,
+          "amendments non-pyrogenic": 2,
+          "co2 enrichment": 12,
+          "grazing": 564,
+          "intercropping/species mixtures": 20,
+          "mineral fertilization ; grazing ; liming": 14,
+          "residues management": 2,
+          "warming experiments": 140
+      }
+  },
+  "MX": {
+      "number_primary_studies": 41,
+      "geom": "[{\"type\":\"Feature\",\"id\":137,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-102.534823474268,23.9507951094759]},\"properties\":{\"long_name\":\"Mexico\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 7,
+          "amendments non-pyrogenic": 3,
+          "grazing": 29,
+          "shrub encroachment": 2
+      }
+  },
+  "PH": {
+      "number_primary_studies": 4,
+      "geom": "[{\"type\":\"Feature\",\"id\":185,\"geometry\":{\"type\":\"Point\",\"coordinates\":[122.8736866702,11.747413798271]},\"properties\":{\"long_name\":\"Philippines\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 4
+      }
+  },
+  "TG": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":98,\"geometry\":{\"type\":\"Point\",\"coordinates\":[0.975853059078481,8.5346584608813]},\"properties\":{\"long_name\":\"Togo\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 2
+      }
+  },
+  "KE": {
+      "number_primary_studies": 48,
+      "geom": "[{\"type\":\"Feature\",\"id\":111,\"geometry\":{\"type\":\"Point\",\"coordinates\":[37.8579083796558,0.529819631289838]},\"properties\":{\"long_name\":\"Kenya\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 10,
+          "grazing": 36,
+          "mineral fertilization ; grazing ; liming": 2
+      }
+  },
+  "PA": {
+      "number_primary_studies": 67,
+      "geom": "[{\"type\":\"Feature\",\"id\":92,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-80.1090561334593,8.50550177395588]},\"properties\":{\"long_name\":\"Panama\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 6,
+          "grazing": 55,
+          "residues management": 6
+      }
+  },
+  "NI": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":79,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-85.0336542482676,12.8400916875073]},\"properties\":{\"long_name\":\"Nicaragua\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 2
+      }
+  },
+  "HN": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":74,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-86.6196656551255,14.8193312254773]},\"properties\":{\"long_name\":\"Honduras\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 2
+      }
+  },
+  "TZ": {
+      "number_primary_studies": 22,
+      "geom": "[{\"type\":\"Feature\",\"id\":116,\"geometry\":{\"type\":\"Point\",\"coordinates\":[34.8234205059706,-6.27018476636659]},\"properties\":{\"long_name\":\"Tanzania, United Republic of\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 6,
+          "grazing": 16
+      }
+  },
+  "NG": {
+      "number_primary_studies": 6,
+      "geom": "[{\"type\":\"Feature\",\"id\":83,\"geometry\":{\"type\":\"Point\",\"coordinates\":[8.10528485968806,9.59364932904282]},\"properties\":{\"long_name\":\"Nigeria\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 6
+      }
+  },
+  "CI": {
+      "number_primary_studies": 3,
+      "geom": "[{\"type\":\"Feature\",\"id\":95,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-5.55552964565554,7.63165287991665]},\"properties\":{\"long_name\":\"Cote d'Ivoire\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 2,
+          "amendments non-pyrogenic": 1
+      }
+  },
+  "DE": {
+      "number_primary_studies": 543,
+      "geom": "[{\"type\":\"Feature\",\"id\":7,\"geometry\":{\"type\":\"Point\",\"coordinates\":[10.392312119663,51.110122216499]},\"properties\":{\"long_name\":\"Germany\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 2,
+          "amendments non-pyrogenic": 4,
+          "co2 enrichment": 4,
+          "grazing": 431,
+          "intercropping/species mixtures": 84,
+          "mineral fertilization ; grazing ; liming": 2,
+          "residues management": 16
+      }
+  },
+  "SN": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":72,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-14.4682399645985,14.3669032615052]},\"properties\":{\"long_name\":\"Senegal\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 2
+      }
+  },
+  "PE": {
+      "number_primary_studies": 6,
+      "geom": "[{\"type\":\"Feature\",\"id\":121,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-74.3754239835803,-9.16370840347554]},\"properties\":{\"long_name\":\"Peru\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 4,
+          "residues management": 2
+      }
+  },
+  "PR": {
+      "number_primary_studies": 4,
+      "geom": "[{\"type\":\"Feature\",\"id\":189,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-66.466215242424,18.220944736459]},\"properties\":{\"long_name\":\"Puerto Rico\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 2,
+          "residues management": 2
+      }
+  },
+  "AU": {
+      "number_primary_studies": 281,
+      "geom": "[{\"type\":\"Feature\",\"id\":222,\"geometry\":{\"type\":\"Point\",\"coordinates\":[134.490972365464,-25.7332813287158]},\"properties\":{\"long_name\":\"Australia\"}}]",
+      "effect_outcomes": {
+          "amendments non-pyrogenic": 3,
+          "co2 enrichment": 8,
+          "grazing": 214,
+          "mineral fertilization ; grazing ; liming": 8,
+          "shrub encroachment": 6,
+          "warming experiments": 42
+      }
+  },
+  "RU": {
+      "number_primary_studies": 15,
+      "geom": "[{\"type\":\"Feature\",\"id\":132,\"geometry\":{\"type\":\"Point\",\"coordinates\":[96.689529243041,61.9881557098379]},\"properties\":{\"long_name\":\"Russia\"}}]",
+      "effect_outcomes": {
+          "amendments non-pyrogenic": 1,
+          "warming experiments": 14
+      }
+  },
+  "LA": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":71,\"geometry\":{\"type\":\"Point\",\"coordinates\":[103.76344941795,18.5023949079871]},\"properties\":{\"long_name\":\"Laos\"}}]",
+      "effect_outcomes": {
+          "amendments non-pyrogenic": 1
+      }
+  },
+  "SE": {
+      "number_primary_studies": 288,
+      "geom": "[{\"type\":\"Feature\",\"id\":136,\"geometry\":{\"type\":\"Point\",\"coordinates\":[16.7411272225643,62.7877349687442]},\"properties\":{\"long_name\":\"Sweden\"}}]",
+      "effect_outcomes": {
+          "amendments non-pyrogenic": 1,
+          "co2 enrichment": 4,
+          "grazing": 21,
+          "intercropping/species mixtures": 16,
+          "residues management": 8,
+          "warming experiments": 238
+      }
+  },
+  "CH": {
+      "number_primary_studies": 205,
+      "geom": "[{\"type\":\"Feature\",\"id\":19,\"geometry\":{\"type\":\"Point\",\"coordinates\":[8.23455626159083,46.8025891704654]},\"properties\":{\"long_name\":\"Switzerland\"}}]",
+      "effect_outcomes": {
+          "amendments non-pyrogenic": 1,
+          "co2 enrichment": 40,
+          "grazing": 50,
+          "intercropping/species mixtures": 96,
+          "mineral fertilization ; grazing ; liming": 2,
+          "residues management": 2,
+          "warming experiments": 14
+      }
+  },
+  "DK": {
+      "number_primary_studies": 143,
+      "geom": "[{\"type\":\"Feature\",\"id\":3,\"geometry\":{\"type\":\"Point\",\"coordinates\":[10.050570674144,55.9624401904021]},\"properties\":{\"long_name\":\"Denmark\"}}]",
+      "effect_outcomes": {
+          "amendments non-pyrogenic": 1,
+          "grazing": 42,
+          "intercropping/species mixtures": 16,
+          "warming experiments": 84
+      }
+  },
+  "NL": {
+      "number_primary_studies": 734,
+      "geom": "[{\"type\":\"Feature\",\"id\":8,\"geometry\":{\"type\":\"Point\",\"coordinates\":[5.60109723694747,52.2535780200093]},\"properties\":{\"long_name\":\"Netherlands\"}}]",
+      "effect_outcomes": {
+          "amendments non-pyrogenic": 1,
+          "co2 enrichment": 4,
+          "grazing": 645,
+          "intercropping/species mixtures": 12,
+          "residues management": 2,
+          "warming experiments": 70
+      }
+  },
+  "NZ": {
+      "number_primary_studies": 38,
+      "geom": "[{\"type\":\"Feature\",\"id\":242,\"geometry\":{\"type\":\"Point\",\"coordinates\":[171.604826752646,-41.8371889548333]},\"properties\":{\"long_name\":\"New Zealand\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 4,
+          "grazing": 26,
+          "mineral fertilization ; grazing ; liming": 8
+      }
+  },
+  "MN": {
+      "number_primary_studies": 36,
+      "geom": "[{\"type\":\"Feature\",\"id\":13,\"geometry\":{\"type\":\"Point\",\"coordinates\":[103.083049548251,46.8352221253373]},\"properties\":{\"long_name\":\"Mongolia\"}}]",
+      "effect_outcomes": {
+          "grazing": 36
+      }
+  },
+  "BW": {
+      "number_primary_studies": 71,
+      "geom": "[{\"type\":\"Feature\",\"id\":126,\"geometry\":{\"type\":\"Point\",\"coordinates\":[23.8150759573921,-22.1819728401153]},\"properties\":{\"long_name\":\"Botswana\"}}]",
+      "effect_outcomes": {
+          "grazing": 71
+      }
+  },
+  "HR": {
+      "number_primary_studies": 57,
+      "geom": "[{\"type\":\"Feature\",\"id\":173,\"geometry\":{\"type\":\"Point\",\"coordinates\":[16.4068523326682,45.0442725038873]},\"properties\":{\"long_name\":\"Croatia\"}}]",
+      "effect_outcomes": {
+          "grazing": 55,
+          "mineral fertilization ; grazing ; liming": 2
+      }
+  },
+  "AR": {
+      "number_primary_studies": 502,
+      "geom": "[{\"type\":\"Feature\",\"id\":124,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-65.1675007436911,-35.3766672659209]},\"properties\":{\"long_name\":\"Argentina\"}}]",
+      "effect_outcomes": {
+          "grazing": 478,
+          "intercropping/species mixtures": 16,
+          "mineral fertilization ; grazing ; liming": 6,
+          "shrub encroachment": 2
+      }
+  },
+  "ZA": {
+      "number_primary_studies": 114,
+      "geom": "[{\"type\":\"Feature\",\"id\":129,\"geometry\":{\"type\":\"Point\",\"coordinates\":[25.093077827096,-28.9995232336903]},\"properties\":{\"long_name\":\"South Africa\"}}]",
+      "effect_outcomes": {
+          "grazing": 108,
+          "mineral fertilization ; grazing ; liming": 4,
+          "shrub encroachment": 2
+      }
+  },
+  "IR": {
+      "number_primary_studies": 136,
+      "geom": "[{\"type\":\"Feature\",\"id\":60,\"geometry\":{\"type\":\"Point\",\"coordinates\":[54.3013991571557,32.5648103035746]},\"properties\":{\"long_name\":\"Iran\"}}]",
+      "effect_outcomes": {
+          "grazing": 132,
+          "mineral fertilization ; grazing ; liming": 4
+      }
+  },
+  "UY": {
+      "number_primary_studies": 38,
+      "geom": "[{\"type\":\"Feature\",\"id\":130,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-56.0121828689982,-32.799585111336]},\"properties\":{\"long_name\":\"Uruguay\"}}]",
+      "effect_outcomes": {
+          "grazing": 34,
+          "mineral fertilization ; grazing ; liming": 4
+      }
+  },
+  "NE": {
+      "number_primary_studies": 16,
+      "geom": "[{\"type\":\"Feature\",\"id\":69,\"geometry\":{\"type\":\"Point\",\"coordinates\":[9.39765523167613,17.4261798132309]},\"properties\":{\"long_name\":\"Niger\"}}]",
+      "effect_outcomes": {
+          "grazing": 16
+      }
+  },
+  "NO": {
+      "number_primary_studies": 57,
+      "geom": "[{\"type\":\"Feature\",\"id\":134,\"geometry\":{\"type\":\"Point\",\"coordinates\":[14.075244986957,64.4477088677774]},\"properties\":{\"long_name\":\"Norway\"}}]",
+      "effect_outcomes": {
+          "grazing": 13,
+          "mineral fertilization ; grazing ; liming": 2,
+          "warming experiments": 42
+      }
+  },
+  "BF": {
+      "number_primary_studies": 11,
+      "geom": "[{\"type\":\"Feature\",\"id\":78,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-1.7398144405188,12.2778969231121]},\"properties\":{\"long_name\":\"Burkina Faso\"}}]",
+      "effect_outcomes": {
+          "grazing": 11
+      }
+  },
+  "FI": {
+      "number_primary_studies": 164,
+      "geom": "[{\"type\":\"Feature\",\"id\":1,\"geometry\":{\"type\":\"Point\",\"coordinates\":[26.2724939330078,64.5036394636447]},\"properties\":{\"long_name\":\"Finland\"}}]",
+      "effect_outcomes": {
+          "grazing": 84,
+          "intercropping/species mixtures": 8,
+          "residues management": 2,
+          "warming experiments": 70
+      }
+  },
+  "EE": {
+      "number_primary_studies": 21,
+      "geom": "[{\"type\":\"Feature\",\"id\":165,\"geometry\":{\"type\":\"Point\",\"coordinates\":[25.5258739153868,58.6740102048903]},\"properties\":{\"long_name\":\"Estonia\"}}]",
+      "effect_outcomes": {
+          "grazing": 21
+      }
+  },
+  "BE": {
+      "number_primary_studies": 37,
+      "geom": "[{\"type\":\"Feature\",\"id\":11,\"geometry\":{\"type\":\"Point\",\"coordinates\":[4.66430435288703,50.6429600365894]},\"properties\":{\"long_name\":\"Belgium\"}}]",
+      "effect_outcomes": {
+          "grazing": 23,
+          "warming experiments": 14
+      }
+  },
+  "TR": {
+      "number_primary_studies": 23,
+      "geom": "[{\"type\":\"Feature\",\"id\":44,\"geometry\":{\"type\":\"Point\",\"coordinates\":[35.1792012582731,39.06062441115]},\"properties\":{\"long_name\":\"Turkey\"}}]",
+      "effect_outcomes": {
+          "grazing": 21,
+          "shrub encroachment": 2
+      }
+  },
+  "ZW": {
+      "number_primary_studies": 4,
+      "geom": "[{\"type\":\"Feature\",\"id\":122,\"geometry\":{\"type\":\"Point\",\"coordinates\":[29.8717598713902,-19.000012265249]},\"properties\":{\"long_name\":\"Zimbabwe\"}}]",
+      "effect_outcomes": {
+          "grazing": 2,
+          "shrub encroachment": 2
+      }
+  },
+  "AT": {
+      "number_primary_studies": 46,
+      "geom": "[{\"type\":\"Feature\",\"id\":18,\"geometry\":{\"type\":\"Point\",\"coordinates\":[14.1399739641446,47.592950004704]},\"properties\":{\"long_name\":\"Austria\"}}]",
+      "effect_outcomes": {
+          "intercropping/species mixtures": 16,
+          "residues management": 2,
+          "warming experiments": 28
+      }
+  },
+  "DZ": {
+      "number_primary_studies": 8,
+      "geom": "[{\"type\":\"Feature\",\"id\":51,\"geometry\":{\"type\":\"Point\",\"coordinates\":[2.63240532361825,28.1632283867011]},\"properties\":{\"long_name\":\"Algeria\"}}]",
+      "effect_outcomes": {
+          "intercropping/species mixtures": 8
+      }
+  },
+  "PL": {
+      "number_primary_studies": 42,
+      "geom": "[{\"type\":\"Feature\",\"id\":10,\"geometry\":{\"type\":\"Point\",\"coordinates\":[19.4009686815796,52.124745716988]},\"properties\":{\"long_name\":\"Poland\"}}]",
+      "effect_outcomes": {
+          "intercropping/species mixtures": 40,
+          "residues management": 2
+      }
+  },
+  "PT": {
+      "number_primary_studies": 12,
+      "geom": "[{\"type\":\"Feature\",\"id\":42,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-8.46677662826977,39.6027415383879]},\"properties\":{\"long_name\":\"Portugal\"}}]",
+      "effect_outcomes": {
+          "intercropping/species mixtures": 12
+      }
+  },
+  "CZ": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":12,\"geometry\":{\"type\":\"Point\",\"coordinates\":[15.3383384465846,49.7430281725468]},\"properties\":{\"long_name\":\"Czech Republic\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization ; grazing ; liming": 2
+      }
+  },
+  "IS": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":163,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-18.6055446354797,64.9975991011785]},\"properties\":{\"long_name\":\"Iceland\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization ; grazing ; liming": 2
+      }
+  },
+  "CO": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":143,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-73.0757601454342,3.90033898307688]},\"properties\":{\"long_name\":\"Colombia\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization ; grazing ; liming": 2
+      }
+  },
+  "TH": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":91,\"geometry\":{\"type\":\"Point\",\"coordinates\":[101.014962185685,15.1199626220996]},\"properties\":{\"long_name\":\"Thailand\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization ; grazing ; liming": 2
+      }
+  },
+  "SK": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":17,\"geometry\":{\"type\":\"Point\",\"coordinates\":[19.4914707323353,48.7073460234975]},\"properties\":{\"long_name\":\"Slovakia\"}}]",
+      "effect_outcomes": {
+          "residues management": 2
+      }
+  },
+  "IE": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":168,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-8.1515688843334,53.1770621494734]},\"properties\":{\"long_name\":\"Ireland\"}}]",
+      "effect_outcomes": {
+          "residues management": 2
+      }
+  },
+  "HU": {
+      "number_primary_studies": 48,
+      "geom": "[{\"type\":\"Feature\",\"id\":23,\"geometry\":{\"type\":\"Point\",\"coordinates\":[19.4134964917758,47.1665011028665]},\"properties\":{\"long_name\":\"Hungary\"}}]",
+      "effect_outcomes": {
+          "residues management": 6,
+          "warming experiments": 42
+      }
+  },
+  "TW": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":181,\"geometry\":{\"type\":\"Point\",\"coordinates\":[120.946354268563,23.7536495264305]},\"properties\":{\"long_name\":\"Taiwan\"}}]",
+      "effect_outcomes": {
+          "residues management": 2
+      }
+  },
+  "KR": {
+      "number_primary_studies": 14,
+      "geom": "[{\"type\":\"Feature\",\"id\":175,\"geometry\":{\"type\":\"Point\",\"coordinates\":[127.829497339392,36.3678714623738]},\"properties\":{\"long_name\":\"Korea, Republic of\"}}]",
+      "effect_outcomes": {
+          "warming experiments": 14
+      }
+  },
+  "JP": {
+      "number_primary_studies": 14,
+      "geom": "[{\"type\":\"Feature\",\"id\":172,\"geometry\":{\"type\":\"Point\",\"coordinates\":[137.974479548007,37.5403648371481]},\"properties\":{\"long_name\":\"Japan\"}}]",
+      "effect_outcomes": {
+          "warming experiments": 14
+      }
+  },
+  "GL": {
+      "number_primary_studies": 42,
+      "geom": "[{\"type\":\"Feature\",\"id\":131,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-41.3910123220457,74.7190215648767]},\"properties\":{\"long_name\":\"Greenland\"}}]",
+      "effect_outcomes": {
+          "warming experiments": 42
+      }
+  }
+};
+
+const wetLandMock = {
+  "US": {
+      "number_primary_studies": 2189,
+      "geom": "[{\"type\":\"Feature\",\"id\":135,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-112.493532187673,45.695381857143]},\"properties\":{\"long_name\":\"United States\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 77,
+          "wetland restauration": 2112
+      }
+  },
+  "CH": {
+      "number_primary_studies": 23,
+      "geom": "[{\"type\":\"Feature\",\"id\":19,\"geometry\":{\"type\":\"Point\",\"coordinates\":[8.23455626159083,46.8025891704654]},\"properties\":{\"long_name\":\"Switzerland\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 23
+      }
+  },
+  "FR": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":24,\"geometry\":{\"type\":\"Point\",\"coordinates\":[2.55042982501832,46.5648681707654]},\"properties\":{\"long_name\":\"France\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1
+      }
+  },
+  "JP": {
+      "number_primary_studies": 6,
+      "geom": "[{\"type\":\"Feature\",\"id\":172,\"geometry\":{\"type\":\"Point\",\"coordinates\":[137.974479548007,37.5403648371481]},\"properties\":{\"long_name\":\"Japan\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 6
+      }
+  },
+  "FI": {
+      "number_primary_studies": 10,
+      "geom": "[{\"type\":\"Feature\",\"id\":1,\"geometry\":{\"type\":\"Point\",\"coordinates\":[26.2724939330078,64.5036394636447]},\"properties\":{\"long_name\":\"Finland\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 10
+      }
+  },
+  "CN": {
+      "number_primary_studies": 12,
+      "geom": "[{\"type\":\"Feature\",\"id\":47,\"geometry\":{\"type\":\"Point\",\"coordinates\":[103.834685245701,36.5633690091615]},\"properties\":{\"long_name\":\"China\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 12
+      }
+  },
+  "KR": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":175,\"geometry\":{\"type\":\"Point\",\"coordinates\":[127.829497339392,36.3678714623738]},\"properties\":{\"long_name\":\"Korea, Republic of\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1
+      }
+  },
+  "ES": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":28,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-3.64926554373003,40.2275897809659]},\"properties\":{\"long_name\":\"Spain\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1
+      }
+  },
+  "PT": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":42,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-8.46677662826977,39.6027415383879]},\"properties\":{\"long_name\":\"Portugal\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1
+      }
+  },
+  "DE": {
+      "number_primary_studies": 6,
+      "geom": "[{\"type\":\"Feature\",\"id\":7,\"geometry\":{\"type\":\"Point\",\"coordinates\":[10.392312119663,51.110122216499]},\"properties\":{\"long_name\":\"Germany\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 6
+      }
+  },
+  "DK": {
+      "number_primary_studies": 7,
+      "geom": "[{\"type\":\"Feature\",\"id\":3,\"geometry\":{\"type\":\"Point\",\"coordinates\":[10.050570674144,55.9624401904021]},\"properties\":{\"long_name\":\"Denmark\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 7
+      }
+  },
+  "GB": {
+      "number_primary_studies": 11,
+      "geom": "[{\"type\":\"Feature\",\"id\":166,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-2.90032697743179,54.1599103645581]},\"properties\":{\"long_name\":\"United Kingdom\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 11
+      }
+  },
+  "NL": {
+      "number_primary_studies": 3,
+      "geom": "[{\"type\":\"Feature\",\"id\":8,\"geometry\":{\"type\":\"Point\",\"coordinates\":[5.60109723694747,52.2535780200093]},\"properties\":{\"long_name\":\"Netherlands\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 3
+      }
+  },
+  "SE": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":136,\"geometry\":{\"type\":\"Point\",\"coordinates\":[16.7411272225643,62.7877349687442]},\"properties\":{\"long_name\":\"Sweden\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 2
+      }
+  },
+  "PH": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":185,\"geometry\":{\"type\":\"Point\",\"coordinates\":[122.8736866702,11.747413798271]},\"properties\":{\"long_name\":\"Philippines\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1
+      }
+  },
+  "BE": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":11,\"geometry\":{\"type\":\"Point\",\"coordinates\":[4.66430435288703,50.6429600365894]},\"properties\":{\"long_name\":\"Belgium\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1
+      }
+  },
+  "IT": {
+      "number_primary_studies": 6,
+      "geom": "[{\"type\":\"Feature\",\"id\":21,\"geometry\":{\"type\":\"Point\",\"coordinates\":[12.0717489315058,42.7911387408423]},\"properties\":{\"long_name\":\"Italy\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 6
+      }
+  },
+  "NZ": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":242,\"geometry\":{\"type\":\"Point\",\"coordinates\":[171.604826752646,-41.8371889548333]},\"properties\":{\"long_name\":\"New Zealand\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 2
+      }
+  },
+  "AU": {
+      "number_primary_studies": 5,
+      "geom": "[{\"type\":\"Feature\",\"id\":222,\"geometry\":{\"type\":\"Point\",\"coordinates\":[134.490972365464,-25.7332813287158]},\"properties\":{\"long_name\":\"Australia\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 5
+      }
+  },
+  "IN": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":146,\"geometry\":{\"type\":\"Point\",\"coordinates\":[79.6188660674667,22.8813691826695]},\"properties\":{\"long_name\":\"India\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 2
+      }
+  },
+  "BR": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":103,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-53.0887365610034,-10.7723250928083]},\"properties\":{\"long_name\":\"Brazil\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1
+      }
+  }
+};
+
+const otherLandMock = {
+  "US": {
+      "number_primary_studies": 2106,
+      "geom": "[{\"type\":\"Feature\",\"id\":135,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-112.493532187673,45.695381857143]},\"properties\":{\"long_name\":\"United States\"}}]",
+      "effect_outcomes": {
+          "fire": 175,
+          "mineral fertilization": 63,
+          "shrub encroachment": 552,
+          "warming experiments": 1316
+      }
+  },
+  "ZA": {
+      "number_primary_studies": 62,
+      "geom": "[{\"type\":\"Feature\",\"id\":129,\"geometry\":{\"type\":\"Point\",\"coordinates\":[25.093077827096,-28.9995232336903]},\"properties\":{\"long_name\":\"South Africa\"}}]",
+      "effect_outcomes": {
+          "fire": 56,
+          "shrub encroachment": 6
+      }
+  },
+  "AR": {
+      "number_primary_studies": 44,
+      "geom": "[{\"type\":\"Feature\",\"id\":124,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-65.1675007436911,-35.3766672659209]},\"properties\":{\"long_name\":\"Argentina\"}}]",
+      "effect_outcomes": {
+          "fire": 14,
+          "shrub encroachment": 30
+      }
+  },
+  "BR": {
+      "number_primary_studies": 44,
+      "geom": "[{\"type\":\"Feature\",\"id\":103,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-53.0887365610034,-10.7723250928083]},\"properties\":{\"long_name\":\"Brazil\"}}]",
+      "effect_outcomes": {
+          "fire": 42,
+          "mineral fertilization": 2
+      }
+  },
+  "AU": {
+      "number_primary_studies": 195,
+      "geom": "[{\"type\":\"Feature\",\"id\":222,\"geometry\":{\"type\":\"Point\",\"coordinates\":[134.490972365464,-25.7332813287158]},\"properties\":{\"long_name\":\"Australia\"}}]",
+      "effect_outcomes": {
+          "fire": 63,
+          "shrub encroachment": 48,
+          "warming experiments": 84
+      }
+  },
+  "BF": {
+      "number_primary_studies": 13,
+      "geom": "[{\"type\":\"Feature\",\"id\":78,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-1.7398144405188,12.2778969231121]},\"properties\":{\"long_name\":\"Burkina Faso\"}}]",
+      "effect_outcomes": {
+          "fire": 7,
+          "shrub encroachment": 6
+      }
+  },
+  "GB": {
+      "number_primary_studies": 297,
+      "geom": "[{\"type\":\"Feature\",\"id\":166,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-2.90032697743179,54.1599103645581]},\"properties\":{\"long_name\":\"United Kingdom\"}}]",
+      "effect_outcomes": {
+          "fire": 7,
+          "mineral fertilization": 10,
+          "warming experiments": 280
+      }
+  },
+  "RU": {
+      "number_primary_studies": 54,
+      "geom": "[{\"type\":\"Feature\",\"id\":132,\"geometry\":{\"type\":\"Point\",\"coordinates\":[96.689529243041,61.9881557098379]},\"properties\":{\"long_name\":\"Russia\"}}]",
+      "effect_outcomes": {
+          "fire": 14,
+          "shrub encroachment": 12,
+          "warming experiments": 28
+      }
+  },
+  "SE": {
+      "number_primary_studies": 498,
+      "geom": "[{\"type\":\"Feature\",\"id\":136,\"geometry\":{\"type\":\"Point\",\"coordinates\":[16.7411272225643,62.7877349687442]},\"properties\":{\"long_name\":\"Sweden\"}}]",
+      "effect_outcomes": {
+          "fire": 14,
+          "mineral fertilization": 2,
+          "shrub encroachment": 6,
+          "warming experiments": 476
+      }
+  },
+  "IN": {
+      "number_primary_studies": 19,
+      "geom": "[{\"type\":\"Feature\",\"id\":146,\"geometry\":{\"type\":\"Point\",\"coordinates\":[79.6188660674667,22.8813691826695]},\"properties\":{\"long_name\":\"India\"}}]",
+      "effect_outcomes": {
+          "fire": 7,
+          "mineral fertilization": 12
+      }
+  },
+  "NO": {
+      "number_primary_studies": 94,
+      "geom": "[{\"type\":\"Feature\",\"id\":134,\"geometry\":{\"type\":\"Point\",\"coordinates\":[14.075244986957,64.4477088677774]},\"properties\":{\"long_name\":\"Norway\"}}]",
+      "effect_outcomes": {
+          "fire": 7,
+          "mineral fertilization": 3,
+          "warming experiments": 84
+      }
+  },
+  "FI": {
+      "number_primary_studies": 153,
+      "geom": "[{\"type\":\"Feature\",\"id\":1,\"geometry\":{\"type\":\"Point\",\"coordinates\":[26.2724939330078,64.5036394636447]},\"properties\":{\"long_name\":\"Finland\"}}]",
+      "effect_outcomes": {
+          "fire": 7,
+          "mineral fertilization": 6,
+          "warming experiments": 140
+      }
+  },
+  "ES": {
+      "number_primary_studies": 266,
+      "geom": "[{\"type\":\"Feature\",\"id\":28,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-3.64926554373003,40.2275897809659]},\"properties\":{\"long_name\":\"Spain\"}}]",
+      "effect_outcomes": {
+          "fire": 14,
+          "mineral fertilization": 4,
+          "shrub encroachment": 24,
+          "warming experiments": 224
+      }
+  },
+  "PT": {
+      "number_primary_studies": 7,
+      "geom": "[{\"type\":\"Feature\",\"id\":42,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-8.46677662826977,39.6027415383879]},\"properties\":{\"long_name\":\"Portugal\"}}]",
+      "effect_outcomes": {
+          "fire": 7
+      }
+  },
+  "CI": {
+      "number_primary_studies": 7,
+      "geom": "[{\"type\":\"Feature\",\"id\":95,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-5.55552964565554,7.63165287991665]},\"properties\":{\"long_name\":\"Cote d'Ivoire\"}}]",
+      "effect_outcomes": {
+          "fire": 7
+      }
+  },
+  "ZW": {
+      "number_primary_studies": 7,
+      "geom": "[{\"type\":\"Feature\",\"id\":122,\"geometry\":{\"type\":\"Point\",\"coordinates\":[29.8717598713902,-19.000012265249]},\"properties\":{\"long_name\":\"Zimbabwe\"}}]",
+      "effect_outcomes": {
+          "fire": 7
+      }
+  },
+  "DE": {
+      "number_primary_studies": 17,
+      "geom": "[{\"type\":\"Feature\",\"id\":7,\"geometry\":{\"type\":\"Point\",\"coordinates\":[10.392312119663,51.110122216499]},\"properties\":{\"long_name\":\"Germany\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization": 5,
+          "shrub encroachment": 12
+      }
+  },
+  "FR": {
+      "number_primary_studies": 35,
+      "geom": "[{\"type\":\"Feature\",\"id\":24,\"geometry\":{\"type\":\"Point\",\"coordinates\":[2.55042982501832,46.5648681707654]},\"properties\":{\"long_name\":\"France\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization": 1,
+          "shrub encroachment": 6,
+          "warming experiments": 28
+      }
+  },
+  "CH": {
+      "number_primary_studies": 33,
+      "geom": "[{\"type\":\"Feature\",\"id\":19,\"geometry\":{\"type\":\"Point\",\"coordinates\":[8.23455626159083,46.8025891704654]},\"properties\":{\"long_name\":\"Switzerland\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization": 5,
+          "warming experiments": 28
+      }
+  },
+  "CN": {
+      "number_primary_studies": 545,
+      "geom": "[{\"type\":\"Feature\",\"id\":47,\"geometry\":{\"type\":\"Point\",\"coordinates\":[103.834685245701,36.5633690091615]},\"properties\":{\"long_name\":\"China\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization": 7,
+          "shrub encroachment": 6,
+          "warming experiments": 532
+      }
+  },
+  "BE": {
+      "number_primary_studies": 31,
+      "geom": "[{\"type\":\"Feature\",\"id\":11,\"geometry\":{\"type\":\"Point\",\"coordinates\":[4.66430435288703,50.6429600365894]},\"properties\":{\"long_name\":\"Belgium\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization": 3,
+          "warming experiments": 28
+      }
+  },
+  "NL": {
+      "number_primary_studies": 142,
+      "geom": "[{\"type\":\"Feature\",\"id\":8,\"geometry\":{\"type\":\"Point\",\"coordinates\":[5.60109723694747,52.2535780200093]},\"properties\":{\"long_name\":\"Netherlands\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization": 2,
+          "warming experiments": 140
+      }
+  },
+  "ID": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":215,\"geometry\":{\"type\":\"Point\",\"coordinates\":[117.311610756535,-2.22979378402477]},\"properties\":{\"long_name\":\"Indonesia\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization": 2
+      }
+  },
+  "JP": {
+      "number_primary_studies": 29,
+      "geom": "[{\"type\":\"Feature\",\"id\":172,\"geometry\":{\"type\":\"Point\",\"coordinates\":[137.974479548007,37.5403648371481]},\"properties\":{\"long_name\":\"Japan\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization": 1,
+          "warming experiments": 28
+      }
+  },
+  "IT": {
+      "number_primary_studies": 105,
+      "geom": "[{\"type\":\"Feature\",\"id\":21,\"geometry\":{\"type\":\"Point\",\"coordinates\":[12.0717489315058,42.7911387408423]},\"properties\":{\"long_name\":\"Italy\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization": 3,
+          "shrub encroachment": 18,
+          "warming experiments": 84
+      }
+  },
+  "CA": {
+      "number_primary_studies": 125,
+      "geom": "[{\"type\":\"Feature\",\"id\":6,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-98.2610993286887,61.3927417486694]},\"properties\":{\"long_name\":\"Canada\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization": 5,
+          "shrub encroachment": 36,
+          "warming experiments": 84
+      }
+  },
+  "MX": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":137,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-102.534823474268,23.9507951094759]},\"properties\":{\"long_name\":\"Mexico\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization": 1
+      }
+  },
+  "CR": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":88,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-84.1890532213732,9.97056913526161]},\"properties\":{\"long_name\":\"Costa Rica\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization": 2
+      }
+  },
+  "PR": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":189,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-66.466215242424,18.220944736459]},\"properties\":{\"long_name\":\"Puerto Rico\"}}]",
+      "effect_outcomes": {
+          "mineral fertilization": 1
+      }
+  },
+  "NA": {
+      "number_primary_studies": 6,
+      "geom": "[{\"type\":\"Feature\",\"id\":123,\"geometry\":{\"type\":\"Point\",\"coordinates\":[17.2184507519956,-22.1333085407672]},\"properties\":{\"long_name\":\"Namibia\"}}]",
+      "effect_outcomes": {
+          "shrub encroachment": 6
+      }
+  },
+  "BW": {
+      "number_primary_studies": 6,
+      "geom": "[{\"type\":\"Feature\",\"id\":126,\"geometry\":{\"type\":\"Point\",\"coordinates\":[23.8150759573921,-22.1819728401153]},\"properties\":{\"long_name\":\"Botswana\"}}]",
+      "effect_outcomes": {
+          "shrub encroachment": 6
+      }
+  },
+  "ET": {
+      "number_primary_studies": 12,
+      "geom": "[{\"type\":\"Feature\",\"id\":80,\"geometry\":{\"type\":\"Point\",\"coordinates\":[39.616065214302,8.62611419188303]},\"properties\":{\"long_name\":\"Ethiopia\"}}]",
+      "effect_outcomes": {
+          "shrub encroachment": 12
+      }
+  },
+  "IL": {
+      "number_primary_studies": 24,
+      "geom": "[{\"type\":\"Feature\",\"id\":55,\"geometry\":{\"type\":\"Point\",\"coordinates\":[34.9660224703455,31.3581661123112]},\"properties\":{\"long_name\":\"Israel\"}}]",
+      "effect_outcomes": {
+          "shrub encroachment": 24
+      }
+  },
+  "PL": {
+      "number_primary_studies": 6,
+      "geom": "[{\"type\":\"Feature\",\"id\":10,\"geometry\":{\"type\":\"Point\",\"coordinates\":[19.4009686815796,52.124745716988]},\"properties\":{\"long_name\":\"Poland\"}}]",
+      "effect_outcomes": {
+          "shrub encroachment": 6
+      }
+  },
+  "TZ": {
+      "number_primary_studies": 6,
+      "geom": "[{\"type\":\"Feature\",\"id\":116,\"geometry\":{\"type\":\"Point\",\"coordinates\":[34.8234205059706,-6.27018476636659]},\"properties\":{\"long_name\":\"Tanzania, United Republic of\"}}]",
+      "effect_outcomes": {
+          "shrub encroachment": 6
+      }
+  },
+  "KR": {
+      "number_primary_studies": 28,
+      "geom": "[{\"type\":\"Feature\",\"id\":175,\"geometry\":{\"type\":\"Point\",\"coordinates\":[127.829497339392,36.3678714623738]},\"properties\":{\"long_name\":\"Korea, Republic of\"}}]",
+      "effect_outcomes": {
+          "warming experiments": 28
+      }
+  },
+  "DK": {
+      "number_primary_studies": 168,
+      "geom": "[{\"type\":\"Feature\",\"id\":3,\"geometry\":{\"type\":\"Point\",\"coordinates\":[10.050570674144,55.9624401904021]},\"properties\":{\"long_name\":\"Denmark\"}}]",
+      "effect_outcomes": {
+          "warming experiments": 168
+      }
+  },
+  "HU": {
+      "number_primary_studies": 84,
+      "geom": "[{\"type\":\"Feature\",\"id\":23,\"geometry\":{\"type\":\"Point\",\"coordinates\":[19.4134964917758,47.1665011028665]},\"properties\":{\"long_name\":\"Hungary\"}}]",
+      "effect_outcomes": {
+          "warming experiments": 84
+      }
+  },
+  "AT": {
+      "number_primary_studies": 56,
+      "geom": "[{\"type\":\"Feature\",\"id\":18,\"geometry\":{\"type\":\"Point\",\"coordinates\":[14.1399739641446,47.592950004704]},\"properties\":{\"long_name\":\"Austria\"}}]",
+      "effect_outcomes": {
+          "warming experiments": 56
+      }
+  },
+  "GL": {
+      "number_primary_studies": 84,
+      "geom": "[{\"type\":\"Feature\",\"id\":131,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-41.3910123220457,74.7190215648767]},\"properties\":{\"long_name\":\"Greenland\"}}]",
+      "effect_outcomes": {
+          "warming experiments": 84
       }
   }
 };
