@@ -106,13 +106,45 @@ const climateChangeMock = {
       "value": -5,
       "low": -11,
       "high": 11,
-      publications: 23
+      publications: 23,
+      details: [
+        {
+          title: "sub-type 1",
+          "value": 25,
+          "low": -11,
+          "high": 31,
+          publications: 13
+        },
+        {
+          title: "sub-type 2",
+          "value": -6,
+          "low": -10,
+          "high": 11,
+          publications: 10
+        },
+      ]
     },{
       title: "Fire",
       "value": 11,
       "low": -23,
       "high": 31,
-      publications: 512
+      publications: 512,
+      details: [
+        {
+          title: "sub-type 1",
+          "value": -20,
+          "low": -41,
+          "high": -11,
+          publications: 413
+        },
+        {
+          title: "sub-type 2",
+          "value": -36,
+          "low": -70,
+          "high": 11,
+          publications: 99
+        },
+      ]
     },
   ]
 };
@@ -127,19 +159,74 @@ const landUseMock = {
       "value": 37,
       "low": -26,
       "high": 50,
-      publications: 112
+      publications: 112,
+      details: [
+        {
+          title: "sub-type 1",
+          "value": -20,
+          "low": -41,
+          "high": -11,
+          publications: 13
+        },
+        {
+          title: "sub-type 2",
+          "value": -36,
+          "low": -70,
+          "high": 11,
+          publications: 99
+        },
+      ]
     },{
       title: "Cropland to Grassland",
       "value": 11,
       "low": -23,
       "high": 31,
-      publications: 51
+      publications: 51,
+      details: [
+        {
+          title: "sub-type 1",
+          "value": -20,
+          "low": -41,
+          "high": -11,
+          publications: 43
+        },
+        {
+          title: "sub-type 2",
+          "value": -36,
+          "low": -70,
+          "high": 11,
+          publications: 8
+        },
+      ]
     },{
       title: "Cropland to Other Land",
       "value": 27,
       "low": 23,
       "high": 91,
-      publications: 51
+      publications: 51,
+      details: [
+        {
+          title: "sub-type 1",
+          "value": -20,
+          "low": -41,
+          "high": -11,
+          publications: 1
+        },
+        {
+          title: "sub-type 2",
+          "value": -36,
+          "low": -70,
+          "high": 11,
+          publications: 25
+        },
+        {
+          title: "sub-type 3",
+          "value": -36,
+          "low": -70,
+          "high": 11,
+          publications: 25
+        },
+      ]
     }
   ]
 };
@@ -153,14 +240,46 @@ const managementMock = {
       "value": 11,
       "low": -23,
       "high": 31,
-      publications: 51
+      publications: 51,
+      details: [
+        {
+          title: "sub-type 1",
+          "value": -20,
+          "low": -41,
+          "high": -11,
+          publications: 7
+        },
+        {
+          title: "sub-type 2",
+          "value": -36,
+          "low": -70,
+          "high": 11,
+          publications: 44
+        },
+      ]
     },
     {
       title: "Agroforestry",
       "value": 27,
       "low": 23,
       "high": 91,
-      publications: 51
+      publications: 51,
+      details: [
+        {
+          title: "sub-type 1",
+          "value": -20,
+          "low": -41,
+          "high": -11,
+          publications: 50
+        },
+        {
+          title: "sub-type 2",
+          "value": -36,
+          "low": -70,
+          "high": 11,
+          publications: 1
+        },
+      ]
     },
   ]
 };

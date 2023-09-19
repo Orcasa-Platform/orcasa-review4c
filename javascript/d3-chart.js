@@ -68,7 +68,7 @@ const createSVGChart = (slug, data) => {
   .style("text-anchor", "start");
 
   const buttonHTML = (title, publications) =>
-    `<button type="button" class='btn-filter-chart'>
+    `<button type="button" class='btn-filter btn-filter-chart' aria-pressed="false" id="btn-${kebabCase(title)}">
       <span class="font-semibold text-slate-700">${title}</span>
       <span class="text-xs font-normal">(${publications})</span>
     </button>`;
@@ -90,6 +90,14 @@ const createSVGChart = (slug, data) => {
       const dataPublications = data.find((item) => item.title === title)?.publications;
       return buttonHTML(title, dataPublications);
     }).on("click", function(_, title){
+      mutations.setFilter('sub-category', title);
+
+      // Change aria pressed to true
+      const buttons = document.querySelectorAll('.btn-filter-chart');
+      buttons.forEach(button => button.setAttribute('aria-pressed', 'false'));
+      const button = document.querySelector(`#btn-${kebabCase(title)}`);
+      button.setAttribute('aria-pressed', 'true');
+
       const dataAction = data.find((item) => item.title === title)?.action;
       return dataAction && dataAction();
     });

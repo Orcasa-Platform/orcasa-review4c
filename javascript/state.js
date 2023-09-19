@@ -6,6 +6,7 @@ const state = {
   landUse: 'cropland',
   landUses: null,
   interventions: null,
+  filter: null,
 };
 
 const mutations = {
@@ -32,6 +33,9 @@ const mutations = {
   },
   setInterventions(interventions) {
     state.interventions = interventions;
+  },
+  setFilter(type, value) {
+    state.filter = { type: type, value: value };
   }
 };
 
