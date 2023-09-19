@@ -60,12 +60,15 @@ const createSVGChart = (slug, data) => {
     d.active ? [d].concat(d.details) : d
   ).flat();
 
-  const ITEM_HEIGHT = 80;
+  const ITEM_HEIGHT = 60;
   const HEIGHT_PADDING = 100;
+
+  const yTickHeight = 44;
+  const yTickWidth = 120;
 
   const activeDataHeight = !!activeData ? activeData.details.length * ITEM_HEIGHT : 0; // Assuming each detail is 20 pixels tall
   const heightValue = (data.length) * ITEM_HEIGHT + activeDataHeight + HEIGHT_PADDING;
-  const widthValue = 500;
+  const widthValue = 300;
 
   const RIGHT_AXIS_PADDING = 200;
   const AXIS_PADDING = 20;
@@ -77,6 +80,7 @@ const createSVGChart = (slug, data) => {
   const chart = d3.select(`#chart-${slug}`)
     .style("text-align", 'center')
     .append("svg")
+    .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox", `-${AXIS_PADDING} -${AXIS_PADDING} ${widthValue + RIGHT_AXIS_PADDING} ${heightValue}`)
 
     const width = widthValue - margin.left - margin.right;
@@ -99,7 +103,8 @@ const createSVGChart = (slug, data) => {
 
   // Create x axis
   const xAxis = d3.axisTop(xScale)
-    .tickFormat(d => d3.format(".0%")(d/100));
+    .tickFormat(d => d3.format(".0%")(d/100))
+    .tickValues([-100, -75, -50, -25, 0, 25, 50, 75, 100]);
 
   // Draw x axis
   const xAxisElement = svg.append("g")
@@ -109,7 +114,7 @@ const createSVGChart = (slug, data) => {
   const xAxisTick = xAxisElement.selectAll(".tick")
 
   xAxisTick.select("text")
-    .attr("fill", gray400);
+    .attr('class', 'font-sans text-gray-400')
 
   xAxisTick.selectAll("line")
     .attr("stroke", 'none');
@@ -121,14 +126,11 @@ const createSVGChart = (slug, data) => {
     .tickFormat(() => '');
 
   const buttonHTML = (title, publications, slug) =>
-    `<button type="button" class='btn-filter btn-filter-chart' aria-pressed="false" id="btn-${kebabCase(slug)}">
+    `<button type="button" class='btn-filter-chart mt-2' aria-pressed="false" id="btn-${kebabCase(slug)}">
       <span class="font-semibold text-slate-700">${title}</span>
       <span class="text-xs font-normal">(${publications})</span>
     </button>`;
   ;
-
-  const yTickHeight = 44;
-  const yTickWidth = 240;
 
   const yAxisRegions = svg
   .append("g")
@@ -151,7 +153,7 @@ const createSVGChart = (slug, data) => {
     // .attr("height", 0)
     // .transition()
     // .duration(500)
-    .attr("height", ITEM_HEIGHT + 4)
+    .attr("height", ITEM_HEIGHT + 10)
     .attr("fill", (d) => d.details ? 'transparent' : gray100)
 
   yAxisTicks.call(yAxis)
@@ -168,8 +170,8 @@ const createSVGChart = (slug, data) => {
       return buttonHTML(title, dataItem?.publications, slug);
     }).on("click", (_, title) => click(_, title, slug, data, !!getSubcategoryByTitle(data, title)));
 
-    const foreignObjects = document.getElementsByTagName("foreignObject");
-    fixedSizeForeignObjects(...foreignObjects);
+    // const foreignObjects = document.getElementsByTagName("foreignObject");
+    // fixedSizeForeignObjects(...foreignObjects);
 
   // Remove all domain lines
   svg.selectAll('.domain').attr('stroke-width', 0);
