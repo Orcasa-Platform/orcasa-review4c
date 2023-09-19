@@ -30,16 +30,60 @@ const addLayer = (map, layerSlug="all") => {
         // ADD SOURCE
         map.addSource(layerName, {
           'type': 'geojson',
-          'data': geoJSONContent
+          'data': geoJSONContent,
+          cluster: true,
+          clusterMaxZoom: 14, // Max zoom to cluster points on
+          clusterRadius: 50, // Radius of each cluster when clustering points (defaults to 50)
+          clusterProperties: {
+            number_primary_studies: ['+', ['get', 'number_primary_studies']]
+          }
         });
       }
 
       if (!currentLayers.find(l => l.id === layerName)) {
+
+        // ADD CLUSTERS
+        map.addLayer({
+          id: `clusters-${layerName}`,
+          type: 'symbol',
+          source: layerName,
+          filter: ['has', 'point_count'],
+          'layout': {
+            'text-field': '{number_primary_studies}',
+            'text-size': 10,
+            'text-offset': [0, -0.5],
+            'text-anchor': 'top',
+            'icon-image': 'square',
+            'icon-size': [
+              'interpolate',
+              ['linear'],
+              ['get', 'number_primary_studies'],
+              0, 0.4,
+              50000, 2
+            ],
+          },
+          'paint': {
+            'text-color': '#fff',
+            'icon-color': [
+              'step',
+              ['get', 'number_primary_studies'],
+              '#6EE7B7',
+              10,
+              '#14B8A6',
+              50,
+              '#288F86',
+              100,
+              '#1E6B65'
+            ]
+          }
+        });
+
         // ADD LAYER
         map.addLayer({
           'id': layerName,
           'source': layerName,
           'type': 'symbol',
+          filter: ['!', ['has', 'point_count']],
           'layout': {
             'text-field': '{number_primary_studies}',
             'text-size': 10,
@@ -72,6 +116,27 @@ const addLayer = (map, layerSlug="all") => {
               '#1E6B65'
             ]
           }
+        });
+
+        // Clusters zoom on click
+        map.on('click', `clusters-${layerName}`, (e) => {
+          const features = map.queryRenderedFeatures(e.point, {
+            layers: [`clusters-${layerName}`]
+          });
+          const clusterId = features[0].properties.cluster_id;
+          const leftPadding = elements.sidebar.getBoundingClientRect().right;
+          map.getSource(layerName).getClusterExpansionZoom(
+              clusterId,
+              (err, zoom) => {
+                  if (err) return;
+
+                  map.easeTo({
+                      center: features[0].geometry.coordinates,
+                      zoom,
+                      padding: { left: leftPadding }
+                  });
+              }
+          );
         });
 
         // ADD TOOLTIP
