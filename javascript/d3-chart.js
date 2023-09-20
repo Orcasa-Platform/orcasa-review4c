@@ -81,6 +81,19 @@ const click = (_, title, slug, data, isSubcategory) => {
         active: false,
       };
     });
+
+    // All the other charts should close their details
+    const chartData = window.getters.chartData();
+    Object.keys(chartData).forEach((key) => {
+      if (key !== slug) {
+        const data = chartData[key];
+        const updatedData = data.map(d => ({
+          ...d,
+          active: false,
+        }));
+        createSVGChart(key, updatedData);
+      }
+    });
   }
 
   window.mutations.setFilter(isSubcategory ? 'sub-category' : 'detail', title);
