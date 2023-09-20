@@ -175,14 +175,15 @@
                 Go back
               </div>
             </button>
+            <!-- PUBLICATION HEADER -->
             <div class="flex flex-col space-y-8 mt-2">
               <div class="flex">
-                <div
+                <header
                   class="text-slate-500">Showing
                   <span id="land-use-publications-detail"></span> scientific
                   publications and <span id="land-use-meta-analysis-detail"></span>
                   meta-analyses related to
-                  cropland.</div>
+                  cropland.</header>
                 <button
                   type="button"
                   id="btn-sort-publications"
@@ -190,6 +191,91 @@
                   Newest first
                   <i class="h-6 w-6" data-lucide="arrow-up-wide-narrow"></i>
                 </button>
+              </div>
+              <!-- PUBLICATION FILTERS -->
+              <div class="flex w-full justify-between">
+                <div id="publication-filters" class="flex flex-col space-y-4">
+                  <div id="year-range">
+                    <div
+                      class="text-slate-700 font-semibold mb-4">
+                      Year range
+                    </div>
+                    <div
+                      class="items-end gap-1 inline-flex">
+                      <div class="w-4 h-[15px] bg-gray-300"></div>
+                      <div class="w-4 h-1.5 bg-gray-300"></div>
+                      <div class="w-4 h-8 bg-gray-300"></div>
+                      <div class="w-4 h-[58px] bg-gray-300"></div>
+                      <div class="w-4 h-[82px] bg-gray-300"></div>
+                      <div class="w-4 h-[92px] bg-gray-300"></div>
+                      <div class="w-4 h-[74px] bg-gray-300"></div>
+                      <div class="w-4 h-8 bg-gray-300"></div>
+                      <div class="w-4 h-[22px] bg-gray-300"></div>
+                      <div class="w-4 h-1.5 bg-gray-300"></div>
+                      <div class="w-4 h-3 bg-gray-300"></div>
+                    </div>
+                  </div>
+                  <div id="type-publication">
+                    <div
+                      class="text-slate-700 font-semibold mb-4">
+                      Type of publication
+                    </div>
+                    <div class="flex h-14 px-4 flex-col justify-center gap-2">
+                      <label class="inline-flex items-center gap-2">
+                        <input type="checkbox" class="checkbox">
+                        <span class="text-slate-700">Primary paper</span>
+                      </label>
+                      <div class="inline-flex items-center gap-2">
+                        <label class="inline-flex items-center gap-2">
+                          <input type="checkbox" class="checkbox">
+                          <span class="text-slate-700">Meta-analysis</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="type-document">
+                    <!-- TODO: Replace fake dropdown -->
+                    <div
+                      class="w-[284px] h-14 flex-col flex">
+                      <div
+                        class="p-4 bg-white shadow border border-gray-400 flex justify-between">
+                        <div
+                          class="text-slate-700">Journal</div>
+                        <i
+                          data-lucide="chevron-down"
+                          class="w-6 h-6 relative stroke-teal-500"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="country">
+                    <div
+                      class="w-[284px] h-14 flex-col flex">
+                      <div
+                        class="p-4 bg-white shadow border border-gray-400 flex justify-between">
+                        <div
+                          class="text-slate-700">Country (1)</div>
+                        <i
+                          data-lucide="chevron-down"
+                          class="w-6 h-6 relative stroke-teal-500"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="search">
+                    <div class="relative">
+                      <input
+                        class="relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 pl-10 focus:outline-none focus:shadow-outline focus:ring focus:ring-teal-500"
+                        type="text" placeholder="Filter by keyword">
+                      <div
+                        class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <i data-lucide="search"
+                          class="w-6 h-6"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  Publications
+                </div>
               </div>
             </div>
           </div>
