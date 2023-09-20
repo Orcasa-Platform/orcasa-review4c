@@ -29,7 +29,7 @@ map.on('load', function() {
       paint: {
         'raster-opacity': 1,
       },
-  }, 'countries-labels');
+  }, 'background');
 
   map.addLayer(
     {
@@ -39,7 +39,7 @@ map.on('load', function() {
       paint: {
         'raster-opacity': 0,
       },
-  }, 'countries-labels');
+  }, 'background');
 
   addSquareIcon(map);
   addLayer(map);

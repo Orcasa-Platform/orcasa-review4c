@@ -17,43 +17,8 @@ const mapStyle = {
     {
       "id": "background",
       "type": "background",
-      "layout": {"visibility": "visible"},
-      "paint": {"background-color": "#f8f4f0"}
-
-    },
-    {
-      "id": "countries-labels-light",
-      "type": "symbol",
-      "paint": {
-        "text-color": "#fff"
-      },
-      "layout": {
-        "text-field": [
-          "get",
-          "country_name"
-        ],
-        "text-anchor": "top"
-      },
-      "source": "labels",
-      "metadata": {
-        "position": "top"
-      }
-    },
-    {
-      "id": "countries-labels",
-      "type": "symbol",
-      "layout": {
-        "text-field": [
-          "get",
-          "country_name"
-        ],
-        "text-anchor": "top"
-      },
-      "source": "labels",
-      "metadata": {
-        "position": "top"
-      }
-    },
+      "layout": {"visibility": "none"},
+    }
   ],
   "id": "orcasa"
 };
