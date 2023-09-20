@@ -11,12 +11,65 @@ const getSlugByTitle = (data, title) => {
   return isSubcategory ? kebabCase(title) : kebabCase(`${activeSubcategoryItem.title}-${title}`);
 };
 
-const click = (_, title, slug, data, isSubcategory) => {
-  window.mutations.setFilter(isSubcategory ? 'sub-category' : 'detail', title);
+const updateButtons = (title, data) => {
+  const buttons = document.querySelectorAll('.btn-filter-chart');
+  buttons.forEach(button => button.setAttribute('aria-pressed', 'false'));
 
-  if (isSubcategory) {
-    // Rerender chart to show details
+  if (title) {
+    const button = document.querySelector(`#btn-${getSlugByTitle(data, title)}`);
+    button.setAttribute('aria-pressed', 'true');
+  }
+};
+
+const updateChartAndButtons = (slug, title, data) => {
+  createSVGChart(slug, data);
+  updateButtons(title, data)
+}
+const click = (_, title, slug, data, isSubcategory) => {
+  const currentSelection = window.getters.filter();
+  let currentTitle = title;
+
+  // If the clicked subcategory was selected clear the filter and close the details
+  if (currentSelection?.type === 'sub-category' && currentSelection?.value === title) {
+    window.mutations.setFilter(null, null);
+    const updatedData = data.map(d => ({
+        ...d,
+        active: false,
+      }));
+    updateChartAndButtons(slug, null, updatedData)
+    return;
+  }
+
+  // If the clicked detail was selected select the active subcategory
+  if (currentSelection?.type === 'detail' && currentSelection?.value === title) {
+    console.log('clear detail')
+
+    const activeSubcategoryItem = data.find((item) => item.active);
+    currentTitle = activeSubcategoryItem.title;
+    window.mutations.setFilter('sub-category', currentTitle);
+    // Rerender chart to hide details
     const updatedData = data.map(d => {
+      if (d.title === currentTitle) {
+        return {
+          ...d,
+          active: true,
+        };
+      }
+      return {
+        ...d,
+        active: false,
+      };
+    });
+    updateChartAndButtons(slug, currentTitle, updatedData)
+    return;
+  }
+
+
+  // Select subcategory or detail
+
+  let updatedData = data;
+  if (isSubcategory) {
+    updatedData = data.map(d => {
       if (d.title === title) {
         return {
           ...d,
@@ -28,19 +81,24 @@ const click = (_, title, slug, data, isSubcategory) => {
         active: false,
       };
     });
-    createSVGChart(slug, updatedData);
+
+    // All the other charts should close their details
+    const chartData = window.getters.chartData();
+    Object.keys(chartData).forEach((key) => {
+      if (key !== slug) {
+        const data = chartData[key];
+        const updatedData = data.map(d => ({
+          ...d,
+          active: false,
+        }));
+        createSVGChart(key, updatedData);
+      }
+    });
   }
 
-  if(!isSubcategory) {
-    // Rerender to filter opacity of error bars
-    createSVGChart(slug, data);
-  }
-
-  // Change aria pressed to true
-  const buttons = document.querySelectorAll('.btn-filter-chart');
-  buttons.forEach(button => button.setAttribute('aria-pressed', 'false'));
-  const button = document.querySelector(`#btn-${getSlugByTitle(data, title)}`);
-  button.setAttribute('aria-pressed', 'true');
+  window.mutations.setFilter(isSubcategory ? 'sub-category' : 'detail', title);
+  // Rerender to show details or filter opacity of error bars
+  updateChartAndButtons(slug, title, updatedData)
 };
 
 // Create the SVG container
