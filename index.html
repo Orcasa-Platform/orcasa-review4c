@@ -88,7 +88,7 @@
         }
 
         .publication-panel {
-          @apply absolute top-0 w-full max-w-[600px] left-0 h-screen bg-white transition-transform z-20 !mt-0;
+          @apply absolute top-0 p-6 w-full max-w-[600px] left-0 h-screen bg-white transition-transform z-20 !mt-0;
         }
       }
     </style>
@@ -163,18 +163,34 @@
           <div id="chart-tooltip"
             class="p-1 bg-slate-700 text-white text-sm absolute hidden rounded"></div>
           <div id="publication-panel"
-            class="publication-panel -translate-x-full">
+            class="publication-panel">
+            <!-- -translate-x-full -->
             <button
               type="button"
               id="btn-close-publication-panel"
-              class="h-6 mt-6 flex pr-1 justify-center items-center gap-1">
-              <div class="w-6 h-6 relative origin-top-left -rotate-180"></div>
+              class="h-6 flex pr-1 justify-center items-center gap-1">
               <i class="w-6 h-6 stroke-teal-500"
                 data-lucide="arrow-left"></i>
               <div class="text-teal-500 text-base font-semibold">
                 Go back
               </div>
             </button>
+            <div class="flex flex-col space-y-8 mt-2">
+              <div class="flex">
+                <div
+                  class="text-slate-500">Showing
+                  <span id="land-use-publications-detail"></span> scientific
+                  publications and <span id="land-use-meta-analysis-detail"></span>
+                  meta-analyses related to
+                  cropland.</div>
+                <button
+                  type="button"
+                  class="btn-secondary flex !py-2 min-w-[150px]">
+                  Newest first
+                  <i class="h-6 w-6" data-lucide="arrow-up-wide-narrow"></i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

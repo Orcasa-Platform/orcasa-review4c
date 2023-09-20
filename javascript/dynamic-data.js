@@ -47,6 +47,8 @@ window.addEventListener('load', function () {
     const metaAnalysisNumber = metaAnalysis?.toLocaleString() || '-';
     elements.landUsePublications.innerHTML = publicationsNumber;
     elements.landUseMetaAnalysis.innerHTML = metaAnalysisNumber;
+    elements.landUsePublicationsDetail.innerHTML = publicationsNumber;
+    elements.landUseMetaAnalysisDetail.innerHTML = metaAnalysisNumber;
     elements.landUseText.innerHTML = name.toLowerCase();
 
     // Load interventions

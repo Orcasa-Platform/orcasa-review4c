@@ -9,6 +9,7 @@ window.addEventListener('load', function () {
     interventions: null,
     filter: null,
     publicationsOpen: false,
+    chartData: null,
   };
 
   window.mutations = {
@@ -42,6 +43,9 @@ window.addEventListener('load', function () {
     setFilter(type, value) {
       state.filter = { type: type, value: value };
     },
+    setChartData(chartData) {
+      state.chartData = chartData;
+    },
   };
 
   window.getters = {
@@ -49,7 +53,7 @@ window.addEventListener('load', function () {
     publicationsOpen: () => state.publicationOpen,
     landUses: () => state.landUses,
     interventions: () => state.interventions,
-    chartData: () => state.data,
+    chartData: () => state.chartData,
     filter: () => state.filter,
   };
 });

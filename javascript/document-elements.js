@@ -21,5 +21,7 @@ const elements = {
   landUseText: document.getElementById('land-use-text'),
   landUsePublications: document.getElementById('land-use-publications'),
   landUseMetaAnalysis: document.getElementById('land-use-meta-analysis'),
+  landUsePublicationsDetail: document.getElementById('land-use-publications-detail'),
+  landUseMetaAnalysisDetail: document.getElementById('land-use-meta-analysis-detail'),
   chartCards: document.getElementById('chart-cards'),
 }
