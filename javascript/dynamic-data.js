@@ -50,6 +50,8 @@ window.addEventListener('load', function () {
     elements.landUsePublicationsDetail.innerHTML = publicationsNumber;
     elements.landUseMetaAnalysisDetail.innerHTML = metaAnalysisNumber;
     elements.landUseText.innerHTML = name.toLowerCase();
+    elements.landUseTextDetail.innerHTML = name.toLowerCase();
+    elements.legendText.innerHTML = name;
 
     // Load interventions
     if (landUse.interventions) {

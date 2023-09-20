@@ -23,6 +23,8 @@ const elements = {
   landUseMetaAnalysis: document.getElementById('land-use-meta-analysis'),
   landUsePublicationsDetail: document.getElementById('land-use-publications-detail'),
   landUseMetaAnalysisDetail: document.getElementById('land-use-meta-analysis-detail'),
+  landUseTextDetail: document.getElementById('land-use-text-detail'),
+  legendText: document.getElementById('legend-text'),
   chartCards: document.getElementById('chart-cards'),
   sortPublicationsButton: document.getElementById('btn-sort-publications'),
 }

@@ -84,18 +84,19 @@
         }
 
         .sidebar {
-          @apply absolute left-[117px] top-0 flex h-full w-full w-[calc(50%-68px)] max-w-[600px] flex-col bg-white shadow-lg transition-transform duration-500 translate-x-0 z-10;
+          @apply absolute left-[117px] top-0 flex h-full w-full w-[calc(50%-68px)] max-w-[600px] flex-col bg-white shadow-lg transition-transform duration-500 z-10;
         }
 
         .publication-panel {
-          @apply absolute top-0 p-6 w-full max-w-[600px] left-0 h-screen bg-white transition-transform z-20 !mt-0;
+          @apply absolute top-0 p-6 w-full max-w-[600px] left-0 h-screen bg-white transition-transform z-20 !mt-0 overflow-auto;
         }
       }
     </style>
   </head>
   <body class="text-main">
     <!-- NAVBAR -->
-    <div class="absolute left-0 z-40 h-full w-[117px]">
+    <div
+      class="absolute left-0 z-40 h-full w-[117px] overflow-y-auto overflow-x-hidden">
       <div
         class="flex h-full w-full flex-col items-center justify-start gap-20 bg-slate-700 py-6">
         <a href="/">
@@ -163,8 +164,7 @@
           <div id="chart-tooltip"
             class="p-1 bg-slate-700 text-white text-sm absolute hidden rounded"></div>
           <div id="publication-panel"
-            class="publication-panel">
-            <!-- -translate-x-full -->
+            class="publication-panel -translate-x-full">
             <button
               type="button"
               id="btn-close-publication-panel"
@@ -183,7 +183,8 @@
                   <span id="land-use-publications-detail"></span> scientific
                   publications and <span id="land-use-meta-analysis-detail"></span>
                   meta-analyses related to
-                  cropland.</header>
+                  <span
+                    class="font-semibold" id="land-use-text-detail"></span>.</header>
                 <button
                   type="button"
                   id="btn-sort-publications"
@@ -334,7 +335,8 @@
         id="legend"
         class="w-[328px] p-2 bg-white shadow transition-transform overflow-hidden">
         <div
-          class="text-base font-semibold mb-2">Cropland
+          class="text-base font-semibold mb-2"><span
+            class="font-semibold" id="legend-text"></span>
           publications</div>
         <div
           class="flex flex-col justify-center items-end gap-1">
