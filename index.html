@@ -82,6 +82,14 @@
         .sidebar-toggle-theme-dark {
           @apply text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none justify-center items-center flex h-10 w-10 text-white bg-slate-700 hover:bg-slate-500;
         }
+
+        .sidebar {
+          @apply absolute left-[117px] top-0 flex h-full w-full w-[calc(50%-68px)] max-w-[600px] flex-col bg-white shadow-lg transition-transform duration-500 translate-x-0 z-10;
+        }
+
+        .publication-panel {
+          @apply absolute top-0 w-full max-w-[600px] left-0 h-screen bg-white transition-transform z-20 !mt-0;
+        }
       }
     </style>
   </head>
@@ -120,7 +128,7 @@
 
     <!-- SIDEBAR -->
     <div id="sidebar"
-      class="absolute left-[117px] top-0 flex h-full w-full w-[calc(50%-68px)] max-w-[600px] flex-col bg-white shadow-lg transition-transform duration-500 translate-x-0 z-10">
+      class="sidebar">
       <div class="flex grow flex-col overflow-y-auto">
         <div class="space-y-5 p-5 text-slate-700">
           <h2 class="text-3.5xl font-serif">
@@ -144,17 +152,32 @@
           </div>
 
           <div class="flex gap-4 my-8">
-            <button type="button" class="btn-primary">See publications</button>
-            <button type="button" class="btn-secondary">See methodology</button>
+            <button type="button" id="btn-publications" class="btn-primary">See
+              publications</button>
+            <button type="button" id="btn-methodology" class="btn-secondary">See
+              methodology</button>
           </div>
 
           <div id="chart-cards">
           </div>
           <div id="chart-tooltip"
             class="p-1 bg-slate-700 text-white text-sm absolute hidden rounded"></div>
+          <div id="publication-panel"
+            class="publication-panel -translate-x-full">
+            <button
+              type="button"
+              id="btn-close-publication-panel"
+              class="h-6 mt-6 flex pr-1 justify-center items-center gap-1">
+              <div class="w-6 h-6 relative origin-top-left -rotate-180"></div>
+              <i class="w-6 h-6 stroke-teal-500"
+                data-lucide="arrow-left"></i>
+              <div class="text-teal-500 text-base font-semibold">
+                Go back
+              </div>
+            </button>
+          </div>
         </div>
       </div>
-
       <div class="absolute -right-10 -ml-px top-0">
         <button id="sidebar-toggle"
           class="sidebar-toggle-theme-dark">
@@ -318,7 +341,8 @@
                 </div>
               </li>
             </ul>
-            <div
+            <!-- TODO: Bring back labels -->
+            <!-- <div
               class="grid grid-flow-col gap-4 pt-5">
               <div class="col-span-6">
                 <div
@@ -380,7 +404,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <button
@@ -399,7 +423,6 @@
     <!-- NOTE: All these must be at the very end. Be careful maintaining the import order -->
 
     <script src='javascript/utils.js'></script>
-    <script src='javascript/fixed-size-foreign-object.js'></script>
 
     <script src='javascript/d3-chart.js'></script>
 

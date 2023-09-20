@@ -8,6 +8,7 @@ window.addEventListener('load', function () {
     landUses: null,
     interventions: null,
     filter: null,
+    publicationsOpen: false,
   };
 
   window.mutations = {
@@ -19,6 +20,9 @@ window.addEventListener('load', function () {
     },
     toggleMapSettings() {
       state.mapSettingsOpen = !state.mapSettingsOpen;
+    },
+    setPublicationsOpen(publicationsOpen) {
+      state.publicationsOpen = publicationsOpen;
     },
     closeMapSettings() {
       state.mapSettingsOpen = false;
@@ -38,13 +42,11 @@ window.addEventListener('load', function () {
     setFilter(type, value) {
       state.filter = { type: type, value: value };
     },
-    setChartData(data) {
-      state.data = data;
-    }
   };
 
   window.getters = {
     sidebarOpen: () => state.sidebarOpen,
+    publicationsOpen: () => state.publicationOpen,
     landUses: () => state.landUses,
     interventions: () => state.interventions,
     chartData: () => state.data,

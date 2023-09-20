@@ -159,4 +159,16 @@ window.addEventListener('load', function () {
       });
     };
   }
+
+  // PUBLICATION BUTTON
+
+  elements.publicationButton.addEventListener("click", function() {
+    window.mutations.setPublicationsOpen(true);
+    elements.publicationPanel.classList.remove('-translate-x-full');
+  });
+
+  elements.closePublicationPanelButton.addEventListener("click", function() {
+    window.mutations.setPublicationsOpen(false);
+    elements.publicationPanel.classList.add('-translate-x-full');
+  });
 });
