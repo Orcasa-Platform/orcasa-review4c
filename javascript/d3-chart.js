@@ -21,7 +21,21 @@ const updateButtons = (title, data) => {
   }
 };
 
-const updateChartAndButtons = (slug, title, data) => {
+const updateChartAndButtons = ({ slug, title, data, resetAllCharts }) => {
+  if (resetAllCharts) {
+    // All the other charts should close their details
+    const chartData = window.getters.chartData();
+    Object.keys(chartData).forEach((key) => {
+      if (key !== slug) {
+        const data = chartData[key];
+        const updatedData = data.map(d => ({
+          ...d,
+          active: false,
+        }));
+        createSVGChart(key, updatedData);
+      }
+    });
+  }
   createSVGChart(slug, data);
   updateButtons(title, data)
 }
@@ -30,17 +44,19 @@ const click = (_, title, slug, data, isSubcategory) => {
   let currentTitle = title;
 
   // If the clicked subcategory was selected clear the filter and close the details
+
   if (currentSelection?.type === 'sub-category' && currentSelection?.value === title) {
     window.mutations.setFilter(null, null);
     const updatedData = data.map(d => ({
         ...d,
         active: false,
       }));
-    updateChartAndButtons(slug, null, updatedData)
+    updateChartAndButtons({ slug, title: null, data: updatedData })
     return;
   }
 
   // If the clicked detail was selected select the active subcategory
+
   if (currentSelection?.type === 'detail' && currentSelection?.value === title) {
     const activeSubcategoryItem = data.find((item) => item.active);
     currentTitle = activeSubcategoryItem.title;
@@ -58,7 +74,7 @@ const click = (_, title, slug, data, isSubcategory) => {
         active: false,
       };
     });
-    updateChartAndButtons(slug, currentTitle, updatedData)
+    updateChartAndButtons({ slug, title: currentTitle, data: updatedData })
     return;
   }
 
@@ -79,24 +95,11 @@ const click = (_, title, slug, data, isSubcategory) => {
         active: false,
       };
     });
-
-    // All the other charts should close their details
-    const chartData = window.getters.chartData();
-    Object.keys(chartData).forEach((key) => {
-      if (key !== slug) {
-        const data = chartData[key];
-        const updatedData = data.map(d => ({
-          ...d,
-          active: false,
-        }));
-        createSVGChart(key, updatedData);
-      }
-    });
   }
 
   window.mutations.setFilter(isSubcategory ? 'sub-category' : 'detail', title);
   // Rerender to show details or filter opacity of error bars
-  updateChartAndButtons(slug, title, updatedData)
+  updateChartAndButtons({ slug, title, data: updatedData, resetAllCharts: isSubcategory })
 };
 
 // Create the SVG container
