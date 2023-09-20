@@ -255,6 +255,7 @@ const createSVGChart = (slug, data) => {
 
 
   const chartTooltip = d3.select('#chart-tooltip');
+  const chartTooltipContent = d3.select('#chart-tooltip-content');
 
   const addTooltip = (event, d) =>  {
     const top = event.clientY;
@@ -264,7 +265,7 @@ const createSVGChart = (slug, data) => {
       .style("left", (event.clientX - chart.node().getBoundingClientRect().left) + "px")
       .classed('hidden', false);
 
-    chartTooltip.html(`<div>min: ${d.low}% median: ${d.value}% max: ${d.high}%</div>`);
+    chartTooltipContent.html(`<div>min: ${d.low}% median: ${d.value}% max: ${d.high}%</div>`);
   }
 
   // Create error bars
