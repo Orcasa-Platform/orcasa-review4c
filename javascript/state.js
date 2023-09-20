@@ -10,6 +10,7 @@ window.addEventListener('load', function () {
     filter: null,
     publicationsOpen: false,
     chartData: null,
+    publicationsSort: 'asc',
   };
 
   window.mutations = {
@@ -46,11 +47,15 @@ window.addEventListener('load', function () {
     setChartData(chartData) {
       state.chartData = chartData;
     },
+    togglePublicationsSort() {
+      state.publicationsSort = state.publicationsSort === 'asc' ? 'desc' : 'asc';
+    }
   };
 
   window.getters = {
     sidebarOpen: () => state.sidebarOpen,
     publicationsOpen: () => state.publicationOpen,
+    publicationsSort: () => state.publicationsSort,
     landUses: () => state.landUses,
     interventions: () => state.interventions,
     chartData: () => state.chartData,

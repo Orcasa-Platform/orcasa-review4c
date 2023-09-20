@@ -171,4 +171,17 @@ window.addEventListener('load', function () {
     window.mutations.setPublicationsOpen(false);
     elements.publicationPanel.classList.add('-translate-x-full');
   });
+
+
+  // PUBLICATIONS PANEL
+
+  // SORT PUBLICATIONS BUTTON
+
+  elements.sortPublicationsButton.addEventListener("click", function() {
+    window.mutations.togglePublicationsSort();
+    const publicationsSort = window.getters.publicationsSort();
+    const [text, icon] = elements.sortPublicationsButton.childNodes;
+    icon.classList.toggle('rotate-180');
+    text.textContent = publicationsSort === 'asc' ? 'Newest first' : 'Oldest first';
+  });
 });

@@ -24,4 +24,5 @@ const elements = {
   landUsePublicationsDetail: document.getElementById('land-use-publications-detail'),
   landUseMetaAnalysisDetail: document.getElementById('land-use-meta-analysis-detail'),
   chartCards: document.getElementById('chart-cards'),
+  sortPublicationsButton: document.getElementById('btn-sort-publications'),
 }
