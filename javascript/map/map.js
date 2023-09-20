@@ -42,7 +42,6 @@ map.on('load', function() {
   }, 'countries-labels');
 
   addSquareIcon(map);
-  // Not need to load the main layer if we select Croplands by default
-  // addLayer(map);
+  addLayer(map);
   zoomButtonStyling();
 });

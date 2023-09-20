@@ -1,4 +1,9 @@
 const interventionData = {
+  "all": {
+    "name": "All",
+    "publications": 13632,
+    "metaAnalysis": 1563,
+  },
   "cropland": {
     "name": "Cropland",
     "publications": 5632,

@@ -50,7 +50,11 @@ window.addEventListener('load', function () {
     elements.landUseText.innerHTML = name.toLowerCase();
 
     // Load interventions
-    loadInterventions(landUse.interventions, landUse.name);
+    if (landUse.interventions) {
+      loadInterventions(landUse.interventions, landUse.name);
+    } else {
+      elements.chartCards.innerHTML = '';
+    }
   };
 
   // Create a button for each land use

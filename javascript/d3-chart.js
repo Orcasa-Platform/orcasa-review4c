@@ -42,8 +42,6 @@ const click = (_, title, slug, data, isSubcategory) => {
 
   // If the clicked detail was selected select the active subcategory
   if (currentSelection?.type === 'detail' && currentSelection?.value === title) {
-    console.log('clear detail')
-
     const activeSubcategoryItem = data.find((item) => item.active);
     currentTitle = activeSubcategoryItem.title;
     window.mutations.setFilter('sub-category', currentTitle);
