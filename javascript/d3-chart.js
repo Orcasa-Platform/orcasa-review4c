@@ -209,9 +209,6 @@ const createSVGChart = (slug, data) => {
     .attr("x", -AXIS_PADDING)
     .attr("y", d => yScale(d.title))
     .attr("width", width + 30 + RIGHT_AXIS_PADDING)
-    // .attr("height", 0)
-    // .transition()
-    // .duration(500)
     .attr("height", ITEM_HEIGHT + 10)
     .attr("fill", (d) => d.details ? 'transparent' : gray100)
 
@@ -228,9 +225,6 @@ const createSVGChart = (slug, data) => {
       const slug = getSlugByTitle(data, title);
       return buttonHTML(title, dataItem?.publications, slug);
     }).on("click", (_, title) => click(_, title, slug, data, !!getSubcategoryByTitle(data, title)));
-
-    // const foreignObjects = document.getElementsByTagName("foreignObject");
-    // fixedSizeForeignObjects(...foreignObjects);
 
   // Remove all domain lines
   svg.selectAll('.domain').attr('stroke-width', 0);
