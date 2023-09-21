@@ -91,4 +91,28 @@ window.addEventListener('load', function () {
       loadData(landUses[0].slug);
     }
   });
+
+  // Populate filters
+  getURL(URLS.countries).then(countries => {
+    if (elements.countryDropdown && countries) {
+      const countryList = elements.countryDropdown.querySelector('ul');
+      countries.forEach(country => {
+        const { iso_2digit: iso, cntry_name: label } = country;
+
+        const listElement = document.createElement('li');
+        listElement.classList.add('flex', 'items-center', 'gap-2', 'p-4');
+        listElement.innerHTML = `
+          <input
+          type="checkbox"
+          class="checkbox-light"
+          id="country-${iso}"
+          value="${iso}" />
+          <label for="country-${iso}">
+          ${label}
+          </label>`;
+
+        countryList.appendChild(listElement)
+      });
+    }
+  });
 });

@@ -1,5 +1,6 @@
 const URLS = {
     'allLayer': 'http://review4c.net/files/int0.json',
+    'countries': '/javascript/mocks/country.json', // Replace with real URL
     // ...
 }
 
@@ -52,3 +53,14 @@ const getIntervention = async (intervention) => {
   }
   return interventionData || interventionMocks[slug];
 };
+
+const getURL = async (url) => {
+  let data;
+  try {
+    const response = await fetch(url);
+    data = await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+  return data;
+}

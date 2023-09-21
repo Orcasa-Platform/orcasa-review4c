@@ -1,0 +1,657 @@
+[
+  {
+    "shp_world_simplifie_id": 51,
+    "iso_2digit": "DZ",
+    "cntry_name": "Algeria"
+  },
+  {
+    "shp_world_simplifie_id": 124,
+    "iso_2digit": "AR",
+    "cntry_name": "Argentina"
+  },
+  {
+    "shp_world_simplifie_id": 222,
+    "iso_2digit": "AU",
+    "cntry_name": "Australia"
+  },
+  {
+    "shp_world_simplifie_id": 18,
+    "iso_2digit": "AT",
+    "cntry_name": "Austria"
+  },
+  {
+    "shp_world_simplifie_id": 38,
+    "iso_2digit": "AZ",
+    "cntry_name": "Azerbaijan"
+  },
+  {
+    "shp_world_simplifie_id": 138,
+    "iso_2digit": "BD",
+    "cntry_name": "Bangladesh"
+  },
+  {
+    "shp_world_simplifie_id": 5,
+    "iso_2digit": "BY",
+    "cntry_name": "Belarus"
+  },
+  {
+    "shp_world_simplifie_id": 11,
+    "iso_2digit": "BE",
+    "cntry_name": "Belgium"
+  },
+  {
+    "shp_world_simplifie_id": 192,
+    "iso_2digit": "BZ",
+    "cntry_name": "Belize"
+  },
+  {
+    "shp_world_simplifie_id": 94,
+    "iso_2digit": "BJ",
+    "cntry_name": "Benin"
+  },
+  {
+    "shp_world_simplifie_id": 119,
+    "iso_2digit": "BO",
+    "cntry_name": "Bolivia"
+  },
+  {
+    "shp_world_simplifie_id": 247,
+    "iso_2digit": "BA",
+    "cntry_name": "Bosnia & Herzegovina"
+  },
+  {
+    "shp_world_simplifie_id": 126,
+    "iso_2digit": "BW",
+    "cntry_name": "Botswana"
+  },
+  {
+    "shp_world_simplifie_id": 103,
+    "iso_2digit": "BR",
+    "cntry_name": "Brazil"
+  },
+  {
+    "shp_world_simplifie_id": 30,
+    "iso_2digit": "BG",
+    "cntry_name": "Bulgaria"
+  },
+  {
+    "shp_world_simplifie_id": 78,
+    "iso_2digit": "BF",
+    "cntry_name": "Burkina Faso"
+  },
+  {
+    "shp_world_simplifie_id": 86,
+    "iso_2digit": "KH",
+    "cntry_name": "Cambodia"
+  },
+  {
+    "shp_world_simplifie_id": 100,
+    "iso_2digit": "CM",
+    "cntry_name": "Cameroon"
+  },
+  {
+    "shp_world_simplifie_id": 6,
+    "iso_2digit": "CA",
+    "cntry_name": "Canada"
+  },
+  {
+    "shp_world_simplifie_id": 243,
+    "iso_2digit": "CL",
+    "cntry_name": "Chile"
+  },
+  {
+    "shp_world_simplifie_id": 47,
+    "iso_2digit": "CN",
+    "cntry_name": "China"
+  },
+  {
+    "shp_world_simplifie_id": 143,
+    "iso_2digit": "CO",
+    "cntry_name": "Colombia"
+  },
+  {
+    "shp_world_simplifie_id": 112,
+    "iso_2digit": "CD",
+    "cntry_name": "Congo, DRC"
+  },
+  {
+    "shp_world_simplifie_id": 88,
+    "iso_2digit": "CR",
+    "cntry_name": "Costa Rica"
+  },
+  {
+    "shp_world_simplifie_id": 95,
+    "iso_2digit": "CI",
+    "cntry_name": "Cote d'Ivory"
+  },
+  {
+    "shp_world_simplifie_id": 173,
+    "iso_2digit": "HR",
+    "cntry_name": "Croatia"
+  },
+  {
+    "shp_world_simplifie_id": 180,
+    "iso_2digit": "CU",
+    "cntry_name": "Cuba"
+  },
+  {
+    "shp_world_simplifie_id": 12,
+    "iso_2digit": "CZ",
+    "cntry_name": "Czech Republic"
+  },
+  {
+    "shp_world_simplifie_id": 3,
+    "iso_2digit": "DK",
+    "cntry_name": "Denmark"
+  },
+  {
+    "shp_world_simplifie_id": 182,
+    "iso_2digit": "DO",
+    "cntry_name": "Dominican Republic"
+  },
+  {
+    "shp_world_simplifie_id": 110,
+    "iso_2digit": "EC",
+    "cntry_name": "Ecuador"
+  },
+  {
+    "shp_world_simplifie_id": 59,
+    "iso_2digit": "EG",
+    "cntry_name": "Egypt"
+  },
+  {
+    "shp_world_simplifie_id": 165,
+    "iso_2digit": "EE",
+    "cntry_name": "Estonia"
+  },
+  {
+    "shp_world_simplifie_id": 80,
+    "iso_2digit": "ET",
+    "cntry_name": "Ethiopia"
+  },
+  {
+    "shp_world_simplifie_id": 1,
+    "iso_2digit": "FI",
+    "cntry_name": "Finland"
+  },
+  {
+    "shp_world_simplifie_id": 24,
+    "iso_2digit": "FR",
+    "cntry_name": "France"
+  },
+  {
+    "shp_world_simplifie_id": 7,
+    "iso_2digit": "DE",
+    "cntry_name": "Germany"
+  },
+  {
+    "shp_world_simplifie_id": 93,
+    "iso_2digit": "GH",
+    "cntry_name": "Ghana"
+  },
+  {
+    "shp_world_simplifie_id": 131,
+    "iso_2digit": "GL",
+    "cntry_name": "Greenland"
+  },
+  {
+    "shp_world_simplifie_id": 197,
+    "iso_2digit": "GP",
+    "cntry_name": "Guadeloupe"
+  },
+  {
+    "shp_world_simplifie_id": 203,
+    "iso_2digit": "GU",
+    "cntry_name": "Guam"
+  },
+  {
+    "shp_world_simplifie_id": 77,
+    "iso_2digit": "GT",
+    "cntry_name": "Guatemala"
+  },
+  {
+    "shp_world_simplifie_id": 90,
+    "iso_2digit": "GN",
+    "cntry_name": "Guinea"
+  },
+  {
+    "shp_world_simplifie_id": 144,
+    "iso_2digit": "GW",
+    "cntry_name": "Guinea-Bissau"
+  },
+  {
+    "shp_world_simplifie_id": 74,
+    "iso_2digit": "HN",
+    "cntry_name": "Honduras"
+  },
+  {
+    "shp_world_simplifie_id": 23,
+    "iso_2digit": "HU",
+    "cntry_name": "Hungary"
+  },
+  {
+    "shp_world_simplifie_id": 163,
+    "iso_2digit": "IS",
+    "cntry_name": "Iceland"
+  },
+  {
+    "shp_world_simplifie_id": 146,
+    "iso_2digit": "IN",
+    "cntry_name": "India"
+  },
+  {
+    "shp_world_simplifie_id": 215,
+    "iso_2digit": "ID",
+    "cntry_name": "Indonesia"
+  },
+  {
+    "shp_world_simplifie_id": 60,
+    "iso_2digit": "IR",
+    "cntry_name": "Iran"
+  },
+  {
+    "shp_world_simplifie_id": 168,
+    "iso_2digit": "IE",
+    "cntry_name": "Ireland"
+  },
+  {
+    "shp_world_simplifie_id": 55,
+    "iso_2digit": "IL",
+    "cntry_name": "Israel"
+  },
+  {
+    "shp_world_simplifie_id": 21,
+    "iso_2digit": "IT",
+    "cntry_name": "Italy"
+  },
+  {
+    "shp_world_simplifie_id": 172,
+    "iso_2digit": "JP",
+    "cntry_name": "Japan"
+  },
+  {
+    "shp_world_simplifie_id": 61,
+    "iso_2digit": "JO",
+    "cntry_name": "Jordan"
+  },
+  {
+    "shp_world_simplifie_id": 9,
+    "iso_2digit": "KZ",
+    "cntry_name": "Kazakhstan"
+  },
+  {
+    "shp_world_simplifie_id": 111,
+    "iso_2digit": "KE",
+    "cntry_name": "Kenya"
+  },
+  {
+    "shp_world_simplifie_id": 31,
+    "iso_2digit": "KG",
+    "cntry_name": "Kyrgyzstan"
+  },
+  {
+    "shp_world_simplifie_id": 71,
+    "iso_2digit": "LA",
+    "cntry_name": "Laos"
+  },
+  {
+    "shp_world_simplifie_id": 2,
+    "iso_2digit": "LV",
+    "cntry_name": "Latvia"
+  },
+  {
+    "shp_world_simplifie_id": 97,
+    "iso_2digit": "LR",
+    "cntry_name": "Liberia"
+  },
+  {
+    "shp_world_simplifie_id": 20,
+    "iso_2digit": "LI",
+    "cntry_name": "Liechtenstein"
+  },
+  {
+    "shp_world_simplifie_id": 4,
+    "iso_2digit": "LT",
+    "cntry_name": "Lithuania"
+  },
+  {
+    "shp_world_simplifie_id": 14,
+    "iso_2digit": "LU",
+    "cntry_name": "Luxembourg"
+  },
+  {
+    "shp_world_simplifie_id": 230,
+    "iso_2digit": "MG",
+    "cntry_name": "Madagascar"
+  },
+  {
+    "shp_world_simplifie_id": 120,
+    "iso_2digit": "MW",
+    "cntry_name": "Malawi"
+  },
+  {
+    "shp_world_simplifie_id": 104,
+    "iso_2digit": "MY",
+    "cntry_name": "Malaysia"
+  },
+  {
+    "shp_world_simplifie_id": 73,
+    "iso_2digit": "ML",
+    "cntry_name": "Mali"
+  },
+  {
+    "shp_world_simplifie_id": 201,
+    "iso_2digit": "MQ",
+    "cntry_name": "Martinique"
+  },
+  {
+    "shp_world_simplifie_id": 137,
+    "iso_2digit": "MX",
+    "cntry_name": "Mexico"
+  },
+  {
+    "shp_world_simplifie_id": 16,
+    "iso_2digit": "MD",
+    "cntry_name": "Moldova"
+  },
+  {
+    "shp_world_simplifie_id": 13,
+    "iso_2digit": "MN",
+    "cntry_name": "Mongolia"
+  },
+  {
+    "shp_world_simplifie_id": 52,
+    "iso_2digit": "MA",
+    "cntry_name": "Morocco"
+  },
+  {
+    "shp_world_simplifie_id": 238,
+    "iso_2digit": "MZ",
+    "cntry_name": "Mozambique"
+  },
+  {
+    "shp_world_simplifie_id": 141,
+    "iso_2digit": "MM",
+    "cntry_name": "Myanmar"
+  },
+  {
+    "shp_world_simplifie_id": 123,
+    "iso_2digit": "NA",
+    "cntry_name": "Namibia"
+  },
+  {
+    "shp_world_simplifie_id": 64,
+    "iso_2digit": "NP",
+    "cntry_name": "Nepal"
+  },
+  {
+    "shp_world_simplifie_id": 8,
+    "iso_2digit": "NL",
+    "cntry_name": "Netherlands"
+  },
+  {
+    "shp_world_simplifie_id": 242,
+    "iso_2digit": "NZ",
+    "cntry_name": "New Zealand"
+  },
+  {
+    "shp_world_simplifie_id": 79,
+    "iso_2digit": "NI",
+    "cntry_name": "Nicaragua"
+  },
+  {
+    "shp_world_simplifie_id": 69,
+    "iso_2digit": "NE",
+    "cntry_name": "Niger"
+  },
+  {
+    "shp_world_simplifie_id": 83,
+    "iso_2digit": "NG",
+    "cntry_name": "Nigeria"
+  },
+  {
+    "shp_world_simplifie_id": 134,
+    "iso_2digit": "NO",
+    "cntry_name": "Norway"
+  },
+  {
+    "shp_world_simplifie_id": 249,
+    "iso_2digit": "OM",
+    "cntry_name": "Oman"
+  },
+  {
+    "shp_world_simplifie_id": 46,
+    "iso_2digit": "PK",
+    "cntry_name": "Pakistan"
+  },
+  {
+    "shp_world_simplifie_id": 92,
+    "iso_2digit": "PA",
+    "cntry_name": "Panama"
+  },
+  {
+    "shp_world_simplifie_id": 219,
+    "iso_2digit": "PG",
+    "cntry_name": "Papua New Guinea"
+  },
+  {
+    "shp_world_simplifie_id": 125,
+    "iso_2digit": "PY",
+    "cntry_name": "Paraguay"
+  },
+  {
+    "shp_world_simplifie_id": 121,
+    "iso_2digit": "PE",
+    "cntry_name": "Peru"
+  },
+  {
+    "shp_world_simplifie_id": 185,
+    "iso_2digit": "PH",
+    "cntry_name": "Philippines"
+  },
+  {
+    "shp_world_simplifie_id": 10,
+    "iso_2digit": "PL",
+    "cntry_name": "Poland"
+  },
+  {
+    "shp_world_simplifie_id": 42,
+    "iso_2digit": "PT",
+    "cntry_name": "Portugal"
+  },
+  {
+    "shp_world_simplifie_id": 189,
+    "iso_2digit": "PR",
+    "cntry_name": "Puerto Rico"
+  },
+  {
+    "shp_world_simplifie_id": 236,
+    "iso_2digit": "RE",
+    "cntry_name": "Reunion"
+  },
+  {
+    "shp_world_simplifie_id": 25,
+    "iso_2digit": "RO",
+    "cntry_name": "Romania"
+  },
+  {
+    "shp_world_simplifie_id": 132,
+    "iso_2digit": "RU",
+    "cntry_name": "Russia"
+  },
+  {
+    "shp_world_simplifie_id": 113,
+    "iso_2digit": "RW",
+    "cntry_name": "Rwanda"
+  },
+  {
+    "shp_world_simplifie_id": 56,
+    "iso_2digit": "SA",
+    "cntry_name": "Saudi Arabia"
+  },
+  {
+    "shp_world_simplifie_id": 72,
+    "iso_2digit": "SN",
+    "cntry_name": "Senegal"
+  },
+  {
+    "shp_world_simplifie_id": 17,
+    "iso_2digit": "SK",
+    "cntry_name": "Slovakia"
+  },
+  {
+    "shp_world_simplifie_id": 22,
+    "iso_2digit": "SI",
+    "cntry_name": "Slovenia"
+  },
+  {
+    "shp_world_simplifie_id": 221,
+    "iso_2digit": "SB",
+    "cntry_name": "Solomon Is."
+  },
+  {
+    "shp_world_simplifie_id": 105,
+    "iso_2digit": "SO",
+    "cntry_name": "Somalia"
+  },
+  {
+    "shp_world_simplifie_id": 129,
+    "iso_2digit": "ZA",
+    "cntry_name": "South Africa"
+  },
+  {
+    "shp_world_simplifie_id": 175,
+    "iso_2digit": "KR",
+    "cntry_name": "South Korea"
+  },
+  {
+    "shp_world_simplifie_id": 28,
+    "iso_2digit": "ES",
+    "cntry_name": "Spain"
+  },
+  {
+    "shp_world_simplifie_id": 211,
+    "iso_2digit": "LK",
+    "cntry_name": "Sri Lanka"
+  },
+  {
+    "shp_world_simplifie_id": 76,
+    "iso_2digit": "SD",
+    "cntry_name": "Sudan"
+  },
+  {
+    "shp_world_simplifie_id": 102,
+    "iso_2digit": "SR",
+    "cntry_name": "Suriname"
+  },
+  {
+    "shp_world_simplifie_id": 127,
+    "iso_2digit": "SZ",
+    "cntry_name": "Swaziland"
+  },
+  {
+    "shp_world_simplifie_id": 136,
+    "iso_2digit": "SE",
+    "cntry_name": "Sweden"
+  },
+  {
+    "shp_world_simplifie_id": 19,
+    "iso_2digit": "CH",
+    "cntry_name": "Switzerland"
+  },
+  {
+    "shp_world_simplifie_id": 48,
+    "iso_2digit": "SY",
+    "cntry_name": "Syria"
+  },
+  {
+    "shp_world_simplifie_id": 181,
+    "iso_2digit": "TW",
+    "cntry_name": "Taiwan"
+  },
+  {
+    "shp_world_simplifie_id": 116,
+    "iso_2digit": "TZ",
+    "cntry_name": "Tanzania"
+  },
+  {
+    "shp_world_simplifie_id": 91,
+    "iso_2digit": "TH",
+    "cntry_name": "Thailand"
+  },
+  {
+    "shp_world_simplifie_id": 82,
+    "iso_2digit": "GM",
+    "cntry_name": "The Gambia"
+  },
+  {
+    "shp_world_simplifie_id": 98,
+    "iso_2digit": "TG",
+    "cntry_name": "Togo"
+  },
+  {
+    "shp_world_simplifie_id": 177,
+    "iso_2digit": "TN",
+    "cntry_name": "Tunisia"
+  },
+  {
+    "shp_world_simplifie_id": 44,
+    "iso_2digit": "TR",
+    "cntry_name": "Turkey"
+  },
+  {
+    "shp_world_simplifie_id": 109,
+    "iso_2digit": "UG",
+    "cntry_name": "Uganda"
+  },
+  {
+    "shp_world_simplifie_id": 15,
+    "iso_2digit": "UA",
+    "cntry_name": "Ukraine"
+  },
+  {
+    "shp_world_simplifie_id": 68,
+    "iso_2digit": "AE",
+    "cntry_name": "United Arab Emirates"
+  },
+  {
+    "shp_world_simplifie_id": 166,
+    "iso_2digit": "GB",
+    "cntry_name": "United Kingdom"
+  },
+  {
+    "shp_world_simplifie_id": 135,
+    "iso_2digit": "US",
+    "cntry_name": "United States"
+  },
+  {
+    "shp_world_simplifie_id": 130,
+    "iso_2digit": "UY",
+    "cntry_name": "Uruguay"
+  },
+  {
+    "shp_world_simplifie_id": 35,
+    "iso_2digit": "UZ",
+    "cntry_name": "Uzbekistan"
+  },
+  {
+    "shp_world_simplifie_id": 209,
+    "iso_2digit": "VE",
+    "cntry_name": "Venezuela"
+  },
+  {
+    "shp_world_simplifie_id": 87,
+    "iso_2digit": "VN",
+    "cntry_name": "Vietnam"
+  },
+  {
+    "shp_world_simplifie_id": 117,
+    "iso_2digit": "ZM",
+    "cntry_name": "Zambia"
+  },
+  {
+    "shp_world_simplifie_id": 122,
+    "iso_2digit": "ZW",
+    "cntry_name": "Zimbabwe"
+  }
+]
