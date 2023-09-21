@@ -194,7 +194,7 @@ window.addEventListener('load', function () {
 
 
     const toggleDropdown = () => {
-      options.classList.toggle('min-h-[115px]');
+      options.classList.toggle('min-h-[190px]');
       options.classList.toggle('hidden');
       buttonIcon.classList.toggle('rotate-180');
       selected.classList.toggle('text-gray-500');
@@ -237,14 +237,15 @@ window.addEventListener('load', function () {
         }
       });
 
+      const placeholder = selected.attributes['aria-placeholder'].value;
+
       if (selectedValues.length === 0) {
-        selected.textContent = 'Document type';
+        selected.textContent = placeholder;
         window.mutations.setPublicationFilters(dropdown.id, null);
       } else {
-        selected.textContent = `Document type (${selectedLabels.length})`;
+        selected.textContent = `${placeholder} (${selectedLabels.length})`;
         window.mutations.setPublicationFilters(dropdown.id, selectedValues);
       };
-      console.log(window.getters.publicationFilters())
     });
   }
 });

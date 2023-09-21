@@ -239,8 +239,6 @@
                     </div>
                   </div>
                   <div id="type-document">
-                    <!-- TODO: Replace fake dropdown -->
-
                     <label for="type-document"
                       class="sr-only">Type of document</label>
                     <div
@@ -251,6 +249,7 @@
                         class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between">
                         <div
                           id="document-type-selected"
+                          aria-placeholder="Document type"
                           class="dropdown-selected text-slate-700">Document type</div>
                         <i
                           data-lucide="chevron-down"
@@ -294,16 +293,57 @@
                     </div>
                   </div>
                   <div id="country">
+                    <label for="country"
+                      class="sr-only">Country</label>
                     <div
-                      class="w-[284px] h-14 flex-col flex">
-                      <div
-                        class="p-4 bg-white shadow border border-gray-400 flex justify-between">
+                      class="dropdown [284px] h-14 flex-col flex"
+                      id="dropdown-select-country">
+                      <button
+                        type="button"
+                        class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between">
                         <div
-                          class="text-slate-700">Country (1)</div>
+                          id="country-selected"
+                          aria-placeholder="Country"
+                          class="dropdown-selected text-slate-700">Country</div>
                         <i
                           data-lucide="chevron-down"
                           class="w-6 h-6 relative stroke-teal-500"></i>
-                      </div>
+                      </button>
+                      <fieldset
+                        class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                        <ul class="space-y-2 flex flex-col">
+                          <li class="flex items-center gap-2 p-4">
+                            <input
+                              type="checkbox"
+                              class="checkbox-light"
+                              id="country-es"
+                              value="es" />
+                            <label for="country-es">
+                              Spain
+                            </label>
+                          </li>
+                          <li class="flex items-center gap-2 p-4">
+                            <input
+                              type="checkbox"
+                              class="checkbox-light"
+                              id="country-pt"
+                              value="pt" />
+                            <label for="country-pt">
+                              Portugal
+                            </label>
+                          </li>
+                          <li class="flex items-center gap-2 p-4">
+                            <input
+                              type="checkbox"
+                              class="checkbox-light"
+                              id="country-fr"
+                              value="fr" />
+                            <label for="country-fr">
+                              France
+                            </label>
+                          </li>
+                        </ul>
+                      </fieldset>
                     </div>
                   </div>
                   <div id="search">
