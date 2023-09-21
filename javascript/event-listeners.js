@@ -186,6 +186,7 @@ window.addEventListener('load', function () {
   });
 
   // DROPDOWNS
+
   for (let dropdown of elements.dropdowns) {
     const button = dropdown.querySelector('.btn-dropdown');
     const buttonIcon = button.querySelector('svg');
@@ -248,4 +249,16 @@ window.addEventListener('load', function () {
       };
     });
   }
+
+  // PUBLICATION TYPE CHECKBOXES
+  elements.typePublication.addEventListener('click', () => {
+    const selectedValues = [];
+
+    elements.typePublication.querySelectorAll('input').forEach(input => {
+      if (input.checked) {
+        selectedValues.push(input.value);
+      }
+    });
+    window.mutations.setPublicationFilters('type-publication', selectedValues);
+  });
 });

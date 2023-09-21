@@ -175,7 +175,8 @@
               class="h-6 flex pr-1 justify-center items-center gap-1">
               <i class="w-6 h-6 stroke-teal-500"
                 data-lucide="arrow-left"></i>
-              <div class="text-teal-500 text-base font-semibold">
+              <div
+                class="text-teal-500 text-base font-semibold focus-visible:outline-mod-sc-ev">
                 Go back
               </div>
             </button>
@@ -220,319 +221,322 @@
                       <div class="w-4 h-3 bg-gray-300"></div>
                     </div>
                   </div>
-                  <div id="type-publication">
-                    <div
-                      class="text-slate-700 font-semibold mb-4">
-                      Type of publication
-                    </div>
-                    <div class="flex h-14 px-4 flex-col justify-center gap-2">
+                  <div>
+                    <label for="type-publication"
+                      class="block text-slate-700 font-semibold mb-4">Type of
+                      publication</label>
+                    <fieldset id="type-publication"
+                      class="flex h-14 px-4 flex-col justify-center gap-2">
                       <label class="inline-flex items-center gap-2">
-                        <input type="checkbox" class="checkbox">
+                        <input type="checkbox" value="primary-paper"
+                          class="checkbox">
                         <span class="text-slate-700">Primary paper</span>
                       </label>
                       <div class="inline-flex items-center gap-2">
                         <label class="inline-flex items-center gap-2">
-                          <input type="checkbox" class="checkbox">
+                          <input type="checkbox" value="meta-analysis"
+                            class="checkbox">
                           <span class="text-slate-700">Meta-analysis</span>
                         </label>
                       </div>
+                      </>
                     </div>
-                  </div>
-                  <div id="type-document">
-                    <label for="type-document"
-                      class="sr-only">Type of document</label>
-                    <div
-                      class="dropdown [284px] h-14 flex-col flex"
-                      id="dropdown-select-document">
-                      <button
-                        type="button"
-                        class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between">
-                        <div
-                          id="document-type-selected"
-                          aria-placeholder="Document type"
-                          class="dropdown-selected text-slate-700">Document type</div>
-                        <i
-                          data-lucide="chevron-down"
-                          class="w-6 h-6 relative stroke-teal-500"></i>
-                      </button>
-                      <fieldset
-                        class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
-                        <ul class="space-y-2 flex flex-col">
-                          <li class="flex items-center gap-2 p-4">
-                            <input
-                              type="checkbox"
-                              class="checkbox-light"
-                              id="type-document-journal"
-                              value="journal" />
-                            <label for="type-document-journal">
-                              Journal
-                            </label>
-                          </li>
-                          <li class="flex items-center gap-2 p-4">
-                            <input
-                              type="checkbox"
-                              class="checkbox-light"
-                              id="type-document-audio"
-                              value="audio" />
-                            <label for="type-document-audio">
-                              Audio
-                            </label>
-                          </li>
-                          <li class="flex items-center gap-2 p-4">
-                            <input
-                              type="checkbox"
-                              class="checkbox-light"
-                              id="type-document-video"
-                              value="video" />
-                            <label for="type-document-video">
-                              Video
-                            </label>
-                          </li>
-                        </ul>
-                      </fieldset>
-                    </div>
-                  </div>
-                  <div id="country">
-                    <label for="country"
-                      class="sr-only">Country</label>
-                    <div
-                      class="dropdown [284px] h-14 flex-col flex"
-                      id="dropdown-select-country">
-                      <button
-                        type="button"
-                        class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between">
-                        <div
-                          id="country-selected"
-                          aria-placeholder="Country"
-                          class="dropdown-selected text-slate-700">Country</div>
-                        <i
-                          data-lucide="chevron-down"
-                          class="w-6 h-6 relative stroke-teal-500"></i>
-                      </button>
-                      <fieldset
-                        class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
-                        <ul class="space-y-2 flex flex-col">
-                          <li class="flex items-center gap-2 p-4">
-                            <input
-                              type="checkbox"
-                              class="checkbox-light"
-                              id="country-es"
-                              value="es" />
-                            <label for="country-es">
-                              Spain
-                            </label>
-                          </li>
-                          <li class="flex items-center gap-2 p-4">
-                            <input
-                              type="checkbox"
-                              class="checkbox-light"
-                              id="country-pt"
-                              value="pt" />
-                            <label for="country-pt">
-                              Portugal
-                            </label>
-                          </li>
-                          <li class="flex items-center gap-2 p-4">
-                            <input
-                              type="checkbox"
-                              class="checkbox-light"
-                              id="country-fr"
-                              value="fr" />
-                            <label for="country-fr">
-                              France
-                            </label>
-                          </li>
-                        </ul>
-                      </fieldset>
-                    </div>
-                  </div>
-                  <div id="search">
-                    <div class="relative">
-                      <input
-                        class="relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 pl-10 focus:outline-none focus:shadow-outline focus:ring focus:ring-teal-500"
-                        type="text" placeholder="Filter by keyword">
+                    <div id="type-document">
+                      <label for="type-document"
+                        class="sr-only">Type of document</label>
                       <div
-                        class="absolute inset-y-0 left-0 flex items-center pl-3">
-                        <i data-lucide="search"
-                          class="w-6 h-6"></i>
+                        class="dropdown h-14 flex-col flex"
+                        id="dropdown-select-document">
+                        <button
+                          type="button"
+                          class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between focus-visible:outline-mod-sc-ev">
+                          <div
+                            id="document-type-selected"
+                            aria-placeholder="Document type"
+                            class="dropdown-selected text-slate-700">Document
+                            type</div>
+                          <i
+                            data-lucide="chevron-down"
+                            class="w-6 h-6 relative stroke-teal-500"></i>
+                        </button>
+                        <fieldset
+                          class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                          <ul class="space-y-2 flex flex-col">
+                            <li class="flex items-center gap-2 p-4">
+                              <input
+                                type="checkbox"
+                                class="checkbox-light"
+                                id="type-document-journal"
+                                value="journal" />
+                              <label for="type-document-journal">
+                                Journal
+                              </label>
+                            </li>
+                            <li class="flex items-center gap-2 p-4">
+                              <input
+                                type="checkbox"
+                                class="checkbox-light"
+                                id="type-document-audio"
+                                value="audio" />
+                              <label for="type-document-audio">
+                                Audio
+                              </label>
+                            </li>
+                            <li class="flex items-center gap-2 p-4">
+                              <input
+                                type="checkbox"
+                                class="checkbox-light"
+                                id="type-document-video"
+                                value="video" />
+                              <label for="type-document-video">
+                                Video
+                              </label>
+                            </li>
+                          </ul>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <div id="country">
+                      <label for="country"
+                        class="sr-only">Country</label>
+                      <div
+                        class="dropdown h-14 flex-col flex"
+                        id="dropdown-select-country">
+                        <button
+                          type="button"
+                          class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between focus-visible:outline-mod-sc-ev">
+                          <div
+                            id="country-selected"
+                            aria-placeholder="Country"
+                            class="dropdown-selected text-slate-700">Country</div>
+                          <i
+                            data-lucide="chevron-down"
+                            class="w-6 h-6 relative stroke-teal-500"></i>
+                        </button>
+                        <fieldset
+                          class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                          <ul class="space-y-2 flex flex-col">
+                            <li class="flex items-center gap-2 p-4">
+                              <input
+                                type="checkbox"
+                                class="checkbox-light"
+                                id="country-es"
+                                value="es" />
+                              <label for="country-es">
+                                Spain
+                              </label>
+                            </li>
+                            <li class="flex items-center gap-2 p-4">
+                              <input
+                                type="checkbox"
+                                class="checkbox-light"
+                                id="country-pt"
+                                value="pt" />
+                              <label for="country-pt">
+                                Portugal
+                              </label>
+                            </li>
+                            <li class="flex items-center gap-2 p-4">
+                              <input
+                                type="checkbox"
+                                class="checkbox-light"
+                                id="country-fr"
+                                value="fr" />
+                              <label for="country-fr">
+                                France
+                              </label>
+                            </li>
+                          </ul>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <div id="search">
+                      <div class="relative">
+                        <input
+                          class="relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 pl-10 focus:outline-none focus-visible:outline-mod-sc-ev"
+                          type="text" placeholder="Filter by keyword">
+                        <div
+                          class="absolute inset-y-0 left-0 flex items-center pl-3">
+                          <i data-lucide="search"
+                            class="w-6 h-6"></i>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div>
-                  Publications
+                  <div>
+                    Publications
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <div class="absolute -right-10 -ml-px top-0">
+          <button id="sidebar-toggle"
+            class="sidebar-toggle-theme-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="h-6 w-6 transition-transform"><polyline
+                points="15 18 9 12 15 6"></polyline></svg></button>
+        </div>
       </div>
-      <div class="absolute -right-10 -ml-px top-0">
-        <button id="sidebar-toggle"
-          class="sidebar-toggle-theme-dark">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="h-6 w-6 transition-transform"><polyline
-              points="15 18 9 12 15 6"></polyline></svg></button>
+      <!-- MAP -->
+      <div id='map' style='width: 100wh; height: 100vh'>
       </div>
-    </div>
-    <!-- MAP -->
-    <div id='map' style='width: 100wh; height: 100vh'>
-    </div>
 
-    <!-- ATTRIBUTION -->
-    <div
-      id="attribution"
-      class="absolute bottom-0 right-0 z-40 max-w-[50%] gap-1 bg-gray-50/25 px-2 py-1 text-sm leading-tight">
-      <span id="attribution-content">
-        ©
-        <a
-          class="hover:underline"
-          rel="noopener noreferrer"
-          target="_blank"
-          href="https://www.openstreetmap.org/">
-          OpenStreetMap
-        </a>
-        contributors ©
-        <a
-          class="hover:underline"
-          rel="noopener noreferrer"
-          target="_blank"
-          href="https://carto.com/">
-          CARTO
-        </a>
-      </span>
-    </div>
-
-    <!-- LEGEND -->
-    <div class="absolute bottom-9 right-6">
-      <div class="absolute -ml-px -top-10 right-0">
-        <button id="legend-toggle"
-          class="sidebar-toggle-theme-dark">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="h-6 w-6 transition-transform -rotate-90"><polyline
-              points="15 18 9 12 15 6"></polyline></svg></button>
-      </div>
+      <!-- ATTRIBUTION -->
       <div
-        id="legend"
-        class="w-[328px] p-2 bg-white shadow transition-transform overflow-hidden">
+        id="attribution"
+        class="absolute bottom-0 right-0 z-40 max-w-[50%] gap-1 bg-gray-50/25 px-2 py-1 text-sm leading-tight">
+        <span id="attribution-content">
+          ©
+          <a
+            class="hover:underline"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://www.openstreetmap.org/">
+            OpenStreetMap
+          </a>
+          contributors ©
+          <a
+            class="hover:underline"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://carto.com/">
+            CARTO
+          </a>
+        </span>
+      </div>
+
+      <!-- LEGEND -->
+      <div class="absolute bottom-9 right-6">
+        <div class="absolute -ml-px -top-10 right-0">
+          <button id="legend-toggle"
+            class="sidebar-toggle-theme-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="h-6 w-6 transition-transform -rotate-90"><polyline
+                points="15 18 9 12 15 6"></polyline></svg></button>
+        </div>
         <div
-          class="text-base font-semibold mb-2"><span
-            class="font-semibold" id="legend-text"></span>
-          publications</div>
-        <div
-          class="flex flex-col justify-center items-end gap-1">
-          <div class="text-slate-500 text-xs leading-[18px]">
-            total publications
-          </div>
-          <div class="flex w-full justify-between h-4">
-            <div class="flex-1 bg-emerald-300"></div>
-            <div class="flex-1 bg-teal-500"></div>
-            <div class="flex-1 bg-teal-600"></div>
-            <div class="flex-1 bg-teal-700"></div>
-          </div>
+          id="legend"
+          class="w-[328px] p-2 bg-white shadow transition-transform overflow-hidden">
           <div
-            class="flex w-full justify-between h-4  text-slate-500 text-xs text-center leading-[18px]">
+            class="text-base font-semibold mb-2"><span
+              class="font-semibold" id="legend-text"></span>
+            publications</div>
+          <div
+            class="flex flex-col justify-center items-end gap-1">
+            <div class="text-slate-500 text-xs leading-[18px]">
+              total publications
+            </div>
+            <div class="flex w-full justify-between h-4">
+              <div class="flex-1 bg-emerald-300"></div>
+              <div class="flex-1 bg-teal-500"></div>
+              <div class="flex-1 bg-teal-600"></div>
+              <div class="flex-1 bg-teal-700"></div>
+            </div>
             <div
-              class="text-center flex-1">1-10</div>
-            <div
-              class="text-center flex-1">10-50</div>
-            <div
-              class="text-center flex-1">50-100</div>
-            <div
-              class="text-center flex-1">>100</div>
+              class="flex w-full justify-between h-4  text-slate-500 text-xs text-center leading-[18px]">
+              <div
+                class="text-center flex-1">1-10</div>
+              <div
+                class="text-center flex-1">10-50</div>
+              <div
+                class="text-center flex-1">50-100</div>
+              <div
+                class="text-center flex-1">>100</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- MAP SETTINGS BUTTON -->
-    <div class="flex flex-col space-y-2 absolute right-6 top-6 z-40">
-      <button
-        id="map-settings-button"
-        class="relative flex items-center justify-center w-10 h-10 transition-colors active:outline active:outline-2 btn-theme-dark"
-        aria-label="Map settings" type="button" data-state="open"
-        aria-haspopup="dialog" aria-expanded="true">
-        <!-- Map settings icons can not be imported as it has to change color -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-          viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          class="w-6 h-6">
-          <path
-            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
-          </path>
-          <circle cx="12" cy="12" r="3"></circle>
-        </svg>
-      </button>
-    </div>
+      <!-- MAP SETTINGS BUTTON -->
+      <div class="flex flex-col space-y-2 absolute right-6 top-6 z-40">
+        <button
+          id="map-settings-button"
+          class="relative flex items-center justify-center w-10 h-10 transition-colors active:outline active:outline-2 btn-theme-dark"
+          aria-label="Map settings" type="button" data-state="open"
+          aria-haspopup="dialog" aria-expanded="true">
+          <!-- Map settings icons can not be imported as it has to change color -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="w-6 h-6">
+            <path
+              d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
+            </path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
 
-    <!-- MAP SETTINGS POPUP -->
-    <div
-      class="fixed z-40 pointer-events-none flex items-center justify-center right-7 top-11 w-[370px] h-[280px] hidden"
-      id="map-settings-overlay">
+      <!-- MAP SETTINGS POPUP -->
       <div
-        role="dialog" aria-label="Map settings"
-        aria-modal="true" aria-expanded="true"
-        id="map-settings-modal"
-        class="relative pointer-events-auto bg-white text-slate-700 z-50 w-72 rounded-sm border p-4 outline-none"
-        tabindex="-1">
+        class="fixed z-40 pointer-events-none flex items-center justify-center right-7 top-11 w-[370px] h-[280px] hidden"
+        id="map-settings-overlay">
         <div
-          class="space-y-3">
-          <div class="mb-6 flex items-center justify-between">
-            <h3
-              class="font-serif font-semibold">Map style
-            </h3>
-          </div>
+          role="dialog" aria-label="Map settings"
+          aria-modal="true" aria-expanded="true"
+          id="map-settings-modal"
+          class="relative pointer-events-auto bg-white text-slate-700 z-50 w-72 rounded-sm border p-4 outline-none"
+          tabindex="-1">
           <div
-            class="space-y-6">
-            <ul class="grid grid-flow-col gap-4">
-              <li
-                class="col-span-6">
-                <div
-                  class="flex w-full items-center justify-between space-x-8">
-                  <button
-                    type="button"
-                    id="satellite-basemap-button">
-                    <div class="space-y-2">
-                      <div
-                        id="satellite-basemap-container"
-                        class="shrink-0 overflow-hidden transition-opacity outline-2 outline-offset-4 outline-yellow-500 group-hover:opacity-100 group-active:outline-slate-500">
-                        <img
-                          alt="Satellite basemap" loading="lazy" width="104"
-                          height="104" decoding="async"
-                          class="w-full"
-                          src="/assets/satellite.webp">
+            class="space-y-3">
+            <div class="mb-6 flex items-center justify-between">
+              <h3
+                class="font-serif font-semibold">Map style
+              </h3>
+            </div>
+            <div
+              class="space-y-6">
+              <ul class="grid grid-flow-col gap-4">
+                <li
+                  class="col-span-6">
+                  <div
+                    class="flex w-full items-center justify-between space-x-8">
+                    <button
+                      type="button"
+                      id="satellite-basemap-button">
+                      <div class="space-y-2">
+                        <div
+                          id="satellite-basemap-container"
+                          class="shrink-0 overflow-hidden transition-opacity outline-2 outline-offset-4 outline-yellow-500 group-hover:opacity-100 group-active:outline-slate-500">
+                          <img
+                            alt="Satellite basemap" loading="lazy" width="104"
+                            height="104" decoding="async"
+                            class="w-full"
+                            src="/assets/satellite.webp">
+                        </div>
                       </div>
-                    </div>
-                  </button>
-                </div>
-              </li>
-              <li
-                class="col-span-6">
-                <div
-                  class="flex w-full items-center justify-between space-x-8">
-                  <button
-                    type="button" id="light-basemap-button">
-                    <div class="space-y-2">
-                      <div
-                        id="light-basemap-container"
-                        class="shrink-0 overflow-hidden transition-opacity outline outline-2 outline-offset-4 outline-yellow-500">
-                        <img
-                          alt="Light basemap" loading="lazy" width="104"
-                          height="104" decoding="async"
-                          class="w-full"
-                          src="/assets/light.webp">
+                    </button>
+                  </div>
+                </li>
+                <li
+                  class="col-span-6">
+                  <div
+                    class="flex w-full items-center justify-between space-x-8">
+                    <button
+                      type="button" id="light-basemap-button">
+                      <div class="space-y-2">
+                        <div
+                          id="light-basemap-container"
+                          class="shrink-0 overflow-hidden transition-opacity outline outline-2 outline-offset-4 outline-yellow-500">
+                          <img
+                            alt="Light basemap" loading="lazy" width="104"
+                            height="104" decoding="async"
+                            class="w-full"
+                            src="/assets/light.webp">
+                        </div>
                       </div>
-                    </div>
-                  </button>
-                </div>
-              </li>
-            </ul>
-            <!-- TODO: Bring back labels -->
-            <!-- <div
+                    </button>
+                  </div>
+                </li>
+              </ul>
+              <!-- TODO: Bring back labels -->
+              <!-- <div
               class="grid grid-flow-col gap-4 pt-5">
               <div class="col-span-6">
                 <div
@@ -595,49 +599,49 @@
                 </div>
               </div>
             </div> -->
+            </div>
           </div>
+          <button
+            id="close-map-settings-button" type="button"
+            class="absolute right-4 top-4" aria-label="Close map settings">
+            <img src="/assets/icons/close.svg" alt="Close map settings"
+              class="h-6 w-6">
+          </button>
+          <span
+            class="absolute right-0 transform origin-top-right -translate-y-1/2 -rotate-90 top-4">
+            <img src="/assets/icons/arrow.svg" alt="Arrow">
+          </span>
         </div>
-        <button
-          id="close-map-settings-button" type="button"
-          class="absolute right-4 top-4" aria-label="Close map settings">
-          <img src="/assets/icons/close.svg" alt="Close map settings"
-            class="h-6 w-6">
-        </button>
-        <span
-          class="absolute right-0 transform origin-top-right -translate-y-1/2 -rotate-90 top-4">
-          <img src="/assets/icons/arrow.svg" alt="Arrow">
-        </span>
       </div>
-    </div>
 
-    <!-- NOTE: All these must be at the very end. Be careful maintaining the import order -->
+      <!-- NOTE: All these must be at the very end. Be careful maintaining the import order -->
 
-    <script src='javascript/utils.js'></script>
+      <script src='javascript/utils.js'></script>
 
-    <script src='javascript/d3-chart.js'></script>
+      <script src='javascript/d3-chart.js'></script>
 
-    <!-- MOCKS FOR CALLS -->
-    <script src='javascript/mocks/layer-mocks.js'></script>
-    <script src='javascript/mocks/data-mocks.js'></script>
+      <!-- MOCKS FOR CALLS -->
+      <script src='javascript/mocks/layer-mocks.js'></script>
+      <script src='javascript/mocks/data-mocks.js'></script>
 
-    <!-- ELEMENT QUERIES -->
-    <script src='javascript/document-elements.js'></script>
+      <!-- ELEMENT QUERIES -->
+      <script src='javascript/document-elements.js'></script>
 
-    <script src='javascript/api-service.js'></script>
+      <script src='javascript/api-service.js'></script>
 
-    <!-- MAP -->
-    <script src='javascript/map/map-style.js'></script>
-    <script src='javascript/map/map-utils.js'></script>
-    <script src='javascript/map/map-layers.js'></script>
-    <script src='javascript/map/map.js'></script>
+      <!-- MAP -->
+      <script src='javascript/map/map-style.js'></script>
+      <script src='javascript/map/map-utils.js'></script>
+      <script src='javascript/map/map-layers.js'></script>
+      <script src='javascript/map/map.js'></script>
 
-    <!-- DYNAMIC DATA -->
-    <script src='javascript/dynamic-data.js'></script>
+      <!-- DYNAMIC DATA -->
+      <script src='javascript/dynamic-data.js'></script>
 
-    <!-- EVENT LISTENERS -->
-    <script src='javascript/event-listeners.js'></script>
+      <!-- EVENT LISTENERS -->
+      <script src='javascript/event-listeners.js'></script>
 
-    <style type="text/tailwindcss">
+      <style type="text/tailwindcss">
       /* MAPLIBRE OVERRIDES */
 
       @layer utilities {
@@ -686,9 +690,9 @@
         }
       }
     </style>
-    <!-- lucide js needs the icon html to be rendered -->
-    <script>
+      <!-- lucide js needs the icon html to be rendered -->
+      <script>
       lucide.createIcons();
     </script>
-  </body>
-</html>
+    </body>
+  </html>
