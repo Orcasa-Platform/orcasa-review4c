@@ -152,4 +152,12 @@ window.addEventListener('load', function () {
       });
     }
   });
+
+  // LOAD PUBLICATIONS
+
+  window.loadPublications = () => {
+    const filter = window.getters.filter();
+    const landUse = window.getters.landUse();
+    const publicationFilters = window.getters.publicationFilters();
+  };
 });

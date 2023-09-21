@@ -146,6 +146,7 @@ window.addEventListener('load', function () {
   elements.publicationButton.addEventListener("click", function() {
     window.mutations.setPublicationsOpen(true);
     elements.publicationPanel.classList.remove('-translate-x-full');
+    window.loadPublications();
   });
 
   elements.closePublicationPanelButton.addEventListener("click", function() {

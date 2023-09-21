@@ -43,8 +43,8 @@ window.addEventListener('load', function () {
     setInterventions(interventions) {
       state.interventions = interventions;
     },
-    setFilter(type, value) {
-      state.filter = { type: type, value: value };
+    setFilter(type, value, subCategory) {
+      state.filter = { type: type, value: value, subCategory: subCategory };
     },
     setChartData(chartData) {
       state.chartData = chartData;
@@ -73,6 +73,7 @@ window.addEventListener('load', function () {
     sidebarOpen: () => state.sidebarOpen,
     publicationsOpen: () => state.publicationOpen,
     publicationsSort: () => state.publicationsSort,
+    landUse: () => state.landUse,
     landUses: () => state.landUses,
     interventions: () => state.interventions,
     chartData: () => state.chartData,

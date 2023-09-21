@@ -23,7 +23,7 @@ const updateButtons = (title, data) => {
 
 const updateChartAndButtons = ({ slug, title, data, resetAllCharts }) => {
   if (resetAllCharts) {
-    // All the other charts should close their details
+    // All the other charts should close their sub-types
     const chartData = window.getters.chartData();
     Object.keys(chartData).forEach((key) => {
       if (key !== slug) {
@@ -39,11 +39,11 @@ const updateChartAndButtons = ({ slug, title, data, resetAllCharts }) => {
   createSVGChart(slug, data);
   updateButtons(title, data)
 }
-const click = (_, title, slug, data, isSubcategory) => {
+const click = (_, title, chartSlug, data, isSubcategory) => {
   const currentSelection = window.getters.filter();
   let currentTitle = title;
 
-  // If the clicked subcategory was selected clear the filter and close the details
+  // If the clicked subcategory was selected clear the filter and close the sub-types
 
   if (currentSelection?.type === 'sub-category' && currentSelection?.value === title) {
     window.mutations.setFilter(null, null);
@@ -51,17 +51,17 @@ const click = (_, title, slug, data, isSubcategory) => {
         ...d,
         active: false,
       }));
-    updateChartAndButtons({ slug, title: null, data: updatedData })
+    updateChartAndButtons({ slug: chartSlug, title: null, data: updatedData })
     return;
   }
 
-  // If the clicked detail was selected select the active subcategory
+  // If the clicked sub-type was selected select the active subcategory
 
-  if (currentSelection?.type === 'detail' && currentSelection?.value === title) {
+  if (currentSelection?.type === 'sub-type' && currentSelection?.value === title) {
     const activeSubcategoryItem = data.find((item) => item.active);
     currentTitle = activeSubcategoryItem.title;
-    window.mutations.setFilter('sub-category', currentTitle);
-    // Rerender chart to hide details
+    window.mutations.setFilter('sub-category', activeSubcategoryItem.slug);
+    // Rerender chart to hide sub-types
     const updatedData = data.map(d => {
       if (d.title === currentTitle) {
         return {
@@ -74,12 +74,12 @@ const click = (_, title, slug, data, isSubcategory) => {
         active: false,
       };
     });
-    updateChartAndButtons({ slug, title: currentTitle, data: updatedData })
+    updateChartAndButtons({ slug: chartSlug, title: currentTitle, data: updatedData })
     return;
   }
 
 
-  // Select subcategory or detail
+  // Select subcategory or sub-types
 
   let updatedData = data;
   if (isSubcategory) {
@@ -96,10 +96,9 @@ const click = (_, title, slug, data, isSubcategory) => {
       };
     });
   }
-
-  window.mutations.setFilter(isSubcategory ? 'sub-category' : 'detail', title);
-  // Rerender to show details or filter opacity of error bars
-  updateChartAndButtons({ slug, title, data: updatedData, resetAllCharts: isSubcategory })
+  window.mutations.setFilter(isSubcategory ? 'sub-category' : 'sub-types', title, !isSubcategory && data.find((item) => item.active).slug);
+  // Rerender to show sub-types or filter opacity of error bars
+  updateChartAndButtons({ slug: chartSlug, title, data: updatedData, resetAllCharts: isSubcategory })
 };
 
 // Create the SVG container
@@ -112,11 +111,11 @@ const createSVGChart = (slug, data) => {
 
   const selected = window.getters.filter();
 
-  // Data with active details
+  // Data with active sub-types
   const activeData = data.find(d => d.active);
 
-  const dataWithDetails = data.map(d =>
-    d.active ? [d].concat(d.details) : d
+  const dataWithSubTypes = data.map(d =>
+    d.active ? [d].concat(d['subTypes']) : d
   ).flat();
 
   const ITEM_HEIGHT = 60;
@@ -125,7 +124,7 @@ const createSVGChart = (slug, data) => {
   const yTickHeight = 44;
   const yTickWidth = 120;
 
-  const activeDataHeight = !!activeData ? activeData.details.length * ITEM_HEIGHT : 0; // Assuming each detail is 20 pixels tall
+  const activeDataHeight = !!activeData ? activeData.subTypes?.length * ITEM_HEIGHT : 0;
   const heightValue = (data.length) * ITEM_HEIGHT + activeDataHeight + HEIGHT_PADDING;
   const widthValue = 300;
 
@@ -153,7 +152,7 @@ const createSVGChart = (slug, data) => {
     .domain([-100, 100])
     .range([0, width]);
 
-    const domainTitles = data.map(d => d.active ? [d.title].concat(d.details.map(dt => dt.title)) : d.title).flat();
+    const domainTitles = data.map(d => d.active ? [d.title].concat(d.subTypes.map(dt => dt.title)) : d.title).flat();
   // Create y scale
   const yScale = d3.scaleBand()
     .domain(domainTitles)
@@ -202,7 +201,7 @@ const createSVGChart = (slug, data) => {
     .attr("transform", `translate(${width + 30}, ${-yTickHeight / 2})`)
 
   yAxisRegions.selectAll(".y-axis-region")
-    .data(dataWithDetails)
+    .data(dataWithSubTypes)
     .enter()
     .append("rect")
     .attr("class", "y-axis-region pointer-events-none")
@@ -210,7 +209,7 @@ const createSVGChart = (slug, data) => {
     .attr("y", d => yScale(d.title))
     .attr("width", width + 30 + RIGHT_AXIS_PADDING)
     .attr("height", ITEM_HEIGHT + 10)
-    .attr("fill", (d) => d.details ? 'transparent' : gray100)
+    .attr("fill", (d) => d.subTypes ? 'transparent' : gray100)
 
   yAxisTicks.call(yAxis)
   .selectAll(".tick")
@@ -221,7 +220,7 @@ const createSVGChart = (slug, data) => {
     .html((title) => {
       const subCategoryItem = getSubcategoryByTitle(data, title);
       const activeSubcategoryItem = !subCategoryItem && data.find((item) => item.active);
-      const dataItem = subCategoryItem || activeSubcategoryItem.details.find(detail => detail.title === title);
+      const dataItem = subCategoryItem || activeSubcategoryItem.subTypes.find(st => st.title === title);
       const slug = getSlugByTitle(data, title);
       return buttonHTML(title, dataItem?.publications, slug);
     }).on("click", (_, title) => click(_, title, slug, data, !!getSubcategoryByTitle(data, title)));
@@ -246,7 +245,7 @@ const createSVGChart = (slug, data) => {
   .attr("stroke", (d) => d === 0 ? 'black' : gray400);
 
   xGridElement.select(".domain").remove();
-  const getOpacity = (d) => (!selected || selected?.type !== 'detail' || selected?.value === d.title) ? 1 : 0.5;
+  const getOpacity = (d) => (!selected || selected?.type !== 'subType' || selected?.value === d.title) ? 1 : 0.5;
 
 
   const chartTooltip = d3.select('#chart-tooltip');
@@ -264,7 +263,7 @@ const createSVGChart = (slug, data) => {
 
   // Create error bars
   svg.selectAll(".error-bar")
-    .data(dataWithDetails)
+    .data(dataWithSubTypes)
     .enter()
     .append("g")
     .attr("class", "error-bar")
@@ -300,7 +299,7 @@ const createSVGChart = (slug, data) => {
 
   // Create data points
   svg.selectAll(".data-point")
-    .data(dataWithDetails)
+    .data(dataWithSubTypes)
     .enter()
     .append("circle")
     .attr("class", "data-point")

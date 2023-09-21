@@ -5,13 +5,15 @@
     "sub-categories": [
         {
             "title": "Cropland to Forestland",
+            "slug": "cropland-to-forestland",
             "value": 37,
             "low": -26,
             "high": 50,
             "publications": 112,
-            "details": [
+            "subTypes": [
                 {
                     "title": "sub-type 1",
+                    "slug": "sub-type-1",
                     "value": -20,
                     "low": -41,
                     "high": -11,
@@ -19,6 +21,7 @@
                 },
                 {
                     "title": "sub-type 2",
+                    "slug": "sub-type-2",
                     "value": -36,
                     "low": -70,
                     "high": 11,
@@ -28,13 +31,15 @@
         },
         {
             "title": "Cropland to Grassland",
+            "slug": "cropland-to-grassland",
             "value": 11,
             "low": -23,
             "high": 31,
             "publications": 51,
-            "details": [
+            "subTypes": [
                 {
                     "title": "sub-type 1",
+                    "slug": "sub-type-1",
                     "value": -20,
                     "low": -41,
                     "high": -11,
@@ -42,6 +47,7 @@
                 },
                 {
                     "title": "sub-type 2",
+                    "slug": "sub-type-2",
                     "value": -36,
                     "low": -70,
                     "high": 11,
@@ -51,13 +57,15 @@
         },
         {
             "title": "Cropland to Other Land",
+            "slug": "cropland-to-other-land",
             "value": 27,
             "low": 23,
             "high": 91,
             "publications": 51,
-            "details": [
+            "subTypes": [
                 {
                     "title": "sub-type 1",
+                    "slug": "sub-type-1",
                     "value": -20,
                     "low": -41,
                     "high": -11,
@@ -65,6 +73,7 @@
                 },
                 {
                     "title": "sub-type 2",
+                    "slug": "sub-type-2",
                     "value": -36,
                     "low": -70,
                     "high": 11,
@@ -72,6 +81,7 @@
                 },
                 {
                     "title": "sub-type 3",
+                    "slug": "sub-type-3",
                     "value": -36,
                     "low": -70,
                     "high": 11,
