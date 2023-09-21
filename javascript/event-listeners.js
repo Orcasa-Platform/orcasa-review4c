@@ -141,25 +141,6 @@ window.addEventListener('load', function () {
     }
   });
 
-  // SIDEBAR CONTENT
-
-  // INTERVENTION BUTTONS
-
-  if (elements.interventionButtons) {
-    for (let element of elements.interventionButtons) {
-      element.addEventListener("click", function() {
-        const slug = element.getAttribute('data-slug');
-        window.mutations.setLandUse(slug);
-
-        loadData(slug);
-
-        element.setAttribute('aria-pressed', 'true');
-        const otherButtons = Array.from(elements.interventionButtons).filter(button => button !== element);
-        otherButtons.forEach(button => button.setAttribute('aria-pressed', 'false'));
-      });
-    };
-  }
-
   // PUBLICATION BUTTON
 
   elements.publicationButton.addEventListener("click", function() {

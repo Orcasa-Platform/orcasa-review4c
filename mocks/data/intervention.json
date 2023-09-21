@@ -1,0 +1,58 @@
+{
+  "all": {
+    "name": "All",
+    "publications": 13632,
+    "metaAnalysis": 1563
+  },
+  "cropland": {
+    "name": "Cropland",
+    "publications": 5632,
+    "metaAnalysis": 563,
+    "interventions": [
+      "climate-change",
+      "land-use",
+      "management"
+    ]
+  },
+  "forest-land": {
+    "name": "Forest Land",
+    "publications": 3500,
+    "metaAnalysis": 350,
+    "default": false,
+    "interventions": [
+      "land-use",
+      "climate-change",
+      "management"
+    ]
+  },
+
+  "grassland": {
+    "name": "Grassland",
+    "publications": 1000,
+    "metaAnalysis": 100,
+    "interventions": [
+      "land-use",
+      "management",
+      "climate-change"
+    ]
+  },
+  "wetlands": {
+    "name": "Wetlands",
+    "publications": 900,
+    "metaAnalysis": 90,
+    "interventions": [
+      "management",
+      "land-use",
+      "climate-change"
+    ]
+  },
+  "other-land": {
+    "name": "Other Land",
+    "publications": 563,
+    "metaAnalysis": 56,
+    "interventions": [
+      "climate-change",
+      "land-use"
+    ]
+  }
+}

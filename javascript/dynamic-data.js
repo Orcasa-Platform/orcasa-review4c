@@ -79,16 +79,33 @@ window.addEventListener('load', function () {
   `;
 
   // Get data on first load
-  getData().then(data => {
+  getURL(URLS.intervention).then(data => {
     if (elements.landUseMenu && data) {
       const landUses = Object.entries(data).map(([key, value], i) => ({ slug: key, ...value, index: i }));
-
       window.mutations.setLandUses(landUses);
 
       landUses.forEach(landUse => {
         elements.landUseMenu.innerHTML += button(landUse);
       });
       loadData(landUses[0].slug);
+    }
+  }).then(() => {
+    // Add event listeners to the intervention buttons
+    const interventionButtons = document.getElementsByClassName('btn-intervention');
+
+    // INTERVENTION BUTTONS
+    if (interventionButtons) {
+      for (let element of elements.interventionButtons) {
+        element.addEventListener("click", function() {
+          const slug = element.getAttribute('data-slug');
+          window.mutations.setLandUse(slug);
+          loadData(slug);
+
+          element.setAttribute('aria-pressed', 'true');
+          const otherButtons = Array.from(elements.interventionButtons).filter(button => button !== element);
+          otherButtons.forEach(button => button.setAttribute('aria-pressed', 'false'));
+        });
+      };
     }
   });
 
@@ -135,5 +152,4 @@ window.addEventListener('load', function () {
       });
     }
   });
-
 });

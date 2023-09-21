@@ -1,0 +1,150 @@
+{
+  "US": {
+      "number_primary_studies": 2189,
+      "geom": "[{\"type\":\"Feature\",\"id\":135,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-112.493532187673,45.695381857143]},\"properties\":{\"long_name\":\"United States\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 77,
+          "wetland restauration": 2112
+      }
+  },
+  "CH": {
+      "number_primary_studies": 23,
+      "geom": "[{\"type\":\"Feature\",\"id\":19,\"geometry\":{\"type\":\"Point\",\"coordinates\":[8.23455626159083,46.8025891704654]},\"properties\":{\"long_name\":\"Switzerland\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 23
+      }
+  },
+  "FR": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":24,\"geometry\":{\"type\":\"Point\",\"coordinates\":[2.55042982501832,46.5648681707654]},\"properties\":{\"long_name\":\"France\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1
+      }
+  },
+  "JP": {
+      "number_primary_studies": 6,
+      "geom": "[{\"type\":\"Feature\",\"id\":172,\"geometry\":{\"type\":\"Point\",\"coordinates\":[137.974479548007,37.5403648371481]},\"properties\":{\"long_name\":\"Japan\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 6
+      }
+  },
+  "FI": {
+      "number_primary_studies": 10,
+      "geom": "[{\"type\":\"Feature\",\"id\":1,\"geometry\":{\"type\":\"Point\",\"coordinates\":[26.2724939330078,64.5036394636447]},\"properties\":{\"long_name\":\"Finland\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 10
+      }
+  },
+  "CN": {
+      "number_primary_studies": 12,
+      "geom": "[{\"type\":\"Feature\",\"id\":47,\"geometry\":{\"type\":\"Point\",\"coordinates\":[103.834685245701,36.5633690091615]},\"properties\":{\"long_name\":\"China\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 12
+      }
+  },
+  "KR": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":175,\"geometry\":{\"type\":\"Point\",\"coordinates\":[127.829497339392,36.3678714623738]},\"properties\":{\"long_name\":\"Korea, Republic of\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1
+      }
+  },
+  "ES": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":28,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-3.64926554373003,40.2275897809659]},\"properties\":{\"long_name\":\"Spain\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1
+      }
+  },
+  "PT": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":42,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-8.46677662826977,39.6027415383879]},\"properties\":{\"long_name\":\"Portugal\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1
+      }
+  },
+  "DE": {
+      "number_primary_studies": 6,
+      "geom": "[{\"type\":\"Feature\",\"id\":7,\"geometry\":{\"type\":\"Point\",\"coordinates\":[10.392312119663,51.110122216499]},\"properties\":{\"long_name\":\"Germany\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 6
+      }
+  },
+  "DK": {
+      "number_primary_studies": 7,
+      "geom": "[{\"type\":\"Feature\",\"id\":3,\"geometry\":{\"type\":\"Point\",\"coordinates\":[10.050570674144,55.9624401904021]},\"properties\":{\"long_name\":\"Denmark\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 7
+      }
+  },
+  "GB": {
+      "number_primary_studies": 11,
+      "geom": "[{\"type\":\"Feature\",\"id\":166,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-2.90032697743179,54.1599103645581]},\"properties\":{\"long_name\":\"United Kingdom\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 11
+      }
+  },
+  "NL": {
+      "number_primary_studies": 3,
+      "geom": "[{\"type\":\"Feature\",\"id\":8,\"geometry\":{\"type\":\"Point\",\"coordinates\":[5.60109723694747,52.2535780200093]},\"properties\":{\"long_name\":\"Netherlands\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 3
+      }
+  },
+  "SE": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":136,\"geometry\":{\"type\":\"Point\",\"coordinates\":[16.7411272225643,62.7877349687442]},\"properties\":{\"long_name\":\"Sweden\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 2
+      }
+  },
+  "PH": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":185,\"geometry\":{\"type\":\"Point\",\"coordinates\":[122.8736866702,11.747413798271]},\"properties\":{\"long_name\":\"Philippines\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1
+      }
+  },
+  "BE": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":11,\"geometry\":{\"type\":\"Point\",\"coordinates\":[4.66430435288703,50.6429600365894]},\"properties\":{\"long_name\":\"Belgium\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1
+      }
+  },
+  "IT": {
+      "number_primary_studies": 6,
+      "geom": "[{\"type\":\"Feature\",\"id\":21,\"geometry\":{\"type\":\"Point\",\"coordinates\":[12.0717489315058,42.7911387408423]},\"properties\":{\"long_name\":\"Italy\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 6
+      }
+  },
+  "NZ": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":242,\"geometry\":{\"type\":\"Point\",\"coordinates\":[171.604826752646,-41.8371889548333]},\"properties\":{\"long_name\":\"New Zealand\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 2
+      }
+  },
+  "AU": {
+      "number_primary_studies": 5,
+      "geom": "[{\"type\":\"Feature\",\"id\":222,\"geometry\":{\"type\":\"Point\",\"coordinates\":[134.490972365464,-25.7332813287158]},\"properties\":{\"long_name\":\"Australia\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 5
+      }
+  },
+  "IN": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":146,\"geometry\":{\"type\":\"Point\",\"coordinates\":[79.6188660674667,22.8813691826695]},\"properties\":{\"long_name\":\"India\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 2
+      }
+  },
+  "BR": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":103,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-53.0887365610034,-10.7723250928083]},\"properties\":{\"long_name\":\"Brazil\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1
+      }
+  }
+}

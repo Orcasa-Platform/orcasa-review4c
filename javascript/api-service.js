@@ -1,59 +1,18 @@
+// Replace all with real URLs
 const URLS = {
-    'allLayer': 'http://review4c.net/files/int0.json',
-    'countries': '/javascript/mocks/country.json', // Replace with real URL
-    'years': '/javascript/mocks/date.json', // Replace with real URL
-    'journals': '/javascript/mocks/journal.json', // Replace with real URL
-    // ...
-}
-
-const mockLayers = {
-  cropland: cropLandMock,
-  "forest-land": forestLandMock,
-  'grassland': grassLandMock,
-  'wetlands': wetLandMock,
-  'other-land': otherLandMock,
-};
-
-const getLayer = async (layerSlug) => {
-  let layer;
-  try {
-    // Currently we have CORS errors when fetching so we are using a mock
-    // const response = await fetch(URLS.allLayer);
-    // layer = await response.json();
-  } catch (error) {
-    console.error(error);
-  }
-
-  return layer || mockLayers[layerSlug] || allLayerMock;
-};
-
-const getData = async () => {
-  let data;
-  try {
-    // Using a mock until we have real data
-    // const response = await fetch(URLS.data);
-    // layer = await response.json();
-  } catch (error) {
-    console.error(error);
-  }
-
-  return data || interventionData;
-};
-
-const getIntervention = async (intervention) => {
-  const {
-    // URL,
-    slug
-  } = intervention;
-  let interventionData;
-  try {
-    // Using a mock until we have real data
-    // const response = await fetch(URL);
-    // layer = await response.json();
-  } catch (error) {
-    console.error(error);
-  }
-  return interventionData || interventionMocks[slug];
+  'all':  '/mocks/layers/all-layer.json',
+  'cropland':  '/mocks/layers/cropland.json',
+  'forest-land':  '/mocks/layers/forest-land.json',
+  'grassland':  '/mocks/layers/grassland.json',
+  'wetlands':  '/mocks/layers/wetlands.json',
+  'other-land':  '/mocks/layers/other-land.json',
+  'countries': '/mocks/filters/country.json',
+  'years': '/mocks/filters/date.json',
+  'journals': '/mocks/filters/journal.json',
+  'intervention': '/mocks/data/intervention.json',
+  'climate-change': '/mocks/data/climate-change.json',
+  'land-use': '/mocks/data/land-use.json',
+  'management': '/mocks/data/management.json',
 };
 
 const getURL = async (url) => {
@@ -62,7 +21,10 @@ const getURL = async (url) => {
     const response = await fetch(url);
     data = await response.json();
   } catch (error) {
-    console.error(error);
+    console.error(url, error);
   }
   return data;
-}
+};
+
+const getLayer = async (layerSlug = 'all') => getURL(URLS[layerSlug]);
+const getIntervention = async (intervention) => getURL(URLS[intervention]);

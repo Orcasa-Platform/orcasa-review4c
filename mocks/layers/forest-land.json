@@ -1,0 +1,785 @@
+{
+  "IT": {
+      "number_primary_studies": 1216,
+      "geom": "[{\"type\":\"Feature\",\"id\":21,\"geometry\":{\"type\":\"Point\",\"coordinates\":[12.0717489315058,42.7911387408423]},\"properties\":{\"long_name\":\"Italy\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 880,
+          "fire": 14,
+          "forest degradation": 131,
+          "forest harvesting": 47,
+          "intercropping/species mixtures": 24,
+          "residues management": 2,
+          "warming experiments": 118
+      }
+  },
+  "CA": {
+      "number_primary_studies": 2114,
+      "geom": "[{\"type\":\"Feature\",\"id\":6,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-98.2610993286887,61.3927417486694]},\"properties\":{\"long_name\":\"Canada\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 650,
+          "fire": 27,
+          "fire ; forest harvesting": 9,
+          "forest degradation": 135,
+          "forest harvesting": 1154,
+          "genotype/species selection": 8,
+          "intercropping/species mixtures": 32,
+          "residues management": 4,
+          "warming experiments": 95
+      }
+  },
+  "BE": {
+      "number_primary_studies": 158,
+      "geom": "[{\"type\":\"Feature\",\"id\":11,\"geometry\":{\"type\":\"Point\",\"coordinates\":[4.66430435288703,50.6429600365894]},\"properties\":{\"long_name\":\"Belgium\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 120,
+          "forest harvesting": 12,
+          "genotype/species selection": 4,
+          "warming experiments": 22
+      }
+  },
+  "FI": {
+      "number_primary_studies": 449,
+      "geom": "[{\"type\":\"Feature\",\"id\":1,\"geometry\":{\"type\":\"Point\",\"coordinates\":[26.2724939330078,64.5036394636447]},\"properties\":{\"long_name\":\"Finland\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 120,
+          "fire": 17,
+          "forest degradation": 65,
+          "forest harvesting": 167,
+          "genotype/species selection": 8,
+          "intercropping/species mixtures": 8,
+          "residues management": 2,
+          "warming experiments": 62
+      }
+  },
+  "US": {
+      "number_primary_studies": 7251,
+      "geom": "[{\"type\":\"Feature\",\"id\":135,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-112.493532187673,45.695381857143]},\"properties\":{\"long_name\":\"United States\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 1940,
+          "fire": 870,
+          "fire ; forest harvesting": 207,
+          "forest degradation": 490,
+          "forest harvesting": 2600,
+          "genotype/species selection": 60,
+          "intercropping/species mixtures": 380,
+          "residues management": 40,
+          "warming experiments": 664
+      }
+  },
+  "CH": {
+      "number_primary_studies": 427,
+      "geom": "[{\"type\":\"Feature\",\"id\":19,\"geometry\":{\"type\":\"Point\",\"coordinates\":[8.23455626159083,46.8025891704654]},\"properties\":{\"long_name\":\"Switzerland\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 290,
+          "intercropping/species mixtures": 96,
+          "residues management": 2,
+          "warming experiments": 39
+      }
+  },
+  "GB": {
+      "number_primary_studies": 396,
+      "geom": "[{\"type\":\"Feature\",\"id\":166,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-2.90032697743179,54.1599103645581]},\"properties\":{\"long_name\":\"United Kingdom\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 180,
+          "fire": 13,
+          "forest degradation": 1,
+          "forest harvesting": 58,
+          "genotype/species selection": 4,
+          "intercropping/species mixtures": 20,
+          "residues management": 2,
+          "warming experiments": 118
+      }
+  },
+  "NZ": {
+      "number_primary_studies": 338,
+      "geom": "[{\"type\":\"Feature\",\"id\":242,\"geometry\":{\"type\":\"Point\",\"coordinates\":[171.604826752646,-41.8371889548333]},\"properties\":{\"long_name\":\"New Zealand\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 10,
+          "forest degradation": 149,
+          "forest harvesting": 174,
+          "genotype/species selection": 4,
+          "warming experiments": 1
+      }
+  },
+  "SK": {
+      "number_primary_studies": 29,
+      "geom": "[{\"type\":\"Feature\",\"id\":17,\"geometry\":{\"type\":\"Point\",\"coordinates\":[19.4914707323353,48.7073460234975]},\"properties\":{\"long_name\":\"Slovakia\"}}]",
+      "effect_outcomes": {
+          "co2 enrichment": 20,
+          "fire": 5,
+          "residues management": 2,
+          "warming experiments": 2
+      }
+  },
+  "AR": {
+      "number_primary_studies": 149,
+      "geom": "[{\"type\":\"Feature\",\"id\":124,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-65.1675007436911,-35.3766672659209]},\"properties\":{\"long_name\":\"Argentina\"}}]",
+      "effect_outcomes": {
+          "fire": 34,
+          "forest degradation": 95,
+          "genotype/species selection": 4,
+          "intercropping/species mixtures": 16
+      }
+  },
+  "JP": {
+      "number_primary_studies": 258,
+      "geom": "[{\"type\":\"Feature\",\"id\":172,\"geometry\":{\"type\":\"Point\",\"coordinates\":[137.974479548007,37.5403648371481]},\"properties\":{\"long_name\":\"Japan\"}}]",
+      "effect_outcomes": {
+          "fire": 19,
+          "forest degradation": 134,
+          "forest harvesting": 91,
+          "genotype/species selection": 4,
+          "warming experiments": 10
+      }
+  },
+  "AU": {
+      "number_primary_studies": 790,
+      "geom": "[{\"type\":\"Feature\",\"id\":222,\"geometry\":{\"type\":\"Point\",\"coordinates\":[134.490972365464,-25.7332813287158]},\"properties\":{\"long_name\":\"Australia\"}}]",
+      "effect_outcomes": {
+          "fire": 140,
+          "forest degradation": 265,
+          "forest harvesting": 331,
+          "genotype/species selection": 24,
+          "warming experiments": 30
+      }
+  },
+  "ES": {
+      "number_primary_studies": 783,
+      "geom": "[{\"type\":\"Feature\",\"id\":28,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-3.64926554373003,40.2275897809659]},\"properties\":{\"long_name\":\"Spain\"}}]",
+      "effect_outcomes": {
+          "fire": 87,
+          "forest degradation": 326,
+          "forest harvesting": 260,
+          "genotype/species selection": 16,
+          "intercropping/species mixtures": 12,
+          "residues management": 2,
+          "warming experiments": 80
+      }
+  },
+  "FR": {
+      "number_primary_studies": 259,
+      "geom": "[{\"type\":\"Feature\",\"id\":24,\"geometry\":{\"type\":\"Point\",\"coordinates\":[2.55042982501832,46.5648681707654]},\"properties\":{\"long_name\":\"France\"}}]",
+      "effect_outcomes": {
+          "fire": 9,
+          "forest degradation": 134,
+          "forest harvesting": 56,
+          "genotype/species selection": 4,
+          "intercropping/species mixtures": 44,
+          "residues management": 2,
+          "warming experiments": 10
+      }
+  },
+  "TR": {
+      "number_primary_studies": 28,
+      "geom": "[{\"type\":\"Feature\",\"id\":44,\"geometry\":{\"type\":\"Point\",\"coordinates\":[35.1792012582731,39.06062441115]},\"properties\":{\"long_name\":\"Turkey\"}}]",
+      "effect_outcomes": {
+          "fire": 14,
+          "forest degradation": 3,
+          "forest harvesting": 7,
+          "genotype/species selection": 4
+      }
+  },
+  "CN": {
+      "number_primary_studies": 2426,
+      "geom": "[{\"type\":\"Feature\",\"id\":47,\"geometry\":{\"type\":\"Point\",\"coordinates\":[103.834685245701,36.5633690091615]},\"properties\":{\"long_name\":\"China\"}}]",
+      "effect_outcomes": {
+          "fire": 10,
+          "forest degradation": 1746,
+          "forest harvesting": 266,
+          "genotype/species selection": 32,
+          "intercropping/species mixtures": 156,
+          "residues management": 26,
+          "warming experiments": 190
+      }
+  },
+  "ET": {
+      "number_primary_studies": 79,
+      "geom": "[{\"type\":\"Feature\",\"id\":80,\"geometry\":{\"type\":\"Point\",\"coordinates\":[39.616065214302,8.62611419188303]},\"properties\":{\"long_name\":\"Ethiopia\"}}]",
+      "effect_outcomes": {
+          "fire": 10,
+          "forest degradation": 45,
+          "forest harvesting": 12,
+          "genotype/species selection": 12
+      }
+  },
+  "PT": {
+      "number_primary_studies": 30,
+      "geom": "[{\"type\":\"Feature\",\"id\":42,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-8.46677662826977,39.6027415383879]},\"properties\":{\"long_name\":\"Portugal\"}}]",
+      "effect_outcomes": {
+          "fire": 18,
+          "intercropping/species mixtures": 12
+      }
+  },
+  "BR": {
+      "number_primary_studies": 4786,
+      "geom": "[{\"type\":\"Feature\",\"id\":103,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-53.0887365610034,-10.7723250928083]},\"properties\":{\"long_name\":\"Brazil\"}}]",
+      "effect_outcomes": {
+          "fire": 83,
+          "forest degradation": 4551,
+          "forest harvesting": 62,
+          "genotype/species selection": 12,
+          "intercropping/species mixtures": 76,
+          "residues management": 2
+      }
+  },
+  "DZ": {
+      "number_primary_studies": 17,
+      "geom": "[{\"type\":\"Feature\",\"id\":51,\"geometry\":{\"type\":\"Point\",\"coordinates\":[2.63240532361825,28.1632283867011]},\"properties\":{\"long_name\":\"Algeria\"}}]",
+      "effect_outcomes": {
+          "fire": 5,
+          "forest harvesting": 4,
+          "intercropping/species mixtures": 8
+      }
+  },
+  "MX": {
+      "number_primary_studies": 465,
+      "geom": "[{\"type\":\"Feature\",\"id\":137,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-102.534823474268,23.9507951094759]},\"properties\":{\"long_name\":\"Mexico\"}}]",
+      "effect_outcomes": {
+          "fire": 20,
+          "forest degradation": 397,
+          "forest harvesting": 48
+      }
+  },
+  "KR": {
+      "number_primary_studies": 83,
+      "geom": "[{\"type\":\"Feature\",\"id\":175,\"geometry\":{\"type\":\"Point\",\"coordinates\":[127.829497339392,36.3678714623738]},\"properties\":{\"long_name\":\"Korea, Republic of\"}}]",
+      "effect_outcomes": {
+          "fire": 5,
+          "forest degradation": 6,
+          "forest harvesting": 54,
+          "genotype/species selection": 8,
+          "warming experiments": 10
+      }
+  },
+  "IL": {
+      "number_primary_studies": 5,
+      "geom": "[{\"type\":\"Feature\",\"id\":55,\"geometry\":{\"type\":\"Point\",\"coordinates\":[34.9660224703455,31.3581661123112]},\"properties\":{\"long_name\":\"Israel\"}}]",
+      "effect_outcomes": {
+          "fire": 5
+      }
+  },
+  "ID": {
+      "number_primary_studies": 178,
+      "geom": "[{\"type\":\"Feature\",\"id\":215,\"geometry\":{\"type\":\"Point\",\"coordinates\":[117.311610756535,-2.22979378402477]},\"properties\":{\"long_name\":\"Indonesia\"}}]",
+      "effect_outcomes": {
+          "fire": 5,
+          "forest degradation": 103,
+          "forest harvesting": 68,
+          "residues management": 2
+      }
+  },
+  "MY": {
+      "number_primary_studies": 258,
+      "geom": "[{\"type\":\"Feature\",\"id\":104,\"geometry\":{\"type\":\"Point\",\"coordinates\":[109.711342448446,3.79381249953645]},\"properties\":{\"long_name\":\"Malaysia\"}}]",
+      "effect_outcomes": {
+          "fire": 5,
+          "forest degradation": 205,
+          "forest harvesting": 48
+      }
+  },
+  "BO": {
+      "number_primary_studies": 40,
+      "geom": "[{\"type\":\"Feature\",\"id\":119,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-64.6704694283692,-16.7151050258305]},\"properties\":{\"long_name\":\"Bolivia\"}}]",
+      "effect_outcomes": {
+          "fire": 5,
+          "forest degradation": 4,
+          "forest harvesting": 31
+      }
+  },
+  "CR": {
+      "number_primary_studies": 219,
+      "geom": "[{\"type\":\"Feature\",\"id\":88,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-84.1890532213732,9.97056913526161]},\"properties\":{\"long_name\":\"Costa Rica\"}}]",
+      "effect_outcomes": {
+          "fire": 5,
+          "forest degradation": 189,
+          "forest harvesting": 11,
+          "genotype/species selection": 4,
+          "residues management": 10
+      }
+  },
+  "ZA": {
+      "number_primary_studies": 111,
+      "geom": "[{\"type\":\"Feature\",\"id\":129,\"geometry\":{\"type\":\"Point\",\"coordinates\":[25.093077827096,-28.9995232336903]},\"properties\":{\"long_name\":\"South Africa\"}}]",
+      "effect_outcomes": {
+          "fire": 109,
+          "forest harvesting": 2
+      }
+  },
+  "BF": {
+      "number_primary_studies": 20,
+      "geom": "[{\"type\":\"Feature\",\"id\":78,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-1.7398144405188,12.2778969231121]},\"properties\":{\"long_name\":\"Burkina Faso\"}}]",
+      "effect_outcomes": {
+          "fire": 13,
+          "forest harvesting": 7
+      }
+  },
+  "RU": {
+      "number_primary_studies": 57,
+      "geom": "[{\"type\":\"Feature\",\"id\":132,\"geometry\":{\"type\":\"Point\",\"coordinates\":[96.689529243041,61.9881557098379]},\"properties\":{\"long_name\":\"Russia\"}}]",
+      "effect_outcomes": {
+          "fire": 26,
+          "forest degradation": 1,
+          "forest harvesting": 12,
+          "genotype/species selection": 8,
+          "warming experiments": 10
+      }
+  },
+  "SE": {
+      "number_primary_studies": 355,
+      "geom": "[{\"type\":\"Feature\",\"id\":136,\"geometry\":{\"type\":\"Point\",\"coordinates\":[16.7411272225643,62.7877349687442]},\"properties\":{\"long_name\":\"Sweden\"}}]",
+      "effect_outcomes": {
+          "fire": 26,
+          "forest harvesting": 119,
+          "genotype/species selection": 16,
+          "intercropping/species mixtures": 16,
+          "residues management": 8,
+          "warming experiments": 170
+      }
+  },
+  "IN": {
+      "number_primary_studies": 532,
+      "geom": "[{\"type\":\"Feature\",\"id\":146,\"geometry\":{\"type\":\"Point\",\"coordinates\":[79.6188660674667,22.8813691826695]},\"properties\":{\"long_name\":\"India\"}}]",
+      "effect_outcomes": {
+          "fire": 13,
+          "forest degradation": 402,
+          "forest harvesting": 97,
+          "intercropping/species mixtures": 20
+      }
+  },
+  "NO": {
+      "number_primary_studies": 55,
+      "geom": "[{\"type\":\"Feature\",\"id\":134,\"geometry\":{\"type\":\"Point\",\"coordinates\":[14.075244986957,64.4477088677774]},\"properties\":{\"long_name\":\"Norway\"}}]",
+      "effect_outcomes": {
+          "fire": 13,
+          "forest harvesting": 12,
+          "warming experiments": 30
+      }
+  },
+  "CI": {
+      "number_primary_studies": 13,
+      "geom": "[{\"type\":\"Feature\",\"id\":95,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-5.55552964565554,7.63165287991665]},\"properties\":{\"long_name\":\"Cote d'Ivoire\"}}]",
+      "effect_outcomes": {
+          "fire": 13
+      }
+  },
+  "ZW": {
+      "number_primary_studies": 45,
+      "geom": "[{\"type\":\"Feature\",\"id\":122,\"geometry\":{\"type\":\"Point\",\"coordinates\":[29.8717598713902,-19.000012265249]},\"properties\":{\"long_name\":\"Zimbabwe\"}}]",
+      "effect_outcomes": {
+          "fire": 13,
+          "forest degradation": 16,
+          "forest harvesting": 12,
+          "genotype/species selection": 4
+      }
+  },
+  "PR": {
+      "number_primary_studies": 136,
+      "geom": "[{\"type\":\"Feature\",\"id\":189,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-66.466215242424,18.220944736459]},\"properties\":{\"long_name\":\"Puerto Rico\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 118,
+          "forest harvesting": 12,
+          "genotype/species selection": 4,
+          "residues management": 2
+      }
+  },
+  "TW": {
+      "number_primary_studies": 134,
+      "geom": "[{\"type\":\"Feature\",\"id\":181,\"geometry\":{\"type\":\"Point\",\"coordinates\":[120.946354268563,23.7536495264305]},\"properties\":{\"long_name\":\"Taiwan\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 130,
+          "forest harvesting": 2,
+          "residues management": 2
+      }
+  },
+  "RW": {
+      "number_primary_studies": 65,
+      "geom": "[{\"type\":\"Feature\",\"id\":113,\"geometry\":{\"type\":\"Point\",\"coordinates\":[29.9172266599841,-1.99793034181828]},\"properties\":{\"long_name\":\"Rwanda\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 65
+      }
+  },
+  "EC": {
+      "number_primary_studies": 187,
+      "geom": "[{\"type\":\"Feature\",\"id\":110,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-78.7806918947223,-1.42521925422544]},\"properties\":{\"long_name\":\"Ecuador\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 187
+      }
+  },
+  "IR": {
+      "number_primary_studies": 136,
+      "geom": "[{\"type\":\"Feature\",\"id\":60,\"geometry\":{\"type\":\"Point\",\"coordinates\":[54.3013991571557,32.5648103035746]},\"properties\":{\"long_name\":\"Iran\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 136
+      }
+  },
+  "NL": {
+      "number_primary_studies": 133,
+      "geom": "[{\"type\":\"Feature\",\"id\":8,\"geometry\":{\"type\":\"Point\",\"coordinates\":[5.60109723694747,52.2535780200093]},\"properties\":{\"long_name\":\"Netherlands\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 65,
+          "genotype/species selection": 4,
+          "intercropping/species mixtures": 12,
+          "residues management": 2,
+          "warming experiments": 50
+      }
+  },
+  "KE": {
+      "number_primary_studies": 78,
+      "geom": "[{\"type\":\"Feature\",\"id\":111,\"geometry\":{\"type\":\"Point\",\"coordinates\":[37.8579083796558,0.529819631289838]},\"properties\":{\"long_name\":\"Kenya\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 73,
+          "forest harvesting": 5
+      }
+  },
+  "CL": {
+      "number_primary_studies": 126,
+      "geom": "[{\"type\":\"Feature\",\"id\":243,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-71.3797619077096,-37.8664780570802]},\"properties\":{\"long_name\":\"Chile\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 99,
+          "forest harvesting": 19,
+          "genotype/species selection": 8
+      }
+  },
+  "TZ": {
+      "number_primary_studies": 99,
+      "geom": "[{\"type\":\"Feature\",\"id\":116,\"geometry\":{\"type\":\"Point\",\"coordinates\":[34.8234205059706,-6.27018476636659]},\"properties\":{\"long_name\":\"Tanzania, United Republic of\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 82,
+          "forest harvesting": 17
+      }
+  },
+  "BD": {
+      "number_primary_studies": 75,
+      "geom": "[{\"type\":\"Feature\",\"id\":138,\"geometry\":{\"type\":\"Point\",\"coordinates\":[90.2709296524611,23.833139181105]},\"properties\":{\"long_name\":\"Bangladesh\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 75
+      }
+  },
+  "NG": {
+      "number_primary_studies": 109,
+      "geom": "[{\"type\":\"Feature\",\"id\":83,\"geometry\":{\"type\":\"Point\",\"coordinates\":[8.10528485968806,9.59364932904282]},\"properties\":{\"long_name\":\"Nigeria\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 109
+      }
+  },
+  "KG": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":31,\"geometry\":{\"type\":\"Point\",\"coordinates\":[74.5555181595258,41.46488000651]},\"properties\":{\"long_name\":\"Kyrgyzstan\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 1
+      }
+  },
+  "DE": {
+      "number_primary_studies": 324,
+      "geom": "[{\"type\":\"Feature\",\"id\":7,\"geometry\":{\"type\":\"Point\",\"coordinates\":[10.392312119663,51.110122216499]},\"properties\":{\"long_name\":\"Germany\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 4,
+          "forest harvesting": 208,
+          "genotype/species selection": 12,
+          "intercropping/species mixtures": 84,
+          "residues management": 16
+      }
+  },
+  "PH": {
+      "number_primary_studies": 64,
+      "geom": "[{\"type\":\"Feature\",\"id\":185,\"geometry\":{\"type\":\"Point\",\"coordinates\":[122.8736866702,11.747413798271]},\"properties\":{\"long_name\":\"Philippines\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 17,
+          "forest harvesting": 47
+      }
+  },
+  "CO": {
+      "number_primary_studies": 47,
+      "geom": "[{\"type\":\"Feature\",\"id\":143,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-73.0757601454342,3.90033898307688]},\"properties\":{\"long_name\":\"Colombia\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 47
+      }
+  },
+  "PA": {
+      "number_primary_studies": 28,
+      "geom": "[{\"type\":\"Feature\",\"id\":92,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-80.1090561334593,8.50550177395588]},\"properties\":{\"long_name\":\"Panama\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 20,
+          "forest harvesting": 2,
+          "residues management": 6
+      }
+  },
+  "MW": {
+      "number_primary_studies": 9,
+      "geom": "[{\"type\":\"Feature\",\"id\":120,\"geometry\":{\"type\":\"Point\",\"coordinates\":[34.3069787387773,-13.2151559491619]},\"properties\":{\"long_name\":\"Malawi\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 9
+      }
+  },
+  "CD": {
+      "number_primary_studies": 89,
+      "geom": "[{\"type\":\"Feature\",\"id\":112,\"geometry\":{\"type\":\"Point\",\"coordinates\":[23.654487791731,-2.87621680268682]},\"properties\":{\"long_name\":\"Congo (Democratic Republic of the)\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 25,
+          "forest harvesting": 64
+      }
+  },
+  "DO": {
+      "number_primary_studies": 16,
+      "geom": "[{\"type\":\"Feature\",\"id\":182,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-70.485444082976,18.8931416407972]},\"properties\":{\"long_name\":\"Dominican Republic\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 11,
+          "forest harvesting": 5
+      }
+  },
+  "SB": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":221,\"geometry\":{\"type\":\"Point\",\"coordinates\":[159.612997328105,-8.90435038602806]},\"properties\":{\"long_name\":\"Solomon Islands\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 1
+      }
+  },
+  "SN": {
+      "number_primary_studies": 18,
+      "geom": "[{\"type\":\"Feature\",\"id\":72,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-14.4682399645985,14.3669032615052]},\"properties\":{\"long_name\":\"Senegal\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 18
+      }
+  },
+  "IE": {
+      "number_primary_studies": 13,
+      "geom": "[{\"type\":\"Feature\",\"id\":168,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-8.1515688843334,53.1770621494734]},\"properties\":{\"long_name\":\"Ireland\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 1,
+          "forest harvesting": 10,
+          "residues management": 2
+      }
+  },
+  "UY": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":130,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-56.0121828689982,-32.799585111336]},\"properties\":{\"long_name\":\"Uruguay\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 1
+      }
+  },
+  "GH": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":93,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-1.20707957395663,7.95972037879835]},\"properties\":{\"long_name\":\"Ghana\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 1
+      }
+  },
+  "NP": {
+      "number_primary_studies": 1,
+      "geom": "[{\"type\":\"Feature\",\"id\":64,\"geometry\":{\"type\":\"Point\",\"coordinates\":[83.9384395496305,28.2530396483743]},\"properties\":{\"long_name\":\"Nepal\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 1
+      }
+  },
+  "IS": {
+      "number_primary_studies": 9,
+      "geom": "[{\"type\":\"Feature\",\"id\":163,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-18.6055446354797,64.9975991011785]},\"properties\":{\"long_name\":\"Iceland\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 1,
+          "genotype/species selection": 8
+      }
+  },
+  "TH": {
+      "number_primary_studies": 2,
+      "geom": "[{\"type\":\"Feature\",\"id\":91,\"geometry\":{\"type\":\"Point\",\"coordinates\":[101.014962185685,15.1199626220996]},\"properties\":{\"long_name\":\"Thailand\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 2
+      }
+  },
+  "CM": {
+      "number_primary_studies": 21,
+      "geom": "[{\"type\":\"Feature\",\"id\":100,\"geometry\":{\"type\":\"Point\",\"coordinates\":[12.7433099861085,5.68582489963154]},\"properties\":{\"long_name\":\"Cameroon\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 16,
+          "forest harvesting": 5
+      }
+  },
+  "MG": {
+      "number_primary_studies": 28,
+      "geom": "[{\"type\":\"Feature\",\"id\":230,\"geometry\":{\"type\":\"Point\",\"coordinates\":[46.7059921409816,-19.3735747570967]},\"properties\":{\"long_name\":\"Madagascar\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 16,
+          "forest harvesting": 12
+      }
+  },
+  "MQ": {
+      "number_primary_studies": 8,
+      "geom": "[{\"type\":\"Feature\",\"id\":201,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-61.0214871290906,14.6527633109107]},\"properties\":{\"long_name\":\"Martinique\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 8
+      }
+  },
+  "GP": {
+      "number_primary_studies": 8,
+      "geom": "[{\"type\":\"Feature\",\"id\":197,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-61.5522227635972,16.2339489461238]},\"properties\":{\"long_name\":\"Guadeloupe\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 8
+      }
+  },
+  "BZ": {
+      "number_primary_studies": 8,
+      "geom": "[{\"type\":\"Feature\",\"id\":192,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-88.682956012346,17.2184737026826]},\"properties\":{\"long_name\":\"Belize\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 8
+      }
+  },
+  "PE": {
+      "number_primary_studies": 34,
+      "geom": "[{\"type\":\"Feature\",\"id\":121,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-74.3754239835803,-9.16370840347554]},\"properties\":{\"long_name\":\"Peru\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 32,
+          "residues management": 2
+      }
+  },
+  "VE": {
+      "number_primary_studies": 30,
+      "geom": "[{\"type\":\"Feature\",\"id\":209,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-66.1662926080036,7.12493013262774]},\"properties\":{\"long_name\":\"Venezuela\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 18,
+          "forest harvesting": 12
+      }
+  },
+  "SZ": {
+      "number_primary_studies": 16,
+      "geom": "[{\"type\":\"Feature\",\"id\":127,\"geometry\":{\"type\":\"Point\",\"coordinates\":[31.4972231414159,-26.5619102897758]},\"properties\":{\"long_name\":\"Swaziland\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 16
+      }
+  },
+  "PY": {
+      "number_primary_studies": 8,
+      "geom": "[{\"type\":\"Feature\",\"id\":125,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-58.3909415803812,-23.2361180034581]},\"properties\":{\"long_name\":\"Paraguay\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 8
+      }
+  },
+  "ZM": {
+      "number_primary_studies": 8,
+      "geom": "[{\"type\":\"Feature\",\"id\":117,\"geometry\":{\"type\":\"Point\",\"coordinates\":[27.7979624127301,-13.4530358706359]},\"properties\":{\"long_name\":\"Zambia\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 8
+      }
+  },
+  "GU": {
+      "number_primary_studies": 8,
+      "geom": "[{\"type\":\"Feature\",\"id\":203,\"geometry\":{\"type\":\"Point\",\"coordinates\":[144.775844834974,13.4441003723206]},\"properties\":{\"long_name\":\"Guam\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 8
+      }
+  },
+  "SR": {
+      "number_primary_studies": 8,
+      "geom": "[{\"type\":\"Feature\",\"id\":102,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-55.9115970206997,4.12673474959052]},\"properties\":{\"long_name\":\"Suriname\"}}]",
+      "effect_outcomes": {
+          "forest degradation": 8
+      }
+  },
+  "VN": {
+      "number_primary_studies": 32,
+      "geom": "[{\"type\":\"Feature\",\"id\":87,\"geometry\":{\"type\":\"Point\",\"coordinates\":[106.304044219028,16.6518349949875]},\"properties\":{\"long_name\":\"Vietnam\"}}]",
+      "effect_outcomes": {
+          "forest harvesting": 32
+      }
+  },
+  "AE": {
+      "number_primary_studies": 5,
+      "geom": "[{\"type\":\"Feature\",\"id\":68,\"geometry\":{\"type\":\"Point\",\"coordinates\":[54.3321785071084,23.9127097544662]},\"properties\":{\"long_name\":\"United Arab Emirates\"}}]",
+      "effect_outcomes": {
+          "forest harvesting": 5
+      }
+  },
+  "GW": {
+      "number_primary_studies": 5,
+      "geom": "[{\"type\":\"Feature\",\"id\":144,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-14.9872160868072,12.0163283962023]},\"properties\":{\"long_name\":\"Guinea-Bissau\"}}]",
+      "effect_outcomes": {
+          "forest harvesting": 5
+      }
+  },
+  "LK": {
+      "number_primary_studies": 5,
+      "geom": "[{\"type\":\"Feature\",\"id\":211,\"geometry\":{\"type\":\"Point\",\"coordinates\":[80.7042534403272,7.61236701409953]},\"properties\":{\"long_name\":\"Sri Lanka\"}}]",
+      "effect_outcomes": {
+          "forest harvesting": 5
+      }
+  },
+  "CZ": {
+      "number_primary_studies": 31,
+      "geom": "[{\"type\":\"Feature\",\"id\":12,\"geometry\":{\"type\":\"Point\",\"coordinates\":[15.3383384465846,49.7430281725468]},\"properties\":{\"long_name\":\"Czech Republic\"}}]",
+      "effect_outcomes": {
+          "forest harvesting": 31
+      }
+  },
+  "PK": {
+      "number_primary_studies": 7,
+      "geom": "[{\"type\":\"Feature\",\"id\":46,\"geometry\":{\"type\":\"Point\",\"coordinates\":[69.3858561847518,29.9667502882306]},\"properties\":{\"long_name\":\"Pakistan\"}}]",
+      "effect_outcomes": {
+          "forest harvesting": 7
+      }
+  },
+  "SA": {
+      "number_primary_studies": 7,
+      "geom": "[{\"type\":\"Feature\",\"id\":56,\"geometry\":{\"type\":\"Point\",\"coordinates\":[44.5851511687149,24.0233664780096]},\"properties\":{\"long_name\":\"Saudi Arabia\"}}]",
+      "effect_outcomes": {
+          "forest harvesting": 7
+      }
+  },
+  "EE": {
+      "number_primary_studies": 24,
+      "geom": "[{\"type\":\"Feature\",\"id\":165,\"geometry\":{\"type\":\"Point\",\"coordinates\":[25.5258739153868,58.6740102048903]},\"properties\":{\"long_name\":\"Estonia\"}}]",
+      "effect_outcomes": {
+          "forest harvesting": 24
+      }
+  },
+  "DK": {
+      "number_primary_studies": 148,
+      "geom": "[{\"type\":\"Feature\",\"id\":3,\"geometry\":{\"type\":\"Point\",\"coordinates\":[10.050570674144,55.9624401904021]},\"properties\":{\"long_name\":\"Denmark\"}}]",
+      "effect_outcomes": {
+          "forest harvesting": 56,
+          "genotype/species selection": 16,
+          "intercropping/species mixtures": 16,
+          "warming experiments": 60
+      }
+  },
+  "HU": {
+      "number_primary_studies": 40,
+      "geom": "[{\"type\":\"Feature\",\"id\":23,\"geometry\":{\"type\":\"Point\",\"coordinates\":[19.4134964917758,47.1665011028665]},\"properties\":{\"long_name\":\"Hungary\"}}]",
+      "effect_outcomes": {
+          "forest harvesting": 4,
+          "residues management": 6,
+          "warming experiments": 30
+      }
+  },
+  "AT": {
+      "number_primary_studies": 42,
+      "geom": "[{\"type\":\"Feature\",\"id\":18,\"geometry\":{\"type\":\"Point\",\"coordinates\":[14.1399739641446,47.592950004704]},\"properties\":{\"long_name\":\"Austria\"}}]",
+      "effect_outcomes": {
+          "genotype/species selection": 4,
+          "intercropping/species mixtures": 16,
+          "residues management": 2,
+          "warming experiments": 20
+      }
+  },
+  "PL": {
+      "number_primary_studies": 46,
+      "geom": "[{\"type\":\"Feature\",\"id\":10,\"geometry\":{\"type\":\"Point\",\"coordinates\":[19.4009686815796,52.124745716988]},\"properties\":{\"long_name\":\"Poland\"}}]",
+      "effect_outcomes": {
+          "genotype/species selection": 4,
+          "intercropping/species mixtures": 40,
+          "residues management": 2
+      }
+  },
+  "BG": {
+      "number_primary_studies": 4,
+      "geom": "[{\"type\":\"Feature\",\"id\":30,\"geometry\":{\"type\":\"Point\",\"coordinates\":[25.2314513023939,42.761349015869]},\"properties\":{\"long_name\":\"Bulgaria\"}}]",
+      "effect_outcomes": {
+          "genotype/species selection": 4
+      }
+  },
+  "GL": {
+      "number_primary_studies": 30,
+      "geom": "[{\"type\":\"Feature\",\"id\":131,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-41.3910123220457,74.7190215648767]},\"properties\":{\"long_name\":\"Greenland\"}}]",
+      "effect_outcomes": {
+          "warming experiments": 30
+      }
+  }
+}
