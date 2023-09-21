@@ -261,4 +261,11 @@ window.addEventListener('load', function () {
     });
     window.mutations.setPublicationFilters('type-publication', selectedValues);
   });
+
+  // SEARCH
+  elements.search.addEventListener('input', debounce(() => {
+      const searchInput = elements.search.querySelector('input');
+      window.mutations.setSearch(searchInput.value);
+    }, 250)
+  );
 });

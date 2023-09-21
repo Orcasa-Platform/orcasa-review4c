@@ -63,6 +63,9 @@ window.addEventListener('load', function () {
     },
     setPublicationFilters(dropdownId, selectedValues) {
       state.publicationFilters = { ...state.publicationFilters, [dropdownId]: selectedValues };
+    },
+    setSearch(value) {
+      state.search = value;
     }
   };
 
@@ -76,5 +79,6 @@ window.addEventListener('load', function () {
     filter: () => state.filter,
     openDropdowns: () => state.openDropdowns,
     publicationFilters: () => state.publicationFilters,
+    search: () => state.search,
   };
 });
