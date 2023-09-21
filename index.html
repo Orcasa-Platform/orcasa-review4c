@@ -167,8 +167,11 @@
           </div>
           <div id="chart-tooltip"
             class="p-1 bg-slate-700 text-white text-sm absolute hidden rounded"></div>
+
+          <!-- PUBLICATION PANEL -->
           <div id="publication-panel"
-            class="publication-panel -translate-x-full">
+            class="publication-panel">
+            <!--  -translate-x-full -->
             <button
               type="button"
               id="btn-close-publication-panel"
@@ -241,20 +244,19 @@
                       </div>
                       </>
                     </div>
-                    <div id="type-document">
-                      <label for="type-document"
-                        class="sr-only">Type of document</label>
+                    <div id="year">
+                      <label for="year"
+                        class="sr-only">year</label>
                       <div
                         class="dropdown h-14 flex-col flex"
-                        id="dropdown-select-document">
+                        id="dropdown-select-year">
                         <button
                           type="button"
                           class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between focus-visible:outline-mod-sc-ev">
                           <div
-                            id="document-type-selected"
-                            aria-placeholder="Document type"
-                            class="dropdown-selected text-slate-700">Document
-                            type</div>
+                            id="year-selected"
+                            aria-placeholder="Year"
+                            class="dropdown-selected text-slate-700">Year</div>
                           <i
                             data-lucide="chevron-down"
                             class="w-6 h-6 relative stroke-teal-500"></i>
@@ -262,36 +264,30 @@
                         <fieldset
                           class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
                           <ul class="space-y-2 flex flex-col">
-                            <li class="flex items-center gap-2 p-4">
-                              <input
-                                type="checkbox"
-                                class="checkbox-light"
-                                id="type-document-journal"
-                                value="journal" />
-                              <label for="type-document-journal">
-                                Journal
-                              </label>
-                            </li>
-                            <li class="flex items-center gap-2 p-4">
-                              <input
-                                type="checkbox"
-                                class="checkbox-light"
-                                id="type-document-audio"
-                                value="audio" />
-                              <label for="type-document-audio">
-                                Audio
-                              </label>
-                            </li>
-                            <li class="flex items-center gap-2 p-4">
-                              <input
-                                type="checkbox"
-                                class="checkbox-light"
-                                id="type-document-video"
-                                value="video" />
-                              <label for="type-document-video">
-                                Video
-                              </label>
-                            </li>
+                          </ul>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <div id="journal">
+                      <label for="journal"
+                        class="sr-only">Journal</label>
+                      <div
+                        class="dropdown h-14 flex-col flex"
+                        id="dropdown-select-journal">
+                        <button
+                          type="button"
+                          class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between focus-visible:outline-mod-sc-ev">
+                          <div
+                            id="journal-selected"
+                            aria-placeholder="Journal"
+                            class="dropdown-selected text-slate-700">Journal</div>
+                          <i
+                            data-lucide="chevron-down"
+                            class="w-6 h-6 relative stroke-teal-500"></i>
+                        </button>
+                        <fieldset
+                          class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                          <ul class="space-y-2 flex flex-col">
                           </ul>
                         </fieldset>
                       </div>

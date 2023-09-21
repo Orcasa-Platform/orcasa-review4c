@@ -1,6 +1,8 @@
 const URLS = {
     'allLayer': 'http://review4c.net/files/int0.json',
     'countries': '/javascript/mocks/country.json', // Replace with real URL
+    'years': '/javascript/mocks/date.json', // Replace with real URL
+    'journals': '/javascript/mocks/journal.json', // Replace with real URL
     // ...
 }
 

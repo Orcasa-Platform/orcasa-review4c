@@ -93,26 +93,47 @@ window.addEventListener('load', function () {
   });
 
   // Populate filters
+  const appendListElement = (parent, value, label, slug) => {
+    const listElement = document.createElement('li');
+    listElement.classList.add('flex', 'items-center', 'gap-2', 'p-4',  'max-w-[265px]');
+    listElement.innerHTML = `
+      <input
+      type="checkbox"
+      class="checkbox-light"
+      id="${slug}-${value}"
+      value="${value}" />
+      <label for="${slug}-${value}">
+      ${label}
+      </label>`;
+      parent.appendChild(listElement)
+  };
+
   getURL(URLS.countries).then(countries => {
-    if (elements.countryDropdown && countries) {
+    if (countries) {
       const countryList = elements.countryDropdown.querySelector('ul');
       countries.forEach(country => {
         const { iso_2digit: iso, cntry_name: label } = country;
-
-        const listElement = document.createElement('li');
-        listElement.classList.add('flex', 'items-center', 'gap-2', 'p-4');
-        listElement.innerHTML = `
-          <input
-          type="checkbox"
-          class="checkbox-light"
-          id="country-${iso}"
-          value="${iso}" />
-          <label for="country-${iso}">
-          ${label}
-          </label>`;
-
-        countryList.appendChild(listElement)
+        appendListElement(countryList, iso, label, 'year');
       });
     }
   });
+  getURL(URLS.years).then(years => {
+    if (years) {
+      const yearList = elements.yearDropdown.querySelector('ul');
+      years.forEach(date => {
+        const { year } = date;
+        appendListElement(yearList, year, year, 'year');
+      });
+    }
+  });
+  getURL(URLS.journals).then(journals => {
+    if (journals) {
+      const journalList = elements.journalDropdown.querySelector('ul');
+      journals.forEach(date => {
+        const { journal_id: value, journal_name: label } = date;
+        appendListElement(journalList, value, capitalize(label), 'journal');
+      });
+    }
+  });
+
 });

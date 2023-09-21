@@ -3,6 +3,8 @@ const kebabCase = text => text
     .replace(/[\s_]+/g, '-')
     .toLowerCase();
 
+const capitalize = text => text.charAt(0).toUpperCase() + text.slice(1);
+
 const debounce = (callback, wait) => {
   let timeoutId = null;
   return (...args) => {
