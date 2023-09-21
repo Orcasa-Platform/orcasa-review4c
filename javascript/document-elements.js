@@ -14,6 +14,7 @@ const elements = {
   attribution: document.getElementById('attribution'),
   attributionContent: document.getElementById('attribution-content'),
   interventionButtons: document.getElementsByClassName('btn-intervention'),
+  dropdowns: document.getElementsByClassName('dropdown'),
   publicationButton: document.getElementById('btn-publications'),
   publicationPanel: document.getElementById('publication-panel'),
   closePublicationPanelButton: document.getElementById('btn-close-publication-panel'),

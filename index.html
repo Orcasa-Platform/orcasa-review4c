@@ -59,6 +59,10 @@
           @apply w-4 h-4 justify-center items-center flex appearance-none rounded border border-slate-700 bg-slate-700 checked:bg-slate-700 checked:border-slate-700 text-mod-sc-ev hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-600;
         }
 
+        .checkbox-light {
+          @apply w-4 h-4 justify-center items-center flex appearance-none rounded border border-slate-700 bg-white checked:bg-mod-sc-ev checked:border-slate-700 text-mod-sc-ev hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-600;
+        }
+
         .navbar-item {
           @apply flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 bg-slate-700 text-white;
         }
@@ -236,16 +240,57 @@
                   </div>
                   <div id="type-document">
                     <!-- TODO: Replace fake dropdown -->
+
+                    <label for="type-document"
+                      class="sr-only">Type of document</label>
                     <div
-                      class="w-[284px] h-14 flex-col flex">
-                      <div
-                        class="p-4 bg-white shadow border border-gray-400 flex justify-between">
+                      class="dropdown [284px] h-14 flex-col flex"
+                      id="dropdown-select-document">
+                      <button
+                        type="button"
+                        class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between">
                         <div
-                          class="text-slate-700">Journal</div>
+                          id="document-type-selected"
+                          class="dropdown-selected text-slate-700">Document type</div>
                         <i
                           data-lucide="chevron-down"
                           class="w-6 h-6 relative stroke-teal-500"></i>
-                      </div>
+                      </button>
+                      <fieldset
+                        class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                        <ul class="space-y-2 flex flex-col">
+                          <li class="flex items-center gap-2 p-4">
+                            <input
+                              type="checkbox"
+                              class="checkbox-light"
+                              id="type-document-journal"
+                              value="journal" />
+                            <label for="type-document-journal">
+                              Journal
+                            </label>
+                          </li>
+                          <li class="flex items-center gap-2 p-4">
+                            <input
+                              type="checkbox"
+                              class="checkbox-light"
+                              id="type-document-audio"
+                              value="audio" />
+                            <label for="type-document-audio">
+                              Audio
+                            </label>
+                          </li>
+                          <li class="flex items-center gap-2 p-4">
+                            <input
+                              type="checkbox"
+                              class="checkbox-light"
+                              id="type-document-video"
+                              value="video" />
+                            <label for="type-document-video">
+                              Video
+                            </label>
+                          </li>
+                        </ul>
+                      </fieldset>
                     </div>
                   </div>
                   <div id="country">

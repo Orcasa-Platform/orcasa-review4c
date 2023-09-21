@@ -184,4 +184,67 @@ window.addEventListener('load', function () {
     icon.classList.toggle('rotate-180');
     text.textContent = publicationsSort === 'asc' ? 'Newest first' : 'Oldest first';
   });
+
+  // DROPDOWNS
+  for (let dropdown of elements.dropdowns) {
+    const button = dropdown.querySelector('.btn-dropdown');
+    const buttonIcon = button.querySelector('svg');
+    const options = dropdown.querySelector('.dropdown-options');
+    const selected = dropdown.querySelector('.dropdown-selected');
+
+
+    const toggleDropdown = () => {
+      options.classList.toggle('min-h-[115px]');
+      options.classList.toggle('hidden');
+      buttonIcon.classList.toggle('rotate-180');
+      selected.classList.toggle('text-gray-500');
+    }
+
+    button.addEventListener('click', () => {
+      const openDropdownsInitial = window.getters.openDropdowns();
+      window.mutations.setOpenDropdown(dropdown.id, !openDropdownsInitial.includes(dropdown.id));
+      toggleDropdown();
+    });
+
+    // Detect clicks outside the dropdown
+    document.addEventListener('click', (event) => {
+      const openDropdowns = window.getters.openDropdowns();
+      const isClickInsideDropdown = dropdown.contains(event.target);
+      if (openDropdowns.includes(dropdown.id) && !isClickInsideDropdown) {
+        window.mutations.setOpenDropdown(dropdown.id, false);
+        toggleDropdown();
+      }
+    });
+
+    // Detect focus outside the dropdown
+    document.addEventListener('focusin', (event) => {
+      const openDropdowns = window.getters.openDropdowns();
+      const isFocusInsideDropdown = dropdown.contains(event.target);
+      if (openDropdowns.includes(dropdown.id) && !isFocusInsideDropdown) {
+        window.mutations.setOpenDropdown(dropdown.id, false);
+        toggleDropdown();
+      }
+    });
+
+    options.addEventListener('click', () => {
+      const selectedValues = [];
+      const selectedLabels = [];
+      options.querySelectorAll('input').forEach(input => {
+        if (input.checked) {
+          selectedValues.push(input.value);
+          const label = document.querySelector(`label[for="${input.id}"]`);
+          selectedLabels.push(label.textContent);
+        }
+      });
+
+      if (selectedValues.length === 0) {
+        selected.textContent = 'Document type';
+        window.mutations.setPublicationFilters(dropdown.id, null);
+      } else {
+        selected.textContent = `Document type (${selectedLabels.length})`;
+        window.mutations.setPublicationFilters(dropdown.id, selectedValues);
+      };
+      console.log(window.getters.publicationFilters())
+    });
+  }
 });

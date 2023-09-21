@@ -11,6 +11,8 @@ window.addEventListener('load', function () {
     publicationsOpen: false,
     chartData: null,
     publicationsSort: 'asc',
+    publicationFilters: {},
+    openDropdowns: [],
   };
 
   window.mutations = {
@@ -49,6 +51,18 @@ window.addEventListener('load', function () {
     },
     togglePublicationsSort() {
       state.publicationsSort = state.publicationsSort === 'asc' ? 'desc' : 'asc';
+    },
+    setOpenDropdown(dropdown, value) {
+      if (value) {
+        state.openDropdowns.push(dropdown);
+      } else {
+        if(!state.openDropdowns) state.openDropdowns = [];
+        if(!state.openDropdowns.includes(dropdown)) return state.openDropdowns;
+        state.openDropdowns = state.openDropdowns.filter(item => item !== dropdown);
+      }
+    },
+    setPublicationFilters(dropdownId, selectedValues) {
+      state.publicationFilters = { ...state.publicationFilters, [dropdownId]: selectedValues };
     }
   };
 
@@ -60,5 +74,7 @@ window.addEventListener('load', function () {
     interventions: () => state.interventions,
     chartData: () => state.chartData,
     filter: () => state.filter,
+    openDropdowns: () => state.openDropdowns,
+    publicationFilters: () => state.publicationFilters,
   };
 });
