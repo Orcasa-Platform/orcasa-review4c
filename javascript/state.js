@@ -40,6 +40,9 @@ window.addEventListener('load', function () {
     setLandUses(landUses) {
       state.landUses = landUses;
     },
+    setCountries(countries) {
+      state.countries = countries;
+    },
     setInterventions(interventions) {
       state.interventions = interventions;
     },
@@ -68,6 +71,9 @@ window.addEventListener('load', function () {
       }
       state.publicationFilters = { ...state.publicationFilters, [filterId]: selectedValues };
     },
+    setPublications(value) {
+      state.publications = value;
+    },
     setSearch(value) {
       state.search = value;
     }
@@ -85,5 +91,7 @@ window.addEventListener('load', function () {
     openDropdowns: () => state.openDropdowns,
     publicationFilters: () => state.publicationFilters,
     search: () => state.search,
+    countries: () => state.countries,
+    publications: () => state.publications,
   };
 });

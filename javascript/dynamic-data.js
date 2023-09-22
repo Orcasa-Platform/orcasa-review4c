@@ -132,6 +132,7 @@ window.addEventListener('load', function () {
         const { iso_2digit: iso, cntry_name: label } = country;
         appendListElement(countryList, iso, label, 'year');
       });
+      window.mutations.setCountries(countries);
     }
   });
   getURL(URLS.years).then(years => {
@@ -154,14 +155,65 @@ window.addEventListener('load', function () {
   });
 
   // LOAD PUBLICATIONS
+  const createPublicationCard = (publication) => {
+    const { title, authors, journal, year, country, description } = publication;
+    const card = document.createElement('div');
+    card.innerHTML = `
+      <div class="flex flex-col p-6 bg-gray-50 mb-2 space-y-4">
+        <div class="h-6 justify-start items-center gap-2 inline-flex">
+          <div class="grow shrink basis-0 h-6 justify-start items-start gap-4 flex">
+              <div class="justify-start items-center gap-2 flex">
+                <i data-lucide="newspaper" class="w-6 h-6 relative stroke-teal-500"></i>
+                <div class="text-slate-500 text-base">${journal}</div>
+              </div>
+              <div class="justify-start items-center gap-2 flex">
+                <i data-lucide="calendar" class="w-6 h-6 relative stroke-teal-500"></i>
+                <div class="text-slate-500 text-base">${year}</div>
+              </div>
+              <div class="justify-start items-center gap-2 flex">
+                <i data-lucide="globe-2" class="w-6 h-6 relative stroke-teal-500"></i>
+                <div class="text-slate-500 text-base">${country}</div>
+              </div>
+          </div>
+        </div>
+        <header class="mb-6 text-slate-700">
+          <div class="text-2xl font-semibold leading-10">
+            ${title}
+          </div>
+          <div class="text-slate-700 text-base">${authors}</div>
+        </header>
+        <div class="text-slate-500 text-base">${ellipsis(description, 230)}</div>
+        <div class="h-6 justify-end items-center gap-4 flex">
+          <div class="pr-1 justify-center items-center gap-1 flex">
+              <div class="text-teal-500 text-base font-semibold font-['Roboto'] leading-normal">Learn more</div>
+              <i data-lucide="arrow-right" class="w-6 h-6 relative stroke-teal-500"></i>
+          </div>
+        </div>
+      </div>
+    `;
+    return card;
+  };
 
   window.loadPublications = () => {
     const filter = window.getters.filter();
-    const landUse = window.getters.landUse();
-    const publicationFilters = window.getters.publicationFilters();
-    const intervention = filter?.intervention;
-    const subCategory = filter?.subCategory || filter?.value;
-    const subType = filter?.type === 'sub-type' && filter?.value;
-    const publications = getPublications({ landUse, intervention, subCategory, subType, publicationFilters });
+    getPublications({
+      landUse: window.getters.landUse(),
+      intervention: filter?.intervention,
+      subCategory:  filter?.subCategory || filter?.value,
+      subType: filter?.type === 'sub-type' && filter?.value,
+      publicationFilters: window.getters.publicationFilters()
+    }).then(data => {
+
+      // First clear publications container
+      elements.publicationsContainer.innerHTML = '';
+
+      data.forEach(publication => {
+        elements.publicationsContainer.appendChild(createPublicationCard(publication));
+      });
+
+      // Update lucide icons
+      lucide.createIcons();
+      window.mutations.setPublications(data);
+    });
   };
 });

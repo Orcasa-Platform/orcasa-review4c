@@ -49,5 +49,14 @@ const getPublications = async ({ landUse, intervention, subCategory, subType, pu
     return filteredPublications;
   };
 
-  return getURL(url).then(data => applyFilters(data));
+  const parseData = (publications) => {
+    const countries = window.getters.countries();
+    return publications.map(publication => {
+      const country = countries.find(country => country.iso_2digit === publication.country);
+      publication.country = country?.cntry_name;
+      return publication;
+    });
+  };
+
+  return getURL(url).then(data => parseData(applyFilters(data)));
 }

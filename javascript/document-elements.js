@@ -28,6 +28,7 @@ const elements = {
   legendText: document.getElementById('legend-text'),
   chartCards: document.getElementById('chart-cards'),
   sortPublicationsButton: document.getElementById('btn-sort-publications'),
+  publicationsContainer: document.getElementById('publications-container'),
   countryDropdown: document.getElementById('dropdown-select-country'),
   yearDropdown: document.getElementById('dropdown-select-year'),
   journalDropdown: document.getElementById('dropdown-select-journal'),

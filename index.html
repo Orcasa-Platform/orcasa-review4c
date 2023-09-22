@@ -184,14 +184,15 @@
             </button>
             <!-- PUBLICATION HEADER -->
             <div class="flex flex-col space-y-8 mt-2">
-              <div class="flex">
+              <div class="flex justify-between items-center">
                 <header
                   class="text-slate-500">Showing
                   <span id="land-use-publications-detail"></span> scientific
                   publications and <span id="land-use-meta-analysis-detail"></span>
                   meta-analyses related to
                   <span
-                    class="font-semibold" id="land-use-text-detail"></span>.</header>
+                    class="font-semibold" id="land-use-text-detail"></span>.
+                </header>
                 <button
                   type="button"
                   id="btn-sort-publications"
@@ -201,7 +202,7 @@
                 </button>
               </div>
               <!-- PUBLICATION FILTERS -->
-              <div class="flex w-full justify-between">
+              <div class="flex w-full justify-between space-x-4">
                 <div id="publication-filters" class="flex flex-col space-y-4">
                   <div id="year-range">
                     <div
@@ -328,8 +329,8 @@
                       </div>
                     </div>
                   </div>
-                  <div>
-                    Publications
+                  <div id="publications-container">
+
                   </div>
                 </div>
               </div>
