@@ -14,6 +14,7 @@ const URLS = {
   'land-use': '/mocks/data/land-use.json',
   'management': '/mocks/data/management.json',
 };
+const BASE_PUBLICATIONS_URL = '/mocks/data/publications';
 
 const getURL = async (url) => {
   let data;
@@ -28,3 +29,25 @@ const getURL = async (url) => {
 
 const getLayer = async (layerSlug = 'all') => getURL(URLS[layerSlug]);
 const getIntervention = async (intervention) => getURL(URLS[intervention]);
+const getPublications = async ({ landUse, intervention, subCategory, subType, publicationFilters }) => {
+  const url = `${BASE_PUBLICATIONS_URL}/${landUse}${intervention ? `/${intervention}` : ''}${subCategory ? `/${subCategory}` : ''}${subType ? `/${subType}` : ''}/publications.json`;
+
+  // This should be done on the backend and the publicationFilters sent as part of the URL
+  const applyFilters = (publications) => {
+    let filteredPublications = publications;
+    if (publicationFilters) {
+      console.log('publicationFilters', publicationFilters)
+      filteredPublications = publications.filter(publication => {
+        console.log(publication)
+        const { country, year, journal } = publication;
+        const countryFilter = publicationFilters.country?.length ? publicationFilters.country.includes(country) : true;
+        const yearFilter = publicationFilters.year?.length ? publicationFilters.year.includes(year) : true;
+        const journalFilter = publicationFilters.journal?.length ? publicationFilters.journal.includes(journal) : true;
+        return countryFilter && yearFilter && journalFilter;
+      });
+    }
+    return filteredPublications;
+  };
+
+  return getURL(url).then(data => applyFilters(data));
+}

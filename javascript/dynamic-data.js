@@ -159,5 +159,9 @@ window.addEventListener('load', function () {
     const filter = window.getters.filter();
     const landUse = window.getters.landUse();
     const publicationFilters = window.getters.publicationFilters();
+    const intervention = filter?.intervention;
+    const subCategory = filter?.subCategory || filter?.value;
+    const subType = filter?.type === 'sub-type' && filter?.value;
+    const publications = getPublications({ landUse, intervention, subCategory, subType, publicationFilters });
   };
 });

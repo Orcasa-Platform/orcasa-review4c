@@ -43,8 +43,8 @@ window.addEventListener('load', function () {
     setInterventions(interventions) {
       state.interventions = interventions;
     },
-    setFilter(type, value, subCategory) {
-      state.filter = { type: type, value: value, subCategory: subCategory };
+    setFilter(filter) {
+      state.filter = filter;
     },
     setChartData(chartData) {
       state.chartData = chartData;
@@ -62,7 +62,11 @@ window.addEventListener('load', function () {
       }
     },
     setPublicationFilters(dropdownId, selectedValues) {
-      state.publicationFilters = { ...state.publicationFilters, [dropdownId]: selectedValues };
+      let filterId = dropdownId;
+      if (dropdownId.startsWith('dropdown-select')) {
+        filterId = dropdownId.replace('dropdown-select-', '');
+      }
+      state.publicationFilters = { ...state.publicationFilters, [filterId]: selectedValues };
     },
     setSearch(value) {
       state.search = value;

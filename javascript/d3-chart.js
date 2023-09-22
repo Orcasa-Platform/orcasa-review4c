@@ -42,25 +42,28 @@ const updateChartAndButtons = ({ slug, title, data, resetAllCharts }) => {
 const click = (_, title, chartSlug, data, isSubcategory) => {
   const currentSelection = window.getters.filter();
   let currentTitle = title;
-
+  const activeSubcategoryItem = data.find((item) => item.active);
+  const slug = isSubcategory ? data.find(d => d.title === title).slug : activeSubcategoryItem.subTypes.find(st => st.title === title).slug;
+console.log(currentSelection)
   // If the clicked subcategory was selected clear the filter and close the sub-types
 
-  if (currentSelection?.type === 'sub-category' && currentSelection?.value === title) {
-    window.mutations.setFilter(null, null);
+  console.log('should clear filter?', currentSelection);
+  if (currentSelection?.type === 'sub-category' && currentSelection?.value === slug) {
+    console.log('clear filter');
+    window.mutations.setFilter(null);
     const updatedData = data.map(d => ({
-        ...d,
-        active: false,
-      }));
+      ...d,
+      active: false,
+    }));
     updateChartAndButtons({ slug: chartSlug, title: null, data: updatedData })
     return;
   }
 
   // If the clicked sub-type was selected select the active subcategory
 
-  if (currentSelection?.type === 'sub-type' && currentSelection?.value === title) {
-    const activeSubcategoryItem = data.find((item) => item.active);
+  if (currentSelection?.type === 'sub-type' && currentSelection?.value === slug) {
     currentTitle = activeSubcategoryItem.title;
-    window.mutations.setFilter('sub-category', activeSubcategoryItem.slug);
+    window.mutations.setFilter({type: 'sub-category', value: activeSubcategoryItem.slug, intervention: chartSlug, subCategory: null});
     // Rerender chart to hide sub-types
     const updatedData = data.map(d => {
       if (d.title === currentTitle) {
@@ -96,7 +99,8 @@ const click = (_, title, chartSlug, data, isSubcategory) => {
       };
     });
   }
-  window.mutations.setFilter(isSubcategory ? 'sub-category' : 'sub-types', title, !isSubcategory && data.find((item) => item.active).slug);
+
+  window.mutations.setFilter({ type: isSubcategory ? 'sub-category' : 'sub-type', value: slug, intervention: chartSlug, subCategory: !isSubcategory && data.find((item) => item.active).slug });
   // Rerender to show sub-types or filter opacity of error bars
   updateChartAndButtons({ slug: chartSlug, title, data: updatedData, resetAllCharts: isSubcategory })
 };
