@@ -1,13 +1,15 @@
 [
   {
+    "id": 17,
     "title": "Wheat Crop Management in CA",
     "journal": "Advances in Agronomy, Vol 134",
     "year": 2018,
     "country": "CA",
+    "type": "publication",
     "authors": "Garcia, Maria; Smith, Sarah; Davis, James",
     "url": "http://example.com/wheat-crop-management-CA",
     "description": "Investigating wheat crop management practices in Canada and their impact on yield.",
-    "meta-analysis": ["meta-analysis-33", "meta-analysis-34"],
+    "meta-analysis": [],
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Funnel plot",
       "Publication bias test": "Egger's test",
@@ -16,14 +18,16 @@
     }
   },
   {
+    "id": 18,
     "title": "Rice Farming Techniques in JP",
     "journal": "Agricultural Systems",
     "year": 2016,
     "country": "JP",
+    "type": "publication",
     "authors": "Tanaka, Yuji; Sato, Hiroshi; Yamada, Keiko",
     "url": "http://example.com/rice-farming-techniques-JP",
     "description": "Exploring rice farming techniques and sustainability in Japan.",
-    "meta-analysis": ["meta-analysis-35", "meta-analysis-36"],
+    "meta-analysis": [],
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Forest plot",
       "Publication bias test": "Begg's test",
@@ -32,14 +36,16 @@
     }
   },
   {
+    "id": 19,
     "title": "Irrigation Management in SA",
     "journal": "Agricultural Water Management",
     "year": 2013,
     "country": "SA",
+    "type": "publication",
     "authors": "Ahmed, Khalid; Ali, Hassan; Khan, Nadeem",
     "url": "http://example.com/irrigation-management-SA",
     "description": "Assessing irrigation management practices in Saudi Arabia and their efficiency.",
-    "meta-analysis": ["meta-analysis-37", "meta-analysis-38"],
+    "meta-analysis": [],
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Trim and fill method",
       "Publication bias test": "Duval and Tweedie's trim and fill",
@@ -48,14 +54,16 @@
     }
   },
   {
+    "id": 20,
     "title": "Organic Farming in DE",
     "journal": "Agriculture Ecosystems & Environment",
     "year": 2014,
     "country": "DE",
+    "type": "publication",
     "authors": "Müller, Hans; Fischer, Anna; Weber, Klaus",
     "url": "http://example.com/organic-farming-DE",
     "description": "A study on organic farming practices in Germany and their ecological impact.",
-    "meta-analysis": ["meta-analysis-39", "meta-analysis-40"],
+    "meta-analysis": [21],
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Rank correlation test",
       "Publication bias test": "Kendall's tau",
@@ -64,14 +72,17 @@
     }
   },
   {
+    "id": 21,
     "title": "Coffee Agroforestry in CO",
     "journal": "Agroforestry Systems",
     "year": 2020,
     "country": "CO",
+    "type": "meta-analysis",
     "authors": "Lopez, Maria; Rodriguez, Carlos; Perez, Juan",
     "url": "http://example.com/coffee-agroforestry-CO",
     "description": "Evaluating coffee agroforestry systems in Colombia and their sustainability.",
-    "meta-analysis": ["meta-analysis-41", "meta-analysis-42"],
+    "publicationId": 20,
+    "globalQuality": 89,
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Regression asymmetry test",
       "Publication bias test": "Eggers' test",
@@ -80,14 +91,16 @@
     }
   },
   {
+    "id": 22,
     "title": "Maize Crop Management in CA",
     "journal": "Advances in Agronomy, Vol 134",
     "year": 2017,
     "country": "CA",
+    "type": "publication",
     "authors": "Brown, John; Smith, Emily; Wilson, David",
     "url": "http://example.com/maize-crop-management-CA",
     "description": "A study on maize crop management practices and their effects on yield in Canada.",
-    "meta-analysis": ["meta-analysis-43", "meta-analysis-44"],
+    "meta-analysis": [],
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Funnel plot",
       "Publication bias test": "Egger's test",
@@ -96,14 +109,17 @@
     }
   },
   {
+    "id": 23,
     "title": "Pesticide Usage in FR Agriculture",
     "journal": "Agricultural Systems",
     "year": 2018,
     "country": "FR",
+    "type": "meta-analysis",
+    "publicationId": 24,
+    "globalQuality": 18,
     "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
     "url": "http://example.com/pesticide-usage-FR",
     "description": "Analyzing pesticide usage trends in French agriculture and their environmental impact.",
-    "meta-analysis": ["meta-analysis-45", "meta-analysis-46"],
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Forest plot",
       "Publication bias test": "Begg's test",
@@ -112,14 +128,16 @@
     }
   },
   {
+    "id": 24,
     "title": "Rice Farming in IN",
     "journal": "Agricultural Water Management",
     "year": 2012,
     "country": "IN",
+    "type": "publication",
     "authors": "Kumar, Ravi; Sharma, Priya; Singh, Amar",
     "url": "http://example.com/rice-farming-IN",
     "description": "Assessment of rice farming practices and water management in India.",
-    "meta-analysis": ["meta-analysis-47", "meta-analysis-48"],
+    "meta-analysis": [23],
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Trim and fill method",
       "Publication bias test": "Duval and Tweedie's trim and fill",

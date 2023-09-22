@@ -45,12 +45,10 @@ window.addEventListener('load', function () {
     // Update the description with the land use publications and meta-analysis
     const publicationsNumber = publications?.toLocaleString() || '-';
     const metaAnalysisNumber = metaAnalysis?.toLocaleString() || '-';
+
     elements.landUsePublications.innerHTML = publicationsNumber;
     elements.landUseMetaAnalysis.innerHTML = metaAnalysisNumber;
-    elements.landUsePublicationsDetail.innerHTML = publicationsNumber;
-    elements.landUseMetaAnalysisDetail.innerHTML = metaAnalysisNumber;
     elements.landUseText.innerHTML = name.toLowerCase();
-    elements.landUseTextDetail.innerHTML = name.toLowerCase();
     elements.legendText.innerHTML = name;
 
     // Load interventions
@@ -156,24 +154,34 @@ window.addEventListener('load', function () {
 
   // LOAD PUBLICATIONS
   const createPublicationCard = (publication) => {
-    const { title, authors, journal, year, country, description } = publication;
+    const { title, authors, journal, year, country, description, type, globalQuality } = publication;
+    const isMetaAnalysis = type === 'meta-analysis';
     const card = document.createElement('div');
     card.innerHTML = `
-      <div class="flex flex-col p-6 bg-gray-50 mb-2 space-y-4">
+      <div class="flex flex-col p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} mb-2 space-y-4">
+        ${isMetaAnalysis ? `<div class="flex">
+        <div class="px-2 py-1 bg-green-100 text-teal-600 text-base">
+          Meta-analysis
+        </div>
+        </div>` : ''}
         <div class="h-6 justify-start items-center gap-2 inline-flex">
-          <div class="grow shrink basis-0 h-6 justify-start items-start gap-4 flex">
-              <div class="justify-start items-center gap-2 flex">
+          <div class="h-6 gap-4 flex">
+              ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
                 <i data-lucide="newspaper" class="w-6 h-6 relative stroke-teal-500"></i>
                 <div class="text-slate-500 text-base">${journal}</div>
-              </div>
+              </div>`: ''}
               <div class="justify-start items-center gap-2 flex">
                 <i data-lucide="calendar" class="w-6 h-6 relative stroke-teal-500"></i>
                 <div class="text-slate-500 text-base">${year}</div>
               </div>
-              <div class="justify-start items-center gap-2 flex">
+              ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
                 <i data-lucide="globe-2" class="w-6 h-6 relative stroke-teal-500"></i>
                 <div class="text-slate-500 text-base">${country}</div>
-              </div>
+              </div>` : ''}
+              ${isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
+              <i data-lucide="award" class="w-6 h-6 relative stroke-teal-500"></i>
+              <div class="text-slate-500 text-base">Global quality: ${globalQuality}%</div>
+            </div>` : ''}
           </div>
         </div>
         <header class="mb-6 text-slate-700">
@@ -196,20 +204,35 @@ window.addEventListener('load', function () {
 
   window.loadPublications = () => {
     const filter = window.getters.filter();
-    getPublications({
+    const publicationRequest = {
       landUse: window.getters.landUse(),
       intervention: filter?.intervention,
       subCategory:  filter?.subCategory || filter?.value,
-      subType: filter?.type === 'sub-type' && filter?.value,
+      subType: filter?.type === 'sub-type' ? filter?.value : null,
       publicationFilters: window.getters.publicationFilters()
-    }).then(data => {
+    };
+    getPublications(publicationRequest).then(data => {
 
       // First clear publications container
       elements.publicationsContainer.innerHTML = '';
 
+      // Show publications
       data.forEach(publication => {
         elements.publicationsContainer.appendChild(createPublicationCard(publication));
       });
+      const selection = publicationRequest.landUse === 'all'
+        ? 'all publications'
+        : [
+          publicationRequest.landUse,
+          publicationRequest.intervention,
+          publicationRequest.subCategory,
+          publicationRequest.subType
+        ].join(' ');
+
+      const metaAnalysisNumber = data.filter(publication => publication.type === 'meta-analysis').length;
+      elements.metaAnalysisNumber.innerHTML = metaAnalysisNumber;
+      elements.publicationsNumber.innerHTML = data.length - metaAnalysisNumber;
+      elements.filtersSelectionText.innerHTML = selection;
 
       // Update lucide icons
       lucide.createIcons();

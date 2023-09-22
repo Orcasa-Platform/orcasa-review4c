@@ -30,7 +30,8 @@ const getURL = async (url) => {
 const getLayer = async (layerSlug = 'all') => getURL(URLS[layerSlug]);
 const getIntervention = async (intervention) => getURL(URLS[intervention]);
 const getPublications = async ({ landUse, intervention, subCategory, subType, publicationFilters }) => {
-  const url = `${BASE_PUBLICATIONS_URL}/${landUse}${intervention ? `/${intervention}` : ''}${subCategory ? `/${subCategory}` : ''}${subType ? `/${subType}` : ''}/publications.json`;
+
+  const url = `${BASE_PUBLICATIONS_URL}/${landUse === 'all' ? '' : landUse}${intervention ? `/${intervention}` : ''}${subCategory ? `/${subCategory}` : ''}${subType ? `/${subType}` : ''}/publications.json`;
 
   // This should be done on the backend and the publicationFilters sent as part of the URL
   const applyFilters = (publications) => {
