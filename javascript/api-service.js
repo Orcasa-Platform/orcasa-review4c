@@ -56,7 +56,7 @@ const getPublications = async ({ landUse, intervention, subCategory, subType, pu
       const country = countries.find(country => country.iso_2digit === publication.country);
       const journal = journals.find(journal => journal.journal_id === publication.journalId);
       publication.country = country?.cntry_name;
-      publication.journal = journal?.journal_name;
+      publication.journal = capitalize(journal?.journal_name);
       return publication;
     });
   };
