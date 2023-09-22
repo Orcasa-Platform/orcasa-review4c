@@ -11,7 +11,7 @@ window.addEventListener('load', function () {
     publicationsOpen: false,
     chartData: null,
     publicationsSort: 'asc',
-    publicationFilters: {},
+    publicationFilters: { 'type-publication': ['meta-analysis', 'primary-paper'] },
     openDropdowns: [],
   };
 
@@ -42,6 +42,9 @@ window.addEventListener('load', function () {
     },
     setCountries(countries) {
       state.countries = countries;
+    },
+    setJournals(journals) {
+      state.journals = journals;
     },
     setInterventions(interventions) {
       state.interventions = interventions;
@@ -92,6 +95,7 @@ window.addEventListener('load', function () {
     publicationFilters: () => state.publicationFilters,
     search: () => state.search,
     countries: () => state.countries,
+    journals: () => state.journals,
     publications: () => state.publications,
   };
 });

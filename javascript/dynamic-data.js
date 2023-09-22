@@ -149,6 +149,7 @@ window.addEventListener('load', function () {
         const { journal_id: value, journal_name: label } = date;
         appendListElement(journalList, value, capitalize(label), 'journal');
       });
+      window.mutations.setJournals(journals);
     }
   });
 
@@ -202,6 +203,21 @@ window.addEventListener('load', function () {
     return card;
   };
 
+  const updateNumbers = (data, publicationRequest) => {
+    const selection = publicationRequest.landUse === 'all'
+    ? 'all publications'
+    : [
+      publicationRequest.landUse,
+      publicationRequest.intervention,
+      publicationRequest.subCategory,
+      publicationRequest.subType
+    ].join(' ');
+    const metaAnalysisNumber = data.filter(publication => publication.type === 'meta-analysis').length;
+    elements.metaAnalysisNumber.innerHTML = metaAnalysisNumber;
+    elements.publicationsNumber.innerHTML = data.length - metaAnalysisNumber;
+    elements.filtersSelectionText.innerHTML = selection;
+  };
+
   window.loadPublications = () => {
     const filter = window.getters.filter();
     const publicationRequest = {
@@ -220,22 +236,13 @@ window.addEventListener('load', function () {
       data.forEach(publication => {
         elements.publicationsContainer.appendChild(createPublicationCard(publication));
       });
-      const selection = publicationRequest.landUse === 'all'
-        ? 'all publications'
-        : [
-          publicationRequest.landUse,
-          publicationRequest.intervention,
-          publicationRequest.subCategory,
-          publicationRequest.subType
-        ].join(' ');
 
-      const metaAnalysisNumber = data.filter(publication => publication.type === 'meta-analysis').length;
-      elements.metaAnalysisNumber.innerHTML = metaAnalysisNumber;
-      elements.publicationsNumber.innerHTML = data.length - metaAnalysisNumber;
-      elements.filtersSelectionText.innerHTML = selection;
+
+      updateNumbers(data, publicationRequest);
 
       // Update lucide icons
       lucide.createIcons();
+
       window.mutations.setPublications(data);
     });
   };

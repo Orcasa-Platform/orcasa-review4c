@@ -229,6 +229,9 @@ window.addEventListener('load', function () {
         selected.textContent = `${placeholder} (${selectedLabels.length})`;
         window.mutations.setPublicationFilters(dropdown.id, selectedValues);
       };
+
+      // Reload publications
+      window.loadPublications();
     });
   }
 
@@ -242,6 +245,9 @@ window.addEventListener('load', function () {
       }
     });
     window.mutations.setPublicationFilters('type-publication', selectedValues);
+
+    // Reload publications
+    window.loadPublications();
   });
 
   // SEARCH

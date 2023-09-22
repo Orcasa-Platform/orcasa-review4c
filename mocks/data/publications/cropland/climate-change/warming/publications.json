@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "Advances in Crop Management Techniques",
-    "journal": "Advances in Agronomy, Vol 134",
+    "journalId": 78,
     "year": 2018,
     "country": "ES",
     "type": "meta-analysis",
@@ -21,10 +21,10 @@
   {
     "id": 2,
     "title": "Emission of CO2 from biochar-amended soils and implications for soil organic carbon",
-    "journal": "GCB Bioenergy",
+    "journalId": 5,
     "year": 2013,
     "country": "PT",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Woolf, Dominic; Amonette, James E.; Street-Perrott, F. Alayne; Lehmann, Johannes; Joseph, Stephen",
     "url": "http://onlinelibrary.wiley.com/doi/10.1111/gcbb.12044/abstract",
     "description": "Biochar is a carbon-rich solid that is produced by pyrolysis of biomass. As a soil amendment, biochar has been shown to increase crop yields, improve soil fertility, promote nutrient retention, and reduce leaching of agrochemicals. However, the effects of biochar on soil organic carbon (SOC) are less clear. Biochar may increase SOC by providing a recalcitrant carbon substrate for soil microorganisms, but it may also reduce SOC by increasing microbial biomass turnover. Here, we review the evidence for these two opposing effects of biochar on SOC, and we present a meta-analysis of 80 published studies that report the effects of biochar on SOC. We find that biochar-amended soils have lower SOC than unamended soils, and that this effect is strongest at low temperatures and in acidic soils. We also find that biochar-amended soils have lower CO2 emissions than unamended soils, and that this effect is strongest at high temperatures and in acidic soils. We conclude that biochar has a small but significant effect on SOC, and that this effect is likely to be driven by the production of CO2 from biochar-amended soils. We suggest that the effect of biochar on SOC should be considered when assessing the climate impacts of biochar as a carbon sequestration strategy.",
@@ -39,7 +39,7 @@
   {
     "id": 3,
     "title": "Sustainable Farming Practices in Developing Countries",
-    "journal": "Agricultural Systems",
+    "journalId": 18,
     "year": 2015,
     "country": "CA",
     "type": "meta-analysis",
@@ -58,7 +58,7 @@
   {
     "id": 4,
     "title": "Efficiency of Irrigation Systems in Arid Regions",
-    "journal": "Agricultural Water Management",
+    "journalId": 66,
     "year": 2010,
     "country": "AU",
     "type": "meta-analysis",
@@ -77,10 +77,10 @@
   {
     "id": 5,
     "title": "Biodiversity Conservation in Agricultural Landscapes",
-    "journal": "Agriculture Ecosystems & Environment",
+    "journalId": 66,
     "year": 2005,
     "country": "UK",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Jones, Sarah; Smith, Peter; Davis, Mark",
     "url": "http://example.com/biodiversity-conservation",
     "description": "Exploring strategies for biodiversity conservation in agricultural landscapes.",
@@ -95,10 +95,10 @@
   {
     "id": 6,
     "title": "Agroforestry for Sustainable Agripractices",
-    "journal": "Agroforestry Systems",
+    "journalId": 22,
     "year": 2019,
     "country": "BR",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Silva, Ana; Oliveira, Carlos; Santos, Maria",
     "url": "http://example.com/agroforestry-sustainability",
     "description": "Examining the role of agroforestry systems in promoting sustainable agricultural practices.",
@@ -113,10 +113,10 @@
   {
     "id": 7,
     "title": "Advances in Crop Management Techniques",
-    "journal": "Advances in Agronomy, Vol 134",
+    "journalId": 78,
     "year": 2017,
     "country": "US",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Anderson, Robert; Turner, Lisa; Harris, James",
     "url": "http://example.com/soil-nutrient-management",
     "description": "A review of modern soil nutrient management practices in agriculture.",
@@ -131,10 +131,10 @@
   {
     "id": 8,
     "title": "Precision Agriculture and Crop Yield Optimization",
-    "journal": "Agricultural Systems",
+    "journalId": 7,
     "year": 2013,
     "country": "CA",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
     "url": "http://example.com/precision-agriculture",
     "description": "Investigating the use of precision agriculture for optimizing crop yields.",
@@ -149,7 +149,7 @@
   {
     "id": 9,
     "title": "Drought Management Strategies in Rice Farming",
-    "journal": "Agricultural Water Management",
+    "journalId": 66,
     "year": 2008,
     "country": "IN",
     "type": "meta-analysis",
@@ -168,10 +168,10 @@
   {
     "id": 10,
     "title": "Sustainable Agriculture Practices in the US",
-    "journal": "Advances in Agronomy, Vol 134",
+    "journalId": 40,
     "year": 2015,
     "country": "US",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Johnson, Mark; Smith, Sarah; Davis, James",
     "url": "http://example.com/sustainable-agriculture-US",
     "description": "Examining sustainable agriculture practices and their implementation in the United States.",
@@ -186,7 +186,7 @@
   {
     "id": 11,
     "title": "Rice Crop Management in China",
-    "journal": "Agricultural Systems",
+    "journalId": 17,
     "year": 2012,
     "country": "CN",
     "type": "meta-analysis",
@@ -205,10 +205,10 @@
   {
     "id": 12,
     "title": "Water Resource Management in Australia",
-    "journal": "Agricultural Water Management",
+    "journalId": 39,
     "year": 2014,
     "country": "AU",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Smith, Robert; Turner, Lisa; Harris, David",
     "url": "http://example.com/water-resource-management-AU",
     "description": "Assessing water resource management strategies in agriculture in Australia.",
@@ -223,10 +223,10 @@
   {
     "id": 13,
     "title": "Organic Farming in the UK",
-    "journal": "Agriculture Ecosystems & Environment",
+    "journalId": 43,
     "year": 2011,
     "country": "GB",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Wilson, Sarah; Brown, Peter; Davis, Mark",
     "url": "http://example.com/organic-farming-UK",
     "description": "Investigating the practices and benefits of organic farming in the United Kingdom.",
@@ -241,7 +241,7 @@
   {
     "id": 14,
     "title": "Coffee Agroforestry Systems in Brazil",
-    "journal": "Agroforestry Systems",
+    "journalId": 43,
     "year": 2019,
     "country": "BR",
     "type": "meta-analysis",
@@ -260,10 +260,10 @@
   {
     "id": 15,
     "title": "Soil Health Management in the US",
-    "journal": "Advances in Agronomy, Vol 134",
+    "journalId": 18,
     "year": 2016,
     "country": "US",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Brown, John; Smith, Emily; Wilson, David",
     "url": "http://example.com/soil-health-management-US",
     "description": "A study on soil health management practices and their impact on crop yields in the United States.",
@@ -278,10 +278,10 @@
   {
     "id": 16,
     "title": "Pesticide Usage in Canadian Agriculture",
-    "journal": "Agricultural Systems",
+    "journalId": 8,
     "year": 2017,
     "country": "CA",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
     "url": "http://example.com/pesticide-usage-Canada",
     "description": "Analyzing pesticide usage trends in Canadian agriculture and their environmental implications.",
@@ -296,10 +296,10 @@
   {
     "id": 17,
     "title": "Wheat Crop Management in CA",
-    "journal": "Advances in Agronomy, Vol 134",
+    "journalId": 8,
     "year": 2018,
     "country": "CA",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Garcia, Maria; Smith, Sarah; Davis, James",
     "url": "http://example.com/wheat-crop-management-CA",
     "description": "Investigating wheat crop management practices in Canada and their impact on yield.",
@@ -314,10 +314,10 @@
   {
     "id": 18,
     "title": "Rice Farming Techniques in JP",
-    "journal": "Agricultural Systems",
+    "journalId": 75,
     "year": 2016,
     "country": "JP",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Tanaka, Yuji; Sato, Hiroshi; Yamada, Keiko",
     "url": "http://example.com/rice-farming-techniques-JP",
     "description": "Exploring rice farming techniques and sustainability in Japan.",
@@ -332,10 +332,10 @@
   {
     "id": 19,
     "title": "Irrigation Management in SA",
-    "journal": "Agricultural Water Management",
+    "journalId": 75,
     "year": 2013,
     "country": "SA",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Ahmed, Khalid; Ali, Hassan; Khan, Nadeem",
     "url": "http://example.com/irrigation-management-SA",
     "description": "Assessing irrigation management practices in Saudi Arabia and their efficiency.",
@@ -350,10 +350,10 @@
   {
     "id": 20,
     "title": "Organic Farming in DE",
-    "journal": "Agriculture Ecosystems & Environment",
+    "journalId": 50,
     "year": 2014,
     "country": "DE",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Müller, Hans; Fischer, Anna; Weber, Klaus",
     "url": "http://example.com/organic-farming-DE",
     "description": "A study on organic farming practices in Germany and their ecological impact.",
@@ -368,7 +368,7 @@
   {
     "id": 21,
     "title": "Coffee Agroforestry in CO",
-    "journal": "Agroforestry Systems",
+    "journalId": 74,
     "year": 2020,
     "country": "CO",
     "type": "meta-analysis",
@@ -387,10 +387,10 @@
   {
     "id": 22,
     "title": "Maize Crop Management in CA",
-    "journal": "Advances in Agronomy, Vol 134",
+    "journalId": 9,
     "year": 2017,
     "country": "CA",
-    "type": "publication",
+    "type": "primary-paper",
     "authors": "Brown, John; Smith, Emily; Wilson, David",
     "url": "http://example.com/maize-crop-management-CA",
     "description": "A study on maize crop management practices and their effects on yield in Canada.",
@@ -405,7 +405,7 @@
   {
     "id": 23,
     "title": "Pesticide Usage in FR Agriculture",
-    "journal": "Agricultural Systems",
+    "journalId": 37,
     "year": 2018,
     "country": "FR",
     "type": "meta-analysis",
@@ -424,10 +424,156 @@
   {
     "id": 24,
     "title": "Rice Farming in IN",
-    "journal": "Agricultural Water Management",
+    "journalId": 6,
     "year": 2012,
     "country": "IN",
-    "type": "publication",
+    "type": "primary-paper",
+    "authors": "Kumar, Ravi; Sharma, Priya; Singh, Amar",
+    "url": "http://example.com/rice-farming-IN",
+    "description": "Assessment of rice farming practices and water management in India.",
+    "meta-analysis": [23],
+    "methodology-and-attributes": {
+      "Publication bias method of analysis": "Trim and fill method",
+      "Publication bias test": "Duval and Tweedie's trim and fill",
+      "Publication bias test result": "p = 0.023",
+      "Publication bias test interpretation": "Publication bias is present"
+    }
+  },
+  {
+    "id": 17,
+    "title": "Wheat Crop Management in CA",
+    "journalId": 66, "Advances in agronomy, vol 134",
+    "year": 2018,
+    "country": "CA",
+    "type": "primary-paper",
+    "authors": "Garcia, Maria; Smith, Sarah; Davis, James",
+    "url": "http://example.com/wheat-crop-management-CA",
+    "description": "Investigating wheat crop management practices in Canada and their impact on yield.",
+    "meta-analysis": [],
+    "methodology-and-attributes": {
+      "Publication bias method of analysis": "Funnel plot",
+      "Publication bias test": "Egger's test",
+      "Publication bias test result": "p = 0.016",
+      "Publication bias test interpretation": "Publication bias is present"
+    }
+  },
+  {
+    "id": 18,
+    "title": "Rice Farming Techniques in JP",
+    "journalId": 66, "Agricultural Systems",
+    "year": 2016,
+    "country": "JP",
+    "type": "primary-paper",
+    "authors": "Tanaka, Yuji; Sato, Hiroshi; Yamada, Keiko",
+    "url": "http://example.com/rice-farming-techniques-JP",
+    "description": "Exploring rice farming techniques and sustainability in Japan.",
+    "meta-analysis": [],
+    "methodology-and-attributes": {
+      "Publication bias method of analysis": "Forest plot",
+      "Publication bias test": "Begg's test",
+      "Publication bias test result": "p = 0.017",
+      "Publication bias test interpretation": "Publication bias is present"
+    }
+  },
+  {
+    "id": 19,
+    "title": "Irrigation Management in SA",
+    "journalId": 66, "Agricultural Water Management",
+    "year": 2013,
+    "country": "SA",
+    "type": "primary-paper",
+    "authors": "Ahmed, Khalid; Ali, Hassan; Khan, Nadeem",
+    "url": "http://example.com/irrigation-management-SA",
+    "description": "Assessing irrigation management practices in Saudi Arabia and their efficiency.",
+    "meta-analysis": [],
+    "methodology-and-attributes": {
+      "Publication bias method of analysis": "Trim and fill method",
+      "Publication bias test": "Duval and Tweedie's trim and fill",
+      "Publication bias test result": "p = 0.018",
+      "Publication bias test interpretation": "Publication bias is present"
+    }
+  },
+  {
+    "id": 20,
+    "title": "Organic Farming in DE",
+    "journalId": 66, "Agriculture Ecosystems & Environment",
+    "year": 2014,
+    "country": "DE",
+    "type": "primary-paper",
+    "authors": "Müller, Hans; Fischer, Anna; Weber, Klaus",
+    "url": "http://example.com/organic-farming-DE",
+    "description": "A study on organic farming practices in Germany and their ecological impact.",
+    "meta-analysis": [21],
+    "methodology-and-attributes": {
+      "Publication bias method of analysis": "Rank correlation test",
+      "Publication bias test": "Kendall's tau",
+      "Publication bias test result": "p = 0.019",
+      "Publication bias test interpretation": "Publication bias is present"
+    }
+  },
+  {
+    "id": 21,
+    "title": "Coffee Agroforestry in CO",
+    "journalId": 66, "Agroforestry Systems",
+    "year": 2020,
+    "country": "CO",
+    "type": "meta-analysis",
+    "authors": "Lopez, Maria; Rodriguez, Carlos; Perez, Juan",
+    "url": "http://example.com/coffee-agroforestry-CO",
+    "description": "Evaluating coffee agroforestry systems in Colombia and their sustainability.",
+    "publicationId": 20,
+    "globalQuality": 89,
+    "methodology-and-attributes": {
+      "Publication bias method of analysis": "Regression asymmetry test",
+      "Publication bias test": "Eggers' test",
+      "Publication bias test result": "p = 0.020",
+      "Publication bias test interpretation": "Publication bias is present"
+    }
+  },
+  {
+    "id": 22,
+    "title": "Maize Crop Management in CA",
+    "journalId": 66, "Advances in agronomy, vol 134",
+    "year": 2017,
+    "country": "CA",
+    "type": "primary-paper",
+    "authors": "Brown, John; Smith, Emily; Wilson, David",
+    "url": "http://example.com/maize-crop-management-CA",
+    "description": "A study on maize crop management practices and their effects on yield in Canada.",
+    "meta-analysis": [],
+    "methodology-and-attributes": {
+      "Publication bias method of analysis": "Funnel plot",
+      "Publication bias test": "Egger's test",
+      "Publication bias test result": "p = 0.021",
+      "Publication bias test interpretation": "Publication bias is present"
+    }
+  },
+  {
+    "id": 23,
+    "title": "Pesticide Usage in FR Agriculture",
+    "journalId": 66, "Agricultural Systems",
+    "year": 2018,
+    "country": "FR",
+    "type": "meta-analysis",
+    "publicationId": 24,
+    "globalQuality": 18,
+    "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
+    "url": "http://example.com/pesticide-usage-FR",
+    "description": "Analyzing pesticide usage trends in French agriculture and their environmental impact.",
+    "methodology-and-attributes": {
+      "Publication bias method of analysis": "Forest plot",
+      "Publication bias test": "Begg's test",
+      "Publication bias test result": "p = 0.022",
+      "Publication bias test interpretation": "Publication bias is present"
+    }
+  },
+  {
+    "id": 24,
+    "title": "Rice Farming in IN",
+    "journalId": 66, "Agricultural Water Management",
+    "year": 2012,
+    "country": "IN",
+    "type": "primary-paper",
     "authors": "Kumar, Ravi; Sharma, Priya; Singh, Amar",
     "url": "http://example.com/rice-farming-IN",
     "description": "Assessment of rice farming practices and water management in India.",
@@ -439,4 +585,5 @@
       "Publication bias test interpretation": "Publication bias is present"
     }
   }
+]
 ]

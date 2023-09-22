@@ -44,12 +44,10 @@ const click = (_, title, chartSlug, data, isSubcategory) => {
   let currentTitle = title;
   const activeSubcategoryItem = data.find((item) => item.active);
   const slug = isSubcategory ? data.find(d => d.title === title).slug : activeSubcategoryItem.subTypes.find(st => st.title === title).slug;
-console.log(currentSelection)
+
   // If the clicked subcategory was selected clear the filter and close the sub-types
 
-  console.log('should clear filter?', currentSelection);
   if (currentSelection?.type === 'sub-category' && currentSelection?.value === slug) {
-    console.log('clear filter');
     window.mutations.setFilter(null);
     const updatedData = data.map(d => ({
       ...d,

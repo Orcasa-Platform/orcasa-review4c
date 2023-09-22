@@ -37,14 +37,13 @@ const getPublications = async ({ landUse, intervention, subCategory, subType, pu
   const applyFilters = (publications) => {
     let filteredPublications = publications;
     if (publicationFilters) {
-      console.log('publicationFilters', publicationFilters)
       filteredPublications = publications.filter(publication => {
-        console.log(publication)
-        const { country, year, journal } = publication;
+        const { country, year, journalId } = publication;
         const countryFilter = publicationFilters.country?.length ? publicationFilters.country.includes(country) : true;
-        const yearFilter = publicationFilters.year?.length ? publicationFilters.year.includes(year) : true;
-        const journalFilter = publicationFilters.journal?.length ? publicationFilters.journal.includes(journal) : true;
-        return countryFilter && yearFilter && journalFilter;
+        const yearFilter = publicationFilters.year?.length ? publicationFilters.year.includes(String(year)) : true;
+        const journalFilter = publicationFilters.journal?.length ? publicationFilters.journal.includes(String(journalId)) : true;
+        const typePublicationFilter = publicationFilters['type-publication']?.length ? publicationFilters['type-publication'].includes(publication.type) : true;
+        return countryFilter && yearFilter && journalFilter && typePublicationFilter;
       });
     }
     return filteredPublications;
@@ -52,9 +51,12 @@ const getPublications = async ({ landUse, intervention, subCategory, subType, pu
 
   const parseData = (publications) => {
     const countries = window.getters.countries();
+    const journals = window.getters.journals();
     return publications.map(publication => {
       const country = countries.find(country => country.iso_2digit === publication.country);
+      const journal = journals.find(journal => journal.journal_id === publication.journalId);
       publication.country = country?.cntry_name;
+      publication.journal = journal?.journal_name;
       return publication;
     });
   };
