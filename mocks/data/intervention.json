@@ -16,8 +16,8 @@
   },
   "forest-land": {
     "name": "Forest Land",
-    "publications": 3500,
-    "metaAnalysis": 350,
+    "publications": 0,
+    "metaAnalysis": 0,
     "default": false,
     "interventions": [
       "land-use",
@@ -28,8 +28,8 @@
 
   "grassland": {
     "name": "Grassland",
-    "publications": 1000,
-    "metaAnalysis": 100,
+    "publications": 0,
+    "metaAnalysis": 0,
     "interventions": [
       "land-use",
       "management",
@@ -38,8 +38,8 @@
   },
   "wetlands": {
     "name": "Wetlands",
-    "publications": 900,
-    "metaAnalysis": 90,
+    "publications": 0,
+    "metaAnalysis": 0,
     "interventions": [
       "management",
       "land-use",
@@ -48,8 +48,8 @@
   },
   "other-land": {
     "name": "Other Land",
-    "publications": 563,
-    "metaAnalysis": 56,
+    "publications": 0,
+    "metaAnalysis": 0,
     "interventions": [
       "climate-change",
       "land-use"
