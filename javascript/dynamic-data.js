@@ -123,35 +123,8 @@ window.addEventListener('load', function () {
       parent.appendChild(listElement)
   };
 
-  getURL(URLS.countries).then(countries => {
-    if (countries) {
-      const countryList = elements.countryDropdown.querySelector('ul');
-      countries.forEach(country => {
-        const { iso_2digit: iso, cntry_name: label } = country;
-        appendListElement(countryList, iso, label, 'year');
-      });
-      window.mutations.setCountries(countries);
-    }
-  });
-  getURL(URLS.years).then(years => {
-    if (years) {
-      const yearList = elements.yearDropdown.querySelector('ul');
-      years.forEach(date => {
-        const { year } = date;
-        appendListElement(yearList, year, year, 'year');
-      });
-    }
-  });
-  getURL(URLS.journals).then(journals => {
-    if (journals) {
-      const journalList = elements.journalDropdown.querySelector('ul');
-      journals.forEach(date => {
-        const { journal_id: value, journal_name: label } = date;
-        appendListElement(journalList, value, capitalize(label), 'journal');
-      });
-      window.mutations.setJournals(journals);
-    }
-  });
+  getURL(URLS.countries).then(window.mutations.setCountries);
+  getURL(URLS.journals).then(window.mutations.setJournals);
 
   // LOAD PUBLICATIONS
   const createPublicationCard = (publication) => {
@@ -219,6 +192,8 @@ window.addEventListener('load', function () {
   };
 
   const populateYearChart = (years) => {
+    elements.yearRange.innerHTML = '';
+
     years && Object.values(years).forEach(yearCount => {
       const YEAR_COUNT_HEIGHT = 2;
       const yearElement = document.createElement('div');
@@ -227,7 +202,33 @@ window.addEventListener('load', function () {
     });
   };
 
-  window.loadPublications = () => {
+  const populateFilters = (metadata) => {
+    const countries = window.getters.countries();
+    const journals = window.getters.journals();
+    const { years: availableYearObjects, countries: availableCountries, journals: availableJournals } = metadata;
+    const countryList = elements.countryDropdown.querySelector('ul');
+    countryList.innerHTML = '';
+    countries.filter(c => availableCountries.includes(c.iso_2digit)).forEach(country => {
+      const { iso_2digit: iso, cntry_name: label } = country;
+      appendListElement(countryList, iso, label, 'year');
+    });
+
+    const journalList = elements.journalDropdown.querySelector('ul');
+    journalList.innerHTML = '';
+    journals.filter(j => availableJournals.includes(j.journal_id)).forEach(journal => {
+      const { journal_id: value, journal_name: label } = journal;
+      appendListElement(journalList, value, capitalize(label), 'journal');
+    });
+
+    const availableYears = availableYearObjects && Object.keys(availableYearObjects);
+    const yearList = elements.yearDropdown.querySelector('ul');
+    yearList.innerHTML = '';
+    availableYears.forEach((year) => {
+      appendListElement(yearList, year, year, 'year');
+    });
+  };
+
+  window.loadPublications = (reload) => {
     const filter = window.getters.filter();
     const publicationRequest = {
       landUse: window.getters.landUse(),
@@ -259,7 +260,11 @@ window.addEventListener('load', function () {
         });
       }
 
-      populateYearChart(metadata.years);
+      if(!reload) {
+        populateYearChart(metadata.years);
+        populateFilters(metadata);
+      }
+
       updateNumbers(data, publicationRequest);
 
       // Update lucide icons
@@ -268,6 +273,8 @@ window.addEventListener('load', function () {
       window.mutations.setPublications({ data, metadata });
     });
   };
+
+  window.reloadPublications = () => window.loadPublications(true);
 
   // Add event listener on scroll on publications list to load more publications
   elements.publicationPanel.addEventListener('scroll', () => {
@@ -279,7 +286,7 @@ window.addEventListener('load', function () {
     if (scrollHeight - scrollTop === clientHeight) {
       if (pages > currentPage) {
         window.mutations.setPublicationPage(window.getters.publicationPage() + 1);
-        window.loadPublications();
+        window.reloadPublications();
       }
     }
   });

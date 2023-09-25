@@ -165,7 +165,7 @@ window.addEventListener('load', function () {
     const [text, icon] = elements.sortPublicationsButton.childNodes;
     icon.classList.toggle('rotate-180');
     text.textContent = publicationsSort === 'asc' ? 'Newest first' : 'Oldest first';
-    window.loadPublications();
+    window.reloadPublications();
   });
 
   // DROPDOWNS
@@ -232,7 +232,7 @@ window.addEventListener('load', function () {
       };
 
       // Reload publications
-      window.loadPublications();
+      window.reloadPublications();
     });
   }
 
@@ -248,14 +248,14 @@ window.addEventListener('load', function () {
     window.mutations.setPublicationFilters('type-publication', selectedValues);
 
     // Reload publications
-    window.loadPublications();
+    window.reloadPublications();
   });
 
   // SEARCH
   elements.search.addEventListener('input', debounce(() => {
       const searchInput = elements.search.querySelector('input');
       window.mutations.setSearch(searchInput.value);
-      window.loadPublications();
+      window.reloadPublications();
     }, 250)
   );
 });

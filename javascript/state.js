@@ -14,6 +14,8 @@ window.addEventListener('load', function () {
     publicationFilters: { 'type-publication': ['meta-analysis', 'primary-paper'] },
     publicationPage: 1,
     openDropdowns: [],
+    countries: null,
+    journals: null,
   };
 
   window.mutations = {

@@ -36,7 +36,7 @@ const getPublications = async ({ landUse, intervention, subCategory, subType, pu
 
   // This should be done on the backend and the publicationFilters sent as part of the URL
   const applyFilters = (publications) => {
-    let filteredPublications = publications || [];
+    let filteredPublications = publications.concat() || [];
     if (publicationFilters) {
       filteredPublications = publications.filter(publication => {
         const { country, year, journalId } = publication;
@@ -68,6 +68,7 @@ const getPublications = async ({ landUse, intervention, subCategory, subType, pu
     return publications.map(publication => {
       const country = countries.find(country => country.iso_2digit === publication.country);
       const journal = journals.find(journal => journal.journal_id === publication.journalId);
+      publication.iso = publication.country;
       publication.country = country?.cntry_name;
       publication.journal = capitalize(journal?.journal_name);
       return publication;
@@ -77,15 +78,16 @@ const getPublications = async ({ landUse, intervention, subCategory, subType, pu
   const PAGE_SIZE = 20;
 
   const getMetadata = (data) => {
-    const yearCounts = data.reduce((counts, publication) => {
+    const yearCounts = data.concat().reduce((counts, publication) => {
       const year = publication.year;
       counts[year] = (counts[year] || 0) + 1;
       return counts;
     }, {});
-
     return {
       years: yearCounts,
       pages: Math.ceil(data.length / PAGE_SIZE),
+      countries: uniq(data.map(d => d.country)),
+      journals: uniq(data.map(d => d.journalId)),
     };
   };
 
@@ -95,10 +97,12 @@ const getPublications = async ({ landUse, intervention, subCategory, subType, pu
   };
 
   return getURL(url).then((data) => {
+    const updatedData = data;
+    const metadata = getMetadata(updatedData);
     const filteredData = applyFilters(data);
     const parsedData = parseData(filteredData);
     const paginatedData = paginate(parsedData);
 
-    return { data: paginatedData, metadata: getMetadata(filteredData) };
+    return { data: paginatedData, metadata };
   });
 }
