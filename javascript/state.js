@@ -9,6 +9,7 @@ window.addEventListener('load', function () {
     interventions: null,
     filter: null,
     publicationsOpen: false,
+    publicationDetailOpen: false,
     chartData: null,
     publicationsSort: 'asc',
     publicationFilters: { 'type-publication': ['meta-analysis', 'primary-paper'] },
@@ -30,6 +31,9 @@ window.addEventListener('load', function () {
     },
     setPublicationsOpen(publicationsOpen) {
       state.publicationsOpen = publicationsOpen;
+    },
+    setPublicationDetailOpen(publicationOpen) {
+      state.publicationDetailOpen = publicationOpen;
     },
     closeMapSettings() {
       state.mapSettingsOpen = false;
@@ -91,6 +95,7 @@ window.addEventListener('load', function () {
   window.getters = {
     sidebarOpen: () => state.sidebarOpen,
     publicationsOpen: () => state.publicationOpen,
+    publicationDetailOpen: () => state.publicationDetailOpen,
     publicationsSort: () => state.publicationsSort,
     landUse: () => state.landUse,
     landUses: () => state.landUses,

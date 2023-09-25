@@ -1,3 +1,88 @@
+// TEMPLATES
+const metaAnalysisTemplate = (id) => {
+  const publications = window.getters.publications()?.data;
+  const metaAnalysisPublication = publications.find(publication => String(publication.id) === String(id));
+  if(!metaAnalysisPublication) return '';
+  const { title, authors, description } = metaAnalysisPublication;
+  return `<div class="flex flex-col gap-1 px-[50px] py-[30px] bg-green-50">
+        <div class="flex-col gap-4 flex">
+            <div class="text-slate-700 text-lg leading-[30px]">${title}</div>
+            <div class="w-[350px] text-slate-700 text-xs font-normal font-['Roboto'] leading-[18px]">${authors}</div>
+        </div>
+        <div class="w-[668px] h-[100px] relative">
+          <div class="text-slate-500 text-sm leading-7">${description}</div>
+        </div>
+        <div class="flex pr-1 justify-end gap-1">
+          <button data-id="${id}" class="btn-publication-detail text-teal-500 text-base font-semibold">Learn more</button>
+          <i data-lucide="arrow-right" class="w-6 h-6 relative stroke-teal-500"></i>
+        </div>
+    </div>`;
+};
+
+const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journal, year, country, globalQuality, id, title, authors, description, source, url, metaAnalysis }) => `
+<div class="flex flex-col ${isDetail ? '' : `p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} mb-2`} space-y-4">
+  ${isMetaAnalysis ? `<div class="flex">
+  <div class="px-2 py-1 bg-green-100 text-teal-600 text-base">
+    Meta-analysis
+  </div>
+  </div>` : ''}
+  <div class="h-6 justify-start items-center gap-2 inline-flex">
+    <div class="h-6 gap-4 flex">
+        ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
+          <i data-lucide="newspaper" class="w-6 h-6 relative stroke-teal-500"></i>
+          <div class="text-slate-500 text-base">${journal}</div>
+        </div>`: ''}
+        <div class="justify-start items-center gap-2 flex">
+          <i data-lucide="calendar" class="w-6 h-6 relative stroke-teal-500"></i>
+          <div class="text-slate-500 text-base">${year}</div>
+        </div>
+        ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
+          <i data-lucide="globe-2" class="w-6 h-6 relative stroke-teal-500"></i>
+          <div class="text-slate-500 text-base">${country}</div>
+        </div>` : ''}
+        ${isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
+        <i data-lucide="award" class="w-6 h-6 relative stroke-teal-500"></i>
+        <div class="text-slate-500 text-base">Global quality: ${globalQuality}%</div>
+      </div>` : ''}
+    </div>
+  </div>
+  <header class="mb-6 text-slate-700">
+    <div class="text-2xl font-semibold leading-10">
+      ${title}
+    </div>
+    <div class="text-slate-700 text-base">${authors}</div>
+  </header>
+  <div class="text-slate-500 text-base">${isDetail ? description : ellipsis(description, 230)}</div>
+  ${!isDetail ? `<div class="h-6 justify-end items-center gap-4 flex">
+    <div class="pr-1 justify-center items-center gap-1 flex">
+        <button data-id="${id}" class="btn-publication-detail text-teal-500 text-base font-semibold">Learn more</button>
+        <i data-lucide="arrow-right" class="w-6 h-6 relative stroke-teal-500"></i>
+    </div>
+  </div>`: ''}
+  ${isDetail ?
+    `<div>
+      <div class="flex w-full justify-between items-center mb-6">
+        <div>
+          <span class="text-slate-500 text-base">Source: </span>
+          <span class="text-slate-700 text-base">${source}</span>
+        </div>
+        <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn-secondary flex gap-2">
+          Visit DOI
+          <i data-lucide="external-link" class="w-6 h-6 color-slate-700 stroke-current"></i>
+        </a>
+      </div>
+    ${metaAnalysis ? `
+    <div class="pt-2.5 border-t border-dashed border-gray-300 flex-col gap-5 flex">
+      <div class="text-slate-700 text-2xl leading-10 font-serif">Meta-analysis</div>
+      ${metaAnalysis.map(metaAnalysisTemplate).join('')}
+    </div>
+  </div>
+  `: ''}
+    `
+    : ''}
+</div>
+`;
+
 window.addEventListener('load', function () {
   const createCards = (data, landUseName) => {
     const cards = data.map(({
@@ -128,51 +213,8 @@ window.addEventListener('load', function () {
 
   // LOAD PUBLICATIONS
   const createPublicationCard = (publication) => {
-    const { title, authors, journal, year, country, description, type, globalQuality } = publication;
-    const isMetaAnalysis = type === 'meta-analysis';
     const card = document.createElement('div');
-    card.innerHTML = `
-      <div class="flex flex-col p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} mb-2 space-y-4">
-        ${isMetaAnalysis ? `<div class="flex">
-        <div class="px-2 py-1 bg-green-100 text-teal-600 text-base">
-          Meta-analysis
-        </div>
-        </div>` : ''}
-        <div class="h-6 justify-start items-center gap-2 inline-flex">
-          <div class="h-6 gap-4 flex">
-              ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
-                <i data-lucide="newspaper" class="w-6 h-6 relative stroke-teal-500"></i>
-                <div class="text-slate-500 text-base">${journal}</div>
-              </div>`: ''}
-              <div class="justify-start items-center gap-2 flex">
-                <i data-lucide="calendar" class="w-6 h-6 relative stroke-teal-500"></i>
-                <div class="text-slate-500 text-base">${year}</div>
-              </div>
-              ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
-                <i data-lucide="globe-2" class="w-6 h-6 relative stroke-teal-500"></i>
-                <div class="text-slate-500 text-base">${country}</div>
-              </div>` : ''}
-              ${isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
-              <i data-lucide="award" class="w-6 h-6 relative stroke-teal-500"></i>
-              <div class="text-slate-500 text-base">Global quality: ${globalQuality}%</div>
-            </div>` : ''}
-          </div>
-        </div>
-        <header class="mb-6 text-slate-700">
-          <div class="text-2xl font-semibold leading-10">
-            ${title}
-          </div>
-          <div class="text-slate-700 text-base">${authors}</div>
-        </header>
-        <div class="text-slate-500 text-base">${ellipsis(description, 230)}</div>
-        <div class="h-6 justify-end items-center gap-4 flex">
-          <div class="pr-1 justify-center items-center gap-1 flex">
-              <div class="text-teal-500 text-base font-semibold font-['Roboto'] leading-normal">Learn more</div>
-              <i data-lucide="arrow-right" class="w-6 h-6 relative stroke-teal-500"></i>
-          </div>
-        </div>
-      </div>
-    `;
+    card.innerHTML = publicationCardTemplate({ isDetail: false, isMetaAnalysis: publication.type === 'meta-analysis', ...publication});
     return card;
   };
 
@@ -256,7 +298,8 @@ window.addEventListener('load', function () {
         link.addEventListener("click", function() {
           window.mutations.setPublicationDetailOpen(true);
           elements.publicationDetailPanel.classList.remove('-translate-x-full');
-          window.loadPublication();
+          const publicationId = link.getAttribute('data-id');
+          window.loadPublication(publicationId);
         });
       }
 
@@ -275,6 +318,28 @@ window.addEventListener('load', function () {
   };
 
   window.reloadPublications = () => window.loadPublications(true);
+
+  window.loadPublication = (publicationId) => {
+    elements.publicationDetailPanelContent.innerHTML = '';
+    const publication = window.getters.publications()?.data.find(publication => String(publication.id) === publicationId);
+    const card = document.createElement('div');
+    card.innerHTML = publicationCardTemplate({ isDetail: true, isMetaAnalysis: publication.type === 'meta-analysis', ...publication});
+    elements.publicationDetailPanelContent.appendChild(card);
+
+    const linkButtons = document.getElementsByClassName('btn-publication-detail');
+    for (let link of linkButtons) {
+      link.addEventListener("click", function() {
+        const publicationId = link.getAttribute('data-id');
+        window.loadPublication(publicationId);
+      });
+    }
+
+    // Update lucide icons
+    lucide.createIcons();
+  };
+
+
+
 
   // Add event listener on scroll on publications list to load more publications
   elements.publicationPanel.addEventListener('scroll', () => {

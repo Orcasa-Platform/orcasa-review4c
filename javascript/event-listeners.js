@@ -154,7 +154,6 @@ window.addEventListener('load', function () {
     elements.publicationPanel.classList.add('-translate-x-full');
   });
 
-
   // PUBLICATIONS PANEL
 
   // SORT PUBLICATIONS BUTTON
@@ -258,4 +257,11 @@ window.addEventListener('load', function () {
       window.reloadPublications();
     }, 250)
   );
+
+  // PUBLICATION DETAIL PANEL
+
+  elements.closePublicationDetailPanelButton.addEventListener("click", function() {
+    window.mutations.setPublicationsOpen(false);
+    elements.publicationDetailPanel.classList.add('-translate-x-full');
+  });
 });
