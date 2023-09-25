@@ -260,7 +260,7 @@ const createSVGChart = (slug, data) => {
       .style("left", (event.clientX - chart.node().getBoundingClientRect().left) + "px")
       .classed('hidden', false);
 
-    chartTooltip.html(`<div>min: ${d.low}% median: ${d.value}% max: ${d.high}%</div>`);
+    chartTooltip.html(`<div>min: ${d.low.toFixed(1)}% median: ${d.value.toFixed(1)}% max: ${d.high.toFixed(1)}%</div>`);
   }
 
   // Create error bars

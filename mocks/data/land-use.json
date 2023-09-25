@@ -6,25 +6,25 @@
         {
             "title": "Cropland to Forestland",
             "slug": "cropland-to-forestland",
-            "value": 37,
-            "low": -26,
-            "high": 50,
+            "value": 37.24,
+            "low": -26.43,
+            "high": 50.52,
             "publications": 112,
             "subTypes": [
                 {
                     "title": "sub-type 1",
                     "slug": "sub-type-1",
-                    "value": -20,
-                    "low": -41,
-                    "high": -11,
+                    "value": -20.25,
+                    "low": -41.52,
+                    "high": -11.13,
                     "publications": 13
                 },
                 {
                     "title": "sub-type 2",
                     "slug": "sub-type-2",
-                    "value": -36,
-                    "low": -70,
-                    "high": 11,
+                    "value": -36.52,
+                    "low": -70.55,
+                    "high": 11.14,
                     "publications": 99
                 }
             ]
@@ -32,25 +32,25 @@
         {
             "title": "Cropland to Grassland",
             "slug": "cropland-to-grassland",
-            "value": 11,
-            "low": -23,
-            "high": 31,
+            "value": 11.52,
+            "low": -23.64,
+            "high": 31.74,
             "publications": 51,
             "subTypes": [
                 {
                     "title": "sub-type 1",
                     "slug": "sub-type-1",
-                    "value": -20,
-                    "low": -41,
-                    "high": -11,
+                    "value": -20.22,
+                    "low": -41.43,
+                    "high": -11.55,
                     "publications": 43
                 },
                 {
                     "title": "sub-type 2",
                     "slug": "sub-type-2",
-                    "value": -36,
-                    "low": -70,
-                    "high": 11,
+                    "value": -36.25,
+                    "low": -70.53,
+                    "high": 11.24,
                     "publications": 8
                 }
             ]
@@ -58,33 +58,33 @@
         {
             "title": "Cropland to Other Land",
             "slug": "cropland-to-other-land",
-            "value": 27,
-            "low": 23,
-            "high": 91,
+            "value": 27.52,
+            "low": 23.53,
+            "high": 91.44,
             "publications": 51,
             "subTypes": [
                 {
                     "title": "sub-type 1",
                     "slug": "sub-type-1",
-                    "value": -20,
-                    "low": -41,
-                    "high": -11,
+                    "value": -20.64,
+                    "low": -41.34,
+                    "high": -11.52,
                     "publications": 1
                 },
                 {
                     "title": "sub-type 2",
                     "slug": "sub-type-2",
-                    "value": -36,
-                    "low": -70,
-                    "high": 11,
+                    "value": -36.64,
+                    "low": -70.43,
+                    "high": 11.25,
                     "publications": 25
                 },
                 {
                     "title": "sub-type 3",
                     "slug": "sub-type-3",
-                    "value": -36,
-                    "low": -70,
-                    "high": 11,
+                    "value": -36.34,
+                    "low": -70.53,
+                    "high": 11.25,
                     "publications": 25
                 }
             ]

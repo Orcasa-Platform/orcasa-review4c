@@ -6,25 +6,25 @@
         {
             "title": "Organic Farming",
             "slug": "organic-farming",
-            "value": 11,
-            "low": -23,
-            "high": 31,
+            "value": 11.245,
+            "low": -23.35,
+            "high": 31.23,
             "publications": 51,
             "subTypes": [
                 {
                     "title": "sub-type 1",
                     "slug": "sub-type-1",
-                    "value": -20,
-                    "low": -41,
-                    "high": -11,
+                    "value": -20.234,
+                    "low": -41.54,
+                    "high": -11.64,
                     "publications": 7
                 },
                 {
                     "title": "sub-type 2",
                     "slug": "sub-type-2",
-                    "value": -36,
-                    "low": -70,
-                    "high": 11,
+                    "value": -36.76,
+                    "low": -70.47,
+                    "high": 11.57,
                     "publications": 44
                 }
             ]
@@ -32,25 +32,25 @@
         {
             "title": "Agroforestry",
             "slug": "agroforestry",
-            "value": 27,
-            "low": 23,
-            "high": 91,
+            "value": 27.47,
+            "low": 23.574,
+            "high": 91.547,
             "publications": 51,
             "subTypes": [
                 {
                     "title": "sub-type 1",
                     "slug": "sub-type-1",
-                    "value": -20,
-                    "low": -41,
-                    "high": -11,
+                    "value": -20.364,
+                    "low": -41.45,
+                    "high": -11.45,
                     "publications": 50
                 },
                 {
                     "title": "sub-type 2",
                     "slug": "sub-type-2",
-                    "value": -36,
-                    "low": -70,
-                    "high": 11,
+                    "value": -36.34,
+                    "low": -70.54,
+                    "high": 11.45,
                     "publications": 1
                 }
             ]

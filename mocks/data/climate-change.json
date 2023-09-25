@@ -6,25 +6,25 @@
         {
             "title": "Warming",
             "slug": "warming",
-            "value": -5,
-            "low": -11,
-            "high": 11,
+            "value": -5.23,
+            "low": -11.54,
+            "high": 11.63,
             "publications": 24,
             "subTypes": [
                 {
                     "title": "sub-type 1",
                     "slug": "sub-type-1",
-                    "value": 25,
-                    "low": -11,
-                    "high": 31,
+                    "value": 25.44,
+                    "low": -11.34,
+                    "high": 31.23,
                     "publications": 16
                 },
                 {
                     "title": "sub-type 2",
                     "slug": "sub-type-2",
-                    "value": -6,
-                    "low": -10,
-                    "high": 11,
+                    "value": -6.23,
+                    "low": -10.34,
+                    "high": 11.22,
                     "publications": 8
                 }
             ]
@@ -32,25 +32,25 @@
         {
             "title": "Fire",
             "slug": "fire",
-            "value": 11,
-            "low": -23,
-            "high": 31,
+            "value": 11.43,
+            "low": -23.65,
+            "high": 31.23,
             "publications": 512,
             "subTypes": [
                 {
                     "title": "sub-type 1",
                     "slug": "sub-type-1",
-                    "value": -20,
-                    "low": -41,
-                    "high": -11,
+                    "value": -20.50,
+                    "low": -41.34,
+                    "high": -11.42,
                     "publications": 413
                 },
                 {
                     "title": "sub-type 2",
                     "slug": "sub-type-2",
-                    "value": -36,
-                    "low": -70,
-                    "high": 11,
+                    "value": -36.34,
+                    "low": -70.42,
+                    "high": 11.43,
                     "publications": 99
                 }
             ]
