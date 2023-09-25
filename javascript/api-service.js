@@ -29,7 +29,8 @@ const getURL = async (url) => {
 
 const getLayer = async (layerSlug = 'all') => getURL(URLS[layerSlug]);
 const getIntervention = async (intervention) => getURL(URLS[intervention]);
-const getPublications = async ({ landUse, intervention, subCategory, subType, publicationFilters, search, sort }) => {
+
+const getPublications = async ({ landUse, intervention, subCategory, subType, publicationFilters, search, sort, page }) => {
 
   const url = `${BASE_PUBLICATIONS_URL}/${landUse === 'all' ? '' : landUse}${intervention ? `/${intervention}` : ''}${subCategory ? `/${subCategory}` : ''}${subType ? `/${subType}` : ''}/publications.json`;
 
@@ -73,6 +74,8 @@ const getPublications = async ({ landUse, intervention, subCategory, subType, pu
     });
   };
 
+  const PAGE_SIZE = 20;
+
   const getMetadata = (data) => {
     const yearCounts = data.reduce((counts, publication) => {
       const year = publication.year;
@@ -82,11 +85,20 @@ const getPublications = async ({ landUse, intervention, subCategory, subType, pu
 
     return {
       years: yearCounts,
+      pages: Math.ceil(data.length / PAGE_SIZE),
     };
+  };
+
+  const paginate = (data) => {
+    if (!page) return data;
+    return data.slice(0, PAGE_SIZE * page);
   };
 
   return getURL(url).then((data) => {
     const filteredData = applyFilters(data);
-    return { data: parseData(filteredData), metadata: getMetadata(filteredData) };
+    const parsedData = parseData(filteredData);
+    const paginatedData = paginate(parsedData);
+
+    return { data: paginatedData, metadata: getMetadata(filteredData) };
   });
 }

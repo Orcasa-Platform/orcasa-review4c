@@ -236,7 +236,8 @@ window.addEventListener('load', function () {
       subType: filter?.type === 'sub-type' ? filter?.value : null,
       publicationFilters: window.getters.publicationFilters(),
       search: window.getters.search(),
-      sort: window.getters.publicationsSort()
+      sort: window.getters.publicationsSort(),
+      page: window.getters.publicationPage(),
     };
 
     getPublications(publicationRequest).then(({ data, metadata }) => {
@@ -248,13 +249,38 @@ window.addEventListener('load', function () {
         elements.publicationsContainer.appendChild(createPublicationCard(publication));
       });
 
+      // Add event listeners to the publication buttons
+
+      for (let link of elements.publicationDetailButton) {
+        link.addEventListener("click", function() {
+          window.mutations.setPublicationDetailOpen(true);
+          elements.publicationDetailPanel.classList.remove('-translate-x-full');
+          window.loadPublication();
+        });
+      }
+
       populateYearChart(metadata.years);
       updateNumbers(data, publicationRequest);
 
       // Update lucide icons
       lucide.createIcons();
 
-      window.mutations.setPublications(data);
+      window.mutations.setPublications({ data, metadata });
     });
   };
+
+  // Add event listener on scroll on publications list to load more publications
+  elements.publicationPanel.addEventListener('scroll', () => {
+    const { scrollHeight, scrollTop, clientHeight } = elements.publicationPanel;
+    const { pages } = window.getters.publications()?.metadata;
+    const currentPage = window.getters.publicationPage();
+
+    // When we get to the end of the scroll, load more publications
+    if (scrollHeight - scrollTop === clientHeight) {
+      if (pages > currentPage) {
+        window.mutations.setPublicationPage(window.getters.publicationPage() + 1);
+        window.loadPublications();
+      }
+    }
+  });
 });

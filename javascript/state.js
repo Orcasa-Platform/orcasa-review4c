@@ -12,6 +12,7 @@ window.addEventListener('load', function () {
     chartData: null,
     publicationsSort: 'asc',
     publicationFilters: { 'type-publication': ['meta-analysis', 'primary-paper'] },
+    publicationPage: 1,
     openDropdowns: [],
   };
 
@@ -74,6 +75,9 @@ window.addEventListener('load', function () {
       }
       state.publicationFilters = { ...state.publicationFilters, [filterId]: selectedValues };
     },
+    setPublicationPage(page) {
+      state.publicationPage = page;
+    },
     setPublications(value) {
       state.publications = value;
     },
@@ -93,6 +97,7 @@ window.addEventListener('load', function () {
     filter: () => state.filter,
     openDropdowns: () => state.openDropdowns,
     publicationFilters: () => state.publicationFilters,
+    publicationPage: () => state.publicationPage,
     search: () => state.search,
     countries: () => state.countries,
     journals: () => state.journals,
