@@ -218,6 +218,15 @@ window.addEventListener('load', function () {
     elements.filtersSelectionText.innerHTML = selection;
   };
 
+  const populateYearChart = (years) => {
+    years && Object.values(years).forEach(yearCount => {
+      const YEAR_COUNT_HEIGHT = 2;
+      const yearElement = document.createElement('div');
+      yearElement.classList.add('flex-1', `h-[${yearCount * YEAR_COUNT_HEIGHT}px]`, 'bg-gray-300');
+      elements.yearRange.appendChild(yearElement);
+    });
+  };
+
   window.loadPublications = () => {
     const filter = window.getters.filter();
     const publicationRequest = {
@@ -229,8 +238,8 @@ window.addEventListener('load', function () {
       search: window.getters.search(),
       sort: window.getters.publicationsSort()
     };
-    getPublications(publicationRequest).then(data => {
 
+    getPublications(publicationRequest).then(({ data, metadata }) => {
       // First clear publications container
       elements.publicationsContainer.innerHTML = '';
 
@@ -239,7 +248,7 @@ window.addEventListener('load', function () {
         elements.publicationsContainer.appendChild(createPublicationCard(publication));
       });
 
-
+      populateYearChart(metadata.years);
       updateNumbers(data, publicationRequest);
 
       // Update lucide icons

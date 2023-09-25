@@ -33,5 +33,6 @@ const elements = {
   yearDropdown: document.getElementById('dropdown-select-year'),
   journalDropdown: document.getElementById('dropdown-select-journal'),
   typePublication: document.getElementById('type-publication'),
+  yearRange: document.getElementById('year-range'),
   search: document.getElementById('search'),
 }

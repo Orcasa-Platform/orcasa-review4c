@@ -73,5 +73,20 @@ const getPublications = async ({ landUse, intervention, subCategory, subType, pu
     });
   };
 
-  return getURL(url).then(data => parseData(applyFilters(data)));
+  const getMetadata = (data) => {
+    const yearCounts = data.reduce((counts, publication) => {
+      const year = publication.year;
+      counts[year] = (counts[year] || 0) + 1;
+      return counts;
+    }, {});
+
+    return {
+      years: yearCounts,
+    };
+  };
+
+  return getURL(url).then((data) => {
+    const filteredData = applyFilters(data);
+    return { data: parseData(filteredData), metadata: getMetadata(filteredData) };
+  });
 }
