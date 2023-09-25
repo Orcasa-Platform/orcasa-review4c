@@ -35,7 +35,7 @@ const getPublications = async ({ landUse, intervention, subCategory, subType, pu
 
   // This should be done on the backend and the publicationFilters sent as part of the URL
   const applyFilters = (publications) => {
-    let filteredPublications = publications;
+    let filteredPublications = publications || [];
     if (publicationFilters) {
       filteredPublications = publications.filter(publication => {
         const { country, year, journalId } = publication;
