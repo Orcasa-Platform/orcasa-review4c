@@ -185,8 +185,12 @@ const createSVGChart = (slug, data) => {
     .tickPadding(10)
     .tickFormat(() => '');
 
+  const windowWidth = window.innerWidth;
+  // Change scale of the button depending on the window width
+  const buttonScale = windowWidth > 1024 ? 0.8 : 1;
+
   const buttonHTML = (title, publications, slug) =>
-    `<button type="button" class='btn-filter-chart mt-2' aria-pressed="false" id="btn-${kebabCase(slug)}">
+    `<button type="button" class='btn-filter-chart mt-2' aria-pressed="false" id="btn-${kebabCase(slug)}" style="transform: scale(${buttonScale});">
       <span class="font-semibold text-slate-700">${title}</span>
       <span class="text-xs font-normal">(${publications})</span>
     </button>`;
