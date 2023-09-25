@@ -165,6 +165,7 @@ window.addEventListener('load', function () {
     const [text, icon] = elements.sortPublicationsButton.childNodes;
     icon.classList.toggle('rotate-180');
     text.textContent = publicationsSort === 'asc' ? 'Newest first' : 'Oldest first';
+    window.loadPublications();
   });
 
   // DROPDOWNS
@@ -254,6 +255,7 @@ window.addEventListener('load', function () {
   elements.search.addEventListener('input', debounce(() => {
       const searchInput = elements.search.querySelector('input');
       window.mutations.setSearch(searchInput.value);
+      window.loadPublications();
     }, 250)
   );
 });

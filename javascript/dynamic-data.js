@@ -225,7 +225,9 @@ window.addEventListener('load', function () {
       intervention: filter?.intervention,
       subCategory:  filter?.subCategory || filter?.value,
       subType: filter?.type === 'sub-type' ? filter?.value : null,
-      publicationFilters: window.getters.publicationFilters()
+      publicationFilters: window.getters.publicationFilters(),
+      search: window.getters.search(),
+      sort: window.getters.publicationsSort()
     };
     getPublications(publicationRequest).then(data => {
 

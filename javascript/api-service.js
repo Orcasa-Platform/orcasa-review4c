@@ -29,7 +29,7 @@ const getURL = async (url) => {
 
 const getLayer = async (layerSlug = 'all') => getURL(URLS[layerSlug]);
 const getIntervention = async (intervention) => getURL(URLS[intervention]);
-const getPublications = async ({ landUse, intervention, subCategory, subType, publicationFilters }) => {
+const getPublications = async ({ landUse, intervention, subCategory, subType, publicationFilters, search, sort }) => {
 
   const url = `${BASE_PUBLICATIONS_URL}/${landUse === 'all' ? '' : landUse}${intervention ? `/${intervention}` : ''}${subCategory ? `/${subCategory}` : ''}${subType ? `/${subType}` : ''}/publications.json`;
 
@@ -46,7 +46,19 @@ const getPublications = async ({ landUse, intervention, subCategory, subType, pu
         return countryFilter && yearFilter && journalFilter && typePublicationFilter;
       });
     }
-    return filteredPublications;
+
+    if (search) {
+      filteredPublications = filteredPublications.filter(publication => {
+        const { title, authors } = publication;
+        const titleFilter = title.toLowerCase().includes(search.toLowerCase());
+        const authorsFilter = authors.toLowerCase().includes(search.toLowerCase());
+        return titleFilter || authorsFilter;
+      });
+    }
+
+    const sortAlphabetically = (a, b) => a.title.localeCompare(b.title);
+    const sortedPublications = filteredPublications.sort(sortAlphabetically);
+    return sort === 'asc' ? sortedPublications : sortedPublications.reverse();
   };
 
   const parseData = (publications) => {
