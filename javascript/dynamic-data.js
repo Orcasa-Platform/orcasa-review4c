@@ -85,7 +85,9 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journal, ye
 
 window.addEventListener('load', function () {
   const createCards = (data, landUseName) => {
-    const cards = data.map(({
+    console.log('d', data)
+    const existingData = data?.filter(Boolean);
+    const cards = existingData.map(({
       name,
       slug,
       description
@@ -104,11 +106,12 @@ window.addEventListener('load', function () {
       `;
     });
     elements.chartCards.innerHTML = cards.join('');
-    data.map(d => createSVGChart(d.slug, d["sub-categories"]));
+    existingData.map(d => createSVGChart(d.slug, d["sub-categories"]));
   };
 
-  const loadInterventions = (interventions, landUseName) => {
-    const interventionPromises = interventions.map(getIntervention);
+  const loadInterventions = (landUse) => {
+    const { name: landUseName, interventions, slug: landUseSlug } = landUse;
+    const interventionPromises = interventions.map((interventionSlug) => getIntervention(landUseSlug, interventionSlug));
     Promise.all(interventionPromises).then((data) => {
       window.mutations.setInterventions(data);
       createCards(data, landUseName);
@@ -158,7 +161,7 @@ window.addEventListener('load', function () {
 
     // Load interventions
     if (landUse.interventions) {
-      loadInterventions(landUse.interventions, landUse.name);
+      loadInterventions(landUse);
     } else {
       elements.chartCards.innerHTML = '';
     }
@@ -182,7 +185,7 @@ window.addEventListener('load', function () {
   `;
 
   // Get data on first load
-  getURL(URLS.allLandUses).then(data => {
+  getIntervention().then(data => {
     if (elements.landUseMenu && data) {
       const landUses = Object.entries(data).map(([key, value], i) => ({ slug: key, ...value, index: i }));
       window.mutations.setLandUses(landUses);
@@ -229,8 +232,8 @@ window.addEventListener('load', function () {
       parent.appendChild(listElement)
   };
 
-  getURL(URLS.countries).then(window.mutations.setCountries);
-  getURL(URLS.journals).then(window.mutations.setJournals);
+  getFilters('country').then(window.mutations.setCountries);
+  getFilters('journal').then(window.mutations.setJournals);
 
   // LOAD PUBLICATIONS
   const createPublicationCard = (publication) => {

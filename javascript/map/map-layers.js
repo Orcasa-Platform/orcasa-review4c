@@ -1,11 +1,12 @@
-const addLayer = (map, layerSlug="all") => {
+const addLayer = (map, landUseSlug="all", interventionSlug, subTypeSlug) => {
+  const layerSlug = landUseSlug === 'all' ? 'all' : `${landUseSlug}${interventionSlug ? `-${interventionSlug}` : ''}${subTypeSlug ? `-${subTypeSlug}` : ''}`;
   const currentLayers = map.getStyle()?.layers;
   const currentSources = map.getStyle()?.sources;
   const layerName = `layer-${layerSlug}`;
 
   // Get the layer and load it if not already loaded
   if (!currentSources[layerName] || !currentLayers.find(l => l.id === layerName)) {
-    getLayer(layerSlug).then(layer => {
+    getLayer(landUseSlug, interventionSlug, subTypeSlug).then(layer => {
       const countryValues = layer && Object.values(layer);
       const features = countryValues && countryValues.map(country => {
         const geom = country.geom && JSON.parse(country.geom)?.[0];

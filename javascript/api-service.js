@@ -1,37 +1,47 @@
-// Replace all with real URLs
-const URLS = {
-  'all':  '/mocks/layers/all-layer.json',
-  'cropland':  '/mocks/layers/cropland.json',
-  'forest-land':  '/mocks/layers/forest-land.json',
-  'grassland':  '/mocks/layers/grassland.json',
-  'wetlands':  '/mocks/layers/wetlands.json',
-  'other-land':  '/mocks/layers/other-land.json',
-  'countries': '/mocks/filters/country.json',
-  'years': '/mocks/filters/date.json',
-  'journals': '/mocks/filters/journal.json',
-  'allLandUses': '/mocks/data/all-land-uses.json',
-  'climate-change': '/mocks/data/climate-change.json',
-  'land-use': '/mocks/data/land-use.json',
-  'management': '/mocks/data/management.json',
-};
+// Replace all mock data with real URLs
+// Eg. const BASE_PUBLICATIONS_URL = 'https://review4c.org/.../publications';
+
 const BASE_PUBLICATIONS_URL = '/mocks/data/publications';
+const BASE_INTERVENTIONS_URL = '/mocks/data/interventions';
+const BASE_LAYERS_URL = '/mocks/layers';
+const BASE_FILTERS_URL = '/mocks/filters';
 
 const getURL = async (url) => {
   let data;
   try {
     const response = await fetch(url);
-    data = await response.json();
+
+    if (!response.ok && response.status === 404) {
+      throw new Error("Missing file:", { cause: response });
+    } else {
+      data = await response.json();
+    }
   } catch (error) {
-    console.error(url, error);
+    console.error(error, url);
   }
   return data;
 };
 
-const getLayer = async (layerSlug = 'all') => getURL(URLS[layerSlug]);
-const getIntervention = async (intervention) => getURL(URLS[intervention]);
+// Base data for the filters of the publications
+// Note: We are getting the years from the available publications so the date.json file is not used
+const getFilters = async (filter) => {
+  return getURL(`${BASE_FILTERS_URL}/${filter}.json`);
+};
 
+// GeoJSON layers on the map
+const getLayer = async (landUseSlug = 'all', interventionSlug, subTypeSlug) => {
+  const url = `${BASE_LAYERS_URL}/${landUseSlug === 'all' ? '' : `${landUseSlug}/`}${interventionSlug ? `${interventionSlug}/` : ''}${subTypeSlug ? `${subTypeSlug}/` : ''}index.json`;
+  return getURL(url);
+}
+
+// Intervention data for the charts
+const getIntervention = async (landUseSlug='all', interventionSlug) => {
+  const url = `${BASE_INTERVENTIONS_URL}/${landUseSlug === 'all' ? '' : `${landUseSlug}/`}${interventionSlug ? `${interventionSlug}/` : ''}index.json`;
+  return getURL(url);
+};
+
+// Publication data
 const getPublications = async ({ landUse, intervention, subCategory, subType, publicationFilters, search, sort, page }) => {
-
   const url = `${BASE_PUBLICATIONS_URL}/${landUse === 'all' ? '' : landUse}${intervention ? `/${intervention}` : ''}${subCategory ? `/${subCategory}` : ''}${subType ? `/${subType}` : ''}/publications.json`;
 
   // This should be done on the backend and the publicationFilters sent as part of the URL
@@ -78,6 +88,8 @@ const getPublications = async ({ landUse, intervention, subCategory, subType, pu
   const PAGE_SIZE = 20;
 
   const getMetadata = (data) => {
+    if(!data) return {};
+
     const yearCounts = data.concat().reduce((counts, publication) => {
       const year = publication.year;
       counts[year] = (counts[year] || 0) + 1;
