@@ -20,6 +20,7 @@ const elements = {
   closePublicationPanelButton: document.getElementById('btn-close-publication-panel'),
   publicationDetailButton: document.getElementsByClassName('btn-publication-detail'),
   publicationDetailPanel: document.getElementById('publication-detail-panel'),
+  publicationDetailModal: document.getElementById('publication-detail-modal'),
   publicationDetailPanelContent: document.getElementById('publication-detail-panel-content'),
   closePublicationDetailPanelButton: document.getElementById('btn-close-publication-detail-panel'),
   landUseMenu: document.getElementById('land-use-menu'),

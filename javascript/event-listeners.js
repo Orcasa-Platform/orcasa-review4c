@@ -37,8 +37,8 @@ window.addEventListener('load', function () {
         element.classList.add('theme-light');
       };
     }
-    elements.sidebarToggle.classList.remove('sidebar-toggle-theme-dark');
-    elements.sidebarToggle.classList.add('sidebar-toggle-theme-light');
+    elements.sidebarToggle.classList.remove('btn-icon-theme-dark');
+    elements.sidebarToggle.classList.add('btn-icon-theme-light');
     elements.mapSettingsButton.classList.remove('btn-theme-dark');
     elements.mapSettingsButton.classList.add('btn-theme-light');
 
@@ -87,8 +87,8 @@ window.addEventListener('load', function () {
     }
     elements.mapSettingsButton.classList.add('btn-theme-dark');
     elements.mapSettingsButton.classList.remove('btn-theme-light');
-    elements.sidebarToggle.classList.add('sidebar-toggle-theme-dark');
-    elements.sidebarToggle.classList.remove('sidebar-toggle-theme-light');
+    elements.sidebarToggle.classList.add('btn-icon-theme-dark');
+    elements.sidebarToggle.classList.remove('btn-icon-theme-light');
 
     elements.attribution.classList.add('text-black');
     elements.attribution.classList.remove('text-white');
@@ -260,8 +260,17 @@ window.addEventListener('load', function () {
 
   // PUBLICATION DETAIL PANEL
 
-  elements.closePublicationDetailPanelButton.addEventListener("click", function() {
+  // Hide the modal when the close button is clicked
+  elements.closePublicationDetailPanelButton.addEventListener('click', () => {
     window.mutations.setPublicationsOpen(false);
-    elements.publicationDetailPanel.classList.add('-translate-x-full');
+    elements.publicationDetailModal.classList.add('hidden');
+  });
+
+  // Hide the modal when the user clicks outside of it
+  elements.publicationDetailModal.addEventListener('click', (event) => {
+    if (event.target === elements.publicationDetailModal) {
+      window.mutations.setPublicationsOpen(false);
+      elements.publicationDetailModal.classList.add('hidden');
+    }
   });
 });

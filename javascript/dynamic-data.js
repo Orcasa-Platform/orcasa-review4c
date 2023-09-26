@@ -317,7 +317,9 @@ window.addEventListener('load', function () {
       for (let link of elements.publicationDetailButton) {
         link.addEventListener("click", function() {
           window.mutations.setPublicationDetailOpen(true);
-          elements.publicationDetailPanel.classList.remove('-translate-x-full');
+
+          elements.publicationDetailModal.classList.remove('hidden');
+
           const publicationId = link.getAttribute('data-id');
           window.loadPublication(publicationId);
         });
