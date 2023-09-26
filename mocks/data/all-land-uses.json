@@ -2,7 +2,8 @@
   "all": {
     "name": "All",
     "publications": 13632,
-    "metaAnalysis": 1563
+    "metaAnalysis": 1563,
+    "comparisons": 15857
   },
   "cropland": {
     "name": "Cropland",

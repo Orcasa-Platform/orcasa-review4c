@@ -9,7 +9,7 @@ const URLS = {
   'countries': '/mocks/filters/country.json',
   'years': '/mocks/filters/date.json',
   'journals': '/mocks/filters/journal.json',
-  'intervention': '/mocks/data/intervention.json',
+  'allLandUses': '/mocks/data/all-land-uses.json',
   'climate-change': '/mocks/data/climate-change.json',
   'land-use': '/mocks/data/land-use.json',
   'management': '/mocks/data/management.json',

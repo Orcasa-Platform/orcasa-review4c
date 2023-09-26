@@ -24,6 +24,7 @@ const elements = {
   closePublicationDetailPanelButton: document.getElementById('btn-close-publication-detail-panel'),
   landUseMenu: document.getElementById('land-use-menu'),
   landUseText: document.getElementById('land-use-text'),
+  landUseIntro: document.getElementById('land-use-intro'),
   landUsePublications: document.getElementById('land-use-publications'),
   landUseMetaAnalysis: document.getElementById('land-use-meta-analysis'),
   publicationsNumber: document.getElementById('publications-number'),

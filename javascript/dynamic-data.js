@@ -119,7 +119,7 @@ window.addEventListener('load', function () {
   window.loadData = (landUseSlug) => {
     const landUsesData = window.getters.landUses();
     const landUse = landUsesData.find(({ slug }) => slug === landUseSlug);
-    const { name, publications, metaAnalysis, slug } = landUse;
+    const { name, publications, metaAnalysis, comparisons, slug } = landUse;
 
     // Set on state the first land use
     window.mutations.setLandUse(slug);
@@ -130,10 +130,30 @@ window.addEventListener('load', function () {
     // Update the description with the land use publications and meta-analysis
     const publicationsNumber = publications?.toLocaleString() || '-';
     const metaAnalysisNumber = metaAnalysis?.toLocaleString() || '-';
+    const comparisonsNumber = comparisons?.toLocaleString() || '-';
+    if(landUseSlug === 'all') {
+      elements.landUseIntro.innerHTML = `<span>Scientific Evidence brings impartial evidence from peer-reviewed literature to analyse the effects of land management, land-use change and climate change on Soil Organic Carbon. To date, Scientific Evidence gathers </span>
+      <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analyses,
+      <span
+        class="font-semibold">
+        <span id="land-use-publications">${publicationsNumber}</span> scientific publications</span> and includes over </span>
+        <span id="land-use-publications">${comparisonsNumber}</span> <span>
+         comparisons of practices to increase soil carbon storage.</span>`
+    } else {
+      elements.landUseIntro.innerHTML = `<span>These
+        insights come from the analysis of</span><span
+        class="font-semibold">
+        <span id="land-use-publications">${publicationsNumber}</span> scientific publications</span><span>
+        and <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analysis
+        related
+        to </span><span
+        class="font-semibold" id="land-use-text">${name.toLowerCase()}</span><span>
+        interventions on SOC.</span>`
+    }
 
-    elements.landUsePublications.innerHTML = publicationsNumber;
-    elements.landUseMetaAnalysis.innerHTML = metaAnalysisNumber;
-    elements.landUseText.innerHTML = name.toLowerCase();
+    // elements.landUsePublications.innerHTML = publicationsNumber;
+    // elements.landUseMetaAnalysis.innerHTML = metaAnalysisNumber;
+    // elements.landUseText.innerHTML = name.toLowerCase();
     elements.legendText.innerHTML = name;
 
     // Load interventions
@@ -162,7 +182,7 @@ window.addEventListener('load', function () {
   `;
 
   // Get data on first load
-  getURL(URLS.intervention).then(data => {
+  getURL(URLS.allLandUses).then(data => {
     if (elements.landUseMenu && data) {
       const landUses = Object.entries(data).map(([key, value], i) => ({ slug: key, ...value, index: i }));
       window.mutations.setLandUses(landUses);
