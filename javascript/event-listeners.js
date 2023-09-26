@@ -265,4 +265,12 @@ window.addEventListener('load', function () {
     window.mutations.setPublicationsOpen(false);
     elements.publicationDetailModal.classList.add('hidden');
   });
+
+  // Hide the modal when the user clicks outside of it
+  elements.publicationDetailModal.addEventListener('click', (event) => {
+    if (event.target === elements.publicationDetailModal) {
+      window.mutations.setPublicationsOpen(false);
+      elements.publicationDetailModal.classList.add('hidden');
+    }
+  });
 });
