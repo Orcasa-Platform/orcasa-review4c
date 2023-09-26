@@ -42,7 +42,7 @@ const getIntervention = async (landUseSlug='all', interventionSlug) => {
 
 // Publication data
 const getPublications = async ({ landUse, intervention, subCategory, subType, publicationFilters, search, sort, page }) => {
-  const url = `${BASE_PUBLICATIONS_URL}/${landUse === 'all' ? '' : landUse}${intervention ? `/${intervention}` : ''}${subCategory ? `/${subCategory}` : ''}${subType ? `/${subType}` : ''}/publications.json`;
+  const url = `${BASE_PUBLICATIONS_URL}/${landUse === 'all' ? '' : landUse}${intervention ? `/${intervention}` : ''}${subCategory ? `/${subCategory}` : ''}${subType ? `/${subType}` : ''}/index.json`;
 
   // This should be done on the backend and the publicationFilters sent as part of the URL
   const applyFilters = (publications) => {
