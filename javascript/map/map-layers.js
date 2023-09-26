@@ -33,7 +33,7 @@ const addLayer = (map, layerSlug="all") => {
           'data': geoJSONContent,
           cluster: true,
           clusterMaxZoom: 14, // Max zoom to cluster points on
-          clusterRadius: 50, // Radius of each cluster when clustering points (defaults to 50)
+          clusterRadius: 100, // Radius of each cluster when clustering points
           clusterProperties: {
             number_primary_studies: ['+', ['get', 'number_primary_studies']]
           }
