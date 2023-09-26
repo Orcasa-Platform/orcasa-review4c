@@ -79,11 +79,11 @@
           @apply text-white bg-slate-700 hover:bg-slate-500;
         }
 
-        .sidebar-toggle-theme-light {
+        .btn-icon-theme-light {
           @apply text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none justify-center items-center flex h-10 w-10 text-slate-700 bg-white hover:bg-slate-200 border-l border-gray-300;
         }
 
-        .sidebar-toggle-theme-dark {
+        .btn-icon-theme-dark {
           @apply text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none justify-center items-center flex h-10 w-10 text-white bg-slate-700 hover:bg-slate-500;
         }
 
@@ -326,27 +326,10 @@
               </div>
             </div>
           </div>
-
-          <!-- PUBLICATION DETAIL PANEL -->
-          <div id="publication-detail-panel"
-            class="publication-panel -translate-x-full">
-            <button
-              type="button"
-              id="btn-close-publication-detail-panel"
-              class="h-6 flex pr-1 justify-center items-center gap-1 mb-4">
-              <i class="w-6 h-6 stroke-teal-500"
-                data-lucide="arrow-left"></i>
-              <div
-                class="text-teal-500 text-base font-semibold focus-visible:outline-mod-sc-ev">
-                Go back
-              </div>
-            </button>
-            <div id="publication-detail-panel-content"></div>
-          </div>
         </div>
         <div class="absolute -right-10 -ml-px top-0">
           <button id="sidebar-toggle"
-            class="sidebar-toggle-theme-dark">
+            class="btn-icon-theme-dark">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
               viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -386,7 +369,7 @@
       <div class="absolute bottom-9 right-6">
         <div class="absolute -ml-px -top-10 right-0">
           <button id="legend-toggle"
-            class="sidebar-toggle-theme-dark">
+            class="btn-icon-theme-dark">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
               viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -423,6 +406,23 @@
                 class="text-center flex-1">>100</div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- PUBLICATION DETAIL MODAL -->
+      <div id="publication-detail-modal"
+        class="hidden absolute bg-gray-900 inset-0 bg-opacity-50 z-50 h-full w-full flex items-center justify-center">
+        <div id="publication-detail-panel"
+          class="bg-white p-6 max-h-[90%] overflow-y-auto relative">
+          <button
+            type="button"
+            aria-label="close modal"
+            id="btn-close-publication-detail-panel"
+            class="btn-icon-theme-dark absolute top-0 right-0">
+            <i class="w-6 h-6 stroke-white"
+              data-lucide="x"></i>
+          </button>
+          <div id="publication-detail-panel-content"></div>
         </div>
       </div>
 
