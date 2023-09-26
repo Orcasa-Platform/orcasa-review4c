@@ -221,6 +221,7 @@ window.addEventListener('load', function () {
       type="checkbox"
       class="checkbox-light"
       id="${slug}-${value}"
+      checked
       value="${value}" />
       <label for="${slug}-${value}">
       ${label}
@@ -270,17 +271,25 @@ window.addEventListener('load', function () {
     const { years: availableYearObjects, countries: availableCountries, journals: availableJournals } = metadata;
     const countryList = elements.countryDropdown.querySelector('ul');
     countryList.innerHTML = '';
-    countries.filter(c => availableCountries.includes(c.iso_2digit)).forEach(country => {
+    const filteredCountries = countries.filter(c => availableCountries.includes(c.iso_2digit))
+    filteredCountries.forEach(country => {
       const { iso_2digit: iso, cntry_name: label } = country;
       appendListElement(countryList, iso, label, 'year');
     });
 
+    // Start with all countries selected
+    window.mutations.setPublicationFilters('countries', filteredCountries.map(c => c.iso_2digit));
+
     const journalList = elements.journalDropdown.querySelector('ul');
     journalList.innerHTML = '';
-    journals.filter(j => availableJournals.includes(j.journal_id)).forEach(journal => {
+    const filteredJournals = journals.filter(j => availableJournals.includes(j.journal_id));
+    filteredJournals.forEach(journal => {
       const { journal_id: value, journal_name: label } = journal;
       appendListElement(journalList, value, capitalize(label), 'journal');
     });
+
+    // Start with all journals selected
+    window.mutations.setPublicationFilters('journals', filteredJournals.map(c => c.journal_id));
 
     const availableYears = availableYearObjects && Object.keys(availableYearObjects);
     const yearList = elements.yearDropdown.querySelector('ul');
@@ -288,6 +297,9 @@ window.addEventListener('load', function () {
     availableYears.forEach((year) => {
       appendListElement(yearList, year, year, 'year');
     });
+
+    // Start with all years selected
+    window.mutations.setPublicationFilters('years', availableYears.map(c => c.journal_id));
   };
 
   window.loadPublications = (reload) => {
