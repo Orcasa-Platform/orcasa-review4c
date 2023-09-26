@@ -59,7 +59,7 @@ const addLayer = (map, layerSlug="all") => {
               ['linear'],
               ['get', 'number_primary_studies'],
               0, 0.4,
-              50000, 2
+              50000, 1.6
             ],
           },
           'paint': {
@@ -97,7 +97,7 @@ const addLayer = (map, layerSlug="all") => {
               ['linear'],
               ['get', 'number_primary_studies'],
               0, 0.4,
-              50000, 2
+              50000, 1.6
             ],
             'icon-allow-overlap': true,
             'icon-ignore-placement': true,
