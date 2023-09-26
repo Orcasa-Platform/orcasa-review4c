@@ -7,9 +7,9 @@ const metaAnalysisTemplate = (id) => {
   return `<div class="flex flex-col gap-1 px-[50px] py-[30px] bg-green-50">
         <div class="flex-col gap-4 flex">
             <div class="text-slate-700 text-lg leading-[30px]">${title}</div>
-            <div class="w-[350px] text-slate-700 text-xs font-normal font-['Roboto'] leading-[18px]">${authors}</div>
+            <div class="text-slate-700 text-xs leading-[18px]">${authors}</div>
         </div>
-        <div class="w-[668px] h-[100px] relative">
+        <div>
           <div class="text-slate-500 text-sm leading-7">${description}</div>
         </div>
         <div class="flex pr-1 justify-end gap-1">
