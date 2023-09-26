@@ -319,6 +319,7 @@ window.addEventListener('load', function () {
           window.mutations.setPublicationDetailOpen(true);
 
           elements.publicationDetailModal.classList.remove('hidden');
+          elements.closePublicationDetailPanelButton.focus();
 
           const publicationId = link.getAttribute('data-id');
           window.loadPublication(publicationId);
