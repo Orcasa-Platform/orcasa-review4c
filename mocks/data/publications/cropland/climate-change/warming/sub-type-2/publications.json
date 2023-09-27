@@ -86,7 +86,6 @@
     "url": "http://example.com/coffee-agroforestry-CO",
     "source": "Google scholar",
     "description": "Evaluating coffee agroforestry systems in Colombia and their sustainability.",
-    "publicationId": 20,
     "globalQuality": 89,
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Regression asymmetry test",
@@ -121,7 +120,6 @@
     "year": 2018,
     "country": "FR",
     "type": "meta-analysis",
-    "publicationId": 24,
     "globalQuality": 18,
     "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
     "url": "http://example.com/pesticide-usage-FR",

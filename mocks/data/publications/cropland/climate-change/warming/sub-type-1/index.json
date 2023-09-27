@@ -10,7 +10,6 @@
     "url": "http://example.com/advances-in-agronomy",
     "source": "Google scholar",
     "description": "This study explores the latest advancements in crop management techniques and their impact on agricultural productivity.",
-    "publicationId": 2,
     "globalQuality": 66,
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Funnel plot",
@@ -49,7 +48,6 @@
     "url": "http://example.com/sustainable-farming-practices",
     "source": "Google scholar",
     "description": "An examination of sustainable farming practices in developing countries and their role in food security.",
-    "publicationId": 5,
     "globalQuality": 80,
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Forest plot",
@@ -69,7 +67,6 @@
     "url": "http://example.com/irrigation-efficiency",
     "source": "Google scholar",
     "description": "Assessing the efficiency of irrigation systems in arid regions and their impact on water resources.",
-    "publicationId": 5,
     "globalQuality": 60,
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Trim and fill method",
@@ -165,7 +162,6 @@
     "url": "http://example.com/drought-management-rice",
     "source": "Google scholar",
     "description": "Assessment of drought management strategies in rice farming.",
-    "publicationId": 8,
     "globalQuality": 21,
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Trim and fill method",
@@ -204,7 +200,6 @@
     "url": "http://example.com/rice-crop-management-China",
     "source": "Google scholar",
     "description": "A study on rice crop management practices in China and their impact on food production.",
-    "publicationId": 10,
     "globalQuality": 65,
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Forest plot",
@@ -262,7 +257,6 @@
     "url": "http://example.com/coffee-agroforestry-BR",
     "source": "Google scholar",
     "description": "Assessing the agroforestry systems used in coffee cultivation in Brazil.",
-    "publicationId": 13,
     "globalQuality": 60,
     "methodology-and-attributes": {
       "Publication bias method of analysis": "Regression asymmetry test",
