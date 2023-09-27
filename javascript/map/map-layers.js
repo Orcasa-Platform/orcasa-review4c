@@ -1,7 +1,5 @@
 const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug, subTypeSlug) => {
-  console.log('addLayer', landUseSlug, mainInterventionSlug, interventionSlug, subTypeSlug)
   const layerSlug = landUseSlug === 'all' ? 'all' : `${landUseSlug}${mainInterventionSlug ? `-${mainInterventionSlug}` : ''}${interventionSlug ? `-${interventionSlug}` : ''}${subTypeSlug ? `-${subTypeSlug}` : ''}`;
-  console.log(layerSlug)
   const currentLayers = map.getStyle()?.layers;
   const currentSources = map.getStyle()?.sources;
   const layerName = `layer-${layerSlug}`;
@@ -201,5 +199,4 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
       map.setLayoutProperty(layerId, 'visibility', 'visible');
     }
   });
-  console.log('currentLayers', currentLayers)
 };
