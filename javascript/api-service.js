@@ -129,7 +129,7 @@ const getPublications = async ({ landUse, mainIntervention, interventionSlug, su
 
   const paginate = (data) => {
     if (!page) return data;
-    return data.slice(0, PAGE_SIZE * page);
+    return data.slice(PAGE_SIZE * (page - 1), PAGE_SIZE * page);
   };
 
   return getURL(url).then((data) => {

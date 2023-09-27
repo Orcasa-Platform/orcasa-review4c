@@ -298,7 +298,12 @@ window.addEventListener('load', function () {
     window.mutations.setPublicationFilters('years', availableYears.map(c => c.journal_id));
   };
 
-  window.loadPublications = (reload) => {
+  window.loadPublications = (reload, addNewPage) => {
+    if (reload && !addNewPage) {
+      // Go to page 1 of the new selection
+      window.mutations.setPublicationPage(1);
+    }
+
     const filter = window.getters.filter();
     const publicationRequest = {
       landUse: window.getters.landUse(),
@@ -313,7 +318,9 @@ window.addEventListener('load', function () {
 
     getPublications(publicationRequest).then(({ data, metadata }) => {
       // First clear publications container
-      elements.publicationsContainer.innerHTML = '';
+      if(!addNewPage) {
+        elements.publicationsContainer.innerHTML = '';
+      }
 
       // Show publications
       data.forEach(publication => {
@@ -339,16 +346,24 @@ window.addEventListener('load', function () {
         populateFilters(metadata);
       }
 
-      updateNumbers(data, publicationRequest);
+      if(!addNewPage) {
+        updateNumbers(data, publicationRequest);
+      }
 
       // Update lucide icons
       lucide.createIcons();
 
-      window.mutations.setPublications({ data, metadata });
+      if (addNewPage) {
+        const { data: currentData } = window.getters.publications() || {};
+        window.mutations.setPublications({ data: currentData.concat(data).flat(), metadata });
+      } else {
+        window.mutations.setPublications({ data, metadata });
+      }
     });
   };
 
   window.reloadPublications = () => window.loadPublications(true);
+  window.addPublications = () => window.loadPublications(true, true);
 
   window.loadPublication = (publicationId) => {
     elements.publicationDetailPanelContent.innerHTML = '';
@@ -382,7 +397,7 @@ window.addEventListener('load', function () {
     if (scrollHeight - scrollTop === clientHeight) {
       if (pages > currentPage) {
         window.mutations.setPublicationPage(window.getters.publicationPage() + 1);
-        window.reloadPublications();
+        window.addPublications();
       }
     }
   });
