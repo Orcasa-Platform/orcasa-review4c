@@ -42,6 +42,5 @@ map.on('load', function() {
   }, 'background');
 
   addSquareIcon(map);
-  addLayer(map);
   zoomButtonStyling();
 });

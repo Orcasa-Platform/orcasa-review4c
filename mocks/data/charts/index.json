@@ -2,8 +2,7 @@
   "all": {
     "name": "All",
     "publications": 13632,
-    "metaAnalysis": 1563,
-    "comparisons": 15857
+    "metaAnalysis": 1563
   },
   "cropland": {
     "name": "Cropland",
@@ -19,7 +18,6 @@
     "name": "Forest Land",
     "publications": 0,
     "metaAnalysis": 0,
-    "default": false,
     "mainInterventions": [
       "land-use",
       "climate-change",

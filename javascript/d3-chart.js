@@ -3,12 +3,12 @@ const red = "#FA545D";
 const gray400 = '#8B90A4';
 const gray100 = '#F0F0F5';
 
-const getSubcategoryByTitle = (data, title) => data.find((item) => item.title === title);
+const getInterventionByTitle = (data, title) => data.find((item) => item.title === title);
 
 const getSlugByTitle = (data, title) => {
-  const isSubcategory = !!getSubcategoryByTitle(data, title);
-  const activeSubcategoryItem = !isSubcategory && data.find((item) => item.active);
-  return isSubcategory ? kebabCase(title) : kebabCase(`${activeSubcategoryItem.title}-${title}`);
+  const isIntervention = !!getInterventionByTitle(data, title);
+  const activeInterventionItem = !isIntervention && data.find((item) => item.active);
+  return isIntervention ? kebabCase(title) : kebabCase(`${activeInterventionItem.title}-${title}`);
 };
 
 const updateButtons = (title, data) => {
@@ -39,15 +39,19 @@ const updateChartAndButtons = ({ slug, title, data, resetAllCharts }) => {
   createSVGChart(slug, data);
   updateButtons(title, data)
 }
-const click = (_, title, chartSlug, data, isSubcategory) => {
+const click = (_, title, chartSlug, data, isIntervention) => {
   const currentSelection = window.getters.filter();
+
   let currentTitle = title;
-  const activeSubcategoryItem = data.find((item) => item.active);
-  const slug = isSubcategory ? data.find(d => d.title === title).slug : activeSubcategoryItem.subTypes.find(st => st.title === title).slug;
+  const activeInterventionItem = data.find((item) => item.active);
+  const slug = isIntervention ? data.find(d => d.title === title).slug : activeInterventionItem.subTypes.find(st => st.title === title).slug;
 
-  // If the clicked subcategory was selected clear the filter and close the sub-types
+  // Update map
+  addLayer(map, 'cropland', chartSlug, slug);
 
-  if (currentSelection?.type === 'sub-category' && currentSelection?.value === slug) {
+  // If the clicked intervention was selected clear the filter and close the sub-types
+
+  if (currentSelection?.type === 'intervention' && currentSelection?.value === slug) {
     window.mutations.setFilter(null);
     const updatedData = data.map(d => ({
       ...d,
@@ -57,11 +61,11 @@ const click = (_, title, chartSlug, data, isSubcategory) => {
     return;
   }
 
-  // If the clicked sub-type was selected select the active subcategory
+  // If the clicked sub-type was selected select the active intervention
 
   if (currentSelection?.type === 'sub-type' && currentSelection?.value === slug) {
-    currentTitle = activeSubcategoryItem.title;
-    window.mutations.setFilter({type: 'sub-category', value: activeSubcategoryItem.slug, mainIntervention: chartSlug, subCategory: null});
+    currentTitle = activeInterventionItem.title;
+    window.mutations.setFilter({type: 'intervention', value: activeInterventionItem.slug, mainIntervention: chartSlug, intervention: null});
     // Rerender chart to hide sub-types
     const updatedData = data.map(d => {
       if (d.title === currentTitle) {
@@ -80,10 +84,10 @@ const click = (_, title, chartSlug, data, isSubcategory) => {
   }
 
 
-  // Select subcategory or sub-types
+  // Select intervention or sub-types
 
   let updatedData = data;
-  if (isSubcategory) {
+  if (isIntervention) {
     updatedData = data.map(d => {
       if (d.title === title) {
         return {
@@ -98,9 +102,9 @@ const click = (_, title, chartSlug, data, isSubcategory) => {
     });
   }
 
-  window.mutations.setFilter({ type: isSubcategory ? 'sub-category' : 'sub-type', value: slug, mainIntervention: chartSlug, subCategory: !isSubcategory && data.find((item) => item.active).slug });
+  window.mutations.setFilter({ type: isIntervention ? 'intervention' : 'sub-type', value: slug, mainIntervention: chartSlug, intervention: !isIntervention && data.find((item) => item.active).slug });
   // Rerender to show sub-types or filter opacity of error bars
-  updateChartAndButtons({ slug: chartSlug, title, data: updatedData, resetAllCharts: isSubcategory })
+  updateChartAndButtons({ slug: chartSlug, title, data: updatedData, resetAllCharts: isIntervention })
 };
 
 // Create the SVG container
@@ -224,12 +228,12 @@ const createSVGChart = (slug, data) => {
     .attr("height", ITEM_HEIGHT + yTickHeight)
     .style("text-align", 'left')
     .html((title) => {
-      const subCategoryItem = getSubcategoryByTitle(data, title);
-      const activeSubcategoryItem = !subCategoryItem && data.find((item) => item.active);
-      const dataItem = subCategoryItem || activeSubcategoryItem.subTypes.find(st => st.title === title);
+      const interventionItem = getInterventionByTitle(data, title);
+      const activeInterventionItem = !interventionItem && data.find((item) => item.active);
+      const dataItem = interventionItem || activeInterventionItem.subTypes.find(st => st.title === title);
       const slug = getSlugByTitle(data, title);
       return buttonHTML(title, dataItem?.publications, slug);
-    }).on("click", (_, title) => click(_, title, slug, data, !!getSubcategoryByTitle(data, title)));
+    }).on("click", (_, title) => click(_, title, slug, data, !!getInterventionByTitle(data, title)));
 
   // Remove all domain lines
   svg.selectAll('.domain').attr('stroke-width', 0);

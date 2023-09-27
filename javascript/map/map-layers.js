@@ -1,12 +1,14 @@
-const addLayer = (map, landUseSlug="all", mainInterventionSlug, subTypeSlug) => {
-  const layerSlug = landUseSlug === 'all' ? 'all' : `${landUseSlug}${mainInterventionSlug ? `-${mainInterventionSlug}` : ''}${subTypeSlug ? `-${subTypeSlug}` : ''}`;
+const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug, subTypeSlug) => {
+  console.log('addLayer', landUseSlug, mainInterventionSlug, interventionSlug, subTypeSlug)
+  const layerSlug = landUseSlug === 'all' ? 'all' : `${landUseSlug}${mainInterventionSlug ? `-${mainInterventionSlug}` : ''}${interventionSlug ? `-${interventionSlug}` : ''}${subTypeSlug ? `-${subTypeSlug}` : ''}`;
+  console.log(layerSlug)
   const currentLayers = map.getStyle()?.layers;
   const currentSources = map.getStyle()?.sources;
   const layerName = `layer-${layerSlug}`;
 
   // Get the layer and load it if not already loaded
   if (!currentSources[layerName] || !currentLayers.find(l => l.id === layerName)) {
-    getLayer(landUseSlug, mainInterventionSlug, subTypeSlug).then(layer => {
+    getLayer(landUseSlug, mainInterventionSlug, interventionSlug, subTypeSlug).then(layer => {
       const countryValues = layer && Object.values(layer);
       const features = countryValues && countryValues.map(country => {
         const geom = country.geom && JSON.parse(country.geom)?.[0];
@@ -184,12 +186,14 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, subTypeSlug) => 
     });
   }
 
-
   // Hide all layers except for the selected one
   currentLayers.forEach(layer => {
     const layerId = layer.id;
     const selectedLayerId = `layer-${layerSlug}`;
-    if (layerId.startsWith('layer-') && layerId !== selectedLayerId) {
+    if (
+      layerId.startsWith('layer-') && layerId !== selectedLayerId
+      // layerId.startsWith('clusters-layer') && layerId !== `clusters-${selectedLayerId}`
+    ) {
       map.setLayoutProperty(layerId, 'visibility', 'none');
     }
 
@@ -197,4 +201,5 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, subTypeSlug) => 
       map.setLayoutProperty(layerId, 'visibility', 'visible');
     }
   });
+  console.log('currentLayers', currentLayers)
 };

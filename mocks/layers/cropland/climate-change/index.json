@@ -1,0 +1,208 @@
+{
+    "BR": {
+        "number_primary_studies": 5292,
+        "geom": "[{\"type\":\"Feature\",\"id\":103,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-53.0887365610034,-10.7723250928083]},\"properties\":{\"long_name\":\"Brazil\"}}]",
+        "effect_outcomes": {
+            "agroforestry": 534,
+            "amendments non-pyrogenic": 109,
+            "amendments non-pyrogenic ; cover crops": 16,
+            "amendments non-pyrogenic ; cover crops ; water management ; crop rotation": 16,
+            "amendments non-pyrogenic ; mineral fertilization": 88,
+            "amendments non-pyrogenic ; residues management": 10,
+            "amendments pyrogenic": 318,
+            "co2 enrichment": 11,
+            "cover crops": 370,
+            "cover crops ; crop rotation": 24,
+            "crop rotation": 38,
+            "drought/rainfall reduction": 16,
+            "energy crop": 76,
+            "fire": 10,
+            "genotype/species selection": 1,
+            "intercropping/species mixtures": 76,
+            "mineral fertilization": 685,
+            "organic farming": 58,
+            "other": 70,
+            "residues management": 108,
+            "tillage": 2446,
+            "water management": 212
+        }
+    },
+    "CR": {
+        "number_primary_studies": 886,
+        "geom": "[{\"type\":\"Feature\",\"id\":88,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-84.1890532213732,9.97056913526161]},\"properties\":{\"long_name\":\"Costa Rica\"}}]",
+        "effect_outcomes": {
+            "agroforestry": 469,
+            "co2 enrichment": 6,
+            "cover crops": 218,
+            "drought/rainfall reduction": 6,
+            "fire": 6,
+            "mineral fertilization": 153,
+            "organic farming": 14,
+            "other": 2,
+            "residues management": 6,
+            "tillage": 6
+        }
+    },
+    "IN": {
+        "number_primary_studies": 7576,
+        "geom": "[{\"type\":\"Feature\",\"id\":146,\"geometry\":{\"type\":\"Point\",\"coordinates\":[79.6188660674667,22.8813691826695]},\"properties\":{\"long_name\":\"India\"}}]",
+        "effect_outcomes": {
+            "agroforestry": 557,
+            "amendments non-pyrogenic": 595,
+            "amendments non-pyrogenic ; cover crops": 6,
+            "amendments non-pyrogenic ; cover crops ; water management ; crop rotation": 6,
+            "amendments non-pyrogenic ; mineral fertilization": 292,
+            "amendments non-pyrogenic ; residues management": 997,
+            "amendments pyrogenic": 267,
+            "co2 enrichment": 2,
+            "cover crops": 728,
+            "crop rotation": 16,
+            "drought/rainfall reduction": 66,
+            "energy crop": 48,
+            "genotype/species selection": 26,
+            "intercropping/species mixtures": 20,
+            "mineral fertilization": 1196,
+            "organic farming": 56,
+            "other": 32,
+            "residues management": 1581,
+            "tillage": 938,
+            "water management": 147
+        }
+    },
+    "PH": {
+        "number_primary_studies": 445,
+        "geom": "[{\"type\":\"Feature\",\"id\":185,\"geometry\":{\"type\":\"Point\",\"coordinates\":[122.8736866702,11.747413798271]},\"properties\":{\"long_name\":\"Philippines\"}}]",
+        "effect_outcomes": {
+            "agroforestry": 77,
+            "amendments non-pyrogenic": 18,
+            "amendments non-pyrogenic ; mineral fertilization": 18,
+            "amendments pyrogenic": 97,
+            "co2 enrichment": 1,
+            "cover crops": 12,
+            "cover crops ; crop rotation": 8,
+            "drought/rainfall reduction": 12,
+            "genotype/species selection": 4,
+            "mineral fertilization": 48,
+            "residues management": 137,
+            "water management": 13
+        }
+    },
+    "GB": {
+        "number_primary_studies": 2958,
+        "geom": "[{\"type\":\"Feature\",\"id\":166,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-2.90032697743179,54.1599103645581]},\"properties\":{\"long_name\":\"United Kingdom\"}}]",
+        "effect_outcomes": {
+            "agroforestry": 93,
+            "amendments non-pyrogenic": 128,
+            "amendments non-pyrogenic ; cover crops": 4,
+            "amendments non-pyrogenic ; cover crops ; water management ; crop rotation": 4,
+            "amendments non-pyrogenic ; mineral fertilization": 370,
+            "amendments non-pyrogenic ; residues management": 25,
+            "amendments pyrogenic": 398,
+            "co2 enrichment": 15,
+            "cover crops": 216,
+            "cover crops ; crop rotation": 8,
+            "crop rotation": 65,
+            "drought/rainfall reduction": 4,
+            "energy crop": 60,
+            "fire": 4,
+            "genotype/species selection": 1,
+            "intercropping/species mixtures": 44,
+            "mineral fertilization": 747,
+            "organic farming": 49,
+            "other": 128,
+            "residues management": 137,
+            "tillage": 221,
+            "water management": 237
+        }
+    },
+    "SN": {
+        "number_primary_studies": 1432,
+        "geom": "[{\"type\":\"Feature\",\"id\":72,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-14.4682399645985,14.3669032615052]},\"properties\":{\"long_name\":\"Senegal\"}}]",
+        "effect_outcomes": {
+            "agroforestry": 1336,
+            "intercropping/species mixtures": 96
+        }
+    },
+    "SD": {
+        "number_primary_studies": 944,
+        "geom": "[{\"type\":\"Feature\",\"id\":76,\"geometry\":{\"type\":\"Point\",\"coordinates\":[30.0501951435436,13.8316881994583]},\"properties\":{\"long_name\":\"Sudan\"}}]",
+        "effect_outcomes": {
+            "agroforestry": 918,
+            "residues management": 26
+        }
+    },
+    "US": {
+        "number_primary_studies": 29885,
+        "geom": "[{\"type\":\"Feature\",\"id\":135,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-112.493532187673,45.695381857143]},\"properties\":{\"long_name\":\"United States\"}}]",
+        "effect_outcomes": {
+            "agroforestry": 598,
+            "amendments non-pyrogenic": 3044,
+            "amendments non-pyrogenic ; cover crops": 114,
+            "amendments non-pyrogenic ; cover crops ; water management ; crop rotation": 114,
+            "amendments non-pyrogenic ; mineral fertilization": 472,
+            "amendments non-pyrogenic ; residues management": 379,
+            "amendments pyrogenic": 1659,
+            "co2 enrichment": 97,
+            "cover crops": 4815,
+            "cover crops ; crop rotation": 432,
+            "crop rotation": 787,
+            "drought/rainfall reduction": 20,
+            "energy crop": 524,
+            "fire": 20,
+            "genotype/species selection": 43,
+            "intercropping/species mixtures": 380,
+            "mineral fertilization": 6071,
+            "organic farming": 279,
+            "other": 104,
+            "residues management": 612,
+            "tillage": 8500,
+            "tillage ; residues management ; cover crops": 15,
+            "water management": 806
+        }
+    },
+    "FR": {
+        "number_primary_studies": 1727,
+        "geom": "[{\"type\":\"Feature\",\"id\":24,\"geometry\":{\"type\":\"Point\",\"coordinates\":[2.55042982501832,46.5648681707654]},\"properties\":{\"long_name\":\"France\"}}]",
+        "effect_outcomes": {
+            "agroforestry": 131,
+            "amendments non-pyrogenic": 45,
+            "amendments non-pyrogenic ; cover crops": 2,
+            "amendments non-pyrogenic ; cover crops ; water management ; crop rotation": 2,
+            "amendments non-pyrogenic ; mineral fertilization": 138,
+            "amendments non-pyrogenic ; residues management": 159,
+            "amendments pyrogenic": 60,
+            "co2 enrichment": 4,
+            "cover crops": 208,
+            "crop rotation": 14,
+            "drought/rainfall reduction": 3,
+            "energy crop": 28,
+            "fire": 3,
+            "genotype/species selection": 3,
+            "intercropping/species mixtures": 44,
+            "mineral fertilization": 234,
+            "organic farming": 14,
+            "other": 48,
+            "residues management": 85,
+            "tillage": 403,
+            "tillage ; residues management ; cover crops": 2,
+            "water management": 97
+        }
+    },
+    "ID": {
+        "number_primary_studies": 707,
+        "geom": "[{\"type\":\"Feature\",\"id\":215,\"geometry\":{\"type\":\"Point\",\"coordinates\":[117.311610756535,-2.22979378402477]},\"properties\":{\"long_name\":\"Indonesia\"}}]",
+        "effect_outcomes": {
+            "agroforestry": 133,
+            "amendments non-pyrogenic": 10,
+            "amendments non-pyrogenic ; mineral fertilization": 6,
+            "amendments pyrogenic": 144,
+            "cover crops": 170,
+            "drought/rainfall reduction": 12,
+            "energy crop": 32,
+            "genotype/species selection": 4,
+            "mineral fertilization": 162,
+            "organic farming": 8,
+            "tillage": 26
+        }
+    }
+}

@@ -1,0 +1,48 @@
+{
+  "PH": {
+      "number_primary_studies": 445,
+      "geom": "[{\"type\":\"Feature\",\"id\":185,\"geometry\":{\"type\":\"Point\",\"coordinates\":[122.8736866702,11.747413798271]},\"properties\":{\"long_name\":\"Philippines\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 77,
+          "amendments non-pyrogenic": 18,
+          "amendments non-pyrogenic ; mineral fertilization": 18,
+          "amendments pyrogenic": 97,
+          "co2 enrichment": 1,
+          "cover crops": 12,
+          "cover crops ; crop rotation": 8,
+          "drought/rainfall reduction": 12,
+          "genotype/species selection": 4,
+          "mineral fertilization": 48,
+          "residues management": 137,
+          "water management": 13
+      }
+  },
+  "GB": {
+      "number_primary_studies": 2958,
+      "geom": "[{\"type\":\"Feature\",\"id\":166,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-2.90032697743179,54.1599103645581]},\"properties\":{\"long_name\":\"United Kingdom\"}}]",
+      "effect_outcomes": {
+          "agroforestry": 93,
+          "amendments non-pyrogenic": 128,
+          "amendments non-pyrogenic ; cover crops": 4,
+          "amendments non-pyrogenic ; cover crops ; water management ; crop rotation": 4,
+          "amendments non-pyrogenic ; mineral fertilization": 370,
+          "amendments non-pyrogenic ; residues management": 25,
+          "amendments pyrogenic": 398,
+          "co2 enrichment": 15,
+          "cover crops": 216,
+          "cover crops ; crop rotation": 8,
+          "crop rotation": 65,
+          "drought/rainfall reduction": 4,
+          "energy crop": 60,
+          "fire": 4,
+          "genotype/species selection": 1,
+          "intercropping/species mixtures": 44,
+          "mineral fertilization": 747,
+          "organic farming": 49,
+          "other": 128,
+          "residues management": 137,
+          "tillage": 221,
+          "water management": 237
+      }
+  }
+}

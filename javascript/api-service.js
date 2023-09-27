@@ -46,8 +46,8 @@ const getPathname = (baseURL, landUse, sectionParams) => {
 }
 
 // GeoJSON layers on the map
-const getLayer = async (landUseSlug = 'all', mainInterventionSlug, subCategory, subTypeSlug) => {
-  const url = getPathname(BASE_LAYERS_URL, landUseSlug, [mainInterventionSlug, subCategory, subTypeSlug]);
+const getLayer = async (landUseSlug = 'all', mainInterventionSlug, interventionSlug, subTypeSlug) => {
+  const url = getPathname(BASE_LAYERS_URL, landUseSlug, [mainInterventionSlug, interventionSlug, subTypeSlug]);
   return getURL(url);
 }
 
@@ -57,13 +57,15 @@ const getMainInterventionChartData = async (landUseSlug='all', mainInterventionS
   return getURL(url);
 };
 
+const PAGE_SIZE = 20;
+
 // Publication data
-const getPublications = async ({ landUse, mainIntervention, subCategory, subType, publicationFilters, search, sort, page }) => {
-  const sectionParams = [mainIntervention, subCategory, subType];
+const getPublications = async ({ landUse, mainIntervention, interventionSlug, subType, publicationFilters, search, sort, page, pageSize=PAGE_SIZE }) => {
+  const sectionParams = [mainIntervention, interventionSlug, subType];
   const pathname = getPathname(BASE_PUBLICATIONS_URL, landUse, sectionParams);
 
   // Filter params are not used now but they will be needed on the backend
-  const filterParams = { ...publicationFilters, search, sort, page };
+  const filterParams = { ...publicationFilters, search, sort, page, pageSize };
   const params = getURLParams(filterParams);
 
   const url = `${pathname}?${params}`;
@@ -108,8 +110,6 @@ const getPublications = async ({ landUse, mainIntervention, subCategory, subType
       return publication;
     });
   };
-
-  const PAGE_SIZE = 20;
 
   const getMetadata = (data) => {
     if(!data) return {};

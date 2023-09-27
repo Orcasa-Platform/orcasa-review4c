@@ -105,7 +105,7 @@ window.addEventListener('load', function () {
       `;
     });
     elements.chartCards.innerHTML = cards.join('');
-    existingData.map(d => createSVGChart(d.slug, d["sub-categories"]));
+    existingData.map(d => createSVGChart(d.slug, d["interventions"]));
   };
 
   const loadMainInterventionCharts = (landUse) => {
@@ -120,7 +120,7 @@ window.addEventListener('load', function () {
   window.loadData = (landUseSlug) => {
     const landUsesData = window.getters.landUses();
     const landUse = landUsesData.find(({ slug }) => slug === landUseSlug);
-    const { name, publications, metaAnalysis, comparisons, slug } = landUse;
+    const { name, publications, metaAnalysis, slug } = landUse;
 
     // Set on state the first land use
     window.mutations.setLandUse(slug);
@@ -131,15 +131,12 @@ window.addEventListener('load', function () {
     // Update the description with the land use publications and meta-analysis
     const publicationsNumber = publications?.toLocaleString() || '-';
     const metaAnalysisNumber = metaAnalysis?.toLocaleString() || '-';
-    const comparisonsNumber = comparisons?.toLocaleString() || '-';
-    if(landUseSlug === 'all') {
+    if (landUseSlug === 'all') {
       elements.landUseIntro.innerHTML = `<span>Scientific Evidence brings impartial evidence from peer-reviewed literature to analyse the effects of land management, land-use change and climate change on Soil Organic Carbon. To date, Scientific Evidence gathers </span>
-      <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analyses,
+      <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analyses and
       <span
         class="font-semibold">
-        <span id="land-use-publications">${publicationsNumber}</span> scientific publications</span> and includes over </span>
-        <span id="land-use-publications">${comparisonsNumber}</span> <span>
-         comparisons of practices to increase soil carbon storage.</span>`
+        <span id="land-use-publications">${publicationsNumber}</span> scientific publications</span> of practices to increase soil carbon storage.</span>`
     } else {
       elements.landUseIntro.innerHTML = `<span>These
         insights come from the analysis of</span><span
@@ -243,7 +240,7 @@ window.addEventListener('load', function () {
     : [
       publicationRequest.landUse,
       publicationRequest.mainIntervention,
-      publicationRequest.subCategory,
+      publicationRequest.intervention,
       publicationRequest.subType
     ].join(' ');
     const metaAnalysisNumber = data.filter(publication => publication.type === 'meta-analysis').length;
@@ -305,7 +302,7 @@ window.addEventListener('load', function () {
     const publicationRequest = {
       landUse: window.getters.landUse(),
       mainIntervention: filter?.mainIntervention,
-      subCategory:  filter?.subCategory || filter?.value,
+      intervention:  filter?.intervention || filter?.value,
       subType: filter?.type === 'sub-type' ? filter?.value : null,
       publicationFilters: window.getters.publicationFilters(),
       search: window.getters.search(),

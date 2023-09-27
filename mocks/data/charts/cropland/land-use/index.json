@@ -2,7 +2,7 @@
     "name": "Land Use Change",
     "slug": "land-use-change",
     "description": "Soil organic carbon (SOC) change (%)",
-    "sub-categories": [
+    "interventions": [
         {
             "title": "Cropland to Forestland",
             "slug": "cropland-to-forestland",

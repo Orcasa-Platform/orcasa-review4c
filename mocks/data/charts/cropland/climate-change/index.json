@@ -2,7 +2,7 @@
     "name": "Climate Change",
     "slug": "climate-change",
     "description": "Soil organic carbon (SOC) change (%)",
-    "sub-categories": [
+    "interventions": [
         {
             "title": "Warming",
             "slug": "warming",

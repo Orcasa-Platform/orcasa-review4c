@@ -2,7 +2,7 @@
     "name": "Management",
     "slug": "management",
     "description": "Soil organic carbon (SOC) change (%)",
-    "sub-categories": [
+    "interventions": [
         {
             "title": "Organic Farming",
             "slug": "organic-farming",
