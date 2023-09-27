@@ -6,7 +6,6 @@ window.addEventListener('load', function () {
     basemap: 'light',
     landUse: 'cropland',
     landUses: null,
-    interventions: null,
     filter: null,
     publicationsOpen: false,
     publicationDetailOpen: false,
@@ -53,9 +52,6 @@ window.addEventListener('load', function () {
     setJournals(journals) {
       state.journals = journals;
     },
-    setInterventions(interventions) {
-      state.interventions = interventions;
-    },
     setFilter(filter) {
       state.filter = filter;
     },
@@ -99,7 +95,6 @@ window.addEventListener('load', function () {
     publicationsSort: () => state.publicationsSort,
     landUse: () => state.landUse,
     landUses: () => state.landUses,
-    interventions: () => state.interventions,
     chartData: () => state.chartData,
     filter: () => state.filter,
     openDropdowns: () => state.openDropdowns,

@@ -85,7 +85,6 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journal, ye
 
 window.addEventListener('load', function () {
   const createCards = (data, landUseName) => {
-    console.log('d', data)
     const existingData = data?.filter(Boolean);
     const cards = existingData.map(({
       name,
@@ -109,16 +108,15 @@ window.addEventListener('load', function () {
     existingData.map(d => createSVGChart(d.slug, d["sub-categories"]));
   };
 
-  const loadInterventions = (landUse) => {
-    const { name: landUseName, interventions, slug: landUseSlug } = landUse;
-    const interventionPromises = interventions.map((interventionSlug) => getIntervention(landUseSlug, interventionSlug));
-    Promise.all(interventionPromises).then((data) => {
-      window.mutations.setInterventions(data);
+  const loadMainInterventionCharts = (landUse) => {
+    const { name: landUseName, mainInterventions, slug: landUseSlug } = landUse;
+    const mainInterventionPromises = mainInterventions.map((mainInterventionSlug) => getMainInterventionChartData(landUseSlug, mainInterventionSlug));
+    Promise.all(mainInterventionPromises).then((data) => {
       createCards(data, landUseName);
     });
   };
 
-  // Load data on first load or when the user clicks on an intervention menu button
+  // Load data on first load or when the user clicks on an main intervention menu button
   window.loadData = (landUseSlug) => {
     const landUsesData = window.getters.landUses();
     const landUse = landUsesData.find(({ slug }) => slug === landUseSlug);
@@ -154,14 +152,11 @@ window.addEventListener('load', function () {
         interventions on SOC.</span>`
     }
 
-    // elements.landUsePublications.innerHTML = publicationsNumber;
-    // elements.landUseMetaAnalysis.innerHTML = metaAnalysisNumber;
-    // elements.landUseText.innerHTML = name.toLowerCase();
     elements.legendText.innerHTML = name;
 
-    // Load interventions
-    if (landUse.interventions) {
-      loadInterventions(landUse);
+    // Load main intervention charts
+    if (landUse.mainInterventions) {
+      loadMainInterventionCharts(landUse);
     } else {
       elements.chartCards.innerHTML = '';
     }
@@ -172,7 +167,7 @@ window.addEventListener('load', function () {
   `<button
     type="button"
     data-slug=${slug}
-    class="btn-filter btn-intervention"
+    class="btn-filter btn-land-use"
     aria-pressed="${index === 0 ? "true" : "false"}"
   >
     <span class="font-semibold">
@@ -185,7 +180,7 @@ window.addEventListener('load', function () {
   `;
 
   // Get data on first load
-  getIntervention().then(data => {
+  getMainInterventionChartData().then(data => {
     if (elements.landUseMenu && data) {
       const landUses = Object.entries(data).map(([key, value], i) => ({ slug: key, ...value, index: i }));
       window.mutations.setLandUses(landUses);
@@ -196,19 +191,19 @@ window.addEventListener('load', function () {
       loadData(landUses[0].slug);
     }
   }).then(() => {
-    // Add event listeners to the intervention buttons
-    const interventionButtons = document.getElementsByClassName('btn-intervention');
+    // Add event listeners to the land use buttons
+    const landUseButtons = document.getElementsByClassName('btn-land-use');
 
-    // INTERVENTION BUTTONS
-    if (interventionButtons) {
-      for (let element of elements.interventionButtons) {
+    // LAND USE BUTTONS
+    if (landUseButtons) {
+      for (let element of elements.landUseButtons) {
         element.addEventListener("click", function() {
           const slug = element.getAttribute('data-slug');
           window.mutations.setLandUse(slug);
           loadData(slug);
 
           element.setAttribute('aria-pressed', 'true');
-          const otherButtons = Array.from(elements.interventionButtons).filter(button => button !== element);
+          const otherButtons = Array.from(elements.landUseButtons).filter(button => button !== element);
           otherButtons.forEach(button => button.setAttribute('aria-pressed', 'false'));
         });
       };
@@ -247,7 +242,7 @@ window.addEventListener('load', function () {
     ? 'all publications'
     : [
       publicationRequest.landUse,
-      publicationRequest.intervention,
+      publicationRequest.mainIntervention,
       publicationRequest.subCategory,
       publicationRequest.subType
     ].join(' ');
@@ -309,7 +304,7 @@ window.addEventListener('load', function () {
     const filter = window.getters.filter();
     const publicationRequest = {
       landUse: window.getters.landUse(),
-      intervention: filter?.intervention,
+      mainIntervention: filter?.mainIntervention,
       subCategory:  filter?.subCategory || filter?.value,
       subType: filter?.type === 'sub-type' ? filter?.value : null,
       publicationFilters: window.getters.publicationFilters(),

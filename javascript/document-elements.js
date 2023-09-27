@@ -13,7 +13,7 @@ const elements = {
   maplibreControls: document.getElementsByClassName('maplibregl-ctrl'),
   attribution: document.getElementById('attribution'),
   attributionContent: document.getElementById('attribution-content'),
-  interventionButtons: document.getElementsByClassName('btn-intervention'),
+  landUseButtons: document.getElementsByClassName('btn-land-use'),
   dropdowns: document.getElementsByClassName('dropdown'),
   publicationButton: document.getElementById('btn-publications'),
   publicationPanel: document.getElementById('publication-panel'),

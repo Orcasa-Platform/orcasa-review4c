@@ -2,9 +2,19 @@
 // Eg. const BASE_PUBLICATIONS_URL = 'https://review4c.org/.../publications';
 
 const BASE_PUBLICATIONS_URL = '/mocks/data/publications';
-const BASE_INTERVENTIONS_URL = '/mocks/data/interventions';
+const BASE_CHARTS_URL = '/mocks/data/charts';
 const BASE_LAYERS_URL = '/mocks/layers';
 const BASE_FILTERS_URL = '/mocks/filters';
+
+const getURLParams = (filterParams) => {
+  const formData = new FormData();
+  Object.entries(filterParams).forEach(([key, value]) => {
+    if (value) {
+      formData.append(key, value);
+    }
+  });
+  return  new URLSearchParams(formData).toString();
+};
 
 const getURL = async (url) => {
   let data;
@@ -28,25 +38,39 @@ const getFilters = async (filter) => {
   return getURL(`${BASE_FILTERS_URL}/${filter}.json`);
 };
 
+const getPathname = (baseURL, landUse, sectionParams) => {
+  const filteredSectionParams = sectionParams.filter(Boolean);
+  const landUsePath = landUse === 'all' ? '' : `${landUse}/`;
+  const sectionPath = filteredSectionParams.length ? `/${filteredSectionParams.join("/")}/` : '';
+  return `${baseURL}/${landUsePath}${sectionPath}index.json`;
+}
+
 // GeoJSON layers on the map
-const getLayer = async (landUseSlug = 'all', interventionSlug, subTypeSlug) => {
-  const url = `${BASE_LAYERS_URL}/${landUseSlug === 'all' ? '' : `${landUseSlug}/`}${interventionSlug ? `${interventionSlug}/` : ''}${subTypeSlug ? `${subTypeSlug}/` : ''}index.json`;
+const getLayer = async (landUseSlug = 'all', mainInterventionSlug, subCategory, subTypeSlug) => {
+  const url = getPathname(BASE_LAYERS_URL, landUseSlug, [mainInterventionSlug, subCategory, subTypeSlug]);
   return getURL(url);
 }
 
-// Intervention data for the charts
-const getIntervention = async (landUseSlug='all', interventionSlug) => {
-  const url = `${BASE_INTERVENTIONS_URL}/${landUseSlug === 'all' ? '' : `${landUseSlug}/`}${interventionSlug ? `${interventionSlug}/` : ''}index.json`;
+// Gets main interventions data for each of the the charts on a land use page
+const getMainInterventionChartData = async (landUseSlug='all', mainInterventionSlug) => {
+  const url = getPathname(BASE_CHARTS_URL, landUseSlug, [mainInterventionSlug]);
   return getURL(url);
 };
 
 // Publication data
-const getPublications = async ({ landUse, intervention, subCategory, subType, publicationFilters, search, sort, page }) => {
-  const url = `${BASE_PUBLICATIONS_URL}/${landUse === 'all' ? '' : landUse}${intervention ? `/${intervention}` : ''}${subCategory ? `/${subCategory}` : ''}${subType ? `/${subType}` : ''}/index.json`;
+const getPublications = async ({ landUse, mainIntervention, subCategory, subType, publicationFilters, search, sort, page }) => {
+  const sectionParams = [mainIntervention, subCategory, subType];
+  const pathname = getPathname(BASE_PUBLICATIONS_URL, landUse, sectionParams);
+
+  // Filter params are not used now but they will be needed on the backend
+  const filterParams = { ...publicationFilters, search, sort, page };
+  const params = getURLParams(filterParams);
+
+  const url = `${pathname}?${params}`;
 
   // This should be done on the backend and the publicationFilters sent as part of the URL
   const applyFilters = (publications) => {
-    let filteredPublications = publications.concat() || [];
+    let filteredPublications = (publications || []).concat();
     if (publicationFilters) {
       filteredPublications = publications.filter(publication => {
         const { country, year, journalId } = publication;

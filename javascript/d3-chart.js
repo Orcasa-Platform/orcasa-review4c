@@ -61,7 +61,7 @@ const click = (_, title, chartSlug, data, isSubcategory) => {
 
   if (currentSelection?.type === 'sub-type' && currentSelection?.value === slug) {
     currentTitle = activeSubcategoryItem.title;
-    window.mutations.setFilter({type: 'sub-category', value: activeSubcategoryItem.slug, intervention: chartSlug, subCategory: null});
+    window.mutations.setFilter({type: 'sub-category', value: activeSubcategoryItem.slug, mainIntervention: chartSlug, subCategory: null});
     // Rerender chart to hide sub-types
     const updatedData = data.map(d => {
       if (d.title === currentTitle) {
@@ -98,7 +98,7 @@ const click = (_, title, chartSlug, data, isSubcategory) => {
     });
   }
 
-  window.mutations.setFilter({ type: isSubcategory ? 'sub-category' : 'sub-type', value: slug, intervention: chartSlug, subCategory: !isSubcategory && data.find((item) => item.active).slug });
+  window.mutations.setFilter({ type: isSubcategory ? 'sub-category' : 'sub-type', value: slug, mainIntervention: chartSlug, subCategory: !isSubcategory && data.find((item) => item.active).slug });
   // Rerender to show sub-types or filter opacity of error bars
   updateChartAndButtons({ slug: chartSlug, title, data: updatedData, resetAllCharts: isSubcategory })
 };

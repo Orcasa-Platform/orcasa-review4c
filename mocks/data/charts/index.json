@@ -9,7 +9,7 @@
     "name": "Cropland",
     "publications": 5632,
     "metaAnalysis": 563,
-    "interventions": [
+    "mainInterventions": [
       "climate-change",
       "land-use",
       "management"
@@ -20,7 +20,7 @@
     "publications": 0,
     "metaAnalysis": 0,
     "default": false,
-    "interventions": [
+    "mainInterventions": [
       "land-use",
       "climate-change",
       "management"
@@ -31,7 +31,7 @@
     "name": "Grassland",
     "publications": 0,
     "metaAnalysis": 0,
-    "interventions": [
+    "mainInterventions": [
       "land-use",
       "management",
       "climate-change"
@@ -41,7 +41,7 @@
     "name": "Wetlands",
     "publications": 0,
     "metaAnalysis": 0,
-    "interventions": [
+    "mainInterventions": [
       "management",
       "land-use",
       "climate-change"
@@ -51,7 +51,7 @@
     "name": "Other Land",
     "publications": 0,
     "metaAnalysis": 0,
-    "interventions": [
+    "mainInterventions": [
       "climate-change",
       "land-use"
     ]
