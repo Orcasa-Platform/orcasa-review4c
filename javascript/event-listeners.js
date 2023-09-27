@@ -209,7 +209,9 @@ window.addEventListener('load', function () {
       }
     });
 
-    options.addEventListener('click', () => {
+    // Click on options and reload data
+    // Use debounce to prevent ghost clicks
+    options.addEventListener('click', debounce(() => {
       const selectedValues = [];
       const selectedLabels = [];
       options.querySelectorAll('input').forEach(input => {
@@ -221,7 +223,6 @@ window.addEventListener('load', function () {
       });
 
       const placeholder = selected.attributes['aria-placeholder'].value;
-
       if (selectedValues.length === 0) {
         selected.textContent = placeholder;
         window.mutations.setPublicationFilters(dropdown.id, null);
@@ -232,7 +233,7 @@ window.addEventListener('load', function () {
 
       // Reload publications
       window.reloadPublications();
-    });
+    }), 0);
   }
 
   // PUBLICATION TYPE CHECKBOXES

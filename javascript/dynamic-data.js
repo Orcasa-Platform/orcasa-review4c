@@ -210,17 +210,18 @@ window.addEventListener('load', function () {
   // Populate filters
   const appendListElement = (parent, value, label, slug) => {
     const listElement = document.createElement('li');
-    listElement.classList.add('flex', 'items-center', 'gap-2', 'p-4',  'max-w-[265px]');
+    listElement.classList.add('max-w-[265px]');
     listElement.innerHTML = `
+    <label for="${slug}-${value}" class="flex items-center gap-2 p-4">
       <input
-      type="checkbox"
-      class="checkbox-light"
-      id="${slug}-${value}"
-      checked
-      value="${value}" />
-      <label for="${slug}-${value}">
+        type="checkbox"
+        class="checkbox-light"
+        id="${slug}-${value}"
+        checked
+        value="${value}"
+      />
       ${label}
-      </label>`;
+    </label>`;
       parent.appendChild(listElement)
   };
 
