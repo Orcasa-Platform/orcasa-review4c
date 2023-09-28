@@ -28,7 +28,7 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
       };
 
       if (!currentSources[layerName]) {
-        // ADD SOURCE
+        // ADD SOURCE. SAME FOR CLUSTERS AND LAYER
         map.addSource(layerName, {
           'type': 'geojson',
           'data': geoJSONContent,
@@ -181,18 +181,17 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
     });
   }
 
-  // Hide all layers except for the selected one
   currentLayers.forEach(layer => {
     const layerId = layer.id;
     const selectedLayerId = `layer-${layerSlug}`;
     if (
-      layerId.startsWith('layer-') && layerId !== selectedLayerId
-      // layerId.startsWith('clusters-layer') && layerId !== `clusters-${selectedLayerId}`
+      layerId.startsWith('layer-') && layerId !== selectedLayerId ||
+      layerId.startsWith('clusters-') && !layerId.startsWith(`clusters-${selectedLayerId}`)
     ) {
       map.setLayoutProperty(layerId, 'visibility', 'none');
     }
 
-    if (layerId === selectedLayerId) {
+    if (layerId === selectedLayerId || layerId === `clusters-${selectedLayerId}`) {
       map.setLayoutProperty(layerId, 'visibility', 'visible');
     }
   });

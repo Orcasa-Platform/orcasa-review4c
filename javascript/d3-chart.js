@@ -39,17 +39,17 @@ const updateChartAndButtons = ({ slug, title, data, resetAllCharts }) => {
   createSVGChart(slug, data);
   updateButtons(title, data)
 }
+const updateMapLayer = (map, chartSlug, interventionSlug, subTypeSlug) => {
+  const currentLandUse = window.getters.landUse();
+   // We can't have a main intervention without an intervention
+  addLayer(map, currentLandUse, interventionSlug ? chartSlug : null, interventionSlug, subTypeSlug);
+};
+
 const click = (_, title, chartSlug, data, isIntervention) => {
   const currentSelection = window.getters.filter();
-
   let currentTitle = title;
   const activeInterventionItem = data.find((item) => item.active);
   const slug = isIntervention ? data.find(d => d.title === title).slug : activeInterventionItem.subTypes.find(st => st.title === title).slug;
-
-  // Update map (TESTING)
-  const interventionSlug = isIntervention ? slug : activeInterventionItem.slug;
-  const subTypeSlug = isIntervention ? null : slug;
-  addLayer(map, 'cropland', chartSlug, interventionSlug, subTypeSlug);
 
   // If the clicked intervention was selected clear the filter and close the sub-types
 
@@ -60,6 +60,7 @@ const click = (_, title, chartSlug, data, isIntervention) => {
       active: false,
     }));
     updateChartAndButtons({ slug: chartSlug, title: null, data: updatedData })
+    updateMapLayer(map, null, null, null);
     return;
   }
 
@@ -81,6 +82,7 @@ const click = (_, title, chartSlug, data, isIntervention) => {
         active: false,
       };
     });
+    updateMapLayer(map, chartSlug, activeInterventionItem.slug, null);
     updateChartAndButtons({ slug: chartSlug, title: currentTitle, data: updatedData })
     return;
   }
@@ -103,9 +105,9 @@ const click = (_, title, chartSlug, data, isIntervention) => {
       };
     });
   }
-
   window.mutations.setFilter({ type: isIntervention ? 'intervention' : 'sub-type', value: slug, mainIntervention: chartSlug, intervention: !isIntervention && data.find((item) => item.active).slug });
   // Rerender to show sub-types or filter opacity of error bars
+  updateMapLayer(map, chartSlug, isIntervention ? slug : activeInterventionItem.slug, isIntervention ? null : slug)
   updateChartAndButtons({ slug: chartSlug, title, data: updatedData, resetAllCharts: isIntervention })
 };
 
