@@ -2,12 +2,12 @@
     {
         "id": 1,
         "title": "Advances in Crop Management Techniques",
-        "journalId": [
+        "journalIds": [
             78,
             16
         ],
         "year": 2018,
-        "country": [
+        "countryIsos": [
             "ES",
             "PT",
             "FR"
@@ -30,12 +30,12 @@
     {
         "id": 2,
         "title": "Emission of CO2 from biochar-amended soils and implications for soil organic carbon",
-        "journalId": [
+        "journalIds": [
             67,
             16
         ],
         "year": 2013,
-        "country": [
+        "countryIsos": [
             "PT"
         ],
         "type": "primary-paper",
@@ -50,11 +50,11 @@
     {
         "id": 3,
         "title": "Sustainable Farming Practices in Developing Countries",
-        "journalId": [
+        "journalIds": [
             4
         ],
         "year": 2015,
-        "country": [
+        "countryIsos": [
             "CA"
         ],
         "type": "meta-analysis",
@@ -75,11 +75,11 @@
     {
         "id": 4,
         "title": "Efficiency of Irrigation Systems in Arid Regions",
-        "journalId": [
+        "journalIds": [
             66
         ],
         "year": 2010,
-        "country": [
+        "countryIsos": [
             "AU",
             "PT"
         ],
@@ -101,11 +101,11 @@
     {
         "id": 5,
         "title": "Biodiversity Conservation in Agricultural Landscapes",
-        "journalId": [
+        "journalIds": [
             4
         ],
         "year": 2005,
-        "country": [
+        "countryIsos": [
             "GB"
         ],
         "type": "primary-paper",
@@ -121,11 +121,11 @@
     {
         "id": 6,
         "title": "Agroforestry for Sustainable Agripractices",
-        "journalId": [
+        "journalIds": [
             66
         ],
         "year": 2019,
-        "country": [
+        "countryIsos": [
             "BR"
         ],
         "type": "primary-paper",
@@ -140,11 +140,11 @@
     {
         "id": 7,
         "title": "Advances in Crop Management Techniques",
-        "journalId": [
+        "journalIds": [
             18
         ],
         "year": 2017,
-        "country": [
+        "countryIsos": [
             "US"
         ],
         "type": "primary-paper",
@@ -159,11 +159,11 @@
     {
         "id": 8,
         "title": "Precision Agriculture and Crop Yield Optimization",
-        "journalId": [
+        "journalIds": [
             75
         ],
         "year": 2013,
-        "country": [
+        "countryIsos": [
             "CA"
         ],
         "type": "primary-paper",
@@ -178,11 +178,11 @@
     {
         "id": 9,
         "title": "Drought Management Strategies in Rice Farming",
-        "journalId": [
+        "journalIds": [
             66
         ],
         "year": 2008,
-        "country": [
+        "countryIsos": [
             "IN"
         ],
         "type": "meta-analysis",
@@ -203,11 +203,11 @@
     {
         "id": 10,
         "title": "Sustainable Agriculture Practices in the US",
-        "journalId": [
+        "journalIds": [
             54
         ],
         "year": 2015,
-        "country": [
+        "countryIsos": [
             "US"
         ],
         "type": "primary-paper",
@@ -222,11 +222,11 @@
     {
         "id": 11,
         "title": "Rice Crop Management in China",
-        "journalId": [
+        "journalIds": [
             54
         ],
         "year": 2012,
-        "country": [
+        "countryIsos": [
             "CN"
         ],
         "type": "meta-analysis",
@@ -247,11 +247,11 @@
     {
         "id": 12,
         "title": "Water Resource Management in Australia",
-        "journalId": [
+        "journalIds": [
             54
         ],
         "year": 2014,
-        "country": [
+        "countryIsos": [
             "AU"
         ],
         "type": "primary-paper",
@@ -266,11 +266,11 @@
     {
         "id": 13,
         "title": "Organic Farming in the UK",
-        "journalId": [
+        "journalIds": [
             66
         ],
         "year": 2011,
-        "country": [
+        "countryIsos": [
             "GB"
         ],
         "type": "primary-paper",
@@ -285,11 +285,11 @@
     {
         "id": 14,
         "title": "Coffee Agroforestry Systems in Brazil",
-        "journalId": [
+        "journalIds": [
             66
         ],
         "year": 2019,
-        "country": [
+        "countryIsos": [
             "BR"
         ],
         "type": "meta-analysis",
@@ -310,11 +310,11 @@
     {
         "id": 15,
         "title": "Soil Health Management in the US",
-        "journalId": [
+        "journalIds": [
             7
         ],
         "year": 2016,
-        "country": [
+        "countryIsos": [
             "US"
         ],
         "type": "primary-paper",
@@ -329,11 +329,11 @@
     {
         "id": 16,
         "title": "Pesticide Usage in Canadian Agriculture",
-        "journalId": [
+        "journalIds": [
             7
         ],
         "year": 2017,
-        "country": [
+        "countryIsos": [
             "CA"
         ],
         "type": "primary-paper",
@@ -346,12 +346,12 @@
     {
         "id": 17,
         "title": "Wheat Crop Management in CA",
-        "journalId": [
+        "journalIds": [
             66,
             67
         ],
         "year": 2018,
-        "country": [
+        "countryIsos": [
             "US"
         ],
         "type": "primary-paper",
@@ -366,11 +366,11 @@
     {
         "id": 18,
         "title": "Rice Farming Techniques in JP",
-        "journalId": [
+        "journalIds": [
             66
         ],
         "year": 2016,
-        "country": [
+        "countryIsos": [
             "JP",
             "CA"
         ],
@@ -386,11 +386,11 @@
     {
         "id": 19,
         "title": "Irrigation Management in SA",
-        "journalId": [
+        "journalIds": [
             66
         ],
         "year": 2013,
-        "country": [
+        "countryIsos": [
             "SA"
         ],
         "type": "primary-paper",
@@ -406,11 +406,11 @@
     {
         "id": 20,
         "title": "Organic Farming in DE",
-        "journalId": [
+        "journalIds": [
             66
         ],
         "year": 2014,
-        "country": [
+        "countryIsos": [
             "DE"
         ],
         "type": "primary-paper",
@@ -425,11 +425,11 @@
     {
         "id": 21,
         "title": "Coffee Agroforestry in CO",
-        "journalId": [
+        "journalIds": [
             66
         ],
         "year": 2020,
-        "country": [
+        "countryIsos": [
             "CO"
         ],
         "type": "meta-analysis",
@@ -450,11 +450,11 @@
     {
         "id": 22,
         "title": "Maize Crop Management in CA",
-        "journalId": [
+        "journalIds": [
             66
         ],
         "year": 2017,
-        "country": [
+        "countryIsos": [
             "IN"
         ],
         "type": "primary-paper",
@@ -469,11 +469,11 @@
     {
         "id": 23,
         "title": "Pesticide Usage in FR Agriculture",
-        "journalId": [
+        "journalIds": [
             66
         ],
         "year": 2018,
-        "country": [
+        "countryIsos": [
             "FR"
         ],
         "type": "meta-analysis",
@@ -494,11 +494,11 @@
     {
         "id": 24,
         "title": "Rice Farming in IN",
-        "journalId": [
+        "journalIds": [
             66
         ],
         "year": 2012,
-        "country": [
+        "countryIsos": [
             "IN"
         ],
         "type": "primary-paper",

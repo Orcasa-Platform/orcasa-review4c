@@ -324,7 +324,6 @@ window.addEventListener('load', function () {
     const { years: availableYearObjects, countries: availableCountries, journals: availableJournals } = metadata;
     const countryList = elements.countryDropdown.querySelector('ul');
     countryList.innerHTML = '';
-
     const filteredCountries = availableCountries ? countries.filter(c => availableCountries.includes(c.iso_2digit)) : [];
     filteredCountries.forEach(country => {
       const { iso_2digit: iso, cntry_name: label } = country;
@@ -336,11 +335,9 @@ window.addEventListener('load', function () {
 
     const journalList = elements.journalDropdown.querySelector('ul');
     journalList.innerHTML = '';
-    console.log(availableJournals)
     const filteredJournals = availableJournals ? journals.filter(j => availableJournals.includes(j.journal_id)) : [];
     filteredJournals.forEach(journal => {
       const { journal_id: value, journal_name: label } = journal;
-      console.log('hournal list', journal)
       appendListElement(journalList, value, capitalize(label), 'journal');
     });
 
