@@ -222,9 +222,11 @@ window.addEventListener('load', function () {
       }
     });
 
-    // Click on options and reload data
-    // Use debounce to prevent ghost clicks
-    options.addEventListener('click', debounce(() => {
+    options.addEventListener('change', ({ originalTarget }) => {
+      if (originalTarget.type !== 'checkbox') {
+        return;
+      }
+
       const selectedValues = [];
       const selectedLabels = [];
       options.querySelectorAll('input').forEach(input => {
@@ -246,7 +248,7 @@ window.addEventListener('load', function () {
 
       // Reload publications
       window.reloadPublications();
-    }), 0);
+    });
 
     selectAllButton.addEventListener('click', () => {
       const inputs = options.querySelectorAll('input');
@@ -260,6 +262,7 @@ window.addEventListener('load', function () {
 
       const inputValues = [...inputs].map(input => input.value);
       window.mutations.setPublicationFilters(dropdown.id, inputValues);
+      window.reloadPublications();
     });
 
     clearButton.addEventListener('click', () => {
@@ -270,6 +273,7 @@ window.addEventListener('load', function () {
       const placeholder = selected.attributes['aria-placeholder'].value;
       selected.textContent = placeholder;
       window.mutations.setPublicationFilters(dropdown.id, []);
+      window.reloadPublications();
     });
 
     searchInput.addEventListener('input', ({ target: { value: keyword } }) => {
@@ -286,7 +290,11 @@ window.addEventListener('load', function () {
   }
 
   // PUBLICATION TYPE CHECKBOXES
-  elements.typePublication.addEventListener('click', () => {
+  elements.typePublication.addEventListener('click', ({ originalTarget }) => {
+    if (originalTarget.type !== 'checkbox') {
+      return;
+    }
+
     const selectedValues = [];
 
     elements.typePublication.querySelectorAll('input').forEach(input => {
