@@ -62,19 +62,26 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
               0, 0.4,
               50000, 1.6
             ],
+            // We need to allow overlap to avoid dissapearing clusters
+            'text-allow-overlap' : true,
+            'text-ignore-placement': true,
+            'icon-allow-overlap': true,
+            'icon-ignore-placement': true,
           },
           'paint': {
             'text-color': '#fff',
             'icon-color': [
               'step',
               ['get', 'number_primary_studies'],
-              '#6EE7B7',
-              10,
-              '#14B8A6',
-              50,
-              '#288F86',
+              '#B0F2BC',
               100,
-              '#1E6B65'
+              '#89E8AC',
+              500,
+              '#67DBA5',
+              1000,
+              '#4CC8A3',
+              5000,
+              '#2BB3A7'
             ]
           }
         });
@@ -105,17 +112,7 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
           },
           'paint': {
             'text-color': '#fff',
-            'icon-color': [
-              'step',
-              ['get', 'number_primary_studies'],
-              '#6EE7B7',
-              10,
-              '#14B8A6',
-              50,
-              '#288F86',
-              100,
-              '#1E6B65'
-            ]
+            'icon-color':"#3C4363"
           }
         });
 
