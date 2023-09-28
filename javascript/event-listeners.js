@@ -171,7 +171,8 @@ window.addEventListener('load', function () {
 
   for (let dropdown of elements.dropdowns) {
     const button = dropdown.querySelector('.btn-dropdown');
-    const buttonIcon = button.querySelector('svg');
+    const searchInput = dropdown.querySelector('.search');
+    const buttonIcon = dropdown.querySelector('svg');
     const options = dropdown.querySelector('.dropdown-options');
     const selected = dropdown.querySelector('.dropdown-selected');
     const selectAllButton = dropdown.querySelector('.btn-select-all');
@@ -179,6 +180,16 @@ window.addEventListener('load', function () {
 
 
     const toggleDropdown = () => {
+      button.classList.toggle('hidden');
+
+      searchInput.classList.toggle('hidden');
+      if (searchInput.classList.contains('hidden')) {
+        searchInput.value = '';
+        options.querySelectorAll('li').forEach(option => option.classList.remove('hidden'));
+      } else {
+        searchInput.focus();
+      }
+
       options.classList.toggle('min-h-[190px]');
       options.classList.toggle('hidden');
       buttonIcon.classList.toggle('rotate-180');
@@ -259,6 +270,18 @@ window.addEventListener('load', function () {
       const placeholder = selected.attributes['aria-placeholder'].value;
       selected.textContent = placeholder;
       window.mutations.setPublicationFilters(dropdown.id, []);
+    });
+
+    searchInput.addEventListener('input', ({ target: { value: keyword } }) => {
+      options.querySelectorAll('li').forEach(option => {
+        const { textContent } = option.querySelector('label');
+
+        if (keyword.length === 0 || textContent.toLowerCase().includes(keyword.toLowerCase())) {
+          option.classList.remove('hidden');
+        } else {
+          option.classList.add('hidden');
+        }
+      })
     });
   }
 
