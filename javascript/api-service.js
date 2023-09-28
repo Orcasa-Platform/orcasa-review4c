@@ -77,9 +77,9 @@ const getPublications = async ({ landUse, mainIntervention, intervention, subTyp
     if (publicationFilters) {
       filteredPublications = publications.filter(publication => {
         const { country, year, journalId } = publication;
-        const countryFilter = publicationFilters.country?.length ? publicationFilters.country.includes(country) : true;
+        const countryFilter = publicationFilters.country?.length ? publicationFilters.country.some(iso => country.includes(iso)) : true;
         const yearFilter = publicationFilters.year?.length ? publicationFilters.year.includes(String(year)) : true;
-        const journalFilter = publicationFilters.journal?.length ? publicationFilters.journal.includes(String(journalId)) : true;
+        const journalFilter = publicationFilters.journal?.length ? publicationFilters.journal.some(jID => journalId.map(String).includes(jID)) : true;
         const typePublicationFilter = publicationFilters['type-publication']?.length ? publicationFilters['type-publication'].includes(publication.type) : true;
         return countryFilter && yearFilter && journalFilter && typePublicationFilter;
       });
@@ -103,11 +103,16 @@ const getPublications = async ({ landUse, mainIntervention, intervention, subTyp
     const countries = window.getters.countries();
     const journals = window.getters.journals();
     return publications.map(publication => {
-      const country = countries.find(country => country.iso_2digit === publication.country);
-      const journal = journals.find(journal => journal.journal_id === publication.journalId);
-      publication.iso = publication.country;
-      publication.country = country?.cntry_name;
-      publication.journal = capitalize(journal?.journal_name);
+      const countryNames = publication.country.map(iso => countries.find(country => country.iso_2digit === iso)?.cntry_name);
+      const journalNames = publication.journalId.map(jId => {
+        const journal = journals.find(journal => journal.journal_id === jId)
+        const journalName = journal?.journal_name;
+        return journalName && capitalize(journalName);
+      });
+
+      publication.countries = countryNames;
+      publication.journals = journalNames;
+
       return publication;
     });
   };
@@ -125,8 +130,8 @@ const getPublications = async ({ landUse, mainIntervention, intervention, subTyp
       totalMetaAnalysis: data.filter(publication => publication.type === 'meta-analysis').length || 0,
       years: yearCounts,
       pages: Math.ceil(data.length / PAGE_SIZE),
-      countries: uniq(data.map(d => d.country)),
-      journals: uniq(data.map(d => d.journalId)),
+      countries: uniq(data.map(d => d.country).flat()),
+      journals: uniq(data.map(d => d.journalId).flat()),
     };
   };
 
@@ -141,7 +146,6 @@ const getPublications = async ({ landUse, mainIntervention, intervention, subTyp
     const filteredData = applyFilters(data);
     const parsedData = parseData(filteredData);
     const paginatedData = paginate(parsedData);
-
     return { data: paginatedData, metadata };
   });
 }

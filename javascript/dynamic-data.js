@@ -46,7 +46,7 @@ const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
   </div>`);
 }
 
-const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journal, year, country, globalQuality, id, title, authors, description, source, url, metaAnalysis, 'methodology-and-attributes': methodologyAndAttributes }) => `
+const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, year, countries, globalQuality, id, title, authors, description, source, url, metaAnalysis, 'methodology-and-attributes': methodologyAndAttributes }) => `
 <div class="flex flex-col ${isDetail ? '' : `p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} mb-2`} space-y-4">
   ${!isDetail && isMetaAnalysis ? `<div class="flex">
     <div class="px-2 text-white text-base px-2 bg-teal-500 rounded border border-teal-500">
@@ -62,7 +62,7 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journal, ye
     <div class="h-6 gap-4 flex">
         ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
           <i data-lucide="newspaper" class="w-6 h-6 relative"></i>
-          <div class="text-slate-500 text-base">${journal}</div>
+          <div class="text-slate-500 text-base">${journals.join(', ')}</div>
         </div>`: ''}
         <div class="justify-start items-center gap-2 flex">
           <i data-lucide="calendar" class="w-6 h-6 relative"></i>
@@ -70,7 +70,7 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journal, ye
         </div>
         ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
           <i data-lucide="globe-2" class="w-6 h-6 relative"></i>
-          <div class="text-slate-500 text-base">${country}</div>
+          <div class="text-slate-500 text-base">${countries.join(', ')}</div>
         </div>` : ''}
         ${isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
         <i data-lucide="award" class="w-6 h-6 relative"></i>
@@ -336,9 +336,11 @@ window.addEventListener('load', function () {
 
     const journalList = elements.journalDropdown.querySelector('ul');
     journalList.innerHTML = '';
+    console.log(availableJournals)
     const filteredJournals = availableJournals ? journals.filter(j => availableJournals.includes(j.journal_id)) : [];
     filteredJournals.forEach(journal => {
       const { journal_id: value, journal_name: label } = journal;
+      console.log('hournal list', journal)
       appendListElement(journalList, value, capitalize(label), 'journal');
     });
 
