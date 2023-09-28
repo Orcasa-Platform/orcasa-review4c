@@ -227,7 +227,7 @@ window.addEventListener('load', function () {
       const placeholder = selected.attributes['aria-placeholder'].value;
       if (selectedValues.length === 0) {
         selected.textContent = placeholder;
-        window.mutations.setPublicationFilters(dropdown.id, null);
+        window.mutations.setPublicationFilters(dropdown.id, []);
       } else {
         selected.textContent = `${placeholder} (${selectedLabels.length})`;
         window.mutations.setPublicationFilters(dropdown.id, selectedValues);
@@ -258,7 +258,7 @@ window.addEventListener('load', function () {
 
       const placeholder = selected.attributes['aria-placeholder'].value;
       selected.textContent = placeholder;
-      window.mutations.setPublicationFilters(dropdown.id, null);
+      window.mutations.setPublicationFilters(dropdown.id, []);
     });
   }
 

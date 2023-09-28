@@ -76,11 +76,24 @@ const getPublications = async ({ landUse, mainIntervention, interventionSlug, su
     if (publicationFilters) {
       filteredPublications = publications.filter(publication => {
         const { country, year, journalId } = publication;
-        const countryFilter = publicationFilters.country?.length ? publicationFilters.country.includes(country) : true;
-        const yearFilter = publicationFilters.year?.length ? publicationFilters.year.includes(String(year)) : true;
-        const journalFilter = publicationFilters.journal?.length ? publicationFilters.journal.includes(String(journalId)) : true;
-        const typePublicationFilter = publicationFilters['type-publication']?.length ? publicationFilters['type-publication'].includes(publication.type) : true;
-        return countryFilter && yearFilter && journalFilter && typePublicationFilter;
+
+        if (publicationFilters.country && !publicationFilters.country.includes(country)) {
+          return false;
+        }
+
+        if (publicationFilters.year && !publicationFilters.year.includes(String(year))) {
+          return false;
+        }
+
+        if (publicationFilters.journal && !publicationFilters.journal.includes(String(journalId))) {
+          return false;
+        }
+
+        if (publicationFilters['type-publication'] && !publicationFilters['type-publication'].includes(publication.type)) {
+          return false;
+        }
+
+        return true;
       });
     }
 
