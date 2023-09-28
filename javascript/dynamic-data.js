@@ -132,11 +132,34 @@ window.addEventListener('load', function () {
     const publicationsNumber = publications?.toLocaleString() || '-';
     const metaAnalysisNumber = metaAnalysis?.toLocaleString() || '-';
     if (landUseSlug === 'all') {
-      elements.landUseIntro.innerHTML = `<span>Scientific Evidence brings impartial evidence from peer-reviewed literature to analyse the effects of land management, land-use change and climate change on Soil Organic Carbon. To date, Scientific Evidence gathers </span>
-      <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analyses and
-      <span
-        class="font-semibold">
-        <span id="land-use-publications">${publicationsNumber}</span> scientific publications</span> of practices to increase soil carbon storage.</span>`
+      elements.landUseIntro.innerHTML = `<div class="space-y-6">
+        <div class="text-slate-700 text-[32px] leading-[48px]">
+          <span>Scientific Evidence brings impartial evidence from </span>
+          <span class="font-semibold">peer-reviewed literature.</span>
+        </div>
+        <div class="text-slate-700 text-2xl leading-10">
+          We analyse the effects of land management, land-use change and climate change on Soil Organic Carbon. To date, Scientific Evidence gathers <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analyses and ${publicationsNumber} scientific publications.
+        </div>
+        <div class="flex pt-6 pb-10 justify-evenly items-center gap-4">
+          <div class="flex items-center gap-4">
+            <i class="w-20 h-20 stroke-teal-500 stroke-1" data-lucide="file-stack"></i>
+            <div class="flex-col justify-center flex">
+                <div class="text-slate-700 text-[32px] font-semibold leading-[48px]">${publicationsNumber}</div>
+                <div class="text-slate-700 text-base">Scientific publications</div>
+            </div>
+          </div>
+          <img class="w-[58px]" src="/assets/icons/arrow-all.svg" alt="arrow" class="w-8 h-8" />
+          <div class="flex items-center gap-2">
+            <i class="w-20 h-20 stroke-teal-500 stroke-1" data-lucide="file-bar-chart-2"></i>
+            <div class="flex-col justify-center flex">
+                <div class="text-slate-700 text-[32px] font-semibold leading-[48px]">${metaAnalysisNumber}</div>
+                <div class="text-slate-700 text-base">Meta-analyses</div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+      lucide.createIcons();
+
     } else {
       elements.landUseIntro.innerHTML = `<span>These
         insights come from the analysis of</span><span
@@ -167,7 +190,7 @@ window.addEventListener('load', function () {
     class="btn-filter btn-land-use"
     aria-pressed="${index === 0 ? "true" : "false"}"
   >
-    <span class="font-semibold">
+    <span>
       ${name}
     </span>
     <span class="text-xs">
