@@ -114,5 +114,51 @@
           "tillage": 221,
           "water management": 237
       }
-  }
+  },
+  "IE": {
+    "number_primary_studies": 1083,
+    "geom": "[{\"type\":\"Feature\",\"id\":168,\"geometry\":{\"type\":\"Point\",\"coordinates\":[-8.1515688843334,53.1770621494734]},\"properties\":{\"long_name\":\"Ireland\"}}]",
+    "effect_outcomes": {
+        "agroforestry": 31,
+        "amendments non-pyrogenic": 17,
+        "amendments non-pyrogenic ; mineral fertilization": 66,
+        "amendments non-pyrogenic ; residues management": 5,
+        "amendments pyrogenic": 37,
+        "biotic disturbance": 6,
+        "climate change : co2 ; mineral fertilization": 16,
+        "climate change : drought/rainfall ; mineral fertilization": 12,
+        "climate change : warming ; mineral fertilization": 16,
+        "co2 enrichment": 20,
+        "combination of climatic factors": 58,
+        "cover crops": 14,
+        "cropland -> forest land": 7,
+        "cropland -> grassland": 3,
+        "cropland -> other land": 2,
+        "cropland -> various land uses": 32,
+        "crop rotation": 5,
+        "drought/rainfall reduction": 88,
+        "energy crop": 40,
+        "forest degradation": 1,
+        "forest harvesting": 10,
+        "forest land -> cropland": 53,
+        "forest land -> grassland": 3,
+        "genotype/species selection": 4,
+        "grassland -> cropland": 80,
+        "grassland -> forest land": 7,
+        "grassland -> other land": 2,
+        "intercropping/species mixtures": 24,
+        "liming": 41,
+        "mineral fertilization": 97,
+        "organic farming": 5,
+        "other": 24,
+        "other land -> cropland": 11,
+        "other land -> forest land": 12,
+        "residues management": 105,
+        "tillage": 31,
+        "various land uses -> cropland": 47,
+        "various land uses -> various land uses": 1,
+        "warming experiments": 8,
+        "water management": 42
+    }
+}
 }

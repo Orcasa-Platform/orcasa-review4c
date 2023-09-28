@@ -1,0 +1,135 @@
+[
+    {
+        "id": 17,
+        "title": "Wheat Crop Management in CA",
+        "journalId": 66,
+        "year": 2018,
+        "country": "CA",
+        "type": "primary-paper",
+        "authors": "Garcia, Maria; Smith, Sarah; Davis, James",
+        "url": "http://example.com/wheat-crop-management-CA",
+        "source": "Google scholar",
+        "description": "Investigating wheat crop management practices in Canada and their impact on yield.",
+        "metaAnalysis": [
+            1
+        ]
+    },
+    {
+        "id": 18,
+        "title": "Rice Farming Techniques in JP",
+        "journalId": 66,
+        "year": 2016,
+        "country": "JP",
+        "type": "primary-paper",
+        "authors": "Tanaka, Yuji; Sato, Hiroshi; Yamada, Keiko",
+        "url": "http://example.com/rice-farming-techniques-JP",
+        "source": "Google scholar",
+        "description": "Exploring rice farming techniques and sustainability in Japan.",
+        "metaAnalysis": [
+            21
+        ]
+    },
+    {
+        "id": 19,
+        "title": "Irrigation Management in SA",
+        "journalId": 66,
+        "year": 2013,
+        "country": "SA",
+        "type": "primary-paper",
+        "authors": "Ahmed, Khalid; Ali, Hassan; Khan, Nadeem",
+        "url": "http://example.com/irrigation-management-SA",
+        "source": "Google scholar",
+        "description": "Assessing irrigation management practices in Saudi Arabia and their efficiency.",
+        "metaAnalysis": [
+            1,
+            21
+        ]
+    },
+    {
+        "id": 20,
+        "title": "Organic Farming in DE",
+        "journalId": 66,
+        "year": 2014,
+        "country": "DE",
+        "type": "primary-paper",
+        "authors": "Müller, Hans; Fischer, Anna; Weber, Klaus",
+        "url": "http://example.com/organic-farming-DE",
+        "source": "Google scholar",
+        "description": "A study on organic farming practices in Germany and their ecological impact.",
+        "metaAnalysis": [
+            21
+        ]
+    },
+    {
+        "id": 21,
+        "title": "Coffee Agroforestry in CO",
+        "journalId": 66,
+        "year": 2020,
+        "country": "CO",
+        "type": "meta-analysis",
+        "authors": "Lopez, Maria; Rodriguez, Carlos; Perez, Juan",
+        "url": "http://example.com/coffee-agroforestry-CO",
+        "source": "Google scholar",
+        "description": "Evaluating coffee agroforestry systems in Colombia and their sustainability.",
+        "globalQuality": 89,
+        "methodology-and-attributes": {
+            "Publication bias method of analysis": "Regression asymmetry test",
+            "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+            "How many databases were queried to perform the literature search?": "3",
+            "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+            "Is the model clearly described (structure, random effects, ..)?": "yes",
+            "Is a quality appraisal of the primary studies is performed?": "-"
+        }
+    },
+    {
+        "id": 22,
+        "title": "Maize Crop Management in CA",
+        "journalId": 66,
+        "year": 2017,
+        "country": "CA",
+        "type": "primary-paper",
+        "authors": "Brown, John; Smith, Emily; Wilson, David",
+        "url": "http://example.com/maize-crop-management-CA",
+        "source": "Google scholar",
+        "description": "A study on maize crop management practices and their effects on yield in Canada.",
+        "metaAnalysis": [
+            1
+        ]
+    },
+    {
+        "id": 23,
+        "title": "Pesticide Usage in FR Agriculture",
+        "journalId": 66,
+        "year": 2018,
+        "country": "FR",
+        "type": "meta-analysis",
+        "globalQuality": 18,
+        "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
+        "url": "http://example.com/pesticide-usage-FR",
+        "source": "Google scholar",
+        "description": "Analyzing pesticide usage trends in French agriculture and their environmental impact.",
+        "methodology-and-attributes": {
+            "Publication bias method of analysis": "Forest plot",
+            "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+            "How many databases were queried to perform the literature search?": "3",
+            "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+            "Is the model clearly described (structure, random effects, ..)?": "yes",
+            "Is a quality appraisal of the primary studies is performed?": "-"
+        }
+    },
+    {
+        "id": 24,
+        "title": "Rice Farming in IN",
+        "journalId": 66,
+        "year": 2012,
+        "country": "IN",
+        "type": "primary-paper",
+        "authors": "Kumar, Ravi; Sharma, Priya; Singh, Amar",
+        "url": "http://example.com/rice-farming-IN",
+        "source": "Google scholar",
+        "description": "Assessment of rice farming practices and water management in India.",
+        "metaAnalysis": [
+            21
+        ]
+    }
+]
