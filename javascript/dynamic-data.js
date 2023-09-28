@@ -322,6 +322,12 @@ window.addEventListener('load', function () {
         elements.publicationsContainer.innerHTML = '';
       }
 
+      if (data.length === 0) {
+        elements.publicationsContainer.innerHTML = `
+          <p class="text-center font-semibold text-slate-500">No results based on your search criteria</p>
+        `;
+      }
+
       // Show publications
       data.forEach(publication => {
         elements.publicationsContainer.appendChild(createPublicationCard(publication));
