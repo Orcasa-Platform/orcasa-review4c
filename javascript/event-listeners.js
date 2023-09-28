@@ -174,6 +174,8 @@ window.addEventListener('load', function () {
     const buttonIcon = button.querySelector('svg');
     const options = dropdown.querySelector('.dropdown-options');
     const selected = dropdown.querySelector('.dropdown-selected');
+    const selectAllButton = dropdown.querySelector('.btn-select-all');
+    const clearButton = dropdown.querySelector('.btn-clear');
 
 
     const toggleDropdown = () => {
@@ -234,6 +236,30 @@ window.addEventListener('load', function () {
       // Reload publications
       window.reloadPublications();
     }), 0);
+
+    selectAllButton.addEventListener('click', () => {
+      const inputs = options.querySelectorAll('input');
+
+      inputs.forEach(input => {
+        input.checked = true;
+      });
+
+      const placeholder = selected.attributes['aria-placeholder'].value;
+      selected.textContent = `${placeholder} (${inputs.length})`;
+
+      const inputValues = [...inputs].map(input => input.value);
+      window.mutations.setPublicationFilters(dropdown.id, inputValues);
+    });
+
+    clearButton.addEventListener('click', () => {
+      options.querySelectorAll('input').forEach(input => {
+        input.checked = false;
+      });
+
+      const placeholder = selected.attributes['aria-placeholder'].value;
+      selected.textContent = placeholder;
+      window.mutations.setPublicationFilters(dropdown.id, null);
+    });
   }
 
   // PUBLICATION TYPE CHECKBOXES

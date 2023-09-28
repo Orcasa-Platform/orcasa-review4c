@@ -55,6 +55,10 @@
           @apply inline-block ml-2 align-middle transition-all rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none;
         }
 
+        .btn-link {
+          @apply p-3 font-semibold text-mod-sc-ev transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:text-gray-300 disabled:pointer-events-none hover:text-mod-sc-ev-dark focus-visible:outline-mod-sc-ev;
+        }
+
         .checkbox {
           @apply w-4 h-4 justify-center items-center flex appearance-none rounded border border-slate-700 bg-slate-700 checked:bg-slate-700 checked:border-slate-700 text-mod-sc-ev hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-600;
         }
@@ -254,6 +258,10 @@
                         </button>
                         <fieldset
                           class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                          <div class="flex px-1">
+                            <button type="button" class="btn-select-all btn-link">Select all</button>
+                            <button type="button" class="btn-clear btn-link">Clear</button>
+                          </div>
                           <ul class="space-y-2 flex flex-col">
                           </ul>
                         </fieldset>
@@ -278,6 +286,10 @@
                         </button>
                         <fieldset
                           class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                          <div class="flex px-1">
+                            <button type="button" class="btn-select-all btn-link">Select all</button>
+                            <button type="button" class="btn-clear btn-link">Clear</button>
+                          </div>
                           <ul class="space-y-2 flex flex-col">
                           </ul>
                         </fieldset>
@@ -302,6 +314,10 @@
                         </button>
                         <fieldset
                           class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                          <div class="flex px-1">
+                            <button type="button" class="btn-select-all btn-link">Select all</button>
+                            <button type="button" class="btn-clear btn-link">Clear</button>
+                          </div>
                           <ul class="space-y-2 flex flex-col">
                           </ul>
                         </fieldset>
