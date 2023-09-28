@@ -235,7 +235,8 @@ window.addEventListener('load', function () {
     return card;
   };
 
-  const updateNumbers = (data, publicationRequest) => {
+  const updateNumbers = (metadata, publicationRequest) => {
+    const { totalPublications, totalMetaAnalysis } = metadata;
     const selection = publicationRequest.landUse === 'all'
     ? 'all publications'
     : [
@@ -244,9 +245,9 @@ window.addEventListener('load', function () {
       publicationRequest.intervention,
       publicationRequest.subType
     ].join(' ');
-    const metaAnalysisNumber = data.filter(publication => publication.type === 'meta-analysis').length;
-    elements.metaAnalysisNumber.innerHTML = metaAnalysisNumber;
-    elements.publicationsNumber.innerHTML = data.length - metaAnalysisNumber;
+
+    elements.metaAnalysisNumber.innerHTML = totalMetaAnalysis;
+    elements.publicationsNumber.innerHTML = totalPublications;
     elements.filtersSelectionText.innerHTML = selection;
   };
 
@@ -345,9 +346,8 @@ window.addEventListener('load', function () {
         populateYearChart(metadata.years);
         populateFilters(metadata);
       }
-
       if(!addNewPage) {
-        updateNumbers(data, publicationRequest);
+        updateNumbers(metadata, publicationRequest);
       }
 
       // Update lucide icons
