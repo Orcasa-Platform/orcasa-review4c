@@ -40,8 +40,8 @@ const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
       <span class="text-slate-500 text-sm leading-7 px-6 py-4">${renderValue(value)}</span>
     </div>`;
   }).join('');
-  return (`<div class="flex flex-col gap-4">
-    <div class="text-slate-700 text-2xl leading-10">Methodology and attributes</div>
+  return (`<div class="flex flex-col gap-4 border-t border-gray-300 border-dashed">
+    <div class="text-slate-700 text-2xl leading-10 pt-4">Methodology and attributes</div>
     ${attributes}
   </div>`);
 }
