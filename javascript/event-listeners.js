@@ -316,6 +316,33 @@ window.addEventListener('load', function () {
     }, 250)
   );
 
+  // RESET FILTERS
+  elements.resetFiltersButton.addEventListener('click', () => {
+    window.mutations.setPublicationFilters('type-publication', ['meta-analysis', 'primary-paper']);
+    elements.typePublication.querySelectorAll('input').forEach(input => input.checked = true);
+
+    for (let dropdown of elements.dropdowns) {
+      const selected = dropdown.querySelector('.dropdown-selected');
+      const options = dropdown.querySelector('.dropdown-options');
+      const inputs = options.querySelectorAll('input');
+
+      inputs.forEach(input => {
+        input.checked = true;
+      });
+
+      const placeholder = selected.attributes['aria-placeholder'].value;
+      selected.textContent = `${placeholder} (${inputs.length})`;
+
+      const inputValues = [...inputs].map(input => input.value);
+      window.mutations.setPublicationFilters(dropdown.id, inputValues);
+    }
+
+    window.mutations.setSearch('');
+    elements.search.querySelector('input').value = '';
+
+    window.reloadPublications();
+  });
+
   // PUBLICATION DETAIL PANEL
 
   // Hide the modal when the close button is clicked

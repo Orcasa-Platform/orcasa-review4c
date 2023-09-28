@@ -41,4 +41,5 @@ const elements = {
   typePublication: document.getElementById('type-publication'),
   yearRange: document.getElementById('year-range'),
   search: document.getElementById('search'),
+  resetFiltersButton: document.getElementById('reset-filters'),
 }
