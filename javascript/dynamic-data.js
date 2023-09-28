@@ -246,8 +246,8 @@ window.addEventListener('load', function () {
       publicationRequest.subType
     ].join(' ');
 
-    elements.metaAnalysisNumber.innerHTML = totalMetaAnalysis;
-    elements.publicationsNumber.innerHTML = totalPublications;
+    elements.metaAnalysisNumber.innerHTML = totalMetaAnalysis || 0;
+    elements.publicationsNumber.innerHTML = totalPublications || 0;
     elements.filtersSelectionText.innerHTML = selection;
   };
 
@@ -268,7 +268,8 @@ window.addEventListener('load', function () {
     const { years: availableYearObjects, countries: availableCountries, journals: availableJournals } = metadata;
     const countryList = elements.countryDropdown.querySelector('ul');
     countryList.innerHTML = '';
-    const filteredCountries = countries.filter(c => availableCountries.includes(c.iso_2digit))
+
+    const filteredCountries = availableCountries ? countries.filter(c => availableCountries.includes(c.iso_2digit)) : [];
     filteredCountries.forEach(country => {
       const { iso_2digit: iso, cntry_name: label } = country;
       appendListElement(countryList, iso, label, 'year');
@@ -279,7 +280,7 @@ window.addEventListener('load', function () {
 
     const journalList = elements.journalDropdown.querySelector('ul');
     journalList.innerHTML = '';
-    const filteredJournals = journals.filter(j => availableJournals.includes(j.journal_id));
+    const filteredJournals = availableJournals ? journals.filter(j => availableJournals.includes(j.journal_id)) : [];
     filteredJournals.forEach(journal => {
       const { journal_id: value, journal_name: label } = journal;
       appendListElement(journalList, value, capitalize(label), 'journal');
@@ -288,7 +289,7 @@ window.addEventListener('load', function () {
     // Start with all journals selected
     window.mutations.setPublicationFilters('journals', filteredJournals.map(c => c.journal_id));
 
-    const availableYears = availableYearObjects && Object.keys(availableYearObjects);
+    const availableYears = availableYearObjects && Object.keys(availableYearObjects) || [];
     const yearList = elements.yearDropdown.querySelector('ul');
     yearList.innerHTML = '';
     availableYears.forEach((year) => {
@@ -346,6 +347,7 @@ window.addEventListener('load', function () {
         populateYearChart(metadata.years);
         populateFilters(metadata);
       }
+
       if(!addNewPage) {
         updateNumbers(metadata, publicationRequest);
       }

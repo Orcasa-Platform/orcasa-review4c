@@ -60,8 +60,8 @@ const getMainInterventionChartData = async (landUseSlug='all', mainInterventionS
 const PAGE_SIZE = 20;
 
 // Publication data
-const getPublications = async ({ landUse, mainIntervention, interventionSlug, subType, publicationFilters, search, sort, page, pageSize=PAGE_SIZE }) => {
-  const sectionParams = [mainIntervention, interventionSlug, subType];
+const getPublications = async ({ landUse, mainIntervention, intervention, subType, publicationFilters, search, sort, page, pageSize=PAGE_SIZE }) => {
+  const sectionParams = [mainIntervention, intervention, subType];
   const pathname = getPathname(BASE_PUBLICATIONS_URL, landUse, sectionParams);
 
   // Filter params are not used now but they will be needed on the backend
@@ -72,6 +72,7 @@ const getPublications = async ({ landUse, mainIntervention, interventionSlug, su
 
   // This should be done on the backend and the publicationFilters sent as part of the URL
   const applyFilters = (publications) => {
+    if(!publications) return [];
     let filteredPublications = (publications || []).concat();
     if (publicationFilters) {
       filteredPublications = publications.filter(publication => {
@@ -120,8 +121,8 @@ const getPublications = async ({ landUse, mainIntervention, interventionSlug, su
       return counts;
     }, {});
     return {
-      totalPublications: data.filter(publication => publication.type === 'primary-paper').length,
-      totalMetaAnalysis: data.filter(publication => publication.type === 'meta-analysis').length,
+      totalPublications: data.filter(publication => publication.type === 'primary-paper').length || 0,
+      totalMetaAnalysis: data.filter(publication => publication.type === 'meta-analysis').length || 0,
       years: yearCounts,
       pages: Math.ceil(data.length / PAGE_SIZE),
       countries: uniq(data.map(d => d.country)),

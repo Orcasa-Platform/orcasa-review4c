@@ -46,8 +46,10 @@ const click = (_, title, chartSlug, data, isIntervention) => {
   const activeInterventionItem = data.find((item) => item.active);
   const slug = isIntervention ? data.find(d => d.title === title).slug : activeInterventionItem.subTypes.find(st => st.title === title).slug;
 
-  // Update map
-  addLayer(map, 'cropland', chartSlug, slug);
+  // Update map (TESTING)
+  const interventionSlug = isIntervention ? slug : activeInterventionItem.slug;
+  const subTypeSlug = isIntervention ? null : slug;
+  addLayer(map, 'cropland', chartSlug, interventionSlug, subTypeSlug);
 
   // If the clicked intervention was selected clear the filter and close the sub-types
 
