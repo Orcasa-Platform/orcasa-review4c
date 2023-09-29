@@ -222,8 +222,8 @@ window.addEventListener('load', function () {
       }
     });
 
-    options.addEventListener('change', ({ originalTarget }) => {
-      if (originalTarget.type !== 'checkbox') {
+    options.addEventListener('change', ({ target }) => {
+      if (target.type !== 'checkbox') {
         return;
       }
 
@@ -290,8 +290,8 @@ window.addEventListener('load', function () {
   }
 
   // PUBLICATION TYPE CHECKBOXES
-  elements.typePublication.addEventListener('click', ({ originalTarget }) => {
-    if (originalTarget.type !== 'checkbox') {
+  elements.typePublication.addEventListener('click', ({ target }) => {
+    if (target.type !== 'checkbox') {
       return;
     }
 
