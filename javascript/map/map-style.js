@@ -12,7 +12,8 @@ const mapStyle = {
     }
   },
   "sprite": "https://demotiles.maplibre.org/styles/osm-bright-gl-style/sprite",
-  "glyphs": "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+  // Fonts generated with https://maplibre.org/font-maker/
+  "glyphs": "/assets/glyphs/{fontstack}/{range}.pbf",
   "layers": [
     {
       "id": "background",

@@ -50,16 +50,17 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
           source: layerName,
           filter: ['has', 'point_count'],
           'layout': {
-            'text-field': '{number_primary_studies}',
-            'text-size': 10,
+            'text-field': ['number-format', ['get', 'number_primary_studies'], { locale: 'en' }],
+            'text-size': 16,
+            'text-font': ['Roboto Slab'],
             'text-offset': [0, -0.5],
             'text-anchor': 'top',
             'icon-image': 'square',
             'icon-size': [
               'interpolate',
-              ['linear'],
+              ['exponential', 2],
               ['get', 'number_primary_studies'],
-              0, 0.4,
+              0, 0.8,
               50000, 1.6
             ],
             // We need to allow overlap to avoid dissapearing clusters
@@ -69,7 +70,7 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
             'icon-ignore-placement': true,
           },
           'paint': {
-            'text-color': '#fff',
+            'text-color': '#3C4363',
             'icon-color': [
               'step',
               ['get', 'number_primary_studies'],
@@ -93,8 +94,9 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
           'type': 'symbol',
           filter: ['!', ['has', 'point_count']],
           'layout': {
-            'text-field': '{number_primary_studies}',
-            'text-size': 10,
+            'text-field': ['number-format', ['get', 'number_primary_studies'], { locale: 'en' }],
+            'text-size': 16,
+            'text-font': ['Roboto Slab'],
             'text-offset': [0, -0.5],
             'text-anchor': 'top',
             'text-allow-overlap': true,
@@ -102,9 +104,9 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
             'icon-image': 'square',
             'icon-size': [
               'interpolate',
-              ['linear'],
+              ['exponential', 2],
               ['get', 'number_primary_studies'],
-              0, 0.4,
+              0, 0.8,
               50000, 1.6
             ],
             'icon-allow-overlap': true,
