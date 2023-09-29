@@ -50,7 +50,7 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
           source: layerName,
           filter: ['has', 'point_count'],
           'layout': {
-            'text-field': '{number_primary_studies}',
+            'text-field': ['number-format', ['get', 'number_primary_studies'], { locale: 'en' }],
             'text-size': 16,
             'text-font': ['Roboto Slab'],
             'text-offset': [0, -0.5],
@@ -94,7 +94,7 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
           'type': 'symbol',
           filter: ['!', ['has', 'point_count']],
           'layout': {
-            'text-field': '{number_primary_studies}',
+            'text-field': ['number-format', ['get', 'number_primary_studies'], { locale: 'en' }],
             'text-size': 16,
             'text-font': ['Roboto Slab'],
             'text-offset': [0, -0.5],
