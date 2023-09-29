@@ -142,6 +142,11 @@ window.addEventListener('load', function () {
   });
 
   // PUBLICATION BUTTON
+  const closeFiltersPanel = () => {
+    window.mutations.setFiltersOpen(false);
+    elements.filtersPanel.classList.add('-translate-x-full', 'hidden');
+    elements.filtersVeil.classList.add('hidden');
+  };
 
   elements.publicationButton.addEventListener("click", function() {
     window.mutations.setPublicationsOpen(true);
@@ -152,25 +157,34 @@ window.addEventListener('load', function () {
   elements.closePublicationPanelButton.addEventListener("click", function() {
     window.mutations.setPublicationsOpen(false);
     elements.publicationPanel.classList.add('-translate-x-full');
+
+    const isFiltersPanelOpen = window.getters.filtersOpen();
+    if (isFiltersPanelOpen) {
+      closeFiltersPanel();
+    }
   });
 
   // FILTERS BUTTON
 
   elements.filtersButton.addEventListener("click", function() {
     const buttonState = window.getters.filtersOpen();
+
     // Toggle filters panel
     if (buttonState) {
-      window.mutations.setFiltersOpen(false);
-      elements.filtersPanel.classList.add('-translate-x-full', 'hidden');
+      closeFiltersPanel();
     } else {
       window.mutations.setFiltersOpen(true);
       elements.filtersPanel.classList.remove('-translate-x-full', 'hidden');
+      elements.filtersVeil.classList.remove('hidden');
     }
   });
 
   elements.closeFiltersPanelButton.addEventListener("click", function() {
-    window.mutations.setFiltersOpen(false);
-    elements.filtersPanel.classList.add('-translate-x-full', 'hidden');
+    closeFiltersPanel();
+  });
+
+  elements.filtersVeil.addEventListener("click", function() {
+    closeFiltersPanel();
   });
 
   // PUBLICATIONS PANEL

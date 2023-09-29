@@ -19,6 +19,7 @@ const elements = {
   publicationPanel: document.getElementById('publication-panel'),
   closePublicationPanelButton: document.getElementById('btn-close-publication-panel'),
   filtersButton: document.getElementById('btn-filters'),
+  filtersVeil: document.getElementById('filters-panel-veil'),
   filtersPanel: document.getElementById('filters-panel'),
   closeFiltersPanelButton: document.getElementById('btn-close-filters-panel'),
   publicationDetailButton: document.getElementsByClassName('btn-publication-detail'),
