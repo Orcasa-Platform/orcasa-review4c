@@ -161,16 +161,16 @@ window.addEventListener('load', function () {
     // Toggle filters panel
     if (buttonState) {
       window.mutations.setFiltersOpen(false);
-      elements.filtersPanel.classList.add('-translate-x-full');
+      elements.filtersPanel.classList.add('-translate-x-full', 'hidden');
     } else {
       window.mutations.setFiltersOpen(true);
-      elements.filtersPanel.classList.remove('-translate-x-full');
+      elements.filtersPanel.classList.remove('-translate-x-full', 'hidden');
     }
   });
 
   elements.closeFiltersPanelButton.addEventListener("click", function() {
     window.mutations.setFiltersOpen(false);
-    elements.filtersPanel.classList.add('-translate-x-full');
+    elements.filtersPanel.classList.add('-translate-x-full', 'hidden');
   });
 
   // PUBLICATIONS PANEL
