@@ -212,7 +212,7 @@ window.addEventListener('load', function () {
     const listElement = document.createElement('li');
     listElement.classList.add('max-w-[265px]');
     listElement.innerHTML = `
-    <label for="${slug}-${value}" class="flex items-center gap-2 px-4 py-2">
+    <label for="${slug}-${value}" class="flex items-center gap-2 p-4">
       <input
         type="checkbox"
         class="checkbox-light"
