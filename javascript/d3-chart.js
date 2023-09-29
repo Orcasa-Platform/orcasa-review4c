@@ -1,5 +1,6 @@
 const primaryColor = "#2BB3A7";
 const red = "#FA545D";
+const gray700 = '#3C4363';
 const gray400 = '#8B90A4';
 const gray100 = '#F0F0F5';
 
@@ -128,19 +129,20 @@ const createSVGChart = (slug, data) => {
     d.active ? [d].concat(d['subTypes']) : d
   ).flat();
 
-  const ITEM_HEIGHT = 60;
-  const HEIGHT_PADDING = 100;
+  const ITEM_HEIGHT = 52;
 
-  const yTickHeight = 44;
-  const yTickWidth = 120;
-
-  const activeDataHeight = !!activeData ? activeData.subTypes?.length * ITEM_HEIGHT : 0;
-  const heightValue = (data.length) * ITEM_HEIGHT + activeDataHeight + HEIGHT_PADDING;
-  const widthValue = 300;
+  const heightValue = (data.length + (activeData?.subTypes?.length ?? 0)) * ITEM_HEIGHT + 50;
+  const widthValue = window.innerWidth >= 1536 ? 600 : 400;
 
   const RIGHT_AXIS_PADDING = 200;
   const AXIS_PADDING = 20;
   const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+
+  const width = widthValue - margin.left - margin.right - 100;
+  const height = heightValue - margin.top - margin.bottom;
+
+  const xTickValues = [-100, -75, -50, -25, 0, 25, 50, 75, 100];
+  const yTickWidth = widthValue + RIGHT_AXIS_PADDING - width - 70;
 
   // Remove any existing chart
   d3.select(`#chart-${slug}`).selectAll("*").remove();
@@ -151,8 +153,6 @@ const createSVGChart = (slug, data) => {
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox", `-${AXIS_PADDING} -${AXIS_PADDING} ${widthValue + RIGHT_AXIS_PADDING} ${heightValue}`)
 
-    const width = widthValue - margin.left - margin.right;
-  const height = heightValue - margin.top - margin.bottom;
   const svg = chart
   .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
@@ -172,7 +172,7 @@ const createSVGChart = (slug, data) => {
   // Create x axis
   const xAxis = d3.axisTop(xScale)
     .tickFormat(d => d3.format(".0%")(d/100))
-    .tickValues([-100, -75, -50, -25, 0, 25, 50, 75, 100]);
+    .tickValues(xTickValues);
 
   // Draw x axis
   const xAxisElement = svg.append("g")
@@ -182,7 +182,7 @@ const createSVGChart = (slug, data) => {
   const xAxisTick = xAxisElement.selectAll(".tick")
 
   xAxisTick.select("text")
-    .attr('class', 'font-sans text-gray-400')
+    .attr('class', 'font-sans text-xs text-gray-400')
 
   xAxisTick.selectAll("line")
     .attr("stroke", 'none');
@@ -193,26 +193,21 @@ const createSVGChart = (slug, data) => {
     .tickPadding(10)
     .tickFormat(() => '');
 
-  const windowWidth = window.innerWidth;
-  // Change scale of the button depending on the window width
-  const buttonScale = windowWidth > 1024 ? 0.8 : 1;
-
   const buttonHTML = (title, publications, slug) =>
-    `<button type="button" class='btn-filter-chart mt-2' aria-pressed="false" id="btn-${kebabCase(slug)}" style="transform: scale(${buttonScale});">
-      <span class="font-semibold text-slate-700">${title}</span>
-      <span class="text-xs font-normal">(${publications})</span>
+    `<button type="button" class="btn-filter-chart mt-0.5 max-w-[${yTickWidth}px]" aria-pressed="false" id="btn-${kebabCase(slug)}" title="${title} (${publications})">
+      <span class="mr-1.5 overflow-hidden whitespace-nowrap text-ellipsis">${title}</span><span class="text-xs shrink-0">(${publications})</span>
     </button>`;
   ;
 
   const yAxisRegions = svg
   .append("g")
   .attr("class", "y-axis-regions")
-  .attr("transform", `translate(0, ${-yTickHeight / 2})`)
+  .attr("transform", `translate(0, ${-ITEM_HEIGHT / 2 - 6})`)
 
   const yAxisTicks = svg
     .append("g")
     .attr("class", "y-axis-ticks")
-    .attr("transform", `translate(${width + 30}, ${-yTickHeight / 2})`)
+    .attr("transform", `translate(${width + 50}, ${-ITEM_HEIGHT / 2})`)
 
   yAxisRegions.selectAll(".y-axis-region")
     .data(dataWithSubTypes)
@@ -221,15 +216,15 @@ const createSVGChart = (slug, data) => {
     .attr("class", "y-axis-region pointer-events-none")
     .attr("x", -AXIS_PADDING)
     .attr("y", d => yScale(d.title))
-    .attr("width", width + 30 + RIGHT_AXIS_PADDING)
-    .attr("height", ITEM_HEIGHT + 10)
+    .attr("width", widthValue + RIGHT_AXIS_PADDING)
+    .attr("height", ITEM_HEIGHT)
     .attr("fill", (d) => d.subTypes ? 'transparent' : gray100)
 
   yAxisTicks.call(yAxis)
   .selectAll(".tick")
   .append("foreignObject")
     .attr("width", yTickWidth)
-    .attr("height", ITEM_HEIGHT + yTickHeight)
+    .attr("height", ITEM_HEIGHT)
     .style("text-align", 'left')
     .html((title) => {
       const interventionItem = getInterventionByTitle(data, title);
@@ -244,6 +239,7 @@ const createSVGChart = (slug, data) => {
 
   // Create x grid
   const xGrid = d3.axisBottom(xScale)
+    .tickValues(xTickValues)
     .tickSize(-height + margin.top + margin.bottom)
     .tickFormat("");
 
@@ -254,9 +250,9 @@ const createSVGChart = (slug, data) => {
     .call(xGrid)
 
   xGridElement.selectAll(".tick line")
-  .attr("stroke-opacity",(d) => d === 0 ? 1 : 0.2)
-  .attr("stroke-dasharray", (d) => d === 0 ? 'none' : "5,3")
-  .attr("stroke", (d) => d === 0 ? 'black' : gray400);
+    .attr("stroke-opacity",(d) => d === 0 ? 1 : 0.2)
+    .attr("stroke-dasharray", (d) => d === 0 ? 'none' : "5,3")
+    .attr("stroke", gray700);
 
   xGridElement.select(".domain").remove();
   const getOpacity = (d) => (!selected || selected?.type !== 'subType' || selected?.value === d.title) ? 1 : 0.5;
