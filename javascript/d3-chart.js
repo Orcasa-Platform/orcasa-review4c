@@ -1,5 +1,6 @@
 const primaryColor = "#2BB3A7";
 const red = "#FA545D";
+const gray700 = '#3C4363';
 const gray400 = '#8B90A4';
 const gray100 = '#F0F0F5';
 
@@ -134,6 +135,8 @@ const createSVGChart = (slug, data) => {
   const yTickHeight = 44;
   const yTickWidth = 120;
 
+  const xTickValues = [-100, -75, -50, -25, 0, 25, 50, 75, 100];
+
   const activeDataHeight = !!activeData ? activeData.subTypes?.length * ITEM_HEIGHT : 0;
   const heightValue = (data.length) * ITEM_HEIGHT + activeDataHeight + HEIGHT_PADDING;
   const widthValue = 300;
@@ -172,7 +175,7 @@ const createSVGChart = (slug, data) => {
   // Create x axis
   const xAxis = d3.axisTop(xScale)
     .tickFormat(d => d3.format(".0%")(d/100))
-    .tickValues([-100, -75, -50, -25, 0, 25, 50, 75, 100]);
+    .tickValues(xTickValues);
 
   // Draw x axis
   const xAxisElement = svg.append("g")
@@ -182,7 +185,7 @@ const createSVGChart = (slug, data) => {
   const xAxisTick = xAxisElement.selectAll(".tick")
 
   xAxisTick.select("text")
-    .attr('class', 'font-sans text-gray-400')
+    .attr('class', 'font-sans text-xs text-gray-400')
 
   xAxisTick.selectAll("line")
     .attr("stroke", 'none');
@@ -244,6 +247,7 @@ const createSVGChart = (slug, data) => {
 
   // Create x grid
   const xGrid = d3.axisBottom(xScale)
+    .tickValues(xTickValues)
     .tickSize(-height + margin.top + margin.bottom)
     .tickFormat("");
 
@@ -254,9 +258,9 @@ const createSVGChart = (slug, data) => {
     .call(xGrid)
 
   xGridElement.selectAll(".tick line")
-  .attr("stroke-opacity",(d) => d === 0 ? 1 : 0.2)
-  .attr("stroke-dasharray", (d) => d === 0 ? 'none' : "5,3")
-  .attr("stroke", (d) => d === 0 ? 'black' : gray400);
+    .attr("stroke-opacity",(d) => d === 0 ? 1 : 0.2)
+    .attr("stroke-dasharray", (d) => d === 0 ? 'none' : "5,3")
+    .attr("stroke", gray700);
 
   xGridElement.select(".domain").remove();
   const getOpacity = (d) => (!selected || selected?.type !== 'subType' || selected?.value === d.title) ? 1 : 0.5;
