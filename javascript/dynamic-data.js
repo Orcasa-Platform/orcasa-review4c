@@ -59,22 +59,22 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
       Meta-analysis
     </div>
     </div>` : ''}
-    <div class="h-6 gap-4 flex">
-        ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
+    <div class="w-full h-6 gap-4 flex text-slate-500 text-xs">
+        ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex max-w-[60%] w-fit">
           <i data-lucide="newspaper" class="w-6 h-6 relative"></i>
-          <div class="text-slate-500 text-base">${journals.join(', ')}</div>
+          <div class="truncated-with-tooltip flex-1 truncate">${journals.join(', ')}</div>
         </div>`: ''}
         <div class="justify-start items-center gap-2 flex">
-          <i data-lucide="calendar" class="w-6 h-6 relative"></i>
-          <div class="text-slate-500 text-base">${year}</div>
+          <i data-lucide="calendar" class="w-6 h-6 relative max-width-[10%]"></i>
+          <div>${year}</div>
         </div>
-        ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
+        ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex max-w-[30%]">
           <i data-lucide="globe-2" class="w-6 h-6 relative"></i>
-          <div class="text-slate-500 text-base">${countries.join(', ')}</div>
+          <div>${countries.join(', ')}</div>
         </div>` : ''}
         ${isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
         <i data-lucide="award" class="w-6 h-6 relative"></i>
-        <div class="text-slate-500 text-base">Global quality: ${globalQuality}%</div>
+        <div>Global quality: ${globalQuality}%</div>
       </div>` : ''}
     </div>
   </div>
@@ -450,9 +450,13 @@ window.addEventListener('load', function () {
         elements.publicationsContainer.appendChild(createPublicationCard(publication));
       });
 
-      // Add event listeners to the publication buttons
+      // const truncatedWithTooltipElements = document.getElementsByClassName('truncated-with-tooltip');
+      // https://stackoverflow.com/a/10017343
+      // const truncatedElements = Array.from(truncatedWithTooltipElements)
+      //   .filter(element => element.scrollWidth > element.clientWidth)
+      // TODO: Add tooltip to truncated elements
 
-      for (let link of elements.publicationDetailButton) {
+        for (let link of elements.publicationDetailButton) {
         link.addEventListener("click", function() {
           window.mutations.setPublicationDetailOpen(true);
 
