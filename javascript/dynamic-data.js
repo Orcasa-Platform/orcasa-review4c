@@ -273,7 +273,6 @@ window.addEventListener('load', function () {
         type="checkbox"
         class="checkbox-light"
         id="${slug}-${value}"
-        checked
         value="${value}"
       />
       ${label}
@@ -371,6 +370,17 @@ window.addEventListener('load', function () {
     const countries = window.getters.countries();
     const journals = window.getters.journals();
     const { years: availableYearObjects, countries: availableCountries, journals: availableJournals } = metadata;
+    const publicationTypes = [
+      { value: 'primary-paper', label: 'Primary paper' },
+      { value: 'meta-analysis', label: 'Meta-analysis' },
+    ];
+
+    const publicationTypesList = elements.publicationTypeDropdown.querySelector('ul');
+    publicationTypesList.innerHTML = '';
+    publicationTypes.forEach(({ value, label }) => {
+      appendListElement(publicationTypesList, value, label, 'type-publication');
+    });
+
     const countryList = elements.countryDropdown.querySelector('ul');
     countryList.innerHTML = '';
     const filteredCountries = availableCountries ? countries.filter(c => availableCountries.includes(c.iso_2digit)) : [];

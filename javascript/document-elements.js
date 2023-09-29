@@ -40,6 +40,7 @@ const elements = {
   sortPublicationsButton: document.getElementById('btn-sort-publications'),
   publicationsContainer: document.getElementById('publications-container'),
   countryDropdown: document.getElementById('dropdown-select-country'),
+  publicationTypeDropdown: document.getElementById('dropdown-select-type-publication'),
   yearDropdown: document.getElementById('dropdown-select-year'),
   journalDropdown: document.getElementById('dropdown-select-journal'),
   typePublication: document.getElementById('type-publication'),

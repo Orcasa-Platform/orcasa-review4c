@@ -292,25 +292,37 @@
                 class="btn-light">
                 Reset All
               </button>
-              <div>
+              <div id="type-publication">
                 <label for="type-publication"
-                  class="block text-slate-700 font-semibold mb-4">Type of
-                  publication</label>
-                <fieldset id="type-publication"
-                  class="flex h-14 px-4 flex-col justify-center gap-2">
-                  <label class="inline-flex items-center gap-2">
-                    <input type="checkbox" value="primary-paper"
-                      class="checkbox" checked>
-                    <span class="text-slate-700">Primary paper</span>
-                  </label>
-                  <div class="inline-flex items-center gap-2">
-                    <label class="inline-flex items-center gap-2">
-                      <input type="checkbox" value="meta-analysis"
-                        class="checkbox" checked>
-                      <span class="text-slate-700">Meta-analysis</span>
-                    </label>
-                  </div>
-                </fieldset>
+                  class="sr-only">type-publication</label>
+                <div
+                  class="relative dropdown h-14 flex-col flex"
+                  id="dropdown-select-type-publication">
+                  <button
+                    type="button"
+                    class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
+                    <span
+                      id="type-pubication-selected"
+                      aria-placeholder="Publication type"
+                      class="dropdown-selected text-slate-700">Publication type
+                    </span>
+                  </button>
+                  <input type="search" placeholder="Search…"
+                    class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
+                  <i data-lucide="chevron-down"
+                    class="w-6 h-6 absolute right-4 top-4 stroke-teal-500 pointer-events-none"></i>
+                  <fieldset
+                    class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                    <div
+                      class="flex px-1 border-b border-dashed border-gray-300">
+                      <button type="button"
+                        class="btn-select-all btn-link">Select all</button>
+                      <button type="button" class="btn-clear btn-link">Clear</button>
+                    </div>
+                    <ul class="flex flex-col">
+                    </ul>
+                  </fieldset>
+                </div>
               </div>
               <div id="year">
                 <label for="year"
