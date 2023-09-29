@@ -59,22 +59,22 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
       Meta-analysis
     </div>
     </div>` : ''}
-    <div class="h-6 gap-4 flex">
-        ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
+    <div class="w-full h-6 gap-4 flex text-slate-500 text-xs">
+        ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex max-w-[60%] w-fit">
           <i data-lucide="newspaper" class="w-6 h-6 relative"></i>
-          <div class="text-slate-500 text-base">${journals.join(', ')}</div>
+          <div class="flex-1 truncate" title="${journals.join(', ')}">${journals.join(', ')}</div>
         </div>`: ''}
         <div class="justify-start items-center gap-2 flex">
-          <i data-lucide="calendar" class="w-6 h-6 relative"></i>
-          <div class="text-slate-500 text-base">${year}</div>
+          <i data-lucide="calendar" class="w-6 h-6 relative max-width-[10%]"></i>
+          <div>${year}</div>
         </div>
-        ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
+        ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex max-w-[30%]">
           <i data-lucide="globe-2" class="w-6 h-6 relative"></i>
-          <div class="text-slate-500 text-base">${countries.join(', ')}</div>
+          <div class="truncate" title="${countries.join(', ')}">${countries.join(', ')}</div>
         </div>` : ''}
         ${isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
         <i data-lucide="award" class="w-6 h-6 relative"></i>
-        <div class="text-slate-500 text-base">Global quality: ${globalQuality}%</div>
+        <div>Global quality: ${globalQuality}%</div>
       </div>` : ''}
     </div>
   </div>
@@ -274,7 +274,6 @@ window.addEventListener('load', function () {
         type="checkbox"
         class="checkbox-light"
         id="${slug}-${value}"
-        checked
         value="${value}"
       />
       ${label}
@@ -346,16 +345,20 @@ window.addEventListener('load', function () {
 
     const maxYearCount = Math.max(...Object.values(years));
     const barTooltip = document.getElementById('bar-tooltip');
+    const barTooltipContent = document.getElementById('bar-tooltip-content');
 
     const addTooltip = (event, year, yearBar) =>  {
-      const top = yearBar.getBoundingClientRect().top;
-      const barWidth = yearBar.getBoundingClientRect().width;
-      const TOP_PADDING = 64;
+      const barRect = yearBar.getBoundingClientRect();
+      const top = barRect.top;
+      const TOP_PADDING = 68;
+      const leftOffset = (elements.yearRange.getBoundingClientRect().left - elements.publicationPanel.getBoundingClientRect().width)
+      const left = barRect.left - leftOffset + barRect.width / 2;
+
       // Put on top of the bar
       barTooltip.style.top = `${top - TOP_PADDING}px`;
-      barTooltip.style.left = `${event.clientX - elements.yearRange.getBoundingClientRect().left - barWidth / 2}px`;
+      barTooltip.style.left = `${left}px`;
       barTooltip.classList.remove('hidden');
-      barTooltip.innerHTML = `<div>${year}</div>`;
+      barTooltipContent.innerHTML = `<div>${year}</div>`;
     }
 
     const yearsElements = Object.entries(years).map(([year, yearCount]) => {
@@ -400,6 +403,17 @@ window.addEventListener('load', function () {
     const countries = window.getters.countries();
     const journals = window.getters.journals();
     const { years: availableYearObjects, countries: availableCountries, journals: availableJournals } = metadata;
+    const publicationTypes = [
+      { value: 'primary-paper', label: 'Primary paper' },
+      { value: 'meta-analysis', label: 'Meta-analysis' },
+    ];
+
+    const publicationTypesList = elements.publicationTypeDropdown.querySelector('ul');
+    publicationTypesList.innerHTML = '';
+    publicationTypes.forEach(({ value, label }) => {
+      appendListElement(publicationTypesList, value, label, 'type-publication');
+    });
+
     const countryList = elements.countryDropdown.querySelector('ul');
     countryList.innerHTML = '';
     const filteredCountries = availableCountries ? countries.filter(c => availableCountries.includes(c.iso_2digit)) : [];
@@ -467,10 +481,7 @@ window.addEventListener('load', function () {
       data.forEach(publication => {
         elements.publicationsContainer.appendChild(createPublicationCard(publication));
       });
-
-      // Add event listeners to the publication buttons
-
-      for (let link of elements.publicationDetailButton) {
+        for (let link of elements.publicationDetailButton) {
         link.addEventListener("click", function() {
           window.mutations.setPublicationDetailOpen(true);
 

@@ -2,6 +2,7 @@ window.addEventListener('load', function () {
   window.state = {
     sidebarOpen: false,
     legendOpen: true,
+    filtersOpen: false,
     mapSettingsOpen: false,
     basemap: 'light',
     landUse: 'all',
@@ -31,6 +32,9 @@ window.addEventListener('load', function () {
     },
     setPublicationsOpen(publicationsOpen) {
       state.publicationsOpen = publicationsOpen;
+    },
+    setFiltersOpen(filtersOpen) {
+      state.filtersOpen = filtersOpen;
     },
     setPublicationDetailOpen(publicationOpen) {
       state.publicationDetailOpen = publicationOpen;
@@ -95,6 +99,7 @@ window.addEventListener('load', function () {
   window.getters = {
     sidebarOpen: () => state.sidebarOpen,
     publicationsOpen: () => state.publicationOpen,
+    filtersOpen: () => state.filtersOpen,
     publicationDetailOpen: () => state.publicationDetailOpen,
     publicationsSort: () => state.publicationsSort,
     landUse: () => state.landUse,

@@ -131,7 +131,8 @@ const getPublications = async ({ landUse, mainIntervention, intervention, subTyp
       totalPublications: data.filter(publication => publication.type === 'primary-paper').length || 0,
       totalMetaAnalysis: data.filter(publication => publication.type === 'meta-analysis').length || 0,
       years: yearCounts,
-      pages: Math.ceil(data.length / PAGE_SIZE),
+      // The pages should be after filtering
+      pages: Math.ceil(applyFilters(data).length / PAGE_SIZE),
       countries: uniq(data.map(d => d.countryIsos).flat()),
       journals: uniq(data.map(d => d.journalIds).flat()),
     };
