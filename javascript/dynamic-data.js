@@ -314,16 +314,17 @@ window.addEventListener('load', function () {
 
     const maxYearCount = Math.max(...Object.values(years));
     const barTooltip = document.getElementById('bar-tooltip');
+    const barTooltipContent = document.getElementById('bar-tooltip-content');
 
     const addTooltip = (event, year, yearBar) =>  {
       const top = yearBar.getBoundingClientRect().top;
       const barWidth = yearBar.getBoundingClientRect().width;
-      const TOP_PADDING = 64;
+      const TOP_PADDING = 68;
       // Put on top of the bar
       barTooltip.style.top = `${top - TOP_PADDING}px`;
       barTooltip.style.left = `${event.clientX - elements.yearRange.getBoundingClientRect().left - barWidth / 2}px`;
       barTooltip.classList.remove('hidden');
-      barTooltip.innerHTML = `<div>${year}</div>`;
+      barTooltipContent.innerHTML = `<div>${year}</div>`;
     }
 
     const yearsElements = Object.entries(years).map(([year, yearCount]) => {
