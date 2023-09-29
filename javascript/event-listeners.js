@@ -154,6 +154,25 @@ window.addEventListener('load', function () {
     elements.publicationPanel.classList.add('-translate-x-full');
   });
 
+  // FILTERS BUTTON
+
+  elements.filtersButton.addEventListener("click", function() {
+    const buttonState = window.getters.filtersOpen();
+    // Toggle filters panel
+    if (buttonState) {
+      window.mutations.setFiltersOpen(false);
+      elements.filtersPanel.classList.add('-translate-x-full');
+    } else {
+      window.mutations.setFiltersOpen(true);
+      elements.filtersPanel.classList.remove('-translate-x-full');
+    }
+  });
+
+  elements.closeFiltersPanelButton.addEventListener("click", function() {
+    window.mutations.setFiltersOpen(false);
+    elements.filtersPanel.classList.add('-translate-x-full');
+  });
+
   // PUBLICATIONS PANEL
 
   // SORT PUBLICATIONS BUTTON
