@@ -55,6 +55,10 @@
           @apply inline-block ml-2 align-middle transition-all rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none;
         }
 
+        .btn-link {
+          @apply p-3 font-semibold text-mod-sc-ev transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:text-gray-300 disabled:pointer-events-none hover:text-mod-sc-ev-dark focus-visible:outline-mod-sc-ev;
+        }
+
         .checkbox {
           @apply w-4 h-4 justify-center items-center flex appearance-none rounded border border-slate-700 bg-slate-700 checked:bg-slate-700 checked:border-slate-700 text-mod-sc-ev hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-600;
         }
@@ -257,22 +261,25 @@
                       <label for="year"
                         class="sr-only">year</label>
                       <div
-                        class="dropdown h-14 flex-col flex"
+                        class="relative dropdown h-14 flex-col flex"
                         id="dropdown-select-year">
                         <button
                           type="button"
-                          class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between focus-visible:outline-mod-sc-ev">
-                          <div
+                          class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
+                          <span
                             id="year-selected"
                             aria-placeholder="Year"
-                            class="dropdown-selected text-slate-700">Year</div>
-                          <i
-                            data-lucide="chevron-down"
-                            class="w-6 h-6 relative stroke-teal-500"></i>
+                            class="dropdown-selected text-slate-700">Year</span>
                         </button>
+                        <input type="search" placeholder="Search…" class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden" />
+                        <i data-lucide="chevron-down" class="w-6 h-6 absolute right-4 top-4 stroke-teal-500 pointer-events-none"></i>
                         <fieldset
                           class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
-                          <ul class="space-y-2 flex flex-col">
+                          <div class="flex px-1 border-b border-dashed border-gray-300">
+                            <button type="button" class="btn-select-all btn-link">Select all</button>
+                            <button type="button" class="btn-clear btn-link">Clear</button>
+                          </div>
+                          <ul class="flex flex-col">
                           </ul>
                         </fieldset>
                       </div>
@@ -281,22 +288,25 @@
                       <label for="journal"
                         class="sr-only">Journal</label>
                       <div
-                        class="dropdown h-14 flex-col flex"
+                        class="relative dropdown h-14 flex-col flex"
                         id="dropdown-select-journal">
                         <button
                           type="button"
-                          class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between focus-visible:outline-mod-sc-ev">
-                          <div
+                          class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
+                          <span
                             id="journal-selected"
                             aria-placeholder="Journal"
-                            class="dropdown-selected text-slate-700">Journal</div>
-                          <i
-                            data-lucide="chevron-down"
-                            class="w-6 h-6 relative stroke-teal-500"></i>
+                            class="dropdown-selected text-slate-700">Journal</span>
                         </button>
+                        <input type="search" placeholder="Search…" class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden" />
+                        <i data-lucide="chevron-down" class="w-6 h-6 absolute right-4 top-4 stroke-teal-500 pointer-events-none"></i>
                         <fieldset
                           class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
-                          <ul class="space-y-2 flex flex-col">
+                          <div class="flex px-1 border-b border-dashed border-gray-300">
+                            <button type="button" class="btn-select-all btn-link">Select all</button>
+                            <button type="button" class="btn-clear btn-link">Clear</button>
+                          </div>
+                          <ul class="flex flex-col">
                           </ul>
                         </fieldset>
                       </div>
@@ -305,22 +315,25 @@
                       <label for="country"
                         class="sr-only">Country</label>
                       <div
-                        class="dropdown h-14 flex-col flex"
+                        class="relative dropdown h-14 flex-col flex"
                         id="dropdown-select-country">
                         <button
                           type="button"
-                          class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between focus-visible:outline-mod-sc-ev">
-                          <div
+                          class="btn-dropdown p-4 bg-white shadow border border-gray-400 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
+                          <span
                             id="country-selected"
                             aria-placeholder="Country"
-                            class="dropdown-selected text-slate-700">Country</div>
-                          <i
-                            data-lucide="chevron-down"
-                            class="w-6 h-6 relative stroke-teal-500"></i>
+                            class="dropdown-selected text-slate-700">Country</span>
                         </button>
+                        <input type="search" placeholder="Search…" class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden" />
+                        <i data-lucide="chevron-down" class="w-6 h-6 absolute right-4 top-4 stroke-teal-500 pointer-events-none"></i>
                         <fieldset
                           class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
-                          <ul class="space-y-2 flex flex-col">
+                          <div class="flex px-1 border-b border-dashed border-gray-300">
+                            <button type="button" class="btn-select-all btn-link">Select all</button>
+                            <button type="button" class="btn-clear btn-link">Clear</button>
+                          </div>
+                          <ul class="flex flex-col">
                           </ul>
                         </fieldset>
                       </div>
@@ -328,15 +341,18 @@
                     <div id="search">
                       <div class="relative">
                         <input
-                          class="relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 pl-10 focus:outline-none focus-visible:outline-mod-sc-ev"
-                          type="text" placeholder="Filter by keyword">
+                          class="relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 pl-10 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev"
+                          type="search" placeholder="Filter by keyword">
                         <div
                           class="absolute inset-y-0 left-0 flex items-center pl-3">
                           <i data-lucide="search"
-                            class="w-6 h-6"></i>
+                            class="w-6 h-6 pointer-events-none"></i>
                         </div>
                       </div>
                     </div>
+                    <button type="button" id="reset-filters" class="btn-secondary">
+                      Reset filters
+                    </button>
                   </div>
                   <div id="publications-container">
                   </div>

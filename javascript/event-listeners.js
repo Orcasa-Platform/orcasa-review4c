@@ -171,12 +171,25 @@ window.addEventListener('load', function () {
 
   for (let dropdown of elements.dropdowns) {
     const button = dropdown.querySelector('.btn-dropdown');
-    const buttonIcon = button.querySelector('svg');
+    const searchInput = dropdown.querySelector('.search');
+    const buttonIcon = dropdown.querySelector('svg');
     const options = dropdown.querySelector('.dropdown-options');
     const selected = dropdown.querySelector('.dropdown-selected');
+    const selectAllButton = dropdown.querySelector('.btn-select-all');
+    const clearButton = dropdown.querySelector('.btn-clear');
 
 
     const toggleDropdown = () => {
+      button.classList.toggle('hidden');
+
+      searchInput.classList.toggle('hidden');
+      if (searchInput.classList.contains('hidden')) {
+        searchInput.value = '';
+        options.querySelectorAll('li').forEach(option => option.classList.remove('hidden'));
+      } else {
+        searchInput.focus();
+      }
+
       options.classList.toggle('min-h-[190px]');
       options.classList.toggle('hidden');
       buttonIcon.classList.toggle('rotate-180');
@@ -209,9 +222,11 @@ window.addEventListener('load', function () {
       }
     });
 
-    // Click on options and reload data
-    // Use debounce to prevent ghost clicks
-    options.addEventListener('click', debounce(() => {
+    options.addEventListener('change', ({ target }) => {
+      if (target.type !== 'checkbox') {
+        return;
+      }
+
       const selectedValues = [];
       const selectedLabels = [];
       options.querySelectorAll('input').forEach(input => {
@@ -225,7 +240,7 @@ window.addEventListener('load', function () {
       const placeholder = selected.attributes['aria-placeholder'].value;
       if (selectedValues.length === 0) {
         selected.textContent = placeholder;
-        window.mutations.setPublicationFilters(dropdown.id, null);
+        window.mutations.setPublicationFilters(dropdown.id, []);
       } else {
         selected.textContent = `${placeholder} (${selectedLabels.length})`;
         window.mutations.setPublicationFilters(dropdown.id, selectedValues);
@@ -233,11 +248,53 @@ window.addEventListener('load', function () {
 
       // Reload publications
       window.reloadPublications();
-    }), 0);
+    });
+
+    selectAllButton.addEventListener('click', () => {
+      const inputs = options.querySelectorAll('input');
+
+      inputs.forEach(input => {
+        input.checked = true;
+      });
+
+      const placeholder = selected.attributes['aria-placeholder'].value;
+      selected.textContent = `${placeholder} (${inputs.length})`;
+
+      const inputValues = [...inputs].map(input => input.value);
+      window.mutations.setPublicationFilters(dropdown.id, inputValues);
+      window.reloadPublications();
+    });
+
+    clearButton.addEventListener('click', () => {
+      options.querySelectorAll('input').forEach(input => {
+        input.checked = false;
+      });
+
+      const placeholder = selected.attributes['aria-placeholder'].value;
+      selected.textContent = placeholder;
+      window.mutations.setPublicationFilters(dropdown.id, []);
+      window.reloadPublications();
+    });
+
+    searchInput.addEventListener('input', ({ target: { value: keyword } }) => {
+      options.querySelectorAll('li').forEach(option => {
+        const { textContent } = option.querySelector('label');
+
+        if (keyword.length === 0 || textContent.toLowerCase().includes(keyword.toLowerCase())) {
+          option.classList.remove('hidden');
+        } else {
+          option.classList.add('hidden');
+        }
+      })
+    });
   }
 
   // PUBLICATION TYPE CHECKBOXES
-  elements.typePublication.addEventListener('click', () => {
+  elements.typePublication.addEventListener('click', ({ target }) => {
+    if (target.type !== 'checkbox') {
+      return;
+    }
+
     const selectedValues = [];
 
     elements.typePublication.querySelectorAll('input').forEach(input => {
@@ -258,6 +315,33 @@ window.addEventListener('load', function () {
       window.reloadPublications();
     }, 250)
   );
+
+  // RESET FILTERS
+  elements.resetFiltersButton.addEventListener('click', () => {
+    window.mutations.setPublicationFilters('type-publication', ['meta-analysis', 'primary-paper']);
+    elements.typePublication.querySelectorAll('input').forEach(input => input.checked = true);
+
+    for (let dropdown of elements.dropdowns) {
+      const selected = dropdown.querySelector('.dropdown-selected');
+      const options = dropdown.querySelector('.dropdown-options');
+      const inputs = options.querySelectorAll('input');
+
+      inputs.forEach(input => {
+        input.checked = true;
+      });
+
+      const placeholder = selected.attributes['aria-placeholder'].value;
+      selected.textContent = `${placeholder} (${inputs.length})`;
+
+      const inputValues = [...inputs].map(input => input.value);
+      window.mutations.setPublicationFilters(dropdown.id, inputValues);
+    }
+
+    window.mutations.setSearch('');
+    elements.search.querySelector('input').value = '';
+
+    window.reloadPublications();
+  });
 
   // PUBLICATION DETAIL PANEL
 
