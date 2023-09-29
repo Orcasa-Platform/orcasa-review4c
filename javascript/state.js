@@ -6,6 +6,7 @@ window.addEventListener('load', function () {
     basemap: 'light',
     landUse: 'all',
     landUses: null,
+    mainInterventions: [],
     filter: null,
     publicationsOpen: false,
     publicationDetailOpen: false,
@@ -45,6 +46,9 @@ window.addEventListener('load', function () {
     },
     setLandUses(landUses) {
       state.landUses = landUses;
+    },
+    setMainInterventions(mainInterventions) {
+      state.mainInterventions = mainInterventions;
     },
     setCountries(countries) {
       state.countries = countries;
@@ -95,6 +99,7 @@ window.addEventListener('load', function () {
     publicationsSort: () => state.publicationsSort,
     landUse: () => state.landUse,
     landUses: () => state.landUses,
+    mainInterventions: () => state.mainInterventions,
     chartData: () => state.chartData,
     filter: () => state.filter,
     openDropdowns: () => state.openDropdowns,

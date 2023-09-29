@@ -145,6 +145,7 @@ window.addEventListener('load', function () {
     const { name: landUseName, mainInterventions, slug: landUseSlug } = landUse;
     const mainInterventionPromises = mainInterventions.map((mainInterventionSlug) => getMainInterventionChartData(landUseSlug, mainInterventionSlug));
     Promise.all(mainInterventionPromises).then((data) => {
+      window.mutations.setMainInterventions(data);
       createCards(data, landUseName);
     });
   };
@@ -293,17 +294,48 @@ window.addEventListener('load', function () {
 
   const updateNumbers = (metadata, publicationRequest) => {
     const { totalPublications, totalMetaAnalysis } = metadata;
-    const selection = publicationRequest.landUse === 'all'
-    ? 'all publications'
-    : [
-      publicationRequest.landUse,
-      publicationRequest.mainIntervention,
-      publicationRequest.intervention,
-      publicationRequest.subType
-    ].join(' ');
+
+    const getLandUse = (landUseSlug) =>
+      window.getters.landUses().find(({ slug }) => slug === landUseSlug);
+
+    const getMainIntervention = (mainInterventionSlug) =>
+      window.getters.mainInterventions().find(({ slug }) => slug === mainInterventionSlug);
+
+    const getIntervention = (mainInterventionSlug, interventionSlug) => {
+      const mainIntervention = getMainIntervention(mainInterventionSlug);
+      return mainIntervention?.interventions.find(({ slug }) => slug === interventionSlug);
+    };
+
+    const getSubType = (mainInterventionSlug, interventionSlug, subTypeSlug) => {
+      const intervention = getIntervention(mainInterventionSlug, interventionSlug);
+      return intervention?.subTypes.find(({ slug }) => slug === subTypeSlug);
+    };
+
+    let selection = 'all publications';
+    if (publicationRequest.landUse !== 'all') {
+      const landUseName = getLandUse(publicationRequest.landUse)?.name.toLowerCase();
+
+      if (publicationRequest.subType) {
+        const subTypeName = getSubType(
+          publicationRequest.mainIntervention,
+          publicationRequest.intervention,
+          publicationRequest.subType
+        )?.title.toLowerCase();
+        selection = `${subTypeName} for ${landUseName}`;
+      } else if (publicationRequest.intervention) {
+        const interventionName = getIntervention(
+          publicationRequest.mainIntervention,
+          publicationRequest.intervention
+        )?.title.toLowerCase();
+        selection = `${interventionName} for ${landUseName}`;
+      } else {
+        selection = landUseName;
+      }
+    }
 
     elements.metaAnalysisNumber.innerHTML = totalMetaAnalysis || 0;
     elements.publicationsNumber.innerHTML = totalPublications || 0;
+
     elements.filtersSelectionText.innerHTML = selection;
   };
 
