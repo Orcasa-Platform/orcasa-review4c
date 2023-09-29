@@ -62,7 +62,7 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
     <div class="w-full h-6 gap-4 flex text-slate-500 text-xs">
         ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex max-w-[60%] w-fit">
           <i data-lucide="newspaper" class="w-6 h-6 relative"></i>
-          <div class="truncated-with-tooltip flex-1 truncate">${journals.join(', ')}</div>
+          <div class="flex-1 truncate" title="${journals.join(', ')}">${journals.join(', ')}</div>
         </div>`: ''}
         <div class="justify-start items-center gap-2 flex">
           <i data-lucide="calendar" class="w-6 h-6 relative max-width-[10%]"></i>
@@ -70,7 +70,7 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
         </div>
         ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex max-w-[30%]">
           <i data-lucide="globe-2" class="w-6 h-6 relative"></i>
-          <div>${countries.join(', ')}</div>
+          <div class="truncate" title="${countries.join(', ')}">${countries.join(', ')}</div>
         </div>` : ''}
         ${isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
         <i data-lucide="award" class="w-6 h-6 relative"></i>
@@ -449,13 +449,6 @@ window.addEventListener('load', function () {
       data.forEach(publication => {
         elements.publicationsContainer.appendChild(createPublicationCard(publication));
       });
-
-      // const truncatedWithTooltipElements = document.getElementsByClassName('truncated-with-tooltip');
-      // https://stackoverflow.com/a/10017343
-      // const truncatedElements = Array.from(truncatedWithTooltipElements)
-      //   .filter(element => element.scrollWidth > element.clientWidth)
-      // TODO: Add tooltip to truncated elements
-
         for (let link of elements.publicationDetailButton) {
         link.addEventListener("click", function() {
           window.mutations.setPublicationDetailOpen(true);
