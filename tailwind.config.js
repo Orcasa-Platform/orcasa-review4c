@@ -21,6 +21,7 @@ tailwind.config = {
         'gray-50': '#F7F7F9',
         'mod-sc-ev': '#2BB3A7',
         'mod-sc-ev-light': '#CEEEE3',
+        'chart-color': '#B4E4D7',
         'mod-sc-ev-dark': '#1E6B65',
       },
     },

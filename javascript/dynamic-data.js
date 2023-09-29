@@ -308,14 +308,60 @@ window.addEventListener('load', function () {
   };
 
   const populateYearChart = (years) => {
-    elements.yearRange.innerHTML = '';
+    if (!years) return;
 
-    years && Object.values(years).forEach(yearCount => {
-      const YEAR_COUNT_HEIGHT = 2;
-      const yearElement = document.createElement('div');
-      yearElement.classList.add('flex-1', `h-[${yearCount * YEAR_COUNT_HEIGHT}px]`, 'bg-gray-300');
-      elements.yearRange.appendChild(yearElement);
-    });
+    const yearKeys = Object.keys(years);
+
+    const maxYearCount = Math.max(...Object.values(years));
+    const barTooltip = document.getElementById('bar-tooltip');
+
+    const addTooltip = (event, year, yearBar) =>  {
+      const top = yearBar.getBoundingClientRect().top;
+      const barWidth = yearBar.getBoundingClientRect().width;
+      const TOP_PADDING = 64;
+      // Put on top of the bar
+      barTooltip.style.top = `${top - TOP_PADDING}px`;
+      barTooltip.style.left = `${event.clientX - elements.yearRange.getBoundingClientRect().left - barWidth / 2}px`;
+      barTooltip.classList.remove('hidden');
+      barTooltip.innerHTML = `<div>${year}</div>`;
+    }
+
+    const yearsElements = Object.entries(years).map(([year, yearCount]) => {
+      const heightPercentage = (yearCount / maxYearCount) * 100;
+      const yearBar = document.createElement('div');
+      yearBar.classList.add('year-bar', 'flex-1', `h-[${heightPercentage}%]`, 'bg-chart-color', 'rounded-sm');
+      yearBar.setAttribute('data-year', year);
+      return yearBar.outerHTML;
+    }).join('');
+
+    elements.yearRange.innerHTML = `
+      <div>
+        <div class="relative w-full h-full px-1">
+          <div class="flex gap-1 items-end justify-between h-[125px]">
+            ${yearsElements}
+          </div>
+          <div class="absolute bottom-0 left-0 w-full h-full pointer-events-none">
+            <div class="flex flex-col justify-between items-end h-full">
+              <div class="flex-1 h-[1px] border-b border-gray-300 border-dashed w-full"></div>
+              <div class="flex-1 h-[1px] border-b border-gray-300 border-dashed w-full"></div>
+              <div class="flex-1 h-[1px] border-b border-gray-300 border-dashed w-full"></div>
+              <div class="flex-1 h-[1px] border-b-2 border-black w-full"></div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-between items-center h-full">
+          <div class="text-slate-700 text-sm">${yearKeys[0]}</div>
+          <div class="text-slate-700 text-sm">${yearKeys[yearKeys.length - 1]}</div>
+        </div>
+      </div>
+    `;
+
+    const yearBars = document.getElementsByClassName('year-bar');
+    for (let yearBar of yearBars) {
+      const year = yearBar.getAttribute('data-year');
+      yearBar.addEventListener('mouseenter', (event) => addTooltip(event, year, yearBar));
+      yearBar.addEventListener('mouseleave', () => barTooltip.classList.add('hidden'));
+    }
   };
 
   const populateFilters = (metadata) => {
