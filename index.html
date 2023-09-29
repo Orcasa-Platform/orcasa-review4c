@@ -35,15 +35,15 @@
     <style type="text/tailwindcss">
       @layer utilities {
         .btn-primary {
-          @apply p-4 font-semibold text-white transition-all border border-mod-sc-ev bg-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:bg-mod-sc-ev-dark hover:border-mod-sc-ev-dark focus-visible:outline-mod-sc-ev-dark;
+          @apply p-4 text-white transition-all border border-mod-sc-ev bg-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:bg-mod-sc-ev-dark hover:border-mod-sc-ev-dark focus-visible:outline-mod-sc-ev-dark;
         }
 
         .btn-secondary {
-          @apply p-4 font-semibold transition-all bg-transparent border border-mod-sc-ev text-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev hover:text-white focus-visible:outline-mod-sc-ev-dark;
+          @apply p-4 transition-all bg-gray-100 border border-gray-100 text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:bg-gray-200 hover:text-black focus-visible:outline-black;
         }
 
         .btn-filter {
-          @apply p-2 transition-all bg-gray-50 aria-pressed:bg-mod-sc-ev-light aria-pressed:text-mod-sc-ev-dark focus-visible:outline focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark hover:bg-mod-sc-ev-light focus-visible:outline-mod-sc-ev-dark;
+          @apply px-2 py-1 transition-all bg-gray-50 aria-pressed:bg-gray-700 aria-pressed:text-white focus-visible:outline focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-black hover:bg-gray-200 focus-visible:outline-mod-sc-ev-dark;
         }
 
         /* focus-visible:outline-offset-[-2px] to fix the foreignObject outline */
@@ -92,7 +92,7 @@
         }
 
         .sidebar {
-          @apply absolute left-[117px] top-0 flex h-full w-full w-[calc(50%-68px)] max-w-[862px] min-w-[600px] lg:min-w-[862px] flex-col bg-white shadow-lg transition-transform duration-500 z-10;
+          @apply absolute left-[117px] top-0 flex h-full w-full w-[calc(50%-68px)] max-w-[862px] min-w-[600px] 2xl:min-w-[862px] flex-col bg-white shadow-lg transition-transform duration-500 z-10;
         }
 
         .publication-panel {
@@ -114,8 +114,8 @@
         <div class="flex flex-col gap-px bg-slate-600 py-px">
           <a
             class="navbar-item border-yellow-400"
-            href="/map-layers">
-            Map Layers
+            href="/geospatial-data">
+            Geospatial Data
           </a>
           <a
             class="navbar-item-active border-teal-500"
@@ -139,14 +139,20 @@
     <div id="sidebar"
       class="sidebar">
       <div class="flex grow flex-col overflow-y-auto">
-        <div class="space-y-5 p-5 text-slate-700">
-          <h2 class="text-3.5xl font-serif">
-            Explore the <span class="font-semibold">impact of different
-              interventions</span> on soil organic carbon
-          </h2>
+        <div class="space-y-6 p-5 text-slate-700">
+          <div
+            class="flex items-center min-h-5 h-5 pl-5 border-l-4 border-teal-500">
+            <h2 class="leading-[18px] text-lg"><span
+                class="text-slate-700">Explore
+                the </span><span
+                class="text-teal-500 font-semibold">impact
+                of different interventions</span><span
+                class="text-slate-700">
+                on soil organic carbon.</span></h2>
+          </div>
           <!-- LAND USE MENU -->
           <!-- Loaded dynamically on dynamic-data.js -->
-          <div class="flex gap-2 py-6 my-6 border-gray-200 border-y"
+          <div class="flex gap-2 pt-6"
             id="land-use-menu"></div>
           <div
             id="land-use-intro"
@@ -160,12 +166,21 @@
               class="font-semibold" id="land-use-text"></span><span>
               interventions on SOC.</span>
           </div>
-
-          <div class="flex gap-4 my-8">
-            <button type="button" id="btn-publications" class="btn-primary">See
-              publications</button>
-            <button type="button" id="btn-methodology" class="btn-secondary">See
-              methodology</button>
+          <div
+            class="w-full pt-6 border-t border-gray-300 justify-between items-start inline-flex">
+            <div className="text-slate-700 text-base">Know more about the
+              interventions:</div>
+            <div class="flex gap-2">
+              <button type="button" id="btn-publications"
+                class="btn-primary flex gap-4">
+                <i data-lucide="book-open"></i>
+                <span>Publications</span>
+              </button>
+              <button type="button" id="btn-methodology"
+                class="btn-secondary flex gap-4">
+                <i data-lucide="clipboard-list"></i>
+                <span>Methodology</span></button>
+            </div>
           </div>
 
           <div id="chart-cards">
@@ -188,8 +203,10 @@
               </div>
             </button>
             <!-- PUBLICATION HEADER -->
+            <h2
+              class="text-teal-500 text-[34px] py-6">Publications</h2>
             <div class="flex flex-col space-y-8 mt-2">
-              <div class="flex justify-between items-center">
+              <div class="flex justify-between items-center gap-1">
                 <header
                   class="text-slate-500">Showing
                   <span id="publications-number"></span> scientific
@@ -237,7 +254,7 @@
                           <span class="text-slate-700">Meta-analysis</span>
                         </label>
                       </div>
-                      </>
+                      </º>
                     </div>
                     <div id="year">
                       <label for="year"

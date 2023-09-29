@@ -4,7 +4,7 @@ window.addEventListener('load', function () {
     legendOpen: true,
     mapSettingsOpen: false,
     basemap: 'light',
-    landUse: 'cropland',
+    landUse: 'all',
     landUses: null,
     filter: null,
     publicationsOpen: false,

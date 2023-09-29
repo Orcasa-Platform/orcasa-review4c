@@ -19,40 +19,72 @@ const metaAnalysisTemplate = (id) => {
     </div>`;
 };
 
-const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journal, year, country, globalQuality, id, title, authors, description, source, url, metaAnalysis }) => `
+const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
+  const attributes = methodologyAndAttributes && Object.entries(methodologyAndAttributes).map(([key, value]) => {
+    const label = key.replace(/_/g, ' ');
+    const renderValue = (value) => {
+      if (value === 'yes') {
+        return '<img src="/assets/icons/yes.svg" alt="yes icon" class="w-6 h-6" />';
+      }
+      if (value === 'no') {
+        return '<img src="/assets/icons/no.svg" alt="no icon" class="w-6 h-6" />';
+      }
+      if (value === '-') {
+        return '<img src="/assets/icons/blank.svg" alt="no icon" class="w-6 h-6" />';
+      }
+      return `<span class="pr-2">${value}</span>`;
+    };
+
+    return `<div class="flex gap-1 justify-between items-center even:bg-gray-50 py-4 px-6">
+      <span class="text-slate-600 text-sm">${label}</span>
+      <span class="text-slate-500 text-sm leading-7 px-6 py-4">${renderValue(value)}</span>
+    </div>`;
+  }).join('');
+  return (`<div class="flex flex-col gap-4 border-t border-gray-300 border-dashed">
+    <div class="text-slate-700 text-2xl leading-10 pt-4">Methodology and attributes</div>
+    ${attributes}
+  </div>`);
+}
+
+const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, year, countries, globalQuality, id, title, authors, description, source, url, metaAnalysis, 'methodology-and-attributes': methodologyAndAttributes }) => `
 <div class="flex flex-col ${isDetail ? '' : `p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} mb-2`} space-y-4">
-  ${isMetaAnalysis ? `<div class="flex">
-  <div class="px-2 py-1 bg-green-100 text-teal-600 text-base">
-    Meta-analysis
-  </div>
+  ${!isDetail && isMetaAnalysis ? `<div class="flex">
+    <div class="px-2 text-white text-base px-2 bg-teal-500 rounded border border-teal-500">
+      Meta-analysis
+    </div>
   </div>` : ''}
-  <div class="h-6 justify-start items-center gap-2 inline-flex">
+  <div class="h-6 justify-start items-center gap-6 inline-flex">
+  ${isDetail && isMetaAnalysis ? `<div class="flex">
+    <div class="px-2 text-white text-base px-2 bg-teal-500 rounded border border-teal-500">
+      Meta-analysis
+    </div>
+    </div>` : ''}
     <div class="h-6 gap-4 flex">
         ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
-          <i data-lucide="newspaper" class="w-6 h-6 relative stroke-teal-500"></i>
-          <div class="text-slate-500 text-base">${journal}</div>
+          <i data-lucide="newspaper" class="w-6 h-6 relative"></i>
+          <div class="text-slate-500 text-base">${journals.join(', ')}</div>
         </div>`: ''}
         <div class="justify-start items-center gap-2 flex">
-          <i data-lucide="calendar" class="w-6 h-6 relative stroke-teal-500"></i>
+          <i data-lucide="calendar" class="w-6 h-6 relative"></i>
           <div class="text-slate-500 text-base">${year}</div>
         </div>
         ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
-          <i data-lucide="globe-2" class="w-6 h-6 relative stroke-teal-500"></i>
-          <div class="text-slate-500 text-base">${country}</div>
+          <i data-lucide="globe-2" class="w-6 h-6 relative"></i>
+          <div class="text-slate-500 text-base">${countries.join(', ')}</div>
         </div>` : ''}
         ${isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
-        <i data-lucide="award" class="w-6 h-6 relative stroke-teal-500"></i>
+        <i data-lucide="award" class="w-6 h-6 relative"></i>
         <div class="text-slate-500 text-base">Global quality: ${globalQuality}%</div>
       </div>` : ''}
     </div>
   </div>
   <header class="mb-6 text-slate-700">
-    <div class="text-2xl font-semibold leading-10">
+    <div class="${isDetail ? 'text-slate-700 text-[34px] leading-[50px]' : 'text-2xl font-semibold leading-10'}">
       ${title}
     </div>
-    <div class="text-slate-700 text-base">${authors}</div>
+    <div class="text-slate-700 text-xs leading-[18px] italic">${authors}</div>
   </header>
-  <div class="text-slate-500 text-base">${isDetail ? description : ellipsis(description, 230)}</div>
+  <div class="text-sm leading-7 text-slate-500">${isDetail ? description : ellipsis(description, 230)}</div>
   ${!isDetail ? `<div class="h-6 justify-end items-center gap-4 flex">
     <div class="pr-1 justify-center items-center gap-1 flex">
         <button data-id="${id}" class="btn-publication-detail text-teal-500 text-base font-semibold">Learn more</button>
@@ -71,14 +103,15 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journal, ye
           <i data-lucide="external-link" class="w-6 h-6 color-slate-700 stroke-current"></i>
         </a>
       </div>
-    ${metaAnalysis ? `
-    <div class="pt-2.5 border-t border-dashed border-gray-300 flex-col gap-5 flex">
-      <div class="text-slate-700 text-2xl leading-10 font-serif">Meta-analysis</div>
-      ${metaAnalysis.map(metaAnalysisTemplate).join('')}
-    </div>
-  </div>
-  `: ''}
-    `
+      ${metaAnalysis ? `
+        <div class="pt-2.5 border-t border-dashed border-gray-300 flex-col gap-5 flex">
+          <div class="text-slate-700 text-2xl leading-10 font-serif">Meta-analysis</div>
+            ${metaAnalysis.map(metaAnalysisTemplate).join('')}
+          </div>
+        </div>
+      `: ''}
+      ${methodologyAndAttributes ? methodologyAndAttributesTemplate(methodologyAndAttributes) : ''}
+      `
     : ''}
 </div>
 `;
@@ -132,11 +165,34 @@ window.addEventListener('load', function () {
     const publicationsNumber = publications?.toLocaleString() || '-';
     const metaAnalysisNumber = metaAnalysis?.toLocaleString() || '-';
     if (landUseSlug === 'all') {
-      elements.landUseIntro.innerHTML = `<span>Scientific Evidence brings impartial evidence from peer-reviewed literature to analyse the effects of land management, land-use change and climate change on Soil Organic Carbon. To date, Scientific Evidence gathers </span>
-      <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analyses and
-      <span
-        class="font-semibold">
-        <span id="land-use-publications">${publicationsNumber}</span> scientific publications</span> of practices to increase soil carbon storage.</span>`
+      elements.landUseIntro.innerHTML = `<div class="space-y-6">
+        <div class="text-slate-700 text-[32px] leading-[48px]">
+          <span>Scientific Evidence brings impartial evidence from </span>
+          <span class="font-semibold">peer-reviewed literature.</span>
+        </div>
+        <div class="text-slate-700 text-2xl leading-10">
+          We analyse the effects of land management, land-use change and climate change on Soil Organic Carbon. To date, Scientific Evidence gathers <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analyses and ${publicationsNumber} scientific publications.
+        </div>
+        <div class="flex pt-6 pb-10 justify-evenly items-center gap-4">
+          <div class="flex items-center gap-4">
+            <i class="w-20 h-20 stroke-teal-500 stroke-1" data-lucide="file-stack"></i>
+            <div class="flex-col justify-center flex">
+                <div class="text-slate-700 text-[32px] font-semibold leading-[48px]">${publicationsNumber}</div>
+                <div class="text-slate-700 text-base">Scientific publications</div>
+            </div>
+          </div>
+          <img class="w-[58px]" src="/assets/icons/arrow-all.svg" alt="arrow" class="w-8 h-8" />
+          <div class="flex items-center gap-2">
+            <i class="w-20 h-20 stroke-teal-500 stroke-1" data-lucide="file-bar-chart-2"></i>
+            <div class="flex-col justify-center flex">
+                <div class="text-slate-700 text-[32px] font-semibold leading-[48px]">${metaAnalysisNumber}</div>
+                <div class="text-slate-700 text-base">Meta-analyses</div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+      lucide.createIcons();
+
     } else {
       elements.landUseIntro.innerHTML = `<span>These
         insights come from the analysis of</span><span
@@ -167,7 +223,7 @@ window.addEventListener('load', function () {
     class="btn-filter btn-land-use"
     aria-pressed="${index === 0 ? "true" : "false"}"
   >
-    <span class="font-semibold">
+    <span>
       ${name}
     </span>
     <span class="text-xs">
@@ -235,7 +291,8 @@ window.addEventListener('load', function () {
     return card;
   };
 
-  const updateNumbers = (data, publicationRequest) => {
+  const updateNumbers = (metadata, publicationRequest) => {
+    const { totalPublications, totalMetaAnalysis } = metadata;
     const selection = publicationRequest.landUse === 'all'
     ? 'all publications'
     : [
@@ -244,9 +301,9 @@ window.addEventListener('load', function () {
       publicationRequest.intervention,
       publicationRequest.subType
     ].join(' ');
-    const metaAnalysisNumber = data.filter(publication => publication.type === 'meta-analysis').length;
-    elements.metaAnalysisNumber.innerHTML = metaAnalysisNumber;
-    elements.publicationsNumber.innerHTML = data.length - metaAnalysisNumber;
+
+    elements.metaAnalysisNumber.innerHTML = totalMetaAnalysis || 0;
+    elements.publicationsNumber.innerHTML = totalPublications || 0;
     elements.filtersSelectionText.innerHTML = selection;
   };
 
@@ -267,7 +324,7 @@ window.addEventListener('load', function () {
     const { years: availableYearObjects, countries: availableCountries, journals: availableJournals } = metadata;
     const countryList = elements.countryDropdown.querySelector('ul');
     countryList.innerHTML = '';
-    const filteredCountries = countries.filter(c => availableCountries.includes(c.iso_2digit))
+    const filteredCountries = availableCountries ? countries.filter(c => availableCountries.includes(c.iso_2digit)) : [];
     filteredCountries.forEach(country => {
       const { iso_2digit: iso, cntry_name: label } = country;
       appendListElement(countryList, iso, label, 'year');
@@ -278,7 +335,7 @@ window.addEventListener('load', function () {
 
     const journalList = elements.journalDropdown.querySelector('ul');
     journalList.innerHTML = '';
-    const filteredJournals = journals.filter(j => availableJournals.includes(j.journal_id));
+    const filteredJournals = availableJournals ? journals.filter(j => availableJournals.includes(j.journal_id)) : [];
     filteredJournals.forEach(journal => {
       const { journal_id: value, journal_name: label } = journal;
       appendListElement(journalList, value, capitalize(label), 'journal');
@@ -287,7 +344,7 @@ window.addEventListener('load', function () {
     // Start with all journals selected
     window.mutations.setPublicationFilters('journals', filteredJournals.map(c => c.journal_id));
 
-    const availableYears = availableYearObjects && Object.keys(availableYearObjects);
+    const availableYears = availableYearObjects && Object.keys(availableYearObjects) || [];
     const yearList = elements.yearDropdown.querySelector('ul');
     yearList.innerHTML = '';
     availableYears.forEach((year) => {
@@ -353,7 +410,7 @@ window.addEventListener('load', function () {
       }
 
       if(!addNewPage) {
-        updateNumbers(data, publicationRequest);
+        updateNumbers(metadata, publicationRequest);
       }
 
       // Update lucide icons

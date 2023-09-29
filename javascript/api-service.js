@@ -60,8 +60,8 @@ const getMainInterventionChartData = async (landUseSlug='all', mainInterventionS
 const PAGE_SIZE = 20;
 
 // Publication data
-const getPublications = async ({ landUse, mainIntervention, interventionSlug, subType, publicationFilters, search, sort, page, pageSize=PAGE_SIZE }) => {
-  const sectionParams = [mainIntervention, interventionSlug, subType];
+const getPublications = async ({ landUse, mainIntervention, intervention, subType, publicationFilters, search, sort, page, pageSize=PAGE_SIZE }) => {
+  const sectionParams = [mainIntervention, intervention, subType];
   const pathname = getPathname(BASE_PUBLICATIONS_URL, landUse, sectionParams);
 
   // Filter params are not used now but they will be needed on the backend
@@ -72,28 +72,18 @@ const getPublications = async ({ landUse, mainIntervention, interventionSlug, su
 
   // This should be done on the backend and the publicationFilters sent as part of the URL
   const applyFilters = (publications) => {
+    if(!publications) return [];
     let filteredPublications = (publications || []).concat();
     if (publicationFilters) {
       filteredPublications = publications.filter(publication => {
-        const { country, year, journalId } = publication;
+        const { countryIsos, year, journalIds } = publication;
+        const { country: countrySelection, year: yearSelection, journal: journalSelection, 'type-publication': typeSelection } = publicationFilters;
 
-        if (publicationFilters.country && !publicationFilters.country.includes(country)) {
-          return false;
-        }
-
-        if (publicationFilters.year && !publicationFilters.year.includes(String(year))) {
-          return false;
-        }
-
-        if (publicationFilters.journal && !publicationFilters.journal.includes(String(journalId))) {
-          return false;
-        }
-
-        if (publicationFilters['type-publication'] && !publicationFilters['type-publication'].includes(publication.type)) {
-          return false;
-        }
-
-        return true;
+        const countryFilter = countrySelection?.length ? countrySelection.some(iso => countryIsos.includes(iso)) : true;
+        const yearFilter = yearSelection?.length ? yearSelection.includes(String(year)) : true;
+        const journalFilter = journalSelection?.length ? journalSelection.some(jID => journalIds.map(String).includes(jID)) : true;
+        const typePublicationFilter = typeSelection?.length ? typeSelection.includes(publication.type) : true;
+        return countryFilter && yearFilter && journalFilter && typePublicationFilter;
       });
     }
 
@@ -115,11 +105,16 @@ const getPublications = async ({ landUse, mainIntervention, interventionSlug, su
     const countries = window.getters.countries();
     const journals = window.getters.journals();
     return publications.map(publication => {
-      const country = countries.find(country => country.iso_2digit === publication.country);
-      const journal = journals.find(journal => journal.journal_id === publication.journalId);
-      publication.iso = publication.country;
-      publication.country = country?.cntry_name;
-      publication.journal = capitalize(journal?.journal_name);
+      const countryNames = publication.countryIsos.map(iso => countries.find(country => country.iso_2digit === iso)?.cntry_name);
+      const journalNames = publication.journalIds.map(jId => {
+        const journal = journals.find(journal => journal.journal_id === jId)
+        const journalName = journal?.journal_name;
+        return journalName && capitalize(journalName);
+      });
+
+      publication.countries = countryNames;
+      publication.journals = journalNames;
+
       return publication;
     });
   };
@@ -133,10 +128,12 @@ const getPublications = async ({ landUse, mainIntervention, interventionSlug, su
       return counts;
     }, {});
     return {
+      totalPublications: data.filter(publication => publication.type === 'primary-paper').length || 0,
+      totalMetaAnalysis: data.filter(publication => publication.type === 'meta-analysis').length || 0,
       years: yearCounts,
       pages: Math.ceil(data.length / PAGE_SIZE),
-      countries: uniq(data.map(d => d.country)),
-      journals: uniq(data.map(d => d.journalId)),
+      countries: uniq(data.map(d => d.countryIsos).flat()),
+      journals: uniq(data.map(d => d.journalIds).flat()),
     };
   };
 
@@ -151,7 +148,6 @@ const getPublications = async ({ landUse, mainIntervention, interventionSlug, su
     const filteredData = applyFilters(data);
     const parsedData = parseData(filteredData);
     const paginatedData = paginate(parsedData);
-
     return { data: paginatedData, metadata };
   });
 }

@@ -1,306 +1,277 @@
 [
-  {
-    "id": 1,
-    "title": "Advances in Crop Management Techniques",
-    "journalId": 78,
-    "year": 2018,
-    "country": "ES",
-    "type": "meta-analysis",
-    "authors": "Smith, John; Brown, Emily; Wilson, David",
-    "url": "http://example.com/advances-in-agronomy",
-    "source": "Google scholar",
-    "description": "This study explores the latest advancements in crop management techniques and their impact on agricultural productivity.",
-    "globalQuality": 66,
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Funnel plot",
-      "Publication bias test": "Egger's test",
-      "Publication bias test result": "p = 0.0001",
-      "Publication bias test interpretation": "Publication bias is present"
+    {
+        "id": 1,
+        "title": "Advances in Crop Management Techniques",
+        "journalIds": [78, 16],
+        "year": 2018,
+        "countryIsos": ["ES", "PT", "FR"],
+        "type": "meta-analysis",
+        "authors": "Smith, John; Brown, Emily; Wilson, David",
+        "url": "http://example.com/advances-in-agronomy",
+        "source": "Google scholar",
+        "description": "This study explores the latest advancements in crop management techniques and their impact on agricultural productivity.",
+        "globalQuality": 66,
+        "methodology-and-attributes": {
+            "Publication bias method of analysis": "Funnel plot",
+            "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+            "How many databases were queried to perform the literature search?": "3",
+            "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+            "Is the model clearly described (structure, random effects, ..)?": "yes",
+            "Is a quality appraisal of the primary studies is performed?": "-"
+        }
+    },
+    {
+        "id": 2,
+        "title": "Emission of CO2 from biochar-amended soils and implications for soil organic carbon",
+        "journalIds": [67, 16],
+        "year": 2013,
+        "countryIsos": ["PT"],
+        "type": "primary-paper",
+        "authors": "Woolf, Dominic; Amonette, James E.; Street-Perrott, F. Alayne; Lehmann, Johannes; Joseph, Stephen",
+        "url": "http://onlinelibrary.wiley.com/doi/10.1111/gcbb.12044/abstract",
+        "source": "Google scholar",
+        "description": "Biochar is a carbon-rich solid that is produced by pyrolysis of biomass. As a soil amendment, biochar has been shown to increase crop yields, improve soil fertility, promote nutrient retention, and reduce leaching of agrochemicals. However, the effects of biochar on soil organic carbon (SOC) are less clear. Biochar may increase SOC by providing a recalcitrant carbon substrate for soil microorganisms, but it may also reduce SOC by increasing microbial biomass turnover. Here, we review the evidence for these two opposing effects of biochar on SOC, and we present a meta-analysis of 80 published studies that report the effects of biochar on SOC. We find that biochar-amended soils have lower SOC than unamended soils, and that this effect is strongest at low temperatures and in acidic soils. We also find that biochar-amended soils have lower CO2 emissions than unamended soils, and that this effect is strongest at high temperatures and in acidic soils. We conclude that biochar has a small but significant effect on SOC, and that this effect is likely to be driven by the production of CO2 from biochar-amended soils. We suggest that the effect of biochar on SOC should be considered when assessing the climate impacts of biochar as a carbon sequestration strategy.",
+        "metaAnalysis": [
+            1
+        ]
+    },
+    {
+        "id": 3,
+        "title": "Sustainable Farming Practices in Developing Countries",
+        "journalIds": [4],
+        "year": 2015,
+        "countryIsos": ["CA"],
+        "type": "meta-analysis",
+        "authors": "Garcia, Maria; Patel, Raj; Kim, Chang",
+        "url": "http://example.com/sustainable-farming-practices",
+        "source": "Google scholar",
+        "description": "An examination of sustainable farming practices in developing countries and their role in food security.",
+        "globalQuality": 80,
+        "methodology-and-attributes": {
+            "Publication bias method of analysis": "Forest plot",
+            "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+            "How many databases were queried to perform the literature search?": "3",
+            "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+            "Is the model clearly described (structure, random effects, ..)?": "yes",
+            "Is a quality appraisal of the primary studies is performed?": "-"
+        }
+    },
+    {
+        "id": 4,
+        "title": "Efficiency of Irrigation Systems in Arid Regions",
+        "journalIds": [66],
+        "year": 2010,
+        "countryIsos": ["AU", "PT"],
+        "type": "meta-analysis",
+        "authors": "Wilson, Robert; Lee, Hyejin; Singh, Amar",
+        "url": "http://example.com/irrigation-efficiency",
+        "source": "Google scholar",
+        "description": "Assessing the efficiency of irrigation systems in arid regions and their impact on water resources.",
+        "globalQuality": 60,
+        "methodology-and-attributes": {
+            "Publication bias method of analysis": "Trim and fill method",
+            "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+            "How many databases were queried to perform the literature search?": "3",
+            "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+            "Is the model clearly described (structure, random effects, ..)?": "yes",
+            "Is a quality appraisal of the primary studies is performed?": "-"
+        }
+    },
+    {
+        "id": 5,
+        "title": "Biodiversity Conservation in Agricultural Landscapes",
+        "journalIds": [4],
+        "year": 2005,
+        "countryIsos": ["GB"],
+        "type": "primary-paper",
+        "authors": "Jones, Sarah; Smith, Peter; Davis, Mark",
+        "url": "http://example.com/biodiversity-conservation",
+        "source": "Google scholar",
+        "description": "Exploring strategies for biodiversity conservation in agricultural landscapes.",
+        "metaAnalysis": [
+            1,
+            21
+        ]
+    },
+    {
+        "id": 6,
+        "title": "Agroforestry for Sustainable Agripractices",
+        "journalIds": [66],
+        "year": 2019,
+        "countryIsos": ["BR"],
+        "type": "primary-paper",
+        "authors": "Silva, Ana; Oliveira, Carlos; Santos, Maria",
+        "url": "http://example.com/agroforestry-sustainability",
+        "source": "Google scholar",
+        "description": "Examining the role of agroforestry systems in promoting sustainable agricultural practices.",
+        "metaAnalysis": [
+            21
+        ]
+    },
+    {
+        "id": 7,
+        "title": "Advances in Crop Management Techniques",
+        "journalIds": [18],
+        "year": 2017,
+        "countryIsos": ["US"],
+        "type": "primary-paper",
+        "authors": "Anderson, Robert; Turner, Lisa; Harris, James",
+        "url": "http://example.com/soil-nutrient-management",
+        "source": "Google scholar",
+        "description": "A review of modern soil nutrient management practices in agriculture.",
+        "metaAnalysis": [
+            1
+        ]
+    },
+    {
+        "id": 8,
+        "title": "Precision Agriculture and Crop Yield Optimization",
+        "journalIds": [75],
+        "year": 2013,
+        "countryIsos": ["CA"],
+        "type": "primary-paper",
+        "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
+        "url": "http://example.com/precision-agriculture",
+        "source": "Google scholar",
+        "description": "Investigating the use of precision agriculture for optimizing crop yields.",
+        "metaAnalysis": [
+            9
+        ]
+    },
+    {
+        "id": 9,
+        "title": "Drought Management Strategies in Rice Farming",
+        "journalIds": [66],
+        "year": 2008,
+        "countryIsos": ["IN"],
+        "type": "meta-analysis",
+        "authors": "Kumar, Ravi; Sharma, Priya; Singh, Amar",
+        "url": "http://example.com/drought-management-rice",
+        "source": "Google scholar",
+        "description": "Assessment of drought management strategies in rice farming.",
+        "globalQuality": 21,
+        "methodology-and-attributes": {
+            "Publication bias method of analysis": "Trim and fill method",
+            "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+            "How many databases were queried to perform the literature search?": "3",
+            "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+            "Is the model clearly described (structure, random effects, ..)?": "yes",
+            "Is a quality appraisal of the primary studies is performed?": "-"
+        }
+    },
+    {
+        "id": 10,
+        "title": "Sustainable Agriculture Practices in the US",
+        "journalIds": [54],
+        "year": 2015,
+        "countryIsos": ["US"],
+        "type": "primary-paper",
+        "authors": "Johnson, Mark; Smith, Sarah; Davis, James",
+        "url": "http://example.com/sustainable-agriculture-US",
+        "source": "Google scholar",
+        "description": "Examining sustainable agriculture practices and their implementation in the United States.",
+        "metaAnalysis": [
+            8
+        ]
+    },
+    {
+        "id": 11,
+        "title": "Rice Crop Management in China",
+        "journalIds": [54],
+        "year": 2012,
+        "countryIsos": ["CN"],
+        "type": "meta-analysis",
+        "authors": "Wang, Li; Chen, Wei; Zhang, Ming",
+        "url": "http://example.com/rice-crop-management-China",
+        "source": "Google scholar",
+        "description": "A study on rice crop management practices in China and their impact on food production.",
+        "globalQuality": 65,
+        "methodology-and-attributes": {
+            "Publication bias method of analysis": "Forest plot",
+            "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+            "How many databases were queried to perform the literature search?": "3",
+            "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+            "Is the model clearly described (structure, random effects, ..)?": "yes",
+            "Is a quality appraisal of the primary studies is performed?": "-"
+        }
+    },
+    {
+        "id": 12,
+        "title": "Water Resource Management in Australia",
+        "journalIds": [54],
+        "year": 2014,
+        "countryIsos": ["AU"],
+        "type": "primary-paper",
+        "authors": "Smith, Robert; Turner, Lisa; Harris, David",
+        "url": "http://example.com/water-resource-management-AU",
+        "source": "Google scholar",
+        "description": "Assessing water resource management strategies in agriculture in Australia.",
+        "metaAnalysis": [
+            11
+        ]
+    },
+    {
+        "id": 13,
+        "title": "Organic Farming in the UK",
+        "journalIds": [66],
+        "year": 2011,
+        "countryIsos": ["GB"],
+        "type": "primary-paper",
+        "authors": "Wilson, Sarah; Brown, Peter; Davis, Mark",
+        "url": "http://example.com/organic-farming-UK",
+        "source": "Google scholar",
+        "description": "Investigating the practices and benefits of organic farming in the United Kingdom.",
+        "metaAnalysis": [
+            14
+        ]
+    },
+    {
+        "id": 14,
+        "title": "Coffee Agroforestry Systems in Brazil",
+        "journalIds": [66],
+        "year": 2019,
+        "countryIsos": ["BR"],
+        "type": "meta-analysis",
+        "authors": "Silva, Ana; Oliveira, Carlos; Santos, Maria",
+        "url": "http://example.com/coffee-agroforestry-BR",
+        "source": "Google scholar",
+        "description": "Assessing the agroforestry systems used in coffee cultivation in Brazil.",
+        "globalQuality": 60,
+        "methodology-and-attributes": {
+            "Publication bias method of analysis": "Regression asymmetry test",
+            "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+            "How many databases were queried to perform the literature search?": "3",
+            "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+            "Is the model clearly described (structure, random effects, ..)?": "yes",
+            "Is a quality appraisal of the primary studies is performed?": "-"
+        }
+    },
+    {
+        "id": 15,
+        "title": "Soil Health Management in the US",
+        "journalIds": [7],
+        "year": 2016,
+        "countryIsos": ["US"],
+        "type": "primary-paper",
+        "authors": "Brown, John; Smith, Emily; Wilson, David",
+        "url": "http://example.com/soil-health-management-US",
+        "source": "Google scholar",
+        "description": "A study on soil health management practices and their impact on crop yields in the United States.",
+        "metaAnalysis": [
+            14
+        ]
+    },
+    {
+        "id": 16,
+        "title": "Pesticide Usage in Canadian Agriculture",
+        "journalIds": [7],
+        "year": 2017,
+        "countryIsos": ["CA"],
+        "type": "primary-paper",
+        "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
+        "url": "http://example.com/pesticide-usage-Canada",
+        "source": "Google scholar",
+        "description": "Analyzing pesticide usage trends in Canadian agriculture and their environmental implications.",
+        "metaAnalysis": []
     }
-  },
-  {
-    "id": 2,
-    "title": "Emission of CO2 from biochar-amended soils and implications for soil organic carbon",
-    "journalId": 67,
-    "year": 2013,
-    "country": "PT",
-    "type": "primary-paper",
-    "authors": "Woolf, Dominic; Amonette, James E.; Street-Perrott, F. Alayne; Lehmann, Johannes; Joseph, Stephen",
-    "url": "http://onlinelibrary.wiley.com/doi/10.1111/gcbb.12044/abstract",
-    "source": "Google scholar",
-    "description": "Biochar is a carbon-rich solid that is produced by pyrolysis of biomass. As a soil amendment, biochar has been shown to increase crop yields, improve soil fertility, promote nutrient retention, and reduce leaching of agrochemicals. However, the effects of biochar on soil organic carbon (SOC) are less clear. Biochar may increase SOC by providing a recalcitrant carbon substrate for soil microorganisms, but it may also reduce SOC by increasing microbial biomass turnover. Here, we review the evidence for these two opposing effects of biochar on SOC, and we present a meta-analysis of 80 published studies that report the effects of biochar on SOC. We find that biochar-amended soils have lower SOC than unamended soils, and that this effect is strongest at low temperatures and in acidic soils. We also find that biochar-amended soils have lower CO2 emissions than unamended soils, and that this effect is strongest at high temperatures and in acidic soils. We conclude that biochar has a small but significant effect on SOC, and that this effect is likely to be driven by the production of CO2 from biochar-amended soils. We suggest that the effect of biochar on SOC should be considered when assessing the climate impacts of biochar as a carbon sequestration strategy.",
-    "metaAnalysis": [1],
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Funnel plot",
-      "Publication bias test": "Egger's test",
-      "Publication bias test result": "p = 0.0001",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  },
-  {
-    "id": 3,
-    "title": "Sustainable Farming Practices in Developing Countries",
-    "journalId": 4,
-    "year": 2015,
-    "country": "CA",
-    "type": "meta-analysis",
-    "authors": "Garcia, Maria; Patel, Raj; Kim, Chang",
-    "url": "http://example.com/sustainable-farming-practices",
-    "source": "Google scholar",
-    "description": "An examination of sustainable farming practices in developing countries and their role in food security.",
-    "globalQuality": 80,
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Forest plot",
-      "Publication bias test": "Begg's test",
-      "Publication bias test result": "p = 0.001",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  },
-  {
-    "id": 4,
-    "title": "Efficiency of Irrigation Systems in Arid Regions",
-    "journalId": 66,
-    "year": 2010,
-    "country": "AU",
-    "type": "meta-analysis",
-    "authors": "Wilson, Robert; Lee, Hyejin; Singh, Amar",
-    "url": "http://example.com/irrigation-efficiency",
-    "source": "Google scholar",
-    "description": "Assessing the efficiency of irrigation systems in arid regions and their impact on water resources.",
-    "globalQuality": 60,
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Trim and fill method",
-      "Publication bias test": "Duval and Tweedie's trim and fill",
-      "Publication bias test result": "p = 0.002",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  },
-  {
-    "id": 5,
-    "title": "Biodiversity Conservation in Agricultural Landscapes",
-    "journalId": 4,
-    "year": 2005,
-    "country": "GB",
-    "type": "primary-paper",
-    "authors": "Jones, Sarah; Smith, Peter; Davis, Mark",
-    "url": "http://example.com/biodiversity-conservation",
-    "source": "Google scholar",
-    "description": "Exploring strategies for biodiversity conservation in agricultural landscapes.",
-    "metaAnalysis": [1, 21],
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Rank correlation test",
-      "Publication bias test": "Kendall's tau",
-      "Publication bias test result": "p = 0.003",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  },
-  {
-    "id": 6,
-    "title": "Agroforestry for Sustainable Agripractices",
-    "journalId": 66,
-    "year": 2019,
-    "country": "BR",
-    "type": "primary-paper",
-    "authors": "Silva, Ana; Oliveira, Carlos; Santos, Maria",
-    "url": "http://example.com/agroforestry-sustainability",
-    "source": "Google scholar",
-    "description": "Examining the role of agroforestry systems in promoting sustainable agricultural practices.",
-    "metaAnalysis": [21],
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Regression asymmetry test",
-      "Publication bias test": "Eggers' test",
-      "Publication bias test result": "p = 0.004",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  },
-  {
-    "id": 7,
-    "title": "Advances in Crop Management Techniques",
-    "journalId": 18,
-    "year": 2017,
-    "country": "US",
-    "type": "primary-paper",
-    "authors": "Anderson, Robert; Turner, Lisa; Harris, James",
-    "url": "http://example.com/soil-nutrient-management",
-    "source": "Google scholar",
-    "description": "A review of modern soil nutrient management practices in agriculture.",
-    "metaAnalysis": [1],
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Funnel plot",
-      "Publication bias test": "Egger's test",
-      "Publication bias test result": "p = 0.005",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  },
-  {
-    "id": 8,
-    "title": "Precision Agriculture and Crop Yield Optimization",
-    "journalId": 75,
-    "year": 2013,
-    "country": "CA",
-    "type": "primary-paper",
-    "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
-    "url": "http://example.com/precision-agriculture",
-    "source": "Google scholar",
-    "description": "Investigating the use of precision agriculture for optimizing crop yields.",
-    "metaAnalysis": [9],
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Forest plot",
-      "Publication bias test": "Begg's test",
-      "Publication bias test result": "p = 0.006",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  },
-  {
-    "id": 9,
-    "title": "Drought Management Strategies in Rice Farming",
-    "journalId": 66,
-    "year": 2008,
-    "country": "IN",
-    "type": "meta-analysis",
-    "authors": "Kumar, Ravi; Sharma, Priya; Singh, Amar",
-    "url": "http://example.com/drought-management-rice",
-    "source": "Google scholar",
-    "description": "Assessment of drought management strategies in rice farming.",
-    "globalQuality": 21,
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Trim and fill method",
-      "Publication bias test": "Duval and Tweedie's trim and fill",
-      "Publication bias test result": "p = 0.007",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  },
-  {
-    "id": 10,
-    "title": "Sustainable Agriculture Practices in the US",
-    "journalId": 54,
-    "year": 2015,
-    "country": "US",
-    "type": "primary-paper",
-    "authors": "Johnson, Mark; Smith, Sarah; Davis, James",
-    "url": "http://example.com/sustainable-agriculture-US",
-    "source": "Google scholar",
-    "description": "Examining sustainable agriculture practices and their implementation in the United States.",
-    "metaAnalysis": [8],
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Funnel plot",
-      "Publication bias test": "Egger's test",
-      "Publication bias test result": "p = 0.008",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  },
-  {
-    "id": 11,
-    "title": "Rice Crop Management in China",
-    "journalId": 54,
-    "year": 2012,
-    "country": "CN",
-    "type": "meta-analysis",
-    "authors": "Wang, Li; Chen, Wei; Zhang, Ming",
-    "url": "http://example.com/rice-crop-management-China",
-    "source": "Google scholar",
-    "description": "A study on rice crop management practices in China and their impact on food production.",
-    "globalQuality": 65,
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Forest plot",
-      "Publication bias test": "Begg's test",
-      "Publication bias test result": "p = 0.009",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  },
-  {
-    "id": 12,
-    "title": "Water Resource Management in Australia",
-    "journalId": 54,
-    "year": 2014,
-    "country": "AU",
-    "type": "primary-paper",
-    "authors": "Smith, Robert; Turner, Lisa; Harris, David",
-    "url": "http://example.com/water-resource-management-AU",
-    "source": "Google scholar",
-    "description": "Assessing water resource management strategies in agriculture in Australia.",
-    "metaAnalysis": [11],
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Trim and fill method",
-      "Publication bias test": "Duval and Tweedie's trim and fill",
-      "Publication bias test result": "p = 0.010",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  },
-  {
-    "id": 13,
-    "title": "Organic Farming in the UK",
-    "journalId": 66,
-    "year": 2011,
-    "country": "GB",
-    "type": "primary-paper",
-    "authors": "Wilson, Sarah; Brown, Peter; Davis, Mark",
-    "url": "http://example.com/organic-farming-UK",
-    "source": "Google scholar",
-    "description": "Investigating the practices and benefits of organic farming in the United Kingdom.",
-    "metaAnalysis": [14],
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Rank correlation test",
-      "Publication bias test": "Kendall's tau",
-      "Publication bias test result": "p = 0.011",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  },
-  {
-    "id": 14,
-    "title": "Coffee Agroforestry Systems in Brazil",
-    "journalId": 66,
-    "year": 2019,
-    "country": "BR",
-    "type": "meta-analysis",
-    "authors": "Silva, Ana; Oliveira, Carlos; Santos, Maria",
-    "url": "http://example.com/coffee-agroforestry-BR",
-    "source": "Google scholar",
-    "description": "Assessing the agroforestry systems used in coffee cultivation in Brazil.",
-    "globalQuality": 60,
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Regression asymmetry test",
-      "Publication bias test": "Eggers' test",
-      "Publication bias test result": "p = 0.012",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  },
-  {
-    "id": 15,
-    "title": "Soil Health Management in the US",
-    "journalId": 7,
-    "year": 2016,
-    "country": "US",
-    "type": "primary-paper",
-    "authors": "Brown, John; Smith, Emily; Wilson, David",
-    "url": "http://example.com/soil-health-management-US",
-    "source": "Google scholar",
-    "description": "A study on soil health management practices and their impact on crop yields in the United States.",
-    "metaAnalysis": [14],
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Funnel plot",
-      "Publication bias test": "Egger's test",
-      "Publication bias test result": "p = 0.013",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  },
-  {
-    "id": 16,
-    "title": "Pesticide Usage in Canadian Agriculture",
-    "journalId": 16,
-    "year": 2017,
-    "country": "CA",
-    "type": "primary-paper",
-    "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
-    "url": "http://example.com/pesticide-usage-Canada",
-    "source": "Google scholar",
-    "description": "Analyzing pesticide usage trends in Canadian agriculture and their environmental implications.",
-    "metaAnalysis": [],
-    "methodology-and-attributes": {
-      "Publication bias method of analysis": "Forest plot",
-      "Publication bias test": "Begg's test",
-      "Publication bias test result": "p = 0.014",
-      "Publication bias test interpretation": "Publication bias is present"
-    }
-  }
 ]
