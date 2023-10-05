@@ -1,4 +1,35 @@
 window.addEventListener('load', function () {
+  // SHARED CODE
+  const resetPublicationsFilters = () => {
+    for (let dropdown of elements.dropdowns) {
+      const selected = dropdown.querySelector('.dropdown-selected');
+      const options = dropdown.querySelector('.dropdown-options');
+      const inputs = options.querySelectorAll('input');
+
+      inputs.forEach(input => {
+        input.checked = false;
+      });
+
+      const placeholder = selected.attributes['aria-placeholder'].value;
+      selected.textContent = `${placeholder}`;
+
+      window.mutations.setPublicationFilters(dropdown.id, undefined);
+    }
+
+    window.mutations.setSearch('');
+    elements.search.querySelector('input').value = '';
+  };
+
+  const resetPublicationsSort = () => {
+    if (window.getters.publicationsSort() === 'desc') {
+      window.mutations.togglePublicationsSort();
+
+      const [text, icon] = elements.sortPublicationsButton.childNodes;
+      icon.classList.toggle('rotate-180');
+      text.textContent = 'Newest first';
+    }
+  };
+
   // LEGEND
 
   elements.legendToggle.addEventListener("click", function() {
@@ -155,6 +186,10 @@ window.addEventListener('load', function () {
   });
 
   elements.closePublicationPanelButton.addEventListener("click", function() {
+    // We reset the whole publications view without reloading the publications
+    resetPublicationsFilters();
+    resetPublicationsSort();
+
     window.mutations.setPublicationsOpen(false);
     elements.publicationPanel.classList.add('-translate-x-full');
 
@@ -351,28 +386,7 @@ window.addEventListener('load', function () {
 
   // RESET FILTERS
   elements.resetFiltersButton.addEventListener('click', () => {
-    window.mutations.setPublicationFilters('type-publication', ['meta-analysis', 'primary-paper']);
-    elements.typePublication.querySelectorAll('input').forEach(input => input.checked = true);
-
-    for (let dropdown of elements.dropdowns) {
-      const selected = dropdown.querySelector('.dropdown-selected');
-      const options = dropdown.querySelector('.dropdown-options');
-      const inputs = options.querySelectorAll('input');
-
-      inputs.forEach(input => {
-        input.checked = true;
-      });
-
-      const placeholder = selected.attributes['aria-placeholder'].value;
-      selected.textContent = `${placeholder} (${inputs.length})`;
-
-      const inputValues = [...inputs].map(input => input.value);
-      window.mutations.setPublicationFilters(dropdown.id, inputValues);
-    }
-
-    window.mutations.setSearch('');
-    elements.search.querySelector('input').value = '';
-
+    resetPublicationsFilters();
     window.reloadPublications();
   });
 
