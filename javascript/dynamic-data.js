@@ -254,6 +254,7 @@ window.addEventListener('load', function () {
         element.addEventListener("click", function() {
           const slug = element.getAttribute('data-slug');
           window.mutations.setLandUse(slug);
+          window.mutations.setFilter(null);
           loadData(slug);
 
           element.setAttribute('aria-pressed', 'true');
