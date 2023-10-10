@@ -27,7 +27,6 @@ const elements = {
   publicationDetailModal: document.getElementById('publication-detail-modal'),
   publicationDetailPanelContent: document.getElementById('publication-detail-panel-content'),
   closePublicationDetailPanelButton: document.getElementById('btn-close-publication-detail-panel'),
-  closePublicationDetailPanelButton: document.getElementById('btn-close-publication-detail-panel'),
   landUseMenu: document.getElementById('land-use-menu'),
   landUseText: document.getElementById('land-use-text'),
   landUseIntro: document.getElementById('land-use-intro'),
