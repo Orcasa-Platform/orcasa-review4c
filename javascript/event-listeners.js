@@ -190,6 +190,9 @@ window.addEventListener('load', function () {
     resetPublicationsFilters();
     resetPublicationsSort();
 
+    // We reset the pagination
+    window.mutations.setPublicationPage(1);
+
     window.mutations.setPublicationsOpen(false);
     elements.publicationPanel.classList.add('-translate-x-full');
 
