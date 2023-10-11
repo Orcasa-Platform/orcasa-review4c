@@ -2,8 +2,8 @@ const map = new maplibregl.Map({
   container: 'map',
   style: mapStyle, // stylesheet location
   center: [-74.5, 40], // starting position [lng, lat]
-  zoom: 2, // starting zoom
-  minZoom: 1,
+  zoom: 0, // starting zoom
+  minZoom: 0,
 });
 
 map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
@@ -43,4 +43,22 @@ map.on('load', function() {
 
   addSquareIcon(map);
   zoomButtonStyling();
+
+  fitMap(map, { initial: true });
+
+  // disable map rotation using right click + drag
+  map.dragRotate.disable();
+
+  // disable map rotation using touch rotation gesture
+  map.touchZoomRotate.disableRotation();
+
+
+  // Disable the zoom out button if the zoom level is 0 (standard behaviour does not work)
+  const zoomOutButton = document.getElementsByClassName('maplibregl-ctrl-zoom-out')?.[0];
+  map.on('zoomend', () => {
+    const zoomLevel = map.getZoom();
+    if (zoomOutButton) {
+      zoomOutButton.disabled = zoomLevel === 0;
+    }
+  });
 });

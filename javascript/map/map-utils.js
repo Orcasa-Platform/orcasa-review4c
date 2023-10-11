@@ -33,3 +33,30 @@ const zoomButtonStyling = () => {
   zoomInButton.innerHTML = zoomInSVG;
   zoomOutButton.innerHTML = zoomOutSVG;
 };
+
+const fitMap = (map, { sidebarOpen, initial=false }) => {
+  const navBarWidth = document.querySelector('#navbar').offsetWidth;
+  const sidebarWidth = document.querySelector('#sidebar').offsetWidth;
+
+  const leftPadding = navBarWidth + sidebarWidth;
+
+  if (initial) {
+    const worldBounds = new maplibregl.LngLatBounds(
+      new maplibregl.LngLat(-90, 90),
+      new maplibregl.LngLat(90, -90)
+    );
+    // We set the padding because the sidebar is initially opened
+    map.setPadding({ left: leftPadding, top: 0, right: 0, bottom: 0 })
+    map.fitBounds(worldBounds)
+  } else {
+    map.easeTo({
+      padding: {
+          left: sidebarOpen ? leftPadding : 0,
+          top: 0,
+          right: 0,
+          bottom: 0
+        },
+      duration: 500
+    });
+  }
+}

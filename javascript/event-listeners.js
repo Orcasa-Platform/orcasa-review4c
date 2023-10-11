@@ -164,11 +164,17 @@ window.addEventListener('load', function () {
   elements.sidebarToggle.addEventListener("click", function() {
     window.mutations.toggleSidebar();
     if (state.sidebarOpen) {
+      // Closing sidebar
       elements.sidebar.classList.add('-translate-x-full');
       elements.sidebarToggle.classList.add('rotate-180');
+
+      fitMap(map, { sidebarOpen: false });
     } else {
+      // Opening sidebar
       elements.sidebar.classList.remove('-translate-x-full');
       elements.sidebarToggle.classList.remove('rotate-180');
+
+      fitMap(map, { sidebarOpen: true });
     }
   });
 
