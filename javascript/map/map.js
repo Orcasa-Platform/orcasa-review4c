@@ -1,10 +1,19 @@
 const map = new maplibregl.Map({
   container: 'map',
   style: mapStyle, // stylesheet location
-  center: [-74.5, 40], // starting position [lng, lat]
-  zoom: 0, // starting zoom
-  minZoom: 0,
+  center: [0, 0], // starting position [lng, lat]
+  zoom: 2, // starting zoom
+  pitch: 0,
+  bearing: 0,
+  // The southern longitude doesn't go up to -90 on purpose so that the map looks better by
+  // default i.e. less of the Antarctica is shown
+  bounds: [-180, -80, 180, 90],
+  minZoom: 1,
+  maxZoom: 20,
 });
+
+// Set the default padding
+map.setPadding(getMapPadding(true));
 
 map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
 
@@ -43,8 +52,6 @@ map.on('load', function() {
 
   addSquareIcon(map);
   zoomButtonStyling();
-
-  fitMap(map, { initial: true });
 
   // disable map rotation using right click + drag
   map.dragRotate.disable();
