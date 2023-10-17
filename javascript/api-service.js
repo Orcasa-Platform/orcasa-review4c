@@ -79,9 +79,9 @@ const getPublications = async ({ landUse, mainIntervention, intervention, subTyp
         const { countryIsos, year, journalIds } = publication;
         const { country: countrySelection, year: yearSelection, journal: journalSelection, 'type-publication': typeSelection } = publicationFilters;
 
-        const countryFilter = countrySelection?.length ? countrySelection.some(iso => countryIsos.includes(iso)) : true;
+        const countryFilter = countrySelection?.length && countryIsos.length > 0 ? countrySelection.some(iso => countryIsos.includes(iso)) : true;
         const yearFilter = yearSelection?.length ? yearSelection.includes(String(year)) : true;
-        const journalFilter = journalSelection?.length ? journalSelection.some(jID => journalIds.map(String).includes(jID)) : true;
+        const journalFilter = journalSelection?.length && journalIds.length > 0 ? journalSelection.some(jID => journalIds.map(String).includes(jID)) : true;
         const typePublicationFilter = typeSelection?.length ? typeSelection.includes(publication.type) : true;
         return countryFilter && yearFilter && journalFilter && typePublicationFilter;
       });

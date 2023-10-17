@@ -2,16 +2,9 @@
   {
       "id": 1,
       "title": "Advances in Crop Management Techniques",
-      "journalIds": [
-          78,
-          16
-      ],
+      "journalIds": [],
       "year": 2018,
-      "countryIsos": [
-          "ES",
-          "PT",
-          "FR"
-      ],
+      "countryIsos": [],
       "type": "meta-analysis",
       "authors": "Smith, John; Brown, Emily; Wilson, David",
       "url": "http://example.com/advances-in-agronomy",
@@ -30,14 +23,9 @@
   {
       "id": 2,
       "title": "Emission of CO2 from biochar-amended soils and implications for soil organic carbon",
-      "journalIds": [
-          67,
-          16
-      ],
+      "journalIds": [],
       "year": 2013,
-      "countryIsos": [
-          "PT"
-      ],
+      "countryIsos": [],
       "type": "primary-paper",
       "authors": "Woolf, Dominic; Amonette, James E.; Street-Perrott, F. Alayne; Lehmann, Johannes; Joseph, Stephen",
       "url": "http://onlinelibrary.wiley.com/doi/10.1111/gcbb.12044/abstract",

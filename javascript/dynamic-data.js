@@ -60,7 +60,7 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
     </div>
     </div>` : ''}
     <div class="w-full h-6 gap-4 flex text-slate-500 text-xs">
-        ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex max-w-[60%] w-fit">
+        ${!isMetaAnalysis && journals.length > 0 ? `<div class="justify-start items-center gap-2 flex max-w-[60%] w-fit">
           <i data-lucide="newspaper" class="w-6 h-6 relative"></i>
           <div class="flex-1 truncate" title="${journals.join(', ')}">${journals.join(', ')}</div>
         </div>`: ''}
@@ -68,7 +68,7 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
           <i data-lucide="calendar" class="w-6 h-6 relative max-width-[10%]"></i>
           <div>${year}</div>
         </div>
-        ${!isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex max-w-[30%]">
+        ${!isMetaAnalysis && countries.length > 0 ? `<div class="justify-start items-center gap-2 flex max-w-[30%]">
           <i data-lucide="globe-2" class="w-6 h-6 relative"></i>
           <div class="truncate" title="${countries.join(', ')}">${countries.join(', ')}</div>
         </div>` : ''}
