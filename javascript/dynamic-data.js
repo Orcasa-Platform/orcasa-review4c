@@ -54,7 +54,7 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
     </div>
   </div>` : ''}
   <div class="h-6 justify-start items-center gap-6 inline-flex">
-  ${isDetail && isMetaAnalysis ? `<div class="flex">
+  ${isDetail && isMetaAnalysis ? `<div class="flex flex-shrink-0">
     <div class="px-2 text-white text-base px-2 bg-teal-500 rounded border border-teal-500">
       Meta-analysis
     </div>
