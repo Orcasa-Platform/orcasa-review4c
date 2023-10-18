@@ -194,8 +194,8 @@ const createSVGChart = (slug, data) => {
     .tickFormat(() => '');
 
   const buttonHTML = (title, publications, slug) =>
-    `<button type="button" class="btn-filter-chart mt-0.5 max-w-[${yTickWidth}px]" aria-pressed="false" id="btn-${kebabCase(slug)}" title="${title} (${publications})">
-      <span class="mr-1.5 overflow-hidden whitespace-nowrap text-ellipsis">${title}</span><span class="text-xs shrink-0">(${publications})</span>
+    `<button type="button" class="btn-filter-chart mt-0.5 max-w-[${yTickWidth}px]" aria-pressed="false" id="btn-${kebabCase(slug)}" title="${title} (${formatNumber(publications)})">
+      <span class="mr-1.5 overflow-hidden whitespace-nowrap text-ellipsis">${title}</span><span class="text-xs shrink-0">(${formatNumber(publications)})</span>
     </button>`;
   ;
 

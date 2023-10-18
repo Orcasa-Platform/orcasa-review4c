@@ -313,7 +313,7 @@ window.addEventListener('load', function () {
         selected.textContent = placeholder;
         window.mutations.setPublicationFilters(dropdown.id, []);
       } else {
-        selected.textContent = `${placeholder} (${selectedLabels.length})`;
+        selected.textContent = `${placeholder} (${formatNumber(selectedLabels.length)})`;
         window.mutations.setPublicationFilters(dropdown.id, selectedValues);
       };
 
@@ -329,7 +329,7 @@ window.addEventListener('load', function () {
       });
 
       const placeholder = selected.attributes['aria-placeholder'].value;
-      selected.textContent = `${placeholder} (${inputs.length})`;
+      selected.textContent = `${placeholder} (${formatNumber(inputs.length)})`;
 
       const inputValues = [...inputs].map(input => input.value);
       window.mutations.setPublicationFilters(dropdown.id, inputValues);
