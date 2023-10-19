@@ -163,8 +163,8 @@ window.addEventListener('load', function () {
     addLayer(map, slug);
 
     // Update the description with the land use publications and meta-analysis
-    const publicationsNumber = publications?.toLocaleString() || '-';
-    const metaAnalysisNumber = metaAnalysis?.toLocaleString() || '-';
+    const publicationsNumber = formatNumber(publications) || '-';
+    const metaAnalysisNumber = formatNumber(metaAnalysis) || '-';
     if (landUseSlug === 'all') {
       elements.landUseIntro.innerHTML = `<div class="space-y-6">
         <div class="text-slate-700 text-[32px] leading-[48px]">
@@ -228,7 +228,7 @@ window.addEventListener('load', function () {
       ${name}
     </span>
     <span class="text-xs">
-    (${publications?.toLocaleString()})
+    (${formatNumber(publications)})
     </span>
     </button>
   `;
@@ -333,8 +333,8 @@ window.addEventListener('load', function () {
       }
     }
 
-    elements.metaAnalysisNumber.innerHTML = totalMetaAnalysis || 0;
-    elements.publicationsNumber.innerHTML = totalPublications || 0;
+    elements.metaAnalysisNumber.innerHTML = formatNumber(totalMetaAnalysis) || 0;
+    elements.publicationsNumber.innerHTML = formatNumber(totalPublications) || 0;
 
     elements.filtersSelectionText.innerHTML = selection;
   };

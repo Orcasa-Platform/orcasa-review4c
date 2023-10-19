@@ -21,3 +21,10 @@ const ellipsis = (text, length) => {
 }
 
 const uniq = (arr) => [...new Set(arr)];
+
+const formatNumber = (value) => {
+  // The French number format uses spaces to separate thousands, millions, etc. and a comma to
+  // separate the decimals e.g. 1 456 357,45
+  const formatter = Intl.NumberFormat('fr');
+  return formatter.format(value);
+};

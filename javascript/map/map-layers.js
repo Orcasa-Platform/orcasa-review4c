@@ -50,7 +50,38 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
           source: layerName,
           filter: ['has', 'point_count'],
           'layout': {
-            'text-field': ['number-format', ['get', 'number_primary_studies'], { locale: 'en' }],
+            // The format must correspond to the one defined in `formatNumber` in
+            // `/javascript/utils.js`. For that we would use this line:
+            //
+            // 'text-field': ['number-format', ['get', 'number_primary_studies'], { locale: 'fr' }],
+            //
+            // Unfortunately, and for unknown reasons, the space between thousands, millions, etc.
+            // is not rendered. As a workaround, we're manually adding the spaces.
+            'text-field': [
+              'let',
+              'char_len', ['length', ['to-string', ['get', 'number_primary_studies']]],
+              'str', ['to-string', ['get', 'number_primary_studies']],
+              [
+                'case',
+                ['all', ['>=', ['var', 'char_len'], 7]],
+                [
+                  'concat',
+                  ['slice', ['var', 'str'], 0, ['-', ['var', 'char_len'], 6]],
+                  ' ',
+                  ['slice', ['var', 'str'], ['-', ['var', 'char_len'], 6], ['-', ['var', 'char_len'], 3]],
+                  ' ',
+                  ['slice', ['var', 'str'], ['-', ['var', 'char_len'], 3], ['var', 'char_len']],
+                ],
+                ['all', ['>=', ['var', 'char_len'], 4]],
+                [
+                  'concat',
+                  ['slice', ['var', 'str'], 0, ['-', ['var', 'char_len'], 3]],
+                  ' ',
+                  ['slice', ['var', 'str'], ['-', ['var', 'char_len'], 3], ['var', 'char_len']],
+                ],
+                ['var', 'str'],
+              ]
+            ],
             'text-size': 16,
             'text-font': ['Roboto Slab'],
             'text-offset': [0, -0.5],
@@ -94,7 +125,38 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
           'type': 'symbol',
           filter: ['!', ['has', 'point_count']],
           'layout': {
-            'text-field': ['number-format', ['get', 'number_primary_studies'], { locale: 'en' }],
+            // The format must correspond to the one defined in `formatNumber` in
+            // `/javascript/utils.js`. For that we would use this line:
+            //
+            // 'text-field': ['number-format', ['get', 'number_primary_studies'], { locale: 'fr' }],
+            //
+            // Unfortunately, and for unknown reasons, the space between thousands, millions, etc.
+            // is not rendered. As a workaround, we're manually adding the spaces.
+            'text-field': [
+              'let',
+              'char_len', ['length', ['to-string', ['get', 'number_primary_studies']]],
+              'str', ['to-string', ['get', 'number_primary_studies']],
+              [
+                'case',
+                ['all', ['>=', ['var', 'char_len'], 7]],
+                [
+                  'concat',
+                  ['slice', ['var', 'str'], 0, ['-', ['var', 'char_len'], 6]],
+                  ' ',
+                  ['slice', ['var', 'str'], ['-', ['var', 'char_len'], 6], ['-', ['var', 'char_len'], 3]],
+                  ' ',
+                  ['slice', ['var', 'str'], ['-', ['var', 'char_len'], 3], ['var', 'char_len']],
+                ],
+                ['all', ['>=', ['var', 'char_len'], 4]],
+                [
+                  'concat',
+                  ['slice', ['var', 'str'], 0, ['-', ['var', 'char_len'], 3]],
+                  ' ',
+                  ['slice', ['var', 'str'], ['-', ['var', 'char_len'], 3], ['var', 'char_len']],
+                ],
+                ['var', 'str'],
+              ]
+            ],
             'text-size': 16,
             'text-font': ['Roboto Slab'],
             'text-offset': [0, -0.5],
@@ -144,12 +206,12 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
           const feature = event.features?.[0];
           const { country_name, number_primary_studies, effect_outcomes } = feature?.properties || {};
           const parsedEffectOutcomes = effect_outcomes && JSON.parse(effect_outcomes);
-          const outcomesList = Object.entries(parsedEffectOutcomes).map(([key, value]) => (
-            `<div class="flex w-full">
-              <span class="text-right w-[24px] mr-2">${value}</span>
-              <span >${key}</span>
-            </div>`
-          )).join('');
+          const outcomesList = Object.entries(parsedEffectOutcomes)
+            .sort((a, b) => b[1] - a[1])
+            .map(([key, value]) => (`
+              <span class="text-right">${formatNumber(value)}</span>
+              <span>${key}</span>
+            `)).join('');
 
           const tooltipHTML = `
             <div class="space-y-4">
@@ -163,12 +225,12 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
                   <path d="m6 6 12 12"></path>
                 </svg>
               </button>
-              <div class="flex flex-col max-h-[140px] overflow-y-auto overflow-x-hidden gap-4">
-                <div class="text-slate-700">
-                  <span>${number_primary_studies}</span>
-                  <span>total</span>
+              <div class="max-h-[140px] overflow-y-auto overflow-x-hidden">
+                <div class="grid grid-cols-[min-content_1fr] auto-rows-auto gap-x-2 w-full">
+                  <span class="mb-3">${formatNumber(number_primary_studies)}</span>
+                  <span class="mb-3">total</span>
+                  ${outcomesList}
                 </div>
-                <div>${outcomesList}</div>
               </div>
             </div>`
 
