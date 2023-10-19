@@ -1,0 +1,29 @@
+
+{
+  "id": 1,
+  "title": "Advances in Crop Management Techniques",
+  "journalIds": [
+    78,
+    16
+  ],
+  "year": 2018,
+  "countryIsos": [
+    "ES",
+    "PT",
+    "FR"
+  ],
+  "type": "meta-analysis",
+  "authors": "Smith, John; Brown, Emily; Wilson, David",
+  "url": "http://example.com/advances-in-agronomy",
+  "source": "Google scholar",
+  "description": "This study explores the latest advancements in crop management techniques and their impact on agricultural productivity.",
+  "globalQuality": 66,
+  "methodology-and-attributes": {
+    "Publication bias method of analysis": "Funnel plot",
+    "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+    "How many databases were queried to perform the literature search?": "3",
+    "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+    "Is the model clearly described (structure, random effects, ..)?": "yes",
+    "Is a quality appraisal of the primary studies is performed?": "-"
+  }
+}

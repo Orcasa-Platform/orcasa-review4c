@@ -1,0 +1,20 @@
+{
+  "id": 18,
+  "title": "Rice Farming Techniques in JP",
+  "journalIds": [
+    66
+  ],
+  "year": 2016,
+  "countryIsos": [
+    "JP",
+    "CA"
+  ],
+  "type": "primary-paper",
+  "authors": "Tanaka, Yuji; Sato, Hiroshi; Yamada, Keiko",
+  "url": "http://example.com/rice-farming-techniques-JP",
+  "source": "Google scholar",
+  "description": "Exploring rice farming techniques and sustainability in Japan.",
+  "metaAnalysis": [
+    21
+  ]
+}

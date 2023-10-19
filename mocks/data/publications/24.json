@@ -1,0 +1,22 @@
+{
+  "id": 24,
+  "title": "Rice Farming in IN",
+  "journalIds": [
+    66
+  ],
+  "year": 2012,
+  "countryIsos": [
+    "IN",
+    "US",
+    "CA",
+    "IE"
+  ],
+  "type": "primary-paper",
+  "authors": "Kumar, Ravi; Sharma, Priya; Singh, Amar",
+  "url": "http://example.com/rice-farming-IN",
+  "source": "Google scholar",
+  "description": "Assessment of rice farming practices and water management in India.",
+  "metaAnalysis": [
+    21
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": 17,
+  "title": "Wheat Crop Management in CA",
+  "journalIds": [
+    66,
+    67
+  ],
+  "year": 2018,
+  "countryIsos": [
+    "US"
+  ],
+  "type": "primary-paper",
+  "authors": "Garcia, Maria; Smith, Sarah; Davis, James",
+  "url": "http://example.com/wheat-crop-management-CA",
+  "source": "Google scholar",
+  "description": "Investigating wheat crop management practices in Canada and their impact on yield.",
+  "metaAnalysis": [
+    1
+  ]
+}

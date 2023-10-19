@@ -1,0 +1,19 @@
+{
+  "id": 8,
+  "title": "Precision Agriculture and Crop Yield Optimization",
+  "journalIds": [
+    75
+  ],
+  "year": 2013,
+  "countryIsos": [
+    "CA"
+  ],
+  "type": "primary-paper",
+  "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
+  "url": "http://example.com/precision-agriculture",
+  "source": "Google scholar",
+  "description": "Investigating the use of precision agriculture for optimizing crop yields.",
+  "metaAnalysis": [
+    9
+  ]
+}

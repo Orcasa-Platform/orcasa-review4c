@@ -1,0 +1,25 @@
+{
+  "id": 3,
+  "title": "Sustainable Farming Practices in Developing Countries",
+  "journalIds": [
+    4
+  ],
+  "year": 2015,
+  "countryIsos": [
+    "CA"
+  ],
+  "type": "meta-analysis",
+  "authors": "Garcia, Maria; Patel, Raj; Kim, Chang",
+  "url": "http://example.com/sustainable-farming-practices",
+  "source": "Google scholar",
+  "description": "An examination of sustainable farming practices in developing countries and their role in food security.",
+  "globalQuality": 80,
+  "methodology-and-attributes": {
+    "Publication bias method of analysis": "Forest plot",
+    "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+    "How many databases were queried to perform the literature search?": "3",
+    "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+    "Is the model clearly described (structure, random effects, ..)?": "yes",
+    "Is a quality appraisal of the primary studies is performed?": "-"
+  }
+}

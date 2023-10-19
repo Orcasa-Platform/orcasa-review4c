@@ -1,9 +1,7 @@
 // TEMPLATES
-const metaAnalysisTemplate = (id) => {
-  const publications = window.getters.publications()?.data;
-  const metaAnalysisPublication = publications.find(publication => String(publication.id) === String(id));
+const metaAnalysisTemplate = (metaAnalysisPublication) => {
   if(!metaAnalysisPublication) return '';
-  const { title, authors, description } = metaAnalysisPublication;
+  const { id, title, authors, description } = metaAnalysisPublication;
   return `<div class="flex flex-col gap-1 px-[50px] py-[30px] bg-green-50">
         <div class="flex-col gap-4 flex">
             <div class="text-slate-700 text-lg leading-[30px]">${title}</div>
@@ -13,7 +11,7 @@ const metaAnalysisTemplate = (id) => {
           <div class="text-slate-500 text-sm leading-7">${description}</div>
         </div>
         <div class="flex pr-1 justify-end gap-1">
-          <button data-id="${id}" class="btn-publication-detail text-teal-500 text-base font-semibold">Learn more</button>
+          <button type="button" data-id="${id}" class="btn-publication-detail text-teal-500 text-base font-semibold">Learn more</button>
           <i data-lucide="arrow-right" class="w-6 h-6 relative stroke-teal-500"></i>
         </div>
     </div>`;
@@ -87,7 +85,7 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
   <div class="text-sm leading-7 text-slate-500">${isDetail ? description : ellipsis(description, 230)}</div>
   ${!isDetail ? `<div class="h-6 justify-end items-center gap-4 flex">
     <div class="pr-1 justify-center items-center gap-1 flex">
-        <button data-id="${id}" class="btn-publication-detail text-teal-500 text-base font-semibold">Learn more</button>
+        <button type="button" data-id="${id}" class="btn-publication-detail text-teal-500 text-base font-semibold">Learn more</button>
         <i data-lucide="arrow-right" class="w-6 h-6 relative stroke-teal-500"></i>
     </div>
   </div>`: ''}
@@ -103,7 +101,7 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
           <i data-lucide="external-link" class="w-6 h-6 color-slate-700 stroke-current"></i>
         </a>
       </div>
-      ${metaAnalysis ? `
+      ${metaAnalysis?.length ? `
         <div class="pt-2.5 border-t border-dashed border-gray-300 flex-col gap-5 flex">
           <div class="text-slate-700 text-2xl leading-10 font-serif">Meta-analysis</div>
             ${metaAnalysis.map(metaAnalysisTemplate).join('')}
@@ -448,6 +446,16 @@ window.addEventListener('load', function () {
     window.mutations.setPublicationFilters('years', availableYears.map(c => c.journal_id));
   };
 
+  const onOpenPublication = function({ target }) {
+    window.mutations.setPublicationDetailOpen(true);
+
+    elements.publicationDetailModal.classList.remove('hidden');
+    elements.closePublicationDetailPanelButton.focus();
+
+    const publicationId = target.getAttribute('data-id');
+    window.loadPublication(publicationId);
+  };
+
   window.loadPublications = (reload, addNewPage) => {
     if (reload && !addNewPage) {
       // Go to page 1 of the new selection
@@ -482,16 +490,13 @@ window.addEventListener('load', function () {
       data.forEach(publication => {
         elements.publicationsContainer.appendChild(createPublicationCard(publication));
       });
-        for (let link of elements.publicationDetailButton) {
-        link.addEventListener("click", function() {
-          window.mutations.setPublicationDetailOpen(true);
 
-          elements.publicationDetailModal.classList.remove('hidden');
-          elements.closePublicationDetailPanelButton.focus();
-
-          const publicationId = link.getAttribute('data-id');
-          window.loadPublication(publicationId);
-        });
+      for (let link of elements.publicationDetailButton) {
+        // We remove any previous event listener to avoid loading twice the publication. This
+        // happens after scrolling since this function is called to add new publication at the
+        // bottom of the list.
+        link.removeEventListener('click', onOpenPublication);
+        link.addEventListener("click", onOpenPublication);
       }
 
       if(!reload) {
@@ -518,27 +523,39 @@ window.addEventListener('load', function () {
   window.reloadPublications = () => window.loadPublications(true);
   window.addPublications = () => window.loadPublications(true, true);
 
-  window.loadPublication = (publicationId) => {
+  window.loadPublication = async (publicationId) => {
     elements.publicationDetailPanelContent.innerHTML = '';
-    const publication = window.getters.publications()?.data.find(publication => String(publication.id) === publicationId);
-    const card = document.createElement('div');
-    card.innerHTML = publicationCardTemplate({ isDetail: true, isMetaAnalysis: publication.type === 'meta-analysis', ...publication});
-    elements.publicationDetailPanelContent.appendChild(card);
 
-    const linkButtons = document.getElementsByClassName('btn-publication-detail');
-    for (let link of linkButtons) {
-      link.addEventListener("click", function() {
-        const publicationId = link.getAttribute('data-id');
-        window.loadPublication(publicationId);
+    try {
+      const publication = await getPublication(publicationId);
+      const metaAnalysis = publication.type === 'primary-paper'
+        ? await Promise.all(publication.metaAnalysis.map(id => getPublication(id)))
+        : [];
+
+      const countries = window.getters.countries();
+      const journals = window.getters.journals();
+
+      const card = document.createElement('div');
+      card.innerHTML = publicationCardTemplate({
+        isDetail: true,
+        isMetaAnalysis: publication.type === 'meta-analysis',
+        ...publication,
+        countries: publication.countryIsos
+          .map(iso => countries.find(({ iso_2digit }) => iso_2digit === iso)?.cntry_name)
+          .filter(Boolean),
+        journals: publication.journalIds
+          .map(id => capitalize(journals.find(({ journal_id }) => journal_id === id)?.journal_name ?? ''))
+          .filter(Boolean),
+        metaAnalysis,
       });
+      elements.publicationDetailPanelContent.appendChild(card);
+
+      // Update lucide icons
+      lucide.createIcons();
+    } catch(e) {
+      elements.publicationDetailPanelContent.innerHTML = '<p class="py-10 text-center font-semibold text-slate-500">Publication not found</p>';
     }
-
-    // Update lucide icons
-    lucide.createIcons();
   };
-
-
-
 
   // Add event listener on scroll on publications list to load more publications
   elements.publicationPanel.addEventListener('scroll', () => {

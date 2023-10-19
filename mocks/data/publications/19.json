@@ -1,0 +1,20 @@
+{
+  "id": 19,
+  "title": "Irrigation Management in SA",
+  "journalIds": [
+    66
+  ],
+  "year": 2013,
+  "countryIsos": [
+    "SA"
+  ],
+  "type": "primary-paper",
+  "authors": "Ahmed, Khalid; Ali, Hassan; Khan, Nadeem",
+  "url": "http://example.com/irrigation-management-SA",
+  "source": "Google scholar",
+  "description": "Assessing irrigation management practices in Saudi Arabia and their efficiency.",
+  "metaAnalysis": [
+    1,
+    21
+  ]
+}

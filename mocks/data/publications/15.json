@@ -1,0 +1,19 @@
+{
+  "id": 15,
+  "title": "Soil Health Management in the US",
+  "journalIds": [
+    7
+  ],
+  "year": 2016,
+  "countryIsos": [
+    "US"
+  ],
+  "type": "primary-paper",
+  "authors": "Brown, John; Smith, Emily; Wilson, David",
+  "url": "http://example.com/soil-health-management-US",
+  "source": "Google scholar",
+  "description": "A study on soil health management practices and their impact on crop yields in the United States.",
+  "metaAnalysis": [
+    14
+  ]
+}

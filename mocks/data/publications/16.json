@@ -1,0 +1,17 @@
+{
+  "id": 16,
+  "title": "Pesticide Usage in Canadian Agriculture",
+  "journalIds": [
+    7
+  ],
+  "year": 2017,
+  "countryIsos": [
+    "CA"
+  ],
+  "type": "primary-paper",
+  "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
+  "url": "http://example.com/pesticide-usage-Canada",
+  "source": "Google scholar",
+  "description": "Analyzing pesticide usage trends in Canadian agriculture and their environmental implications.",
+  "metaAnalysis": []
+}

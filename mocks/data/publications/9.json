@@ -1,0 +1,25 @@
+{
+  "id": 9,
+  "title": "Drought Management Strategies in Rice Farming",
+  "journalIds": [
+    66
+  ],
+  "year": 2008,
+  "countryIsos": [
+    "IN"
+  ],
+  "type": "meta-analysis",
+  "authors": "Kumar, Ravi; Sharma, Priya; Singh, Amar",
+  "url": "http://example.com/drought-management-rice",
+  "source": "Google scholar",
+  "description": "Assessment of drought management strategies in rice farming.",
+  "globalQuality": 21,
+  "methodology-and-attributes": {
+    "Publication bias method of analysis": "Trim and fill method",
+    "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+    "How many databases were queried to perform the literature search?": "3",
+    "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+    "Is the model clearly described (structure, random effects, ..)?": "yes",
+    "Is a quality appraisal of the primary studies is performed?": "-"
+  }
+}
