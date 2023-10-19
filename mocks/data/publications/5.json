@@ -1,0 +1,20 @@
+{
+  "id": 5,
+  "title": "Biodiversity Conservation in Agricultural Landscapes",
+  "journalIds": [
+    4
+  ],
+  "year": 2005,
+  "countryIsos": [
+    "GB"
+  ],
+  "type": "primary-paper",
+  "authors": "Jones, Sarah; Smith, Peter; Davis, Mark",
+  "url": "http://example.com/biodiversity-conservation",
+  "source": "Google scholar",
+  "description": "Exploring strategies for biodiversity conservation in agricultural landscapes.",
+  "metaAnalysis": [
+    1,
+    21
+  ]
+}

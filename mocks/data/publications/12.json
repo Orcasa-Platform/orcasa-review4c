@@ -1,0 +1,19 @@
+{
+  "id": 12,
+  "title": "Water Resource Management in Australia",
+  "journalIds": [
+    54
+  ],
+  "year": 2014,
+  "countryIsos": [
+    "AU"
+  ],
+  "type": "primary-paper",
+  "authors": "Smith, Robert; Turner, Lisa; Harris, David",
+  "url": "http://example.com/water-resource-management-AU",
+  "source": "Google scholar",
+  "description": "Assessing water resource management strategies in agriculture in Australia.",
+  "metaAnalysis": [
+    11
+  ]
+}

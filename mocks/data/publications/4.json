@@ -1,0 +1,26 @@
+{
+  "id": 4,
+  "title": "Efficiency of Irrigation Systems in Arid Regions",
+  "journalIds": [
+    66
+  ],
+  "year": 2010,
+  "countryIsos": [
+    "AU",
+    "PT"
+  ],
+  "type": "meta-analysis",
+  "authors": "Wilson, Robert; Lee, Hyejin; Singh, Amar",
+  "url": "http://example.com/irrigation-efficiency",
+  "source": "Google scholar",
+  "description": "Assessing the efficiency of irrigation systems in arid regions and their impact on water resources.",
+  "globalQuality": 60,
+  "methodology-and-attributes": {
+    "Publication bias method of analysis": "Trim and fill method",
+    "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+    "How many databases were queried to perform the literature search?": "3",
+    "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+    "Is the model clearly described (structure, random effects, ..)?": "yes",
+    "Is a quality appraisal of the primary studies is performed?": "-"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": 20,
+  "title": "Organic Farming in DE",
+  "journalIds": [
+    66
+  ],
+  "year": 2014,
+  "countryIsos": [
+    "DE"
+  ],
+  "type": "primary-paper",
+  "authors": "Müller, Hans; Fischer, Anna; Weber, Klaus",
+  "url": "http://example.com/organic-farming-DE",
+  "source": "Google scholar",
+  "description": "A study on organic farming practices in Germany and their ecological impact.",
+  "metaAnalysis": [
+    21
+  ]
+}

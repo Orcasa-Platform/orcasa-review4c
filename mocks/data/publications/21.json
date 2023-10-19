@@ -1,0 +1,25 @@
+{
+  "id": 21,
+  "title": "Coffee Agroforestry in CO",
+  "journalIds": [
+    66
+  ],
+  "year": 2020,
+  "countryIsos": [
+    "CO"
+  ],
+  "type": "meta-analysis",
+  "authors": "Lopez, Maria; Rodriguez, Carlos; Perez, Juan",
+  "url": "http://example.com/coffee-agroforestry-CO",
+  "source": "Google scholar",
+  "description": "Evaluating coffee agroforestry systems in Colombia and their sustainability.",
+  "globalQuality": 89,
+  "methodology-and-attributes": {
+    "Publication bias method of analysis": "Regression asymmetry test",
+    "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+    "How many databases were queried to perform the literature search?": "3",
+    "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+    "Is the model clearly described (structure, random effects, ..)?": "yes",
+    "Is a quality appraisal of the primary studies is performed?": "-"
+  }
+}

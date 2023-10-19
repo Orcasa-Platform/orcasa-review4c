@@ -1,0 +1,19 @@
+{
+  "id": 6,
+  "title": "Agroforestry for Sustainable Agripractices",
+  "journalIds": [
+    66
+  ],
+  "year": 2019,
+  "countryIsos": [
+    "BR"
+  ],
+  "type": "primary-paper",
+  "authors": "Silva, Ana; Oliveira, Carlos; Santos, Maria",
+  "url": "http://example.com/agroforestry-sustainability",
+  "source": "Google scholar",
+  "description": "Examining the role of agroforestry systems in promoting sustainable agricultural practices.",
+  "metaAnalysis": [
+    21
+  ]
+}

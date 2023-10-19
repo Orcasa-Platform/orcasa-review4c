@@ -1,0 +1,19 @@
+{
+  "id": 13,
+  "title": "Organic Farming in the UK",
+  "journalIds": [
+    66
+  ],
+  "year": 2011,
+  "countryIsos": [
+    "GB"
+  ],
+  "type": "primary-paper",
+  "authors": "Wilson, Sarah; Brown, Peter; Davis, Mark",
+  "url": "http://example.com/organic-farming-UK",
+  "source": "Google scholar",
+  "description": "Investigating the practices and benefits of organic farming in the United Kingdom.",
+  "metaAnalysis": [
+    14
+  ]
+}

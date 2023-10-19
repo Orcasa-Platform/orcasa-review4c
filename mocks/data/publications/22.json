@@ -1,0 +1,19 @@
+{
+  "id": 22,
+  "title": "Maize Crop Management in CA",
+  "journalIds": [
+    66
+  ],
+  "year": 2017,
+  "countryIsos": [
+    "IN"
+  ],
+  "type": "primary-paper",
+  "authors": "Brown, John; Smith, Emily; Wilson, David",
+  "url": "http://example.com/maize-crop-management-CA",
+  "source": "Google scholar",
+  "description": "A study on maize crop management practices and their effects on yield in Canada.",
+  "metaAnalysis": [
+    1
+  ]
+}

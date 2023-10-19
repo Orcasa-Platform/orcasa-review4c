@@ -1,0 +1,19 @@
+{
+  "id": 10,
+  "title": "Sustainable Agriculture Practices in the US",
+  "journalIds": [
+    54
+  ],
+  "year": 2015,
+  "countryIsos": [
+    "US"
+  ],
+  "type": "primary-paper",
+  "authors": "Johnson, Mark; Smith, Sarah; Davis, James",
+  "url": "http://example.com/sustainable-agriculture-US",
+  "source": "Google scholar",
+  "description": "Examining sustainable agriculture practices and their implementation in the United States.",
+  "metaAnalysis": [
+    8
+  ]
+}

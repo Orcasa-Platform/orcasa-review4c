@@ -1,0 +1,25 @@
+{
+  "id": 14,
+  "title": "Coffee Agroforestry Systems in Brazil",
+  "journalIds": [
+    66
+  ],
+  "year": 2019,
+  "countryIsos": [
+    "BR"
+  ],
+  "type": "meta-analysis",
+  "authors": "Silva, Ana; Oliveira, Carlos; Santos, Maria",
+  "url": "http://example.com/coffee-agroforestry-BR",
+  "source": "Google scholar",
+  "description": "Assessing the agroforestry systems used in coffee cultivation in Brazil.",
+  "globalQuality": 60,
+  "methodology-and-attributes": {
+    "Publication bias method of analysis": "Regression asymmetry test",
+    "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+    "How many databases were queried to perform the literature search?": "3",
+    "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+    "Is the model clearly described (structure, random effects, ..)?": "yes",
+    "Is a quality appraisal of the primary studies is performed?": "-"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": 23,
+  "title": "Pesticide Usage in FR Agriculture",
+  "journalIds": [
+    66
+  ],
+  "year": 2018,
+  "countryIsos": [
+    "FR"
+  ],
+  "type": "meta-analysis",
+  "globalQuality": 18,
+  "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
+  "url": "http://example.com/pesticide-usage-FR",
+  "source": "Google scholar",
+  "description": "Analyzing pesticide usage trends in French agriculture and their environmental impact.",
+  "methodology-and-attributes": {
+    "Publication bias method of analysis": "Forest plot",
+    "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+    "How many databases were queried to perform the literature search?": "3",
+    "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+    "Is the model clearly described (structure, random effects, ..)?": "yes",
+    "Is a quality appraisal of the primary studies is performed?": "-"
+  }
+}

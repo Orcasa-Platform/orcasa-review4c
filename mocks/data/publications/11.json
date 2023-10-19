@@ -1,0 +1,25 @@
+{
+  "id": 11,
+  "title": "Rice Crop Management in China",
+  "journalIds": [
+    54
+  ],
+  "year": 2012,
+  "countryIsos": [
+    "CN"
+  ],
+  "type": "meta-analysis",
+  "authors": "Wang, Li; Chen, Wei; Zhang, Ming",
+  "url": "http://example.com/rice-crop-management-China",
+  "source": "Google scholar",
+  "description": "A study on rice crop management practices in China and their impact on food production.",
+  "globalQuality": 65,
+  "methodology-and-attributes": {
+    "Publication bias method of analysis": "Forest plot",
+    "Quantifying method for the model's heterogeneity": "quantification (i2, qb) and subgroup analysis",
+    "How many databases were queried to perform the literature search?": "3",
+    "Is the SOC presented as a co-variable in the meta-analysis?": "no",
+    "Is the model clearly described (structure, random effects, ..)?": "yes",
+    "Is a quality appraisal of the primary studies is performed?": "-"
+  }
+}

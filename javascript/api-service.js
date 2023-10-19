@@ -152,3 +152,9 @@ const getPublications = async ({ landUse, mainIntervention, intervention, subTyp
     return { data: paginatedData, metadata };
   });
 }
+
+const getPublication = async (publicationId) => {
+  // NOTE: This URL will point to the endpoint that returns the details of a publication
+  const url = `${BASE_PUBLICATIONS_URL}/${publicationId}.json`;
+  return getURL(url);
+};

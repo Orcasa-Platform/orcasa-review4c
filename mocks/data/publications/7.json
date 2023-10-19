@@ -1,0 +1,19 @@
+{
+  "id": 7,
+  "title": "Advances in Crop Management Techniques",
+  "journalIds": [
+    18
+  ],
+  "year": 2017,
+  "countryIsos": [
+    "US"
+  ],
+  "type": "primary-paper",
+  "authors": "Anderson, Robert; Turner, Lisa; Harris, James",
+  "url": "http://example.com/soil-nutrient-management",
+  "source": "Google scholar",
+  "description": "A review of modern soil nutrient management practices in agriculture.",
+  "metaAnalysis": [
+    1
+  ]
+}
