@@ -360,25 +360,6 @@ window.addEventListener('load', function () {
     });
   }
 
-  // PUBLICATION TYPE CHECKBOXES
-  elements.typePublication.addEventListener('click', ({ target }) => {
-    if (target.type !== 'checkbox') {
-      return;
-    }
-
-    const selectedValues = [];
-
-    elements.typePublication.querySelectorAll('input').forEach(input => {
-      if (input.checked) {
-        selectedValues.push(input.value);
-      }
-    });
-    window.mutations.setPublicationFilters('type-publication', selectedValues);
-
-    // Reload publications
-    window.reloadPublications();
-  });
-
   // SEARCH
   elements.search.addEventListener('input', debounce(() => {
       const searchInput = elements.search.querySelector('input');
