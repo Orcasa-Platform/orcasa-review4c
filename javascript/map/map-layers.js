@@ -1,11 +1,18 @@
 const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug, subTypeSlug) => {
-  const layerSlug = landUseSlug === 'all' ? 'all' : `${landUseSlug}${mainInterventionSlug ? `-${mainInterventionSlug}` : ''}${interventionSlug ? `-${interventionSlug}` : ''}${subTypeSlug ? `-${subTypeSlug}` : ''}`;
+  const slug = landUseSlug === 'all'
+    ? landUseSlug
+    : [landUseSlug, mainInterventionSlug, interventionSlug, subTypeSlug].filter(Boolean).join('-');
+  const layerName = `layer-${slug}`;
+  const clusterLayerName = `clusters-${slug}`;
+
   const currentLayers = map.getStyle()?.layers;
   const currentSources = map.getStyle()?.sources;
-  const layerName = `layer-${layerSlug}`;
+
+  const isSourceDefined = !!currentSources[layerName];
+  const isLayerActive = currentLayers.some(l => l.id === layerName);
 
   // Get the layer and load it if not already loaded
-  if (!currentSources[layerName] || !currentLayers.find(l => l.id === layerName)) {
+  if (!isSourceDefined || !isLayerActive) {
     getLayer(landUseSlug, mainInterventionSlug, interventionSlug, subTypeSlug).then(layer => {
       const countryValues = layer && Object.values(layer);
       const features = countryValues && countryValues.map(country => {
@@ -24,10 +31,10 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
 
       const geoJSONContent = {
         type: 'FeatureCollection',
-        features: features,
+        features,
       };
 
-      if (!currentSources[layerName]) {
+      if (!isSourceDefined) {
         // ADD SOURCE. SAME FOR CLUSTERS AND LAYER
         map.addSource(layerName, {
           'type': 'geojson',
@@ -41,11 +48,10 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
         });
       }
 
-      if (!currentLayers.find(l => l.id === layerName)) {
-
+      if (!isLayerActive) {
         // ADD CLUSTERS
         map.addLayer({
-          id: `clusters-${layerName}`,
+          id: clusterLayerName,
           type: 'symbol',
           source: layerName,
           filter: ['has', 'point_count'],
@@ -181,9 +187,9 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
         });
 
         // Clusters zoom on click
-        map.on('click', `clusters-${layerName}`, (e) => {
+        map.on('click', clusterLayerName, (e) => {
           const features = map.queryRenderedFeatures(e.point, {
-            layers: [`clusters-${layerName}`]
+            layers: [clusterLayerName]
           });
           const clusterId = features[0].properties.cluster_id;
           const leftPadding = elements.sidebar.getBoundingClientRect().right;
@@ -245,18 +251,14 @@ const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug
     });
   }
 
-  currentLayers.forEach(layer => {
-    const layerId = layer.id;
-    const selectedLayerId = `layer-${layerSlug}`;
-    if (
-      layerId.startsWith('layer-') && layerId !== selectedLayerId ||
-      layerId.startsWith('clusters-') && !layerId.startsWith(`clusters-${selectedLayerId}`)
+  currentLayers.forEach(({ id }) => {
+    if (id === layerName || id === clusterLayerName) {
+      map.setLayoutProperty(id, 'visibility', 'visible');
+    } else if (
+      id.startsWith('layer-') && id !== layerName ||
+      id.startsWith('clusters-') && id !== clusterLayerName
     ) {
-      map.setLayoutProperty(layerId, 'visibility', 'none');
-    }
-
-    if (layerId === selectedLayerId || layerId === `clusters-${selectedLayerId}`) {
-      map.setLayoutProperty(layerId, 'visibility', 'visible');
+      map.setLayoutProperty(id, 'visibility', 'none');
     }
   });
 };
