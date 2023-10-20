@@ -456,6 +456,16 @@ window.addEventListener('load', function () {
     window.loadPublication(publicationId);
   };
 
+  const addListenerToPublicationButton = function() {
+    for (let link of elements.publicationDetailButton) {
+      // We remove any previous event listener to avoid loading twice the publication. This
+      // happens after scrolling since this function is called to add new publication at the
+      // bottom of the list.
+      link.removeEventListener('click', onOpenPublication);
+      link.addEventListener("click", onOpenPublication);
+    }
+  };
+
   window.loadPublications = (reload, addNewPage) => {
     if (reload && !addNewPage) {
       // Go to page 1 of the new selection
@@ -491,13 +501,7 @@ window.addEventListener('load', function () {
         elements.publicationsContainer.appendChild(createPublicationCard(publication));
       });
 
-      for (let link of elements.publicationDetailButton) {
-        // We remove any previous event listener to avoid loading twice the publication. This
-        // happens after scrolling since this function is called to add new publication at the
-        // bottom of the list.
-        link.removeEventListener('click', onOpenPublication);
-        link.addEventListener("click", onOpenPublication);
-      }
+      addListenerToPublicationButton();
 
       if(!reload) {
         populateYearChart(metadata.years);
@@ -549,6 +553,8 @@ window.addEventListener('load', function () {
         metaAnalysis,
       });
       elements.publicationDetailPanelContent.appendChild(card);
+
+      addListenerToPublicationButton();
 
       // Update lucide icons
       lucide.createIcons();
