@@ -1,6 +1,7 @@
 :root {
   --main: #334154;
   --hover-main: #64748b;
+  --ring: 215 20.2% 65.1%;
 }
 
 @font-face {

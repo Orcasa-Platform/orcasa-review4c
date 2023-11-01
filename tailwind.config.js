@@ -18,7 +18,6 @@ tailwind.config = {
         'main': '#3C4363',
         'hover-main': '#64748b',
         'hover-light': '#e2e8f0',
-        'gray-50': '#F7F7F9',
         'mod-sc-ev': '#2BB3A7',
         'mod-sc-ev-light': '#CEEEE3',
         'chart-color': '#B4E4D7',
@@ -28,6 +27,12 @@ tailwind.config = {
         'cluster-300': '#67DBA5',
         'cluster-400': '#4CC8A3',
         'cluster-500': '#2BB3A7',
+        ring: 'hsl(var(--ring))',
+        gray: {
+          50: '#F7F7F9',
+          200: '#CFD1DB',
+          300: '#B2B5C5',
+        }
       },
     },
   },

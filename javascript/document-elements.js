@@ -47,4 +47,6 @@ const elements = {
   yearRange: document.getElementById('year-range'),
   search: document.getElementById('search'),
   resetFiltersButton: document.getElementById('reset-filters'),
+  labelsSwitch: document.getElementById('labels-switch'),
+  labelsRadioGroup: document.getElementById('labels-radio-group'),
 }
