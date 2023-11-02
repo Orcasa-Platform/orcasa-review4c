@@ -7,7 +7,7 @@ const mapStyle = {
   "pitch": 0,
   "sources": {
     "labels": {
-      "data": "https://raw.githubusercontent.com/Orcasa-Platform/orcasa/main/client/public/country_labels.json",
+      "data": "/assets/country_labels.json",
       "type": "geojson"
     }
   },
@@ -19,6 +19,56 @@ const mapStyle = {
       "id": "background",
       "type": "background",
       "layout": {"visibility": "none"},
+    },
+    {
+      "id": "countries-labels-dark",
+      "type": "symbol",
+      "paint": {
+        "text-color": "#3C4363",
+        "text-halo-color": "rgba(255, 255, 255, 0.5)",
+        "text-halo-width": 2
+      },
+      "layout": {
+        "visibility": "none",
+        "text-field": [
+          "get",
+          "country_name"
+        ],
+        "text-anchor": "center",
+        "text-padding": 15,
+        "text-font": ["Roboto Slab"],
+        "text-size": 14
+      },
+      "source": "labels",
+      "metadata": {
+        "group": "labels-dark",
+        "position": "top"
+      }
+    },
+    {
+      "id": "countries-labels-light",
+      "type": "symbol",
+      "paint": {
+        "text-color": "#FFFFFF",
+        "text-halo-color": "rgba(29, 33, 51, 0.75)",
+        "text-halo-width": 1.25
+      },
+      "layout": {
+        "visibility": "none",
+        "text-field": [
+          "get",
+          "country_name"
+        ],
+        "text-anchor": "center",
+        "text-padding": 15,
+        "text-font": ["Roboto Slab"],
+        "text-size": 14
+      },
+      "source": "labels",
+      "metadata": {
+        "group": "labels-light",
+        "position": "top"
+      }
     }
   ],
   "id": "orcasa"

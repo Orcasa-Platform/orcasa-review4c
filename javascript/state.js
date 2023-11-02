@@ -5,6 +5,7 @@ window.addEventListener('load', function () {
     filtersOpen: false,
     mapSettingsOpen: false,
     basemap: 'light',
+    labels: null,
     landUse: 'all',
     landUses: null,
     mainInterventions: [],
@@ -44,6 +45,9 @@ window.addEventListener('load', function () {
     },
     setBasemap(basemap) {
       state.basemap = basemap;
+    },
+    setLabels(labels) {
+      state.labels = labels;
     },
     setLandUse(landUse) {
       state.landUse = landUse;
@@ -114,5 +118,6 @@ window.addEventListener('load', function () {
     countries: () => state.countries,
     journals: () => state.journals,
     publications: () => state.publications,
+    labels: () => state.labels,
   };
 });

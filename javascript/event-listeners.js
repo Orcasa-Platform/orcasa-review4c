@@ -159,6 +159,101 @@ window.addEventListener('load', function () {
     );
   });
 
+  const onToggleLabels = function (labels) {
+    window.mutations.setLabels(labels);
+    
+    map.setLayoutProperty('countries-labels-light', 'visibility', 'none');
+    map.setLayoutProperty('countries-labels-dark', 'visibility', 'none');
+
+    if (labels !== null) {
+      map.setLayoutProperty(`countries-labels-${labels}`, 'visibility', 'visible');
+    }
+  };
+
+  elements.labelsSwitch.addEventListener("click", function () {
+    const checked = window.getters.labels() !== null;
+
+    elements.labelsSwitch.setAttribute('aria-checked', `${!checked}`);
+    elements.labelsSwitch.dataset.state = checked ? 'unchecked' : 'checked';
+
+    elements.labelsSwitch.children[0].dataset.state = checked ? 'unchecked' : 'checked';
+
+    const radios = Array.from(elements.labelsRadioGroup.querySelectorAll('button[role="radio"]'));
+    radios.forEach((radio) => {
+      if (checked) {
+        radio.setAttribute('disabled', '');
+        radio.dataset.disabled = '';
+        if (radio.children.length > 0) {
+          radio.children[0].dataset.disabled = '';
+        }
+      } else {
+        radio.removeAttribute('disabled');
+        delete radio.dataset.disabled;
+        if (radio.children.length > 0) {
+          delete radio.children[0].dataset.disabled;
+        }
+      }
+    });
+
+    if (checked) {
+      radios.forEach((radio, index) => onToggleLabelsRadio(radio, index === 0));
+      onToggleLabels(null);
+    } else {
+      const labels = radios[0].value;
+      onToggleLabels(labels)
+    }
+  });
+
+  const onToggleLabelsRadio = function (radio, checked) {
+    if (checked) { 
+      radio.setAttribute('tabindex', 0);
+      radio.setAttribute('aria-checked', true);
+      radio.dataset.state = 'checked';
+
+      onToggleLabels(radio.value);
+    } else {
+      radio.setAttribute('tabindex', -1);
+      radio.setAttribute('aria-checked', false);
+      radio.dataset.state = 'unchecked';
+    }
+  };
+
+  Array.from(
+    elements.labelsRadioGroup.querySelectorAll('button[role="radio"]')
+  ).forEach((radio, index, radios) => {
+    radio.addEventListener('click', function () {
+      const disabled = radio.getAttribute('disabled') === '';
+      if (!disabled) {
+        onToggleLabelsRadio(radio, true);
+
+        radios
+          .filter((_, otherIndex) => otherIndex !== index)
+          .map((otherRadio) => onToggleLabelsRadio(otherRadio, false));
+      }
+    });
+
+    radio.addEventListener('keydown', function ({ key }) {
+      const disabled = radio.getAttribute('disabled') === '';
+      if (!disabled) {
+        let checkedIndex;
+
+        if (key === 'ArrowUp' || key === 'ArrowLeft') {
+          checkedIndex = index === 0 ? radios.length - 1 : index - 1;
+        } else if (key === 'ArrowDown' || key === 'ArrowRight') {
+          checkedIndex = index + 1 === radios.length ? 0 : index + 1;
+        }
+
+        onToggleLabelsRadio(radios[checkedIndex], true);
+
+        radios
+          .filter((_, otherIndex) => otherIndex !== checkedIndex)
+          .map((otherRadio) => onToggleLabelsRadio(otherRadio, false));
+
+        radios[checkedIndex].focus();
+      }
+    });
+  });
+
   // SIDEBAR
 
   elements.sidebarToggle.addEventListener("click", function() {
