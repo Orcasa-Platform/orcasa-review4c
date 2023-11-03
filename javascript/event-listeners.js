@@ -59,104 +59,141 @@ window.addEventListener('load', function () {
     elements.mapSettingsOverlay.classList.add('hidden');
   });
 
-  elements.satelliteBasemapButton.addEventListener("click", function() {
-    window.mutations.setBasemap('satellite');
+  const onToggleBasemapRadio = function(basemap) {
+    window.mutations.setBasemap(basemap);
 
-    // Change theme in buttons and attribution
+    // Change theme of the controls
+    const isDarkTheme = basemap === 'satellite';
+
     if (elements.maplibreControls) {
       for (let element of elements.maplibreControls) {
-        element.classList.add('theme-light');
+        element.classList.toggle('theme-light', isDarkTheme);
       };
     }
-    elements.sidebarToggle.classList.remove('btn-icon-theme-dark');
-    elements.sidebarToggle.classList.add('btn-icon-theme-light');
-    elements.mapSettingsButton.classList.remove('btn-theme-dark');
-    elements.mapSettingsButton.classList.add('btn-theme-light');
 
-    elements.attribution.classList.add('text-white');
-    elements.attribution.classList.remove('text-black');
+    elements.sidebarToggle.classList.toggle('btn-icon-theme-dark', !isDarkTheme);
+    elements.sidebarToggle.classList.toggle('btn-icon-theme-light', isDarkTheme);
 
-    // Update attribution content
-    elements.attributionContent.innerHTML = `<span>
-    Tiles ©
-    <a
-      className="hover:underline"
-      rel="noopener noreferrer"
-      target="_blank"
-      href="https://esri.com"
-    >
-      Esri
-    </a>
-    — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP,
-    and the GIS User Community</span>`;
+    elements.mapSettingsButton.classList.toggle('btn-theme-dark', !isDarkTheme);
+    elements.mapSettingsButton.classList.toggle('btn-theme-light', isDarkTheme);
 
-    // Update map settings popup
-    elements.lightBasemapContainer.classList.remove('outline');
-    elements.satelliteBasemapContainer.classList.add('outline');
+    elements.attribution.classList.toggle('text-black', !isDarkTheme);
+    elements.attribution.classList.toggle('text-white', isDarkTheme);
+
+    // Update the attributions
+    if (basemap === 'satellite') {
+      elements.attributionContent.innerHTML = `
+        <span>
+          Tiles ©
+          <a
+            className="hover:underline"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://esri.com"
+          >
+            Esri
+          </a>
+          — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP,
+          and the GIS User Community
+        </span>
+      `;
+    } else if (basemap === 'light') {
+      elements.attributionContent.innerHTML = `
+        <span>
+          ©
+          <a
+            class="hover:underline"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://www.openstreetmap.org/"
+          >
+            OpenStreetMap
+          </a>
+          contributors ©
+          <a
+            class="hover:underline"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://carto.com/"
+          >
+            CARTO
+          </a>
+        </span>
+      `;
+    } else if (basemap === 'relief') {
+      elements.attributionContent.innerHTML = `
+        <span>
+          Tiles ©
+          <a
+            className="hover:underline"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://esri.com"
+          >
+            Esri
+          </a>
+          — Source: Esri
+        </span>
+      `;
+    }
 
     // Change basemap
-    map.setPaintProperty(
-      'basemap-light',
-      'raster-opacity',
-      0
-    );
-    map.setPaintProperty(
-      'basemap-satellite',
-      'raster-opacity',
-      1
-    );
+    map.setPaintProperty('basemap-satellite', 'raster-opacity', Number(basemap === 'satellite'));
+    map.setPaintProperty('basemap-light', 'raster-opacity', Number(basemap === 'light'));
+    map.setPaintProperty('basemap-relief', 'raster-opacity', Number(basemap === 'relief'));
+
+    // Update the UI
+    const basemapEntries = Object.entries({
+      satellite: elements.satelliteBasemapButton,
+      light: elements.lightBasemapButton,
+      relief: elements.reliefBasemapButton,
+    });
+
+    for(const [id, radio] of basemapEntries) {
+      radio.setAttribute('tabindex', id === basemap ? 0 : -1);
+      radio.setAttribute('aria-checked', id === basemap);
+      radio.dataset.state = id === basemap ? 'checked' : 'unchecked';
+
+      if (id === basemap) {
+        radio.focus();
+      }
+    }
+  };
+
+  elements.satelliteBasemapButton.addEventListener("click", function() {
+    onToggleBasemapRadio('satellite');
+  });
+
+  elements.satelliteBasemapButton.addEventListener('keydown', function ({ key }) {
+    if (key === 'ArrowUp' || key === 'ArrowLeft') {
+      onToggleBasemapRadio('relief')
+    } else if (key === 'ArrowDown' || key === 'ArrowRight') {
+      onToggleBasemapRadio('light')
+    }
   });
 
   elements.lightBasemapButton.addEventListener("click", function() {
+    onToggleBasemapRadio('light');
+  });
 
-    // Change theme in buttons and attribution
-    window.mutations.setBasemap('light');
-    if (elements.maplibreControls) {
-      for (let element of elements.maplibreControls) {
-        element.classList.remove('theme-light');
-      }
+  elements.lightBasemapButton.addEventListener('keydown', function ({ key }) {
+    if (key === 'ArrowUp' || key === 'ArrowLeft') {
+      onToggleBasemapRadio('satellite')
+    } else if (key === 'ArrowDown' || key === 'ArrowRight') {
+      onToggleBasemapRadio('relief')
     }
-    elements.mapSettingsButton.classList.add('btn-theme-dark');
-    elements.mapSettingsButton.classList.remove('btn-theme-light');
-    elements.sidebarToggle.classList.add('btn-icon-theme-dark');
-    elements.sidebarToggle.classList.remove('btn-icon-theme-light');
+  });
 
-    elements.attribution.classList.add('text-black');
-    elements.attribution.classList.remove('text-white');
+  elements.reliefBasemapButton.addEventListener("click", function() {
+    onToggleBasemapRadio('relief');
+  });
 
-    // Update attribution content
-    elements.attributionContent.innerHTML = `<span>©
-    <a
-      class="hover:underline"
-      rel="noopener noreferrer"
-      target="_blank"
-      href="https://www.openstreetmap.org/">
-      OpenStreetMap
-    </a>
-    contributors ©
-    <a
-      class="hover:underline"
-      rel="noopener noreferrer"
-      target="_blank"
-      href="https://carto.com/">
-      CARTO
-    </a></span>`;
-
-    // Update map settings popup
-    elements.lightBasemapContainer.classList.add('outline');
-    elements.satelliteBasemapContainer.classList.remove('outline');
-
-    // Change basemap
-    map.setPaintProperty(
-      'basemap-light',
-      'raster-opacity',
-      1
-    );
-    map.setPaintProperty(
-      'basemap-satellite',
-      'raster-opacity',
-      0
-    );
+  elements.reliefBasemapButton.addEventListener('keydown', function ({ key }) {
+    if (key === 'ArrowUp' || key === 'ArrowLeft') {
+      onToggleBasemapRadio('light')
+    } else if (key === 'ArrowDown' || key === 'ArrowRight') {
+      onToggleBasemapRadio('satellite')
+    }
   });
 
   const onToggleLabels = function (labels) {
