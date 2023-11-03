@@ -4,7 +4,7 @@ window.addEventListener('load', function () {
     legendOpen: true,
     filtersOpen: false,
     mapSettingsOpen: false,
-    basemap: 'light',
+    basemap: 'relief',
     labels: null,
     landUse: 'all',
     landUses: null,

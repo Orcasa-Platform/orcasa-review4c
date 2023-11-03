@@ -590,12 +590,12 @@
                     <div class="space-y-2">
                       <div
                         id="satellite-basemap-container"
-                        class="shrink-0 overflow-hidden transition-opacity outline-2 outline-offset-4 outline-yellow-500 group-hover:opacity-100 group-active:outline-slate-500">
+                        class="shrink-0 overflow-hidden transition-opacity outline-2 outline-offset-4 outline-yellow-500">
                         <img
                           alt="Satellite basemap" loading="lazy" width="104"
                           height="104" decoding="async"
                           class="w-full"
-                          src="/assets/satellite.webp">
+                          src="/assets/images/basemap-satellite.png">
                       </div>
                     </div>
                   </button>
@@ -610,82 +610,38 @@
                     <div class="space-y-2">
                       <div
                         id="light-basemap-container"
-                        class="shrink-0 overflow-hidden transition-opacity outline outline-2 outline-offset-4 outline-yellow-500">
+                        class="shrink-0 overflow-hidden transition-opacity outline-2 outline-offset-4 outline-yellow-500">
                         <img
                           alt="Light basemap" loading="lazy" width="104"
                           height="104" decoding="async"
                           class="w-full"
-                          src="/assets/light.webp">
+                          src="/assets/images/basemap-light.png">
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </li>
+              <li
+                class="col-span-6">
+                <div
+                  class="flex w-full items-center justify-between space-x-8">
+                  <button
+                    type="button" id="relief-basemap-button">
+                    <div class="space-y-2">
+                      <div
+                        id="relief-basemap-container"
+                        class="shrink-0 overflow-hidden transition-opacity outline outline-2 outline-offset-4 outline-yellow-500">
+                        <img
+                          alt="Relief basemap" loading="lazy" width="104"
+                          height="104" decoding="async"
+                          class="w-full"
+                          src="/assets/images/basemap-relief.png">
                       </div>
                     </div>
                   </button>
                 </div>
               </li>
             </ul>
-            <!-- TODO: Bring back labels -->
-            <!-- <div
-              class="grid grid-flow-col gap-4 pt-5">
-              <div class="col-span-6">
-                <div
-                  role="radiogroup" aria-required="false" dir="ltr"
-                  class="grid gap-3 outline-none" tabindex="0">
-                  <div
-                    class="group flex cursor-pointer items-center space-x-2">
-                    <button
-                      type="button" role="radio" aria-checked="true"
-                      data-state="checked"
-                      class="border-primary text-primary ring-offset-background focus-visible:ring-ring aspect-square h-4 w-4 rounded-full border focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      id="labels-dark" tabindex="-1" data-radix-collection-item>
-                      <span
-                        data-state="checked"
-                        class="flex items-center justify-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg" width="24"
-                          height="24" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2"
-                          stroke-linecap="round" stroke-linejoin="round"
-                          class="h-2.5 w-2.5 fill-current text-current">
-                          <circle
-                            cx="12" cy="12" r="10">
-                          </circle>
-                        </svg>
-                      </span>
-                    </button>
-                    <label
-                      class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer font-light transition-colors group-hover:text-slate-400"
-                      for="labels-dark">
-                      Dark labels</label>
-                  </div>
-                  <div
-                    class="group flex cursor-pointer items-center space-x-2">
-                    <button
-                      aria-label="Labels light"
-                      type="button" role="radio" aria-checked="false"
-                      class="border-primary text-primary ring-offset-background focus-visible:ring-ring aspect-square h-4 w-4 rounded-full border focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      id="labels-light" tabindex="-1" data-radix-collection-item>
-                    </button>
-                    <label
-                      class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer font-light transition-colors group-hover:text-slate-400"
-                      for="labels-light">
-                      Light labels</label>
-                  </div>
-                  <div
-                    class="group flex cursor-pointer items-center space-x-2">
-                    <button
-                      aria-label="Labels none"
-                      type="button" role="radio" aria-checked="false"
-                      data-state="unchecked" value="labels-none"
-                      class="border-primary text-primary ring-offset-background focus-visible:ring-ring aspect-square h-4 w-4 rounded-full border focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      id="labels-none" tabindex="-1" data-radix-collection-item>
-                    </button>
-                    <label
-                      class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer font-light transition-colors group-hover:text-slate-400"
-                      for="labels-none">
-                      No labels</label>
-                  </div>
-                </div>
-              </div>
-            </div> -->
           </div>
         </div>
 

@@ -30,15 +30,11 @@ map.on('load', function() {
     tileSize: 256,
   });
 
-  map.addLayer(
-    {
-      id: 'basemap-light',
-      type: 'raster',
-      source: 'basemap-light',
-      paint: {
-        'raster-opacity': 1,
-      },
-  }, 'background');
+  map.addSource('basemap-relief', {
+    type: 'raster',
+    tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}'],
+    tileSize: 256,
+  });
 
   map.addLayer(
     {
@@ -47,6 +43,26 @@ map.on('load', function() {
       source: 'basemap-satellite',
       paint: {
         'raster-opacity': 0,
+      },
+  }, 'background');
+
+  map.addLayer(
+    {
+      id: 'basemap-light',
+      type: 'raster',
+      source: 'basemap-light',
+      paint: {
+        'raster-opacity': 0,
+      },
+  }, 'background');
+
+  map.addLayer(
+    {
+      id: 'basemap-relief',
+      type: 'raster',
+      source: 'basemap-relief',
+      paint: {
+        'raster-opacity': 1,
       },
   }, 'background');
 

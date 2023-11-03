@@ -91,26 +91,20 @@ window.addEventListener('load', function () {
     and the GIS User Community</span>`;
 
     // Update map settings popup
-    elements.lightBasemapContainer.classList.remove('outline');
     elements.satelliteBasemapContainer.classList.add('outline');
+    elements.lightBasemapContainer.classList.remove('outline');
+    elements.reliefBasemapContainer.classList.remove('outline');
 
     // Change basemap
-    map.setPaintProperty(
-      'basemap-light',
-      'raster-opacity',
-      0
-    );
-    map.setPaintProperty(
-      'basemap-satellite',
-      'raster-opacity',
-      1
-    );
+    map.setPaintProperty('basemap-satellite', 'raster-opacity', 1);
+    map.setPaintProperty('basemap-light', 'raster-opacity', 0);
+    map.setPaintProperty('basemap-relief', 'raster-opacity', 0);
   });
 
   elements.lightBasemapButton.addEventListener("click", function() {
+    window.mutations.setBasemap('light');
 
     // Change theme in buttons and attribution
-    window.mutations.setBasemap('light');
     if (elements.maplibreControls) {
       for (let element of elements.maplibreControls) {
         element.classList.remove('theme-light');
@@ -143,20 +137,58 @@ window.addEventListener('load', function () {
     </a></span>`;
 
     // Update map settings popup
-    elements.lightBasemapContainer.classList.add('outline');
     elements.satelliteBasemapContainer.classList.remove('outline');
+    elements.lightBasemapContainer.classList.add('outline');
+    elements.reliefBasemapContainer.classList.remove('outline');
 
     // Change basemap
-    map.setPaintProperty(
-      'basemap-light',
-      'raster-opacity',
-      1
-    );
-    map.setPaintProperty(
-      'basemap-satellite',
-      'raster-opacity',
-      0
-    );
+    map.setPaintProperty('basemap-satellite', 'raster-opacity', 0);
+    map.setPaintProperty('basemap-light', 'raster-opacity', 1);
+    map.setPaintProperty('basemap-relief', 'raster-opacity', 0);
+  });
+
+  elements.reliefBasemapButton.addEventListener("click", function() {
+    window.mutations.setBasemap('relief');
+
+    // Change theme in buttons and attribution
+    if (elements.maplibreControls) {
+      for (let element of elements.maplibreControls) {
+        element.classList.remove('theme-light');
+      }
+    }
+    elements.mapSettingsButton.classList.add('btn-theme-dark');
+    elements.mapSettingsButton.classList.remove('btn-theme-light');
+    elements.sidebarToggle.classList.add('btn-icon-theme-dark');
+    elements.sidebarToggle.classList.remove('btn-icon-theme-light');
+
+    elements.attribution.classList.add('text-black');
+    elements.attribution.classList.remove('text-white');
+
+    // Update attribution content
+    elements.attributionContent.innerHTML = `
+      <span>
+        Tiles ©
+        <a
+          className="hover:underline"
+          rel="noopener noreferrer"
+          target="_blank"
+          href="https://esri.com"
+        >
+          Esri
+        </a>
+        — Source: Esri
+      </span>
+    `;
+
+    // Update map settings popup
+    elements.satelliteBasemapContainer.classList.remove('outline');
+    elements.lightBasemapContainer.classList.remove('outline');
+    elements.reliefBasemapContainer.classList.add('outline');
+
+    // Change basemap
+    map.setPaintProperty('basemap-satellite', 'raster-opacity', 0);
+    map.setPaintProperty('basemap-light', 'raster-opacity', 0);
+    map.setPaintProperty('basemap-relief', 'raster-opacity', 1);
   });
 
   const onToggleLabels = function (labels) {
