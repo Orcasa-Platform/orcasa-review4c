@@ -71,11 +71,11 @@
         }
 
         .navbar-item {
-          @apply flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 bg-slate-700 text-white;
+          @apply flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-4 pr-4 font-sans text-sm font-serif leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 bg-slate-700 text-white;
         }
 
         .navbar-item-active {
-          @apply flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-6 pr-4 font-sans text-sm font-semibold leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 bg-white text-slate-700;
+          @apply flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-4 pr-4 font-sans text-sm font-serif leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 bg-white text-slate-700;
         }
 
         .btn-theme-light {
@@ -99,11 +99,11 @@
         }
 
         .publication-panel {
-          @apply absolute top-0 p-6 w-full max-w-[862px] left-0 h-screen bg-white transition-transform z-20 !mt-0 overflow-auto;
+          @apply absolute top-0 px-12 py-10 w-full max-w-[862px] left-0 h-screen bg-white transition-transform z-20 !mt-0 overflow-auto;
         }
 
         .filters-panel {
-          @apply absolute -right-[380px] p-6 w-[380px] h-screen bg-white transition-transform z-10 overflow-auto;
+          @apply absolute -right-[380px] p-12 w-[380px] h-screen bg-white transition-transform z-10 overflow-auto;
         }
       }
     </style>
@@ -116,26 +116,27 @@
       <div
         class="flex h-full w-full flex-col items-center justify-start gap-20 bg-slate-700 py-6">
         <a href="/">
-          <img src="/assets/images/logo.png" alt="Impact4Soil" width="58" height="58">
+          <img src="/assets/images/logo.png" alt="Impact4Soil" width="58"
+            height="58">
           <span class="sr-only">Impact4Soil</span>
         </a>
         <div class="flex flex-col gap-px bg-slate-600 py-px">
           <a
-            class="navbar-item border-yellow-400"
+            class="navbar-item border-yellow-500"
             href="/geospatial-data">
             Geospatial Data
           </a>
           <a
-            class="navbar-item-active border-teal-500"
+            class="navbar-item-active border-mod-sc-ev"
             href="/scientific-evidence">Scientific Evidence</a>
           <a
-            class="navbar-item border-yellow-600"
+            class="navbar-item border-brown-500"
             href="/practices">Practices</a>
           <a
             class="navbar-item border-blue-500"
             href="/network">Network</a>
           <a
-            class="navbar-item border-indigo-500"
+            class="navbar-item border-purple-700"
             href="/datasets">
             Datasets
           </a>
@@ -143,7 +144,8 @@
         <div class="mt-auto flex flex-col items-center gap-y-4">
           <span class="text-xs text-gray-400">A project by:</span>
           <a href="https://irc-orcasa.eu/" target="_blank" rel="noreferrer">
-            <img src="/assets/images/orcasa-logo-white.png" width="85" height="26" alt="ORCaSa" />
+            <img src="/assets/images/orcasa-logo-white.png" width="85"
+              height="26" alt="ORCaSa" />
             <span class="sr-only text-xs text-gray-400">ORCaSa</span>
           </a>
         </div>
@@ -154,24 +156,20 @@
     <div id="sidebar"
       class="sidebar">
       <div class="flex flex-col overflow-y-auto w-full bg-white">
-        <div class="space-y-6 p-5 text-slate-700 z-20 bg-white">
+        <div class="space-y-6 px-12 py-10 text-slate-700 z-20 bg-white">
           <div
-            class="flex items-center min-h-5 h-5 pl-5 border-l-4 border-teal-500">
+            class="flex items-center min-h-5 h-5 pl-5 border-l-4 border-mod-sc-ev">
             <h2 class="leading-[18px] text-lg"><span
                 class="text-slate-700">Explore
                 the </span><span
-                class="text-teal-500 font-semibold">impact
+                class="text-mod-sc-ev font-semibold">impact
                 of different interventions</span><span
                 class="text-slate-700">
                 on soil organic carbon.</span></h2>
           </div>
-          <!-- LAND USE MENU -->
-          <!-- Loaded dynamically on dynamic-data.js -->
-          <div class="flex gap-2 pt-6"
-            id="land-use-menu"></div>
           <div
             id="land-use-intro"
-            class="font-serif leading-10 text-2xl"><span>These
+            class="font-serif leading-10 text-2xl mt-10"><span>These
               insights come from the analysis of</span><span
               class="font-semibold">
               <span id="land-use-publications"></span> scientific publications</span><span>
@@ -181,8 +179,12 @@
               class="font-semibold" id="land-use-text"></span><span>
               interventions on SOC.</span>
           </div>
+          <!-- LAND USE MENU -->
+          <!-- Loaded dynamically on dynamic-data.js -->
+          <div class="flex gap-2 pt-6"
+            id="land-use-menu"></div>
           <div
-            class="w-full pt-6 border-t border-gray-300 justify-between items-start inline-flex">
+            class="w-full pt-4 justify-between items-start inline-flex">
             <div class="text-slate-700 text-base">Know more about the
               interventions:</div>
             <div class="flex gap-2">
@@ -217,16 +219,16 @@
               type="button"
               id="btn-close-publication-panel"
               class="h-6 flex pr-1 justify-center items-center gap-1">
-              <i class="w-6 h-6 stroke-teal-500"
+              <i class="w-6 h-6 stroke-mod-sc-ev"
                 data-lucide="arrow-left"></i>
               <div
-                class="text-teal-500 text-base font-semibold focus-visible:outline-mod-sc-ev">
+                class="text-mod-sc-ev text-base font-semibold focus-visible:outline-mod-sc-ev">
                 Go back
               </div>
             </button>
             <!-- PUBLICATION HEADER -->
             <h2
-              class="text-teal-500 text-[34px] py-6">Publications</h2>
+              class="text-mod-sc-ev text-[34px] py-6">Publications</h2>
             <div class="flex flex-col space-y-8 mt-2">
               <div class="flex justify-between items-center gap-1">
                 <header
@@ -296,7 +298,8 @@
               </div>
             </div>
             <div class="flex flex-col gap-6">
-              <button type="button" id="reset-filters" class="btn-light w-min whitespace-nowrap">
+              <button type="button" id="reset-filters"
+                class="btn-light w-min whitespace-nowrap">
                 Reset All
               </button>
               <div id="type-publication">
@@ -317,7 +320,7 @@
                   <input type="search" placeholder="Search…"
                     class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
                   <i data-lucide="chevron-down"
-                    class="w-6 h-6 absolute right-4 top-4 stroke-teal-500 pointer-events-none"></i>
+                    class="w-6 h-6 absolute right-4 top-4 stroke-mod-sc-ev pointer-events-none"></i>
                   <fieldset
                     class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
                     <div
@@ -349,7 +352,7 @@
                   <input type="search" placeholder="Search…"
                     class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
                   <i data-lucide="chevron-down"
-                    class="w-6 h-6 absolute right-4 top-4 stroke-teal-500 pointer-events-none"></i>
+                    class="w-6 h-6 absolute right-4 top-4 stroke-mod-sc-ev pointer-events-none"></i>
                   <fieldset
                     class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
                     <div
@@ -380,7 +383,7 @@
                   <input type="search" placeholder="Search…"
                     class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
                   <i data-lucide="chevron-down"
-                    class="w-6 h-6 absolute right-4 top-4 stroke-teal-500 pointer-events-none"></i>
+                    class="w-6 h-6 absolute right-4 top-4 stroke-mod-sc-ev pointer-events-none"></i>
                   <fieldset
                     class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
                     <div
@@ -411,7 +414,7 @@
                   <input type="search" placeholder="Search…"
                     class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
                   <i data-lucide="chevron-down"
-                    class="w-6 h-6 absolute right-4 top-4 stroke-teal-500 pointer-events-none"></i>
+                    class="w-6 h-6 absolute right-4 top-4 stroke-mod-sc-ev pointer-events-none"></i>
                   <fieldset
                     class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
                     <div
@@ -568,53 +571,92 @@
     </div>
 
     <!-- MAP SETTINGS POPUP -->
-    <div class="fixed z-40 hidden pointer-events-none top-6 right-20" id="map-settings-overlay">
+    <div class="fixed z-40 hidden pointer-events-none top-6 right-20"
+      id="map-settings-overlay">
       <div
         role="dialog" aria-label="Map settings"
         aria-modal="true" aria-expanded="true"
         id="map-settings-modal"
         class="relative pointer-events-auto bg-white text-slate-700 w-[310px] rounded-sm border px-6 py-4 outline-none"
-        tabindex="-1"
-      >
+        tabindex="-1">
         <div class="flex flex-col gap-y-4">
           <h1 class="font-serif text-2xl">Map settings</h1>
 
           <fieldset>
             <legend class="font-serif text-lg">Basemap style</legend>
-            <div role="radiogroup" aria-required="false" dir="ltr" class="gap-2 mt-4 flex items-center justify-between gap-x-2 p-2" style="outline: none;">
-              <button id="satellite-basemap-button" type="button" role="radio" aria-checked="false" data-state="unchecked" value="basemap-satellite" class="rounded-full text-main ring-offset-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:ring-2 data-[state=checked]:ring-main data-[state=checked]:ring-offset-4 cursor-pointer overflow-hidden" tabindex="-1">
-                <img alt="Satellite basemap" loading="lazy" width="64" height="88" src="/assets/images/basemap-satellite.png">
+            <div role="radiogroup" aria-required="false" dir="ltr"
+              class="gap-2 mt-4 flex items-center justify-between gap-x-2 p-2"
+              style="outline: none;">
+              <button id="satellite-basemap-button" type="button" role="radio"
+                aria-checked="false" data-state="unchecked"
+                value="basemap-satellite"
+                class="rounded-full text-main ring-offset-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:ring-2 data-[state=checked]:ring-main data-[state=checked]:ring-offset-4 cursor-pointer overflow-hidden"
+                tabindex="-1">
+                <img alt="Satellite basemap" loading="lazy" width="64"
+                  height="88" src="/assets/images/basemap-satellite.png">
               </button>
-              <label class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 sr-only text-base" for="satellite-basemap-button">Satellite basemap</label>
-              
-              <button id="light-basemap-button" type="button" role="radio" aria-checked="false" data-state="unchecked" value="basemap-light" class="rounded-full text-main ring-offset-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:ring-2 data-[state=checked]:ring-main data-[state=checked]:ring-offset-4 cursor-pointer overflow-hidden" tabindex="-1">
-                <img alt="Light basemap" loading="lazy" width="64" height="88" src="/assets/images/basemap-light.png">
+              <label
+                class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 sr-only text-base"
+                for="satellite-basemap-button">Satellite basemap</label>
+
+              <button id="light-basemap-button" type="button" role="radio"
+                aria-checked="false" data-state="unchecked"
+                value="basemap-light"
+                class="rounded-full text-main ring-offset-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:ring-2 data-[state=checked]:ring-main data-[state=checked]:ring-offset-4 cursor-pointer overflow-hidden"
+                tabindex="-1">
+                <img alt="Light basemap" loading="lazy" width="64" height="88"
+                  src="/assets/images/basemap-light.png">
               </button>
-              <label class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 sr-only text-base" for="light-basemap-button">Light basemap</label>
-              
-              <button id="relief-basemap-button" type="button" role="radio" aria-checked="true" data-state="checked" value="basemap-relief" class="rounded-full text-main ring-offset-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:ring-2 data-[state=checked]:ring-main data-[state=checked]:ring-offset-4 cursor-pointer overflow-hidden" tabindex="0">
-                <img alt="Relief basemap" loading="lazy" width="64" height="88" src="/assets/images/basemap-relief.png">
+              <label
+                class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 sr-only text-base"
+                for="light-basemap-button">Light basemap</label>
+
+              <button id="relief-basemap-button" type="button" role="radio"
+                aria-checked="true" data-state="checked" value="basemap-relief"
+                class="rounded-full text-main ring-offset-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:ring-2 data-[state=checked]:ring-main data-[state=checked]:ring-offset-4 cursor-pointer overflow-hidden"
+                tabindex="0">
+                <img alt="Relief basemap" loading="lazy" width="64" height="88"
+                  src="/assets/images/basemap-relief.png">
               </button>
-              <label class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 sr-only text-base" for="relief-basemap-button">Relief basemap</label>
+              <label
+                class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 sr-only text-base"
+                for="relief-basemap-button">Relief basemap</label>
             </div>
           </fieldset>
 
           <div class="border-t border-dashed border-gray-200 pt-2">
             <div class="mb-4 flex items-center justify-between">
-              <label class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 font-serif text-lg" for="labels-switch">Labels</label>
-              <button type="button" role="switch" aria-checked="false" data-state="unchecked" value="on" class="peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-xl border-2 border-slate-700 py-0.5 pl-0.5 pr-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-transparent data-[state=checked]:bg-main" id="labels-switch">
-                <span data-state="unchecked" class="pointer-events-none block h-4 w-4 rounded-full bg-main shadow ring-0 transition data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 data-[state=checked]:bg-white"></span>
+              <label
+                class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 font-serif text-lg"
+                for="labels-switch">Labels</label>
+              <button type="button" role="switch" aria-checked="false"
+                data-state="unchecked" value="on"
+                class="peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-xl border-2 border-slate-700 py-0.5 pl-0.5 pr-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-transparent data-[state=checked]:bg-main"
+                id="labels-switch">
+                <span data-state="unchecked"
+                  class="pointer-events-none block h-4 w-4 rounded-full bg-main shadow ring-0 transition data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 data-[state=checked]:bg-white"></span>
               </button>
             </div>
 
-            <div role="radiogroup" aria-required="false" dir="ltr" class="grid gap-2" style="outline: none;" id="labels-radio-group">
+            <div role="radiogroup" aria-required="false" dir="ltr"
+              class="grid gap-2" style="outline: none;" id="labels-radio-group">
               <div class="group flex cursor-pointer items-center space-x-2">
-                <button type="button" role="radio" aria-checked="true" data-state="checked" value="light" class="aspect-square h-4 w-4 rounded-full border-2 border-main text-main ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:border-[5px]" id="light" tabindex="0" disabled="" data-disabled=""></button>
-                <label class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 text-base" for="light">Light</label>
+                <button type="button" role="radio" aria-checked="true"
+                  data-state="checked" value="light"
+                  class="aspect-square h-4 w-4 rounded-full border-2 border-main text-main ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:border-[5px]"
+                  id="light" tabindex="0" disabled data-disabled></button>
+                <label
+                  class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 text-base"
+                  for="light">Light</label>
               </div>
               <div class="group flex cursor-pointer items-center space-x-2">
-                <button type="button" role="radio" aria-checked="false" data-state="unchecked" value="dark" class="aspect-square h-4 w-4 rounded-full border-2 border-main text-main ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:border-[5px]" id="dark" tabindex="-1" disabled="" data-disabled=""></button>
-                <label class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 text-base" for="dark">Dark</label>
+                <button type="button" role="radio" aria-checked="false"
+                  data-state="unchecked" value="dark"
+                  class="aspect-square h-4 w-4 rounded-full border-2 border-main text-main ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:border-[5px]"
+                  id="dark" tabindex="-1" disabled data-disabled></button>
+                <label
+                  class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 text-base"
+                  for="dark">Dark</label>
               </div>
             </div>
           </div>
@@ -623,8 +665,7 @@
         <button
           id="close-map-settings-button"
           type="button"
-          class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 font-sans bg-gray-700 hover:bg-gray-800 text-white h-10 w-10 absolute right-0 top-0"
-        >
+          class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 font-sans bg-gray-700 hover:bg-gray-800 text-white h-10 w-10 absolute right-0 top-0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -635,8 +676,7 @@
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="h-6 w-6"
-          >
+            class="h-6 w-6">
             <path d="M18 6 6 18"></path>
             <path d="m6 6 12 12"></path>
           </svg>

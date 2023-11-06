@@ -11,8 +11,8 @@ const metaAnalysisTemplate = (metaAnalysisPublication) => {
           <div class="text-slate-500 text-sm leading-7">${description}</div>
         </div>
         <div class="flex pr-1 justify-end gap-1">
-          <button type="button" data-id="${id}" class="btn-publication-detail text-teal-500 text-base font-semibold">Learn more</button>
-          <i data-lucide="arrow-right" class="w-6 h-6 relative stroke-teal-500"></i>
+          <button type="button" data-id="${id}" class="btn-publication-detail text-mod-sc-ev text-base font-semibold">Learn more</button>
+          <i data-lucide="arrow-right" class="w-6 h-6 relative stroke-mod-sc-ev"></i>
         </div>
     </div>`;
 };
@@ -47,13 +47,13 @@ const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
 const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, year, countries, globalQuality, id, title, authors, description, source, url, metaAnalysis, 'methodology-and-attributes': methodologyAndAttributes }) => `
 <div class="flex flex-col ${isDetail ? '' : `p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} mb-2`} space-y-4">
   ${!isDetail && isMetaAnalysis ? `<div class="flex">
-    <div class="px-2 text-white text-base px-2 bg-teal-500 rounded border border-teal-500">
+    <div class="px-2 text-white text-sm px-2 bg-mod-sc-ev rounded border border-mod-sc-ev">
       Meta-analysis
     </div>
   </div>` : ''}
   <div class="h-6 justify-start items-center gap-6 inline-flex">
   ${isDetail && isMetaAnalysis ? `<div class="flex flex-shrink-0">
-    <div class="px-2 text-white text-base px-2 bg-teal-500 rounded border border-teal-500">
+    <div class="px-2 text-white text-sm px-2 bg-mod-sc-ev rounded border border-mod-sc-ev">
       Meta-analysis
     </div>
     </div>` : ''}
@@ -77,16 +77,16 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
     </div>
   </div>
   <header class="mb-6 text-slate-700">
-    <div class="${isDetail ? 'text-slate-700 text-[34px] leading-[50px]' : 'text-2xl font-semibold leading-10'}">
+    <div class="${isDetail ? 'text-slate-700 text-[34px] leading-[50px]' : 'text-xl font-serif leading-[30px] pb-4'}">
       ${title}
     </div>
-    <div class="text-slate-700 text-xs leading-[18px] italic">${authors}</div>
+    <div class="text-slate-700 text-xs leading-[18px] italic mt-5">${authors}</div>
   </header>
   <div class="text-sm leading-7 text-slate-500">${isDetail ? description : ellipsis(description, 230)}</div>
   ${!isDetail ? `<div class="h-6 justify-end items-center gap-4 flex">
     <div class="pr-1 justify-center items-center gap-1 flex">
-        <button type="button" data-id="${id}" class="btn-publication-detail text-teal-500 text-base font-semibold">Learn more</button>
-        <i data-lucide="arrow-right" class="w-6 h-6 relative stroke-teal-500"></i>
+        <button type="button" data-id="${id}" class="btn-publication-detail text-mod-sc-ev text-base font-semibold">Learn more</button>
+        <i data-lucide="arrow-right" class="w-6 h-6 relative stroke-mod-sc-ev"></i>
     </div>
   </div>`: ''}
   ${isDetail ?
@@ -165,26 +165,26 @@ window.addEventListener('load', function () {
     const metaAnalysisNumber = formatNumber(metaAnalysis) || '-';
     if (landUseSlug === 'all') {
       elements.landUseIntro.innerHTML = `<div class="space-y-6">
-        <div class="text-slate-700 text-[32px] leading-[48px]">
+        <div class="text-slate-700 text-[32px] leading-[48px] pt-10">
           <span>Scientific Evidence brings impartial evidence from </span>
           <span class="font-semibold">peer-reviewed literature.</span>
         </div>
-        <div class="text-slate-700 text-2xl leading-10">
+        <div class="text-slate-700 text-base leading-normal">
           We analyse the effects of land management, land-use change and climate change on Soil Organic Carbon. To date, Scientific Evidence gathers <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analyses and ${publicationsNumber} scientific publications.
         </div>
         <div class="flex pt-6 pb-10 justify-evenly items-center gap-4">
           <div class="flex items-center gap-4">
-            <i class="w-20 h-20 stroke-teal-500 stroke-1" data-lucide="file-stack"></i>
+            <i class="w-20 h-20 stroke-mod-sc-ev stroke-1" data-lucide="file-stack"></i>
             <div class="flex-col justify-center flex">
-                <div class="text-slate-700 text-[32px] font-semibold leading-[48px]">${publicationsNumber}</div>
+                <div class="text-slate-700 text-[32px] font-serif font-semibold leading-[48px]">${publicationsNumber}</div>
                 <div class="text-slate-700 text-base">Scientific publications</div>
             </div>
           </div>
-          <img class="w-[58px]" src="/assets/icons/arrow-all.svg" alt="arrow" class="w-8 h-8" />
+          <img class="w-4 h-3.5" src="/assets/icons/arrow-all.svg" alt="arrow" class="w-8 h-8" />
           <div class="flex items-center gap-2">
-            <i class="w-20 h-20 stroke-teal-500 stroke-1" data-lucide="file-bar-chart-2"></i>
+            <i class="w-20 h-20 stroke-mod-sc-ev stroke-1" data-lucide="file-bar-chart-2"></i>
             <div class="flex-col justify-center flex">
-                <div class="text-slate-700 text-[32px] font-semibold leading-[48px]">${metaAnalysisNumber}</div>
+                <div class="text-slate-700 text-[32px] font-serif font-semibold leading-[48px]">${metaAnalysisNumber}</div>
                 <div class="text-slate-700 text-base">Meta-analyses</div>
             </div>
           </div>

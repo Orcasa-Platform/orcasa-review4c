@@ -27,9 +27,26 @@ tailwind.config = {
         'cluster-300': '#67DBA5',
         'cluster-400': '#4CC8A3',
         'cluster-500': '#2BB3A7',
+        brown: {
+          // Practices
+          500: '#BA7300',
+        },
+        yellow: {
+          // Geospatial data
+          500: '#FFD500',
+        },
+        purple: {
+          // Datasets
+          700: '#8380BC',
+        },
+        blue: {
+          // Network
+          500: '#358FE3',
+        },
         ring: 'hsl(var(--ring))',
         gray: {
           50: '#F7F7F9',
+          100: '#F0F0F5',
           200: '#CFD1DB',
           300: '#B2B5C5',
           800: '#3C4363',
