@@ -164,7 +164,7 @@ window.addEventListener('load', function () {
     const publicationsNumber = formatNumber(publications) || '-';
     const metaAnalysisNumber = formatNumber(metaAnalysis) || '-';
     if (landUseSlug === 'all') {
-      elements.landUseIntro.innerHTML = `<div class="space-y-6">
+      elements.landUseAllIntro.innerHTML = `<div class="space-y-6">
         <div class="text-slate-700 text-[32px] leading-[48px] pt-10">
           <span>Scientific Evidence brings impartial evidence from </span>
           <span class="font-semibold">peer-reviewed literature.</span>
@@ -190,20 +190,23 @@ window.addEventListener('load', function () {
           </div>
         </div>
       </div>`;
+      elements.landUseIntro.innerHTML = '';
       lucide.createIcons();
 
     } else {
-      elements.landUseIntro.innerHTML = `<span>These
-        insights come from the analysis of</span><span
-        class="font-semibold">
-        <span id="land-use-publications">${publicationsNumber}</span> scientific publications</span><span>
-        and <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analysis
-        related
-        to </span><span
-        class="font-semibold" id="land-use-text">${name.toLowerCase()}</span><span>
-        interventions on SOC.</span>`
+      elements.landUseIntro.innerHTML = `<div class="border-b border-gray-200 border-dashed pb-6">
+        <span>These
+          insights come from the analysis of</span><span
+          class="font-semibold">
+          <span id="land-use-publications">${publicationsNumber}</span> scientific publications</span><span>
+          and <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analysis
+          related
+          to </span><span
+          class="font-semibold" id="land-use-text">${name.toLowerCase()}</span><span>
+          interventions on SOC.</span>
+      </div>`;
+      elements.landUseAllIntro.innerHTML = '';
     }
-
     elements.legendText.innerHTML = name;
 
     // Load main intervention charts
@@ -222,7 +225,7 @@ window.addEventListener('load', function () {
     class="btn-filter btn-land-use"
     aria-pressed="${index === 0 ? "true" : "false"}"
   >
-    <span>
+    <span class="text-base">
       ${name}
     </span>
     <span class="text-xs">

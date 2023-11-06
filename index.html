@@ -46,7 +46,7 @@
         }
 
         .btn-filter {
-          @apply px-2 py-1 transition-all bg-gray-50 aria-pressed:bg-gray-700 aria-pressed:text-white focus-visible:outline focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-black hover:bg-gray-200 focus-visible:outline-mod-sc-ev-dark;
+          @apply px-2 py-1 transition-all bg-transparent border border-gray-200 aria-pressed:bg-gray-700 aria-pressed:text-white focus-visible:outline focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-white hover:bg-gray-700 focus-visible:outline-mod-sc-ev-dark;
         }
 
         /* focus-visible:outline-offset-[-2px] to fix the foreignObject outline */
@@ -169,7 +169,8 @@
           </div>
           <div
             id="land-use-intro"
-            class="font-serif leading-10 text-2xl mt-10"><span>These
+            class="font-serif leading-10 text-2xl mt-10">
+            <span>These
               insights come from the analysis of</span><span
               class="font-semibold">
               <span id="land-use-publications"></span> scientific publications</span><span>
@@ -177,8 +178,10 @@
               related
               to </span><span
               class="font-semibold" id="land-use-text"></span><span>
-              interventions on SOC.</span>
+              interventions on SOC.
+            </span>
           </div>
+
           <!-- LAND USE MENU -->
           <!-- Loaded dynamically on dynamic-data.js -->
           <div class="flex gap-2 pt-6"
@@ -199,8 +202,11 @@
                 <span>Methodology</span></button>
             </div>
           </div>
+          <div
+            id="land-use-all-intro"
+            class="font-serif leading-10 text-2xl mt-20"></div>
 
-          <div id="chart-cards">
+          <div id="chart-cards" class="pt-4">
           </div>
           <div id="chart-tooltip"
             class="p-1 bg-slate-700 text-white text-sm absolute hidden rounded z-50"></div>
