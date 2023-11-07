@@ -11,8 +11,18 @@ const metaAnalysisTemplate = (metaAnalysisPublication) => {
           <div class="text-slate-500 text-sm leading-7">${description}</div>
         </div>
         <div class="flex pr-1 justify-end gap-1">
-          <button type="button" data-id="${id}" class="btn-publication-detail text-teal-500 text-base font-semibold">Learn more</button>
-          <i data-lucide="arrow-right" class="w-6 h-6 relative stroke-teal-500"></i>
+          <button
+            type="button"
+            class="btn-publication-detail group flex items-center justify-start flex-row-reverse"
+            data-id="${id}"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="svg-btn-publication-detail"
+            ><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <span class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 translate-x-0 group-hover:-translate-x-1/3 group-focus:-translate-x-1/3">Learn more</span>
+          </button>
         </div>
     </div>`;
 };
@@ -46,47 +56,50 @@ const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
 
 const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, year, countries, globalQuality, id, title, authors, description, source, url, metaAnalysis, 'methodology-and-attributes': methodologyAndAttributes }) => `
 <div class="flex flex-col ${isDetail ? '' : `p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} mb-2`} space-y-4">
-  ${!isDetail && isMetaAnalysis ? `<div class="flex">
-    <div class="px-2 text-white text-base px-2 bg-teal-500 rounded border border-teal-500">
-      Meta-analysis
-    </div>
-  </div>` : ''}
   <div class="h-6 justify-start items-center gap-6 inline-flex">
-  ${isDetail && isMetaAnalysis ? `<div class="flex flex-shrink-0">
-    <div class="px-2 text-white text-base px-2 bg-teal-500 rounded border border-teal-500">
-      Meta-analysis
-    </div>
-    </div>` : ''}
-    <div class="w-full h-6 gap-4 flex text-slate-500 text-xs">
-        ${!isMetaAnalysis && journals.length > 0 ? `<div class="justify-start items-center gap-2 flex max-w-[60%] w-fit">
-          <i data-lucide="newspaper" class="w-6 h-6 relative"></i>
-          <div class="flex-1 truncate" title="${journals.join(', ')}">${journals.join(', ')}</div>
-        </div>`: ''}
-        <div class="justify-start items-center gap-2 flex">
-          <i data-lucide="calendar" class="w-6 h-6 relative max-width-[10%]"></i>
-          <div>${year}</div>
-        </div>
-        ${!isMetaAnalysis && countries.length > 0 ? `<div class="justify-start items-center gap-2 flex max-w-[30%]">
-          <i data-lucide="globe-2" class="w-6 h-6 relative"></i>
-          <div class="truncate" title="${countries.join(', ')}">${countries.join(', ')}</div>
-        </div>` : ''}
-        ${isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
-        <i data-lucide="award" class="w-6 h-6 relative"></i>
+    <div class="w-full h-6 gap-4 flex text-gray-700 text-xs">
+      ${isMetaAnalysis ? `<span class="min-w-fit px-2 text-white text-sm px-2 bg-mod-sc-ev rounded border border-mod-sc-ev">
+        Meta-analysis
+      </span>` : ''}
+      ${!isMetaAnalysis && journals.length > 0 ? `<div class="justify-start items-center gap-2 flex max-w-[60%] w-fit">
+      <img class="w-6 h-6" src="/assets/icons/paper.svg" />
+      <div class="flex-1 truncate" title="${journals.join(', ')}">${journals.join(', ')}</div>
+      </div>`: ''}
+      <div class="justify-start items-center gap-2 flex">
+        <img class="w-6 h-6" src="/assets/icons/calendar.svg" />
+        <div>${year}</div>
+      </div>
+      ${!isMetaAnalysis && countries.length > 0 ? `<div class="justify-start items-center gap-2 flex max-w-[30%]">
+        <img class="w-6 h-6" src="/assets/icons/globe.svg" />
+        <div class="truncate" title="${countries.join(', ')}">${countries.join(', ')}</div>
+      </div>` : ''}
+      ${isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
+        <img class="w-6 h-6" src="/assets/icons/check.svg" />
         <div>Global quality: ${globalQuality}%</div>
       </div>` : ''}
     </div>
   </div>
-  <header class="mb-6 text-slate-700">
-    <div class="${isDetail ? 'text-slate-700 text-[34px] leading-[50px]' : 'text-2xl font-semibold leading-10'}">
+  <header class="mb-6 text-gray-700">
+    <div class="font-serif ${isDetail ? 'text-slate-700 text-[34px] leading-[50px]' : 'text-xl font-serif leading-[30px] pb-4'}">
       ${title}
     </div>
-    <div class="text-slate-700 text-xs leading-[18px] italic">${authors}</div>
+    <div class="text-slate-700 text-xs leading-[18px] italic ${isDetail ? 'mt-5' : ''}">${authors}</div>
   </header>
   <div class="text-sm leading-7 text-slate-500">${isDetail ? description : ellipsis(description, 230)}</div>
   ${!isDetail ? `<div class="h-6 justify-end items-center gap-4 flex">
     <div class="pr-1 justify-center items-center gap-1 flex">
-        <button type="button" data-id="${id}" class="btn-publication-detail text-teal-500 text-base font-semibold">Learn more</button>
-        <i data-lucide="arrow-right" class="w-6 h-6 relative stroke-teal-500"></i>
+        <button
+          type="button"
+          class="btn-publication-detail group flex items-center justify-start flex-row-reverse"
+          data-id="${id}"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="svg-btn-publication-detail"><polyline points="9 18 15 12 9 6"
+          ></polyline></svg>
+          <span class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 translate-x-0 group-hover:-translate-x-1/3 group-focus:-translate-x-1/3">Learn more</span>
+        </button>
     </div>
   </div>`: ''}
   ${isDetail ?
@@ -96,9 +109,9 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
           <span class="text-slate-500 text-base">Source: </span>
           <span class="text-slate-700 text-base">${source}</span>
         </div>
-        <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn-secondary flex gap-2">
+        <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn-secondary flex gap-2 !px-5">
           Visit DOI
-          <i data-lucide="external-link" class="w-6 h-6 color-slate-700 stroke-current"></i>
+          <img class="w-6 h-6 color-slate-700 stroke-current" src="/assets/icons/external-link.svg" />
         </a>
       </div>
       ${metaAnalysis?.length ? `
@@ -164,46 +177,49 @@ window.addEventListener('load', function () {
     const publicationsNumber = formatNumber(publications) || '-';
     const metaAnalysisNumber = formatNumber(metaAnalysis) || '-';
     if (landUseSlug === 'all') {
-      elements.landUseIntro.innerHTML = `<div class="space-y-6">
-        <div class="text-slate-700 text-[32px] leading-[48px]">
+      elements.landUseAllIntro.innerHTML = `<div class="space-y-6">
+        <div class="text-slate-700 text-[32px] leading-[48px] pt-10 font-serif">
           <span>Scientific Evidence brings impartial evidence from </span>
           <span class="font-semibold">peer-reviewed literature.</span>
         </div>
-        <div class="text-slate-700 text-2xl leading-10">
+        <div class="text-slate-700 text-base leading-normal">
           We analyse the effects of land management, land-use change and climate change on Soil Organic Carbon. To date, Scientific Evidence gathers <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analyses and ${publicationsNumber} scientific publications.
         </div>
         <div class="flex pt-6 pb-10 justify-evenly items-center gap-4">
           <div class="flex items-center gap-4">
-            <i class="w-20 h-20 stroke-teal-500 stroke-1" data-lucide="file-stack"></i>
+            <img class="w-12 h-16 stroke-mod-sc-ev stroke-1" src="/assets/icons/files.svg" />
             <div class="flex-col justify-center flex">
-                <div class="text-slate-700 text-[32px] font-semibold leading-[48px]">${publicationsNumber}</div>
+                <div class="text-slate-700 text-[32px] font-serif font-semibold leading-[48px]">${publicationsNumber}</div>
                 <div class="text-slate-700 text-base">Scientific publications</div>
             </div>
           </div>
-          <img class="w-[58px]" src="/assets/icons/arrow-all.svg" alt="arrow" class="w-8 h-8" />
-          <div class="flex items-center gap-2">
-            <i class="w-20 h-20 stroke-teal-500 stroke-1" data-lucide="file-bar-chart-2"></i>
+          <img src="/assets/icons/arrow-all.svg" alt="arrow" class="w-4 h-4" />
+          <div class="flex items-center gap-4">
+            <img class="w-12 h-16 stroke-mod-sc-ev stroke-1" src="/assets/icons/document.svg" />
             <div class="flex-col justify-center flex">
-                <div class="text-slate-700 text-[32px] font-semibold leading-[48px]">${metaAnalysisNumber}</div>
+                <div class="text-slate-700 text-[32px] font-serif font-semibold leading-[48px]">${metaAnalysisNumber}</div>
                 <div class="text-slate-700 text-base">Meta-analyses</div>
             </div>
           </div>
         </div>
       </div>`;
+      elements.landUseIntro.innerHTML = '';
       lucide.createIcons();
 
     } else {
-      elements.landUseIntro.innerHTML = `<span>These
-        insights come from the analysis of</span><span
-        class="font-semibold">
-        <span id="land-use-publications">${publicationsNumber}</span> scientific publications</span><span>
-        and <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analysis
-        related
-        to </span><span
-        class="font-semibold" id="land-use-text">${name.toLowerCase()}</span><span>
-        interventions on SOC.</span>`
+      elements.landUseIntro.innerHTML = `<div class="border-b border-gray-200 border-dashed pb-6">
+        <span>These
+          insights come from the analysis of</span><span
+          class="font-semibold">
+          <span id="land-use-publications">${publicationsNumber}</span> scientific publications</span><span>
+          and <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analysis
+          related
+          to </span><span
+          class="font-semibold" id="land-use-text">${name.toLowerCase()}</span><span>
+          interventions on SOC.</span>
+      </div>`;
+      elements.landUseAllIntro.innerHTML = '';
     }
-
     elements.legendText.innerHTML = name;
 
     // Load main intervention charts
@@ -222,7 +238,7 @@ window.addEventListener('load', function () {
     class="btn-filter btn-land-use"
     aria-pressed="${index === 0 ? "true" : "false"}"
   >
-    <span>
+    <span class="text-base">
       ${name}
     </span>
     <span class="text-xs">
@@ -271,7 +287,7 @@ window.addEventListener('load', function () {
     <label for="${slug}-${value}" class="flex items-center gap-2 p-4">
       <input
         type="checkbox"
-        class="checkbox-light"
+        class="checkbox"
         id="${slug}-${value}"
         value="${value}"
       />
@@ -348,13 +364,13 @@ window.addEventListener('load', function () {
 
     const addTooltip = (event, year, yearBar) =>  {
       const barRect = yearBar.getBoundingClientRect();
-      const top = barRect.top;
-      const TOP_PADDING = 68;
-      const leftOffset = (elements.yearRange.getBoundingClientRect().left - elements.publicationPanel.getBoundingClientRect().width)
-      const left = barRect.left - leftOffset + barRect.width / 2;
+      const TOP_PADDING = 28;
+      const bottom = barRect.height + TOP_PADDING;
+      const leftOffset = elements.yearRange.getBoundingClientRect().left + barRect.width;
+      const left = barRect.left - leftOffset;
 
       // Put on top of the bar
-      barTooltip.style.top = `${top - TOP_PADDING}px`;
+      barTooltip.style.bottom = `${bottom}px`;
       barTooltip.style.left = `${left}px`;
       barTooltip.classList.remove('hidden');
       barTooltipContent.innerHTML = `<div>${year}</div>`;
@@ -453,6 +469,7 @@ window.addEventListener('load', function () {
     elements.closePublicationDetailPanelButton.focus();
 
     const publicationId = target.getAttribute('data-id');
+    console.log('publicationId', publicationId, target)
     window.loadPublication(publicationId);
   };
 

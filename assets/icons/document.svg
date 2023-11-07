@@ -1,0 +1,9 @@
+<svg width="54" height="70" viewBox="0 0 54 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 8722">
+<rect id="Rectangle 738" x="12" y="50" width="6" height="8" fill="#2BB3A7"/>
+<rect id="Rectangle 739" x="24" y="42" width="6" height="16" fill="#2BB3A7"/>
+<rect id="Rectangle 740" x="36" y="34" width="6" height="24" fill="#2BB3A7"/>
+<path id="Rectangle 743" d="M35 3V19H51" stroke="#2BB3A7" stroke-width="6"/>
+<path id="Subtract" d="M3 3V0H0V3H3ZM35 3L37.1213 0.87868L36.2426 0H35V3ZM3 67H0V70H3V67ZM51 67V70H54V67H51ZM51 19H54V17.7574L53.1213 16.8787L51 19ZM43 11L40.8787 13.1213L43 11ZM3 6H35V0H3V6ZM6 67V3H0V67H6ZM51 64H3V70H51V64ZM48 19V67H54V19H48ZM40.8787 13.1213L48.8787 21.1213L53.1213 16.8787L45.1213 8.87868L40.8787 13.1213ZM32.8787 5.12132L40.8787 13.1213L45.1213 8.87868L37.1213 0.87868L32.8787 5.12132Z" fill="#2BB3A7"/>
+</g>
+</svg>

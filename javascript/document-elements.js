@@ -29,6 +29,7 @@ const elements = {
   landUseMenu: document.getElementById('land-use-menu'),
   landUseText: document.getElementById('land-use-text'),
   landUseIntro: document.getElementById('land-use-intro'),
+  landUseAllIntro: document.getElementById('land-use-all-intro'),
   landUsePublications: document.getElementById('land-use-publications'),
   landUseMetaAnalysis: document.getElementById('land-use-meta-analysis'),
   publicationsNumber: document.getElementById('publications-number'),
