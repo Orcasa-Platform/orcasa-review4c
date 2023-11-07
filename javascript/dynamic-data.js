@@ -178,7 +178,7 @@ window.addEventListener('load', function () {
     const metaAnalysisNumber = formatNumber(metaAnalysis) || '-';
     if (landUseSlug === 'all') {
       elements.landUseAllIntro.innerHTML = `<div class="space-y-6">
-        <div class="text-slate-700 text-[32px] leading-[48px] pt-10">
+        <div class="text-slate-700 text-[32px] leading-[48px] pt-10 font-serif">
           <span>Scientific Evidence brings impartial evidence from </span>
           <span class="font-semibold">peer-reviewed literature.</span>
         </div>
@@ -287,7 +287,7 @@ window.addEventListener('load', function () {
     <label for="${slug}-${value}" class="flex items-center gap-2 p-4">
       <input
         type="checkbox"
-        class="checkbox-light"
+        class="checkbox"
         id="${slug}-${value}"
         value="${value}"
       />
