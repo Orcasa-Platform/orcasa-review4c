@@ -174,15 +174,15 @@ window.addEventListener('load', function () {
         </div>
         <div class="flex pt-6 pb-10 justify-evenly items-center gap-4">
           <div class="flex items-center gap-4">
-            <i class="w-20 h-20 stroke-mod-sc-ev stroke-1" data-lucide="file-stack"></i>
+            <img class="w-12 h-16 stroke-mod-sc-ev stroke-1" src="/assets/icons/files.svg" />
             <div class="flex-col justify-center flex">
                 <div class="text-slate-700 text-[32px] font-serif font-semibold leading-[48px]">${publicationsNumber}</div>
                 <div class="text-slate-700 text-base">Scientific publications</div>
             </div>
           </div>
-          <img class="w-4 h-3.5" src="/assets/icons/arrow-all.svg" alt="arrow" class="w-8 h-8" />
+          <img src="/assets/icons/arrow-all.svg" alt="arrow" class="w-4 h-4" />
           <div class="flex items-center gap-2">
-            <i class="w-20 h-20 stroke-mod-sc-ev stroke-1" data-lucide="file-bar-chart-2"></i>
+            <img class="w-12 h-16 stroke-mod-sc-ev stroke-1" src="/assets/icons/document.svg" />
             <div class="flex-col justify-center flex">
                 <div class="text-slate-700 text-[32px] font-serif font-semibold leading-[48px]">${metaAnalysisNumber}</div>
                 <div class="text-slate-700 text-base">Meta-analyses</div>

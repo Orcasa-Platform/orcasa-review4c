@@ -39,7 +39,7 @@
         }
 
         .btn-secondary {
-          @apply p-4 transition-all bg-gray-100 border border-gray-100 text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:bg-gray-200 hover:text-black focus-visible:outline-black;
+          @apply p-4 transition-all bg-gray-100 border border-gray-100 text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:bg-gray-200 hover:text-black focus-visible:outline-black disabled:text-gray-500 disabled:cursor-not-allowed;
         }
         .btn-light {
           @apply transition-all text-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark focus-visible:outline-black mt-0 flex text-base font-semibold;
@@ -158,7 +158,7 @@
       <div class="flex flex-col overflow-y-auto w-full bg-white">
         <div class="space-y-6 px-12 py-10 text-slate-700 z-20 bg-white">
           <div
-            class="flex items-center min-h-5 h-5 pl-5 border-l-4 border-mod-sc-ev">
+            class="flex font-serif items-center min-h-5 h-5 pl-5 border-l-4 border-mod-sc-ev">
             <h2 class="leading-[18px] text-lg"><span
                 class="text-slate-700">Explore
                 the </span><span
@@ -196,7 +196,7 @@
                 <i data-lucide="book-open"></i>
                 <span>Publications</span>
               </button>
-              <button type="button" id="btn-methodology"
+              <button type="button" disabled id="btn-methodology"
                 class="btn-secondary flex gap-4">
                 <i data-lucide="clipboard-list"></i>
                 <span>Methodology</span></button>
