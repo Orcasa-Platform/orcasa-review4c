@@ -62,6 +62,10 @@
           @apply p-3 font-semibold text-mod-sc-ev transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:text-gray-300 disabled:pointer-events-none hover:text-mod-sc-ev-dark focus-visible:outline-mod-sc-ev;
         }
 
+        .svg-btn-publication-detail {
+          @apply pointer-events-none mr-[15px] h-[34px] w-[34px] px-1 py-1 transition-colors group-hover:bg-slate-700 group-hover:text-white group-focus:bg-slate-700 group-focus:text-white bg-gray-100;
+        }
+
         .checkbox {
           @apply w-4 h-4 justify-center items-center flex appearance-none rounded border border-slate-700 bg-slate-700 checked:bg-slate-700 checked:border-slate-700 text-mod-sc-ev hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-600;
         }
@@ -214,16 +218,21 @@
           <!-- PUBLICATION PANEL -->
           <div id="publication-panel"
             class="publication-panel -translate-x-full">
+
             <button
-              type="button"
-              id="btn-close-publication-panel"
-              class="h-6 flex pr-1 justify-center items-center gap-1">
-              <i class="w-6 h-6 stroke-mod-sc-ev"
-                data-lucide="arrow-left"></i>
-              <div
-                class="text-mod-sc-ev text-base font-semibold focus-visible:outline-mod-sc-ev">
-                Go back
-              </div>
+              class="group flex items-center"
+              id="btn-close-publication-panel">
+              <svg
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="mr-[15px] h-[34px] w-[34px] bg-gray-100 px-1 py-1 transition-colors group-hover:bg-slate-700 group-hover:text-white group-focus:bg-slate-700 group-focus:text-white">
+                <path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
+              <span
+                class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 -translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Back
+                to Results
+              </span>
+
             </button>
             <!-- PUBLICATION HEADER -->
             <h2

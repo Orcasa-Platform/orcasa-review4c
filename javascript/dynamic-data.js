@@ -11,8 +11,18 @@ const metaAnalysisTemplate = (metaAnalysisPublication) => {
           <div class="text-slate-500 text-sm leading-7">${description}</div>
         </div>
         <div class="flex pr-1 justify-end gap-1">
-          <button type="button" data-id="${id}" class="btn-publication-detail text-mod-sc-ev text-base font-semibold">Learn more</button>
-          <i data-lucide="arrow-right" class="w-6 h-6 relative stroke-mod-sc-ev"></i>
+          <button
+            type="button"
+            class="btn-publication-detail group flex items-center justify-start flex-row-reverse"
+            data-id="${id}"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="svg-btn-publication-detail"
+            ><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <span class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 translate-x-0 group-hover:-translate-x-1/3 group-focus:-translate-x-1/3">Learn more</span>
+          </button>
         </div>
     </div>`;
 };
@@ -78,8 +88,18 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
   <div class="text-sm leading-7 text-slate-500">${isDetail ? description : ellipsis(description, 230)}</div>
   ${!isDetail ? `<div class="h-6 justify-end items-center gap-4 flex">
     <div class="pr-1 justify-center items-center gap-1 flex">
-        <button type="button" data-id="${id}" class="btn-publication-detail text-mod-sc-ev text-base font-semibold">Learn more</button>
-        <i data-lucide="arrow-right" class="w-6 h-6 relative stroke-mod-sc-ev"></i>
+        <button
+          type="button"
+          class="btn-publication-detail group flex items-center justify-start flex-row-reverse"
+          data-id="${id}"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="svg-btn-publication-detail"><polyline points="9 18 15 12 9 6"
+          ></polyline></svg>
+          <span class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 translate-x-0 group-hover:-translate-x-1/3 group-focus:-translate-x-1/3">Learn more</span>
+        </button>
     </div>
   </div>`: ''}
   ${isDetail ?
@@ -449,6 +469,7 @@ window.addEventListener('load', function () {
     elements.closePublicationDetailPanelButton.focus();
 
     const publicationId = target.getAttribute('data-id');
+    console.log('publicationId', publicationId, target)
     window.loadPublication(publicationId);
   };
 
