@@ -47,7 +47,7 @@ const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
 const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, year, countries, globalQuality, id, title, authors, description, source, url, metaAnalysis, 'methodology-and-attributes': methodologyAndAttributes }) => `
 <div class="flex flex-col ${isDetail ? '' : `p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} mb-2`} space-y-4">
   <div class="h-6 justify-start items-center gap-6 inline-flex">
-    <div class="w-full h-6 gap-4 flex text-slate-700 text-xs">
+    <div class="w-full h-6 gap-4 flex text-gray-700 text-xs">
       ${isMetaAnalysis ? `<span class="min-w-fit px-2 text-white text-sm px-2 bg-mod-sc-ev rounded border border-mod-sc-ev">
         Meta-analysis
       </span>` : ''}
@@ -69,8 +69,8 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
       </div>` : ''}
     </div>
   </div>
-  <header class="mb-6 text-slate-700">
-    <div class="${isDetail ? 'text-slate-700 text-[34px] leading-[50px]' : 'text-xl font-serif leading-[30px] pb-4'}">
+  <header class="mb-6 text-gray-700">
+    <div class="font-serif ${isDetail ? 'text-slate-700 text-[34px] leading-[50px]' : 'text-xl font-serif leading-[30px] pb-4'}">
       ${title}
     </div>
     <div class="text-slate-700 text-xs leading-[18px] italic ${isDetail ? 'mt-5' : ''}">${authors}</div>
@@ -89,9 +89,9 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
           <span class="text-slate-500 text-base">Source: </span>
           <span class="text-slate-700 text-base">${source}</span>
         </div>
-        <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn-secondary flex gap-2">
+        <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn-secondary flex gap-2 !px-5">
           Visit DOI
-          <i data-lucide="external-link" class="w-6 h-6 color-slate-700 stroke-current"></i>
+          <img class="w-6 h-6 color-slate-700 stroke-current" src="/assets/icons/external-link.svg" />
         </a>
       </div>
       ${metaAnalysis?.length ? `
