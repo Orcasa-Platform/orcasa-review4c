@@ -194,7 +194,7 @@ window.addEventListener('load', function () {
             </div>
           </div>
           <img src="/assets/icons/arrow-all.svg" alt="arrow" class="w-4 h-4" />
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-4">
             <img class="w-12 h-16 stroke-mod-sc-ev stroke-1" src="/assets/icons/document.svg" />
             <div class="flex-col justify-center flex">
                 <div class="text-slate-700 text-[32px] font-serif font-semibold leading-[48px]">${metaAnalysisNumber}</div>
