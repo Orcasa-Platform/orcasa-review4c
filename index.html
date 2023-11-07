@@ -210,13 +210,6 @@
           </div>
           <div id="chart-tooltip"
             class="p-1 bg-slate-700 text-white text-sm absolute hidden rounded z-50"></div>
-          <div id="bar-tooltip"
-            class="p-2 bg-slate-700 text-white text-sm absolute hidden rounded z-50">
-            <div id="bar-tooltip-content"></div>
-            <span
-              class="absolute bottom-0 transform translate-y-full left-5">
-              <img src="/assets/icons/arrow-bottom.svg" alt="Arrow">
-            </span></div>
 
           <!-- PUBLICATION PANEL -->
           <div id="publication-panel"
@@ -301,7 +294,18 @@
                 Scientific publications by year:
               </div>
               <div
-                id="year-range">
+                id="year-range-container" class="relative">
+                <div id="bar-tooltip"
+                  class="p-2 bg-slate-700 text-white text-sm absolute hidden rounded z-50">
+                  <div id="bar-tooltip-content"></div>
+                  <span
+                    class="absolute bottom-0 transform translate-y-full left-5">
+                    <img src="/assets/icons/arrow-bottom.svg" alt="Arrow">
+                  </span>
+                </div>
+                <div
+                  id="year-range">
+                </div>
               </div>
             </div>
             <div class="flex flex-col gap-6">

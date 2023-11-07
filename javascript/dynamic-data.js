@@ -344,13 +344,13 @@ window.addEventListener('load', function () {
 
     const addTooltip = (event, year, yearBar) =>  {
       const barRect = yearBar.getBoundingClientRect();
-      const top = barRect.top;
-      const TOP_PADDING = 68;
-      const leftOffset = (elements.yearRange.getBoundingClientRect().left - elements.publicationPanel.getBoundingClientRect().width)
-      const left = barRect.left - leftOffset + barRect.width / 2;
+      const TOP_PADDING = 28;
+      const bottom = barRect.height + TOP_PADDING;
+      const leftOffset = elements.yearRange.getBoundingClientRect().left + barRect.width;
+      const left = barRect.left - leftOffset;
 
       // Put on top of the bar
-      barTooltip.style.top = `${top - TOP_PADDING}px`;
+      barTooltip.style.bottom = `${bottom}px`;
       barTooltip.style.left = `${left}px`;
       barTooltip.classList.remove('hidden');
       barTooltipContent.innerHTML = `<div>${year}</div>`;
