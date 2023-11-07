@@ -46,32 +46,25 @@ const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
 
 const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, year, countries, globalQuality, id, title, authors, description, source, url, metaAnalysis, 'methodology-and-attributes': methodologyAndAttributes }) => `
 <div class="flex flex-col ${isDetail ? '' : `p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} mb-2`} space-y-4">
-  ${!isDetail && isMetaAnalysis ? `<div class="flex">
-    <div class="px-2 text-white text-sm px-2 bg-mod-sc-ev rounded border border-mod-sc-ev">
-      Meta-analysis
-    </div>
-  </div>` : ''}
   <div class="h-6 justify-start items-center gap-6 inline-flex">
-  ${isDetail && isMetaAnalysis ? `<div class="flex flex-shrink-0">
-    <div class="px-2 text-white text-sm px-2 bg-mod-sc-ev rounded border border-mod-sc-ev">
-      Meta-analysis
-    </div>
-    </div>` : ''}
-    <div class="w-full h-6 gap-4 flex text-slate-500 text-xs">
-        ${!isMetaAnalysis && journals.length > 0 ? `<div class="justify-start items-center gap-2 flex max-w-[60%] w-fit">
-          <i data-lucide="newspaper" class="w-6 h-6 relative"></i>
-          <div class="flex-1 truncate" title="${journals.join(', ')}">${journals.join(', ')}</div>
-        </div>`: ''}
-        <div class="justify-start items-center gap-2 flex">
-          <i data-lucide="calendar" class="w-6 h-6 relative max-width-[10%]"></i>
-          <div>${year}</div>
-        </div>
-        ${!isMetaAnalysis && countries.length > 0 ? `<div class="justify-start items-center gap-2 flex max-w-[30%]">
-          <i data-lucide="globe-2" class="w-6 h-6 relative"></i>
-          <div class="truncate" title="${countries.join(', ')}">${countries.join(', ')}</div>
-        </div>` : ''}
-        ${isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
-        <i data-lucide="award" class="w-6 h-6 relative"></i>
+    <div class="w-full h-6 gap-4 flex text-slate-700 text-xs">
+      ${isMetaAnalysis ? `<span class="min-w-fit px-2 text-white text-sm px-2 bg-mod-sc-ev rounded border border-mod-sc-ev">
+        Meta-analysis
+      </span>` : ''}
+      ${!isMetaAnalysis && journals.length > 0 ? `<div class="justify-start items-center gap-2 flex max-w-[60%] w-fit">
+      <img class="w-6 h-6" src="/assets/icons/paper.svg" />
+      <div class="flex-1 truncate" title="${journals.join(', ')}">${journals.join(', ')}</div>
+      </div>`: ''}
+      <div class="justify-start items-center gap-2 flex">
+        <img class="w-6 h-6" src="/assets/icons/calendar.svg" />
+        <div>${year}</div>
+      </div>
+      ${!isMetaAnalysis && countries.length > 0 ? `<div class="justify-start items-center gap-2 flex max-w-[30%]">
+        <img class="w-6 h-6" src="/assets/icons/globe.svg" />
+        <div class="truncate" title="${countries.join(', ')}">${countries.join(', ')}</div>
+      </div>` : ''}
+      ${isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
+        <img class="w-6 h-6" src="/assets/icons/check.svg" />
         <div>Global quality: ${globalQuality}%</div>
       </div>` : ''}
     </div>
@@ -80,7 +73,7 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
     <div class="${isDetail ? 'text-slate-700 text-[34px] leading-[50px]' : 'text-xl font-serif leading-[30px] pb-4'}">
       ${title}
     </div>
-    <div class="text-slate-700 text-xs leading-[18px] italic mt-5">${authors}</div>
+    <div class="text-slate-700 text-xs leading-[18px] italic ${isDetail ? 'mt-5' : ''}">${authors}</div>
   </header>
   <div class="text-sm leading-7 text-slate-500">${isDetail ? description : ellipsis(description, 230)}</div>
   ${!isDetail ? `<div class="h-6 justify-end items-center gap-4 flex">

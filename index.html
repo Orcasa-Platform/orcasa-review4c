@@ -234,11 +234,12 @@
             </button>
             <!-- PUBLICATION HEADER -->
             <h2
-              class="text-mod-sc-ev text-[34px] py-6">Publications</h2>
+              class="text-mod-sc-ev font-serif text-[34px] py-6">Publications</h2>
             <div class="flex flex-col space-y-8 mt-2">
-              <div class="flex justify-between items-center gap-1">
+              <div
+                class="flex justify-between items-center gap-1 border-b border-dashed border-gray-200 pb-4">
                 <header
-                  class="text-slate-500">Showing
+                  class="text-slate-700">Showing
                   <span id="publications-number"></span> scientific
                   publications and <span id="meta-analysis-number"></span>
                   meta-analyses related to
@@ -248,16 +249,16 @@
                 <button
                   type="button"
                   id="btn-sort-publications"
-                  class="btn-secondary flex items-center justify-between !py-2 min-w-[150px]">
+                  class="btn-filter flex items-center justify-between !px-4 !py-2 min-w-[150px]">
                   Newest first
-                  <i class="h-6 w-6" data-lucide="arrow-up-wide-narrow"></i>
+                  <i class="h-6 w-6" data-lucide="arrow-up-narrow-wide"></i>
                 </button>
               </div>
               <div class="flex justify-between items-center gap-1">
                 <div id="search" class="w-[calc(100%-125px-16px)]">
                   <div class="relative w-full">
                     <input
-                      class="relative w-full h-14 p-4 bg-white shadow border border-gray-300 pl-10 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev min-w-full"
+                      class="relative w-full h-14 p-4 bg-white border border-gray-200 pl-10 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev min-w-full"
                       type="search" placeholder="Search by keyword">
                     <div
                       class="absolute inset-y-0 left-0 flex items-center pl-3">

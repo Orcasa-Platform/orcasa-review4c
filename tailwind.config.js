@@ -50,6 +50,9 @@ tailwind.config = {
           200: '#CFD1DB',
           300: '#B2B5C5',
           800: '#3C4363',
+        },
+        green: {
+          50: '#F7FCFA',
         }
       },
     },
