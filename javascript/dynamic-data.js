@@ -220,7 +220,7 @@ window.addEventListener('load', function () {
       </div>`;
       elements.landUseAllIntro.innerHTML = '';
     }
-    elements.legendText.innerHTML = name;
+    Array.from(elements.legendTexts).map(text => text.innerHTML = name);
 
     // Load main intervention charts
     if (landUse.mainInterventions) {

@@ -495,57 +495,72 @@
     </div>
 
     <!-- LEGEND -->
-    <div class="absolute bottom-9 right-6">
-      <div class="absolute -ml-px -top-10 right-0">
-        <button id="legend-toggle"
-          class="btn-icon-theme-dark">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="h-6 w-6 transition-transform -rotate-90"><polyline
-              points="15 18 9 12 15 6"></polyline></svg></button>
+    <div class="absolute bottom-16 right-6 z-10">
+      <div class="absolute -ml-px bottom-full right-0">
+        <button id="legend-toggle" class="btn-theme-dark text-xs px-2 py-1 whitespace-nowrap">
+          Hide legend
+        </button>
       </div>
       <div
         id="legend"
-        class="w-[328px] p-2 bg-white shadow transition-transform overflow-hidden">
-        <div
-          class="text-base font-semibold mb-2"><span
-            class="font-semibold" id="legend-text"></span>
-          publications</div>
-        <div
-          class="flex flex-col justify-center items-end gap-1">
-          <div class="text-slate-500 text-xs leading-[18px]">
-            sum of publications
+        class="w-[328px] p-3 bg-white shadow transition-transform"
+      >
+        <div class="text-base font-semibold mb-2">
+          <span class="font-semibold legend-text"></span>
+          publications
+        </div>
+        <div class="flex flex-col gap-3">
+          <div class="flex items-center justify-start gap-1 text-sm text-slate-500">
+            Sum of publications.
           </div>
-          <div
-            class="flex w-full justify-between h-4">
-            <div class="flex-1 bg-cluster-100"></div>
-            <div class="flex-1 bg-cluster-200"></div>
-            <div class="flex-1 bg-cluster-300"></div>
-            <div class="flex-1 bg-cluster-400"></div>
-            <div class="flex-1 bg-cluster-500"></div>
+          <div class="flex justify-end">
+            <div class="relative h-20 w-[274px] text-xs text-slate-500">
+              <div class="flex flex-col">
+                <div class="-mt-px flex h-[21px] w-full items-center text-right">
+                  <span class="mr-[10px] w-[60px]">&gt;5k</span>
+                  <span class="h-[6px] w-[8px] rotate-45 bg-gray-200 p-0"></span>
+                  <span class="mr-3 w-full border-t border-dashed border-gray-200"></span>
+                </div>
+                <div class="-mt-px flex h-[21px] w-full items-center text-right">
+                  <span class="mr-[10px] w-[60px]">500-5k</span>
+                  <span class="h-[6px] w-[8px] rotate-45 bg-gray-200 p-0"></span>
+                  <span class="mr-3 w-full border-t border-dashed border-gray-200"></span>
+                </div>
+                <div class="-mt-px flex h-[21px] w-full items-center text-right">
+                  <span class="mr-[10px] w-[60px]">100-500</span>
+                  <span class="h-[6px] w-[8px] rotate-45 bg-gray-200 p-0"></span>
+                  <span class="mr-3 w-full border-t border-dashed border-gray-200"></span>
+                </div>
+                <div class="-mt-px flex h-[21px] w-full items-center text-right">
+                  <span class="mr-[10px] w-[60px]">1-100</span>
+                  <span class="h-1.5 w-2 rotate-45 bg-gray-200 p-0"></span>
+                  <span class="mr-3 w-full border-t border-dashed border-gray-200"></span>
+                </div>
+              </div>
+              <div class="absolute right-3 top-0">
+                <div class="absolute right-0 top-[70px] h-5 w-5 border border-gray-200"></div>
+                <div class="absolute right-0 top-[50px] h-10 w-10 border border-gray-200"></div>
+                <div class="absolute right-0 top-[30px] h-[60px] w-[60px] border border-gray-200"></div>
+                <div class="absolute right-0 top-[10px] h-20 w-20 border border-gray-200"></div>
+              </div>
+            </div>
           </div>
-          <div
-            class="flex w-full justify-between h-4 text-slate-500 text-xs text-center leading-[18px]">
-            <div
-              class="text-center flex-1">1-100</div>
-            <div
-              class="text-center flex-1">100-500</div>
-            <div
-              class="text-center flex-1">500-1k</div>
-            <div
-              class="text-center flex-1">1-5k</div>
-            <div
-              class="text-center flex-1">>5k</div>
+          <div class="flex items-center gap-2 border-t border-gray-100 pb-1 pt-3">
+            <div class="border-2 border-mod-sc-ev">
+              <div class="flex h-3 w-3 bg-mod-sc-ev"></div>
+            </div>
+            <div class="text-sm text-slate-700">
+              <span class="legend-text"></span>
+              publications
+            </div>
           </div>
-          <div
-            class="h-9 pt-3 pb-1 border-t border-gray-300 border-dashed items-center gap-2 flex w-full">
-            <div class="w-4 h-4 bg-slate-700"></div>
-            <div class="inline text-slate-700 text-sm leading-tight">
-              <span>Publications </span>
-              <span
-                class="font-semibold">by
-                country</span>
+          <div class="flex items-center gap-2 border-t border-gray-100 pb-1 pt-3">
+            <div class="border-2 border-slate-700">
+              <div class="flex h-3 w-3 bg-mod-sc-ev"></div>
+            </div>
+            <div class="text-sm text-slate-700">
+              <span class="legend-text"></span>
+              publications by country
             </div>
           </div>
         </div>

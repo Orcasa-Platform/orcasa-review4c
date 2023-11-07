@@ -35,11 +35,11 @@ window.addEventListener('load', function () {
   elements.legendToggle.addEventListener("click", function() {
     window.mutations.toggleLegend();
     if (!state.legendOpen) {
-      elements.legend.classList.add('h-9');
-      elements.legendToggle.classList.add('rotate-180');
+      elements.legend.classList.add('hidden');
+      elements.legendToggle.innerHTML = 'Show legend';
     } else {
-      elements.legend.classList.remove('h-9');
-      elements.legendToggle.classList.remove('rotate-180');
+      elements.legend.classList.remove('hidden');
+      elements.legendToggle.innerHTML = 'Hide legend';
     }
   });
 
