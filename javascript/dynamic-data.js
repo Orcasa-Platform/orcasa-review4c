@@ -21,7 +21,7 @@ const metaAnalysisTemplate = (metaAnalysisPublication) => {
               width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="svg-btn-publication-detail"
             ><polyline points="9 18 15 12 9 6"></polyline></svg>
-            <span class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 translate-x-0 group-hover:-translate-x-1/3 group-focus:-translate-x-1/3">Learn more</span>
+            <span class="pointer-events-none text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 translate-x-0 group-hover:-translate-x-1/3 group-focus:-translate-x-1/3">Learn more</span>
           </button>
         </div>
     </div>`;
@@ -98,7 +98,7 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
             width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
             class="svg-btn-publication-detail"><polyline points="9 18 15 12 9 6"
           ></polyline></svg>
-          <span class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 translate-x-0 group-hover:-translate-x-1/3 group-focus:-translate-x-1/3">Learn more</span>
+          <span class="pointer-events-none text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 translate-x-0 group-hover:-translate-x-1/3 group-focus:-translate-x-1/3">Learn more</span>
         </button>
     </div>
   </div>`: ''}
@@ -469,7 +469,6 @@ window.addEventListener('load', function () {
     elements.closePublicationDetailPanelButton.focus();
 
     const publicationId = target.getAttribute('data-id');
-    console.log('publicationId', publicationId, target)
     window.loadPublication(publicationId);
   };
 
