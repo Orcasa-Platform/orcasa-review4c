@@ -45,26 +45,27 @@ const getHTMLPopup = (feature) => {
     .sort((a, b) => b[1] - a[1])
     .map(([key, value]) => (`
       <span class="text-right">${formatNumber(value)}</span>
-      <span>${key}</span>
+      <span class="font-semibold text-mod-sc-ev">${key}</span>
     `)).join('');
 
   return `
-    <div class="space-y-4">
-      <h4 class="text-slate-700 text-xl font-semibold font-serif leading-[30px]">
-        ${country_name}
+    <div class="h-full flex flex-col gap-y-4">
+      <h4 class="shrink-0 text-slate-700 text-lg font-serif">
+        Publications in ${country_name}
       </h4>
-      <button type="button" id="popup-close-button" class="absolute right-4 top-4 !m-0">
+      <button type="button" id="popup-close-button" class="shrink-0 inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 font-sans bg-gray-700 hover:bg-gray-500 text-white h-10 w-10 absolute right-0 top-0">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
           <path d="M18 6 6 18"></path>
           <path d="m6 6 12 12"></path>
         </svg>
-        <span class="sr-only">Close</span>
+        <span class="sr-only">Close popup</span>
       </button>
-      <div class="max-h-[140px] overflow-y-auto overflow-x-hidden">
+      <div class="grow overflow-y-auto overflow-x-hidden font-sans text-base">
         <div class="grid grid-cols-[min-content_1fr] auto-rows-auto gap-x-2 w-full">
-          <span class="mb-3">${formatNumber(number_primary_studies)}</span>
-          <span class="mb-3">total</span>
+          <span class="mb-6">${formatNumber(number_primary_studies)}</span>
+          <span class="mb-6 font-semibold text-mod-sc-ev">total</span>
+          <hr class="col-span-2 mb-4 border-dashed border-gray-200 h-0" />
           ${outcomesList}
         </div>
       </div>
@@ -136,7 +137,7 @@ const addLayer = async (map, landUseSlug="all", mainInterventionSlug, interventi
           }
 
           // We display a popup with the country's publications data
-          popup = new maplibregl.Popup({ closeButton: false })
+          popup = new maplibregl.Popup({ closeButton: false, offset: 40  })
             .setLngLat(cluster.geometry.coordinates)
             .setHTML(getHTMLPopup(cluster))
             .addTo(map);
