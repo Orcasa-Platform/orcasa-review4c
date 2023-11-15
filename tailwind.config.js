@@ -22,11 +22,6 @@ tailwind.config = {
         'mod-sc-ev-light': '#CEEEE3',
         'chart-color': '#B4E4D7',
         'mod-sc-ev-dark': '#1E6B65',
-        'cluster-100': '#B0F2BC',
-        'cluster-200': '#89E8AC',
-        'cluster-300': '#67DBA5',
-        'cluster-400': '#4CC8A3',
-        'cluster-500': '#2BB3A7',
         brown: {
           // Practices
           500: '#BA7300',

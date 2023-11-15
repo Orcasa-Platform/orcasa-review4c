@@ -1,264 +1,166 @@
-const addLayer = (map, landUseSlug="all", mainInterventionSlug, interventionSlug, subTypeSlug) => {
-  const slug = landUseSlug === 'all'
-    ? landUseSlug
-    : [landUseSlug, mainInterventionSlug, interventionSlug, subTypeSlug].filter(Boolean).join('-');
-  const layerName = `layer-${slug}`;
-  const clusterLayerName = `clusters-${slug}`;
+const markers = [];
+let popup = null;
+let mapListener = null;
 
-  const currentLayers = map.getStyle()?.layers;
-  const currentSources = map.getStyle()?.sources;
+const getMarkerSizeClasses = (feature) => {
+  const countClassesTuples = [
+    [10, ['h-5', 'w-5']],
+    [500, ['h-10', 'w-10']],
+    [5000, ['h-[60px]', 'w-[60px]']],
+    [Infinity, ['h-20', 'w-20']],
+  ];
 
-  const isSourceDefined = !!currentSources[layerName];
-  const isLayerActive = currentLayers.some(l => l.id === layerName);
+  const count = feature.properties.number_primary_studies;
+  return countClassesTuples.find(([limit]) => count < limit)[1];
+}
 
-  // Get the layer and load it if not already loaded
-  if (!isSourceDefined || !isLayerActive) {
-    getLayer(landUseSlug, mainInterventionSlug, interventionSlug, subTypeSlug).then(layer => {
-      const countryValues = layer && Object.values(layer);
-      const features = countryValues && countryValues.map(country => {
-        const geom = country.geom && JSON.parse(country.geom)?.[0];
-        return ({
-          type: "Feature",
-          geometry: geom.geometry,
-          properties: {
-            number_primary_studies: country.number_primary_studies,
-            effect_outcomes: country.effect_outcomes,
-            country_name: geom?.properties?.long_name,
-            id: geom?.properties?.id,
-          }
-        }
-      )});
+const createHTMLMarker = (feature, isCluster, onClick) => {
+  const element = document.createElement('button');
+  element.type = 'button';
 
-      const geoJSONContent = {
-        type: 'FeatureCollection',
-        features,
-      };
+  const classes = [
+    'flex',
+    'items-center',
+    'justify-center',
+    'bg-mod-sc-ev',
+    ...getMarkerSizeClasses(feature),
+    ...(!isCluster ? ['border-2', 'border-gray-800'] : [])
+  ];
+  element.classList.add(...classes);
 
-      if (!isSourceDefined) {
-        // ADD SOURCE. SAME FOR CLUSTERS AND LAYER
-        map.addSource(layerName, {
-          'type': 'geojson',
-          'data': geoJSONContent,
-          cluster: true,
-          clusterMaxZoom: 14, // Max zoom to cluster points on
-          clusterRadius: 100, // Radius of each cluster when clustering points
-          clusterProperties: {
-            number_primary_studies: ['+', ['get', 'number_primary_studies']]
-          }
-        });
-      }
+  element.innerHTML = `
+    <div class="text-sm text-white">
+      ${formatNumber(feature.properties.number_primary_studies)}
+    </div>
+  `;
 
-      if (!isLayerActive) {
-        // ADD CLUSTERS
-        map.addLayer({
-          id: clusterLayerName,
-          type: 'symbol',
-          source: layerName,
-          filter: ['has', 'point_count'],
-          'layout': {
-            // The format must correspond to the one defined in `formatNumber` in
-            // `/javascript/utils.js`. For that we would use this line:
-            //
-            // 'text-field': ['number-format', ['get', 'number_primary_studies'], { locale: 'fr' }],
-            //
-            // Unfortunately, and for unknown reasons, the space between thousands, millions, etc.
-            // is not rendered. As a workaround, we're manually adding the spaces.
-            'text-field': [
-              'let',
-              'char_len', ['length', ['to-string', ['get', 'number_primary_studies']]],
-              'str', ['to-string', ['get', 'number_primary_studies']],
-              [
-                'case',
-                ['all', ['>=', ['var', 'char_len'], 7]],
-                [
-                  'concat',
-                  ['slice', ['var', 'str'], 0, ['-', ['var', 'char_len'], 6]],
-                  ' ',
-                  ['slice', ['var', 'str'], ['-', ['var', 'char_len'], 6], ['-', ['var', 'char_len'], 3]],
-                  ' ',
-                  ['slice', ['var', 'str'], ['-', ['var', 'char_len'], 3], ['var', 'char_len']],
-                ],
-                ['all', ['>=', ['var', 'char_len'], 4]],
-                [
-                  'concat',
-                  ['slice', ['var', 'str'], 0, ['-', ['var', 'char_len'], 3]],
-                  ' ',
-                  ['slice', ['var', 'str'], ['-', ['var', 'char_len'], 3], ['var', 'char_len']],
-                ],
-                ['var', 'str'],
-              ]
-            ],
-            'text-size': 16,
-            'text-font': ['Roboto Slab'],
-            'text-offset': [0, -0.5],
-            'text-anchor': 'top',
-            'icon-image': 'square',
-            'icon-size': [
-              'interpolate',
-              ['exponential', 2],
-              ['get', 'number_primary_studies'],
-              0, 0.8,
-              50000, 1.6
-            ],
-            // We need to allow overlap to avoid dissapearing clusters
-            'text-allow-overlap' : true,
-            'text-ignore-placement': true,
-            'icon-allow-overlap': true,
-            'icon-ignore-placement': true,
-          },
-          'paint': {
-            'text-color': '#3C4363',
-            'icon-color': [
-              'step',
-              ['get', 'number_primary_studies'],
-              '#B0F2BC',
-              100,
-              '#89E8AC',
-              500,
-              '#67DBA5',
-              1000,
-              '#4CC8A3',
-              5000,
-              '#2BB3A7'
-            ]
-          }
-        });
+  element.addEventListener('click', onClick);
 
-        // ADD LAYER
-        map.addLayer({
-          'id': layerName,
-          'source': layerName,
-          'type': 'symbol',
-          filter: ['!', ['has', 'point_count']],
-          'layout': {
-            // The format must correspond to the one defined in `formatNumber` in
-            // `/javascript/utils.js`. For that we would use this line:
-            //
-            // 'text-field': ['number-format', ['get', 'number_primary_studies'], { locale: 'fr' }],
-            //
-            // Unfortunately, and for unknown reasons, the space between thousands, millions, etc.
-            // is not rendered. As a workaround, we're manually adding the spaces.
-            'text-field': [
-              'let',
-              'char_len', ['length', ['to-string', ['get', 'number_primary_studies']]],
-              'str', ['to-string', ['get', 'number_primary_studies']],
-              [
-                'case',
-                ['all', ['>=', ['var', 'char_len'], 7]],
-                [
-                  'concat',
-                  ['slice', ['var', 'str'], 0, ['-', ['var', 'char_len'], 6]],
-                  ' ',
-                  ['slice', ['var', 'str'], ['-', ['var', 'char_len'], 6], ['-', ['var', 'char_len'], 3]],
-                  ' ',
-                  ['slice', ['var', 'str'], ['-', ['var', 'char_len'], 3], ['var', 'char_len']],
-                ],
-                ['all', ['>=', ['var', 'char_len'], 4]],
-                [
-                  'concat',
-                  ['slice', ['var', 'str'], 0, ['-', ['var', 'char_len'], 3]],
-                  ' ',
-                  ['slice', ['var', 'str'], ['-', ['var', 'char_len'], 3], ['var', 'char_len']],
-                ],
-                ['var', 'str'],
-              ]
-            ],
-            'text-size': 16,
-            'text-font': ['Roboto Slab'],
-            'text-offset': [0, -0.5],
-            'text-anchor': 'top',
-            'text-allow-overlap': true,
-            'text-ignore-placement': true,
-            'icon-image': 'square',
-            'icon-size': [
-              'interpolate',
-              ['exponential', 2],
-              ['get', 'number_primary_studies'],
-              0, 0.8,
-              50000, 1.6
-            ],
-            'icon-allow-overlap': true,
-            'icon-ignore-placement': true,
-          },
-          'paint': {
-            'text-color': '#fff',
-            'icon-color':"#3C4363"
-          }
-        });
+  return element;
+};
 
-        // Clusters zoom on click
-        map.on('click', clusterLayerName, (e) => {
-          const features = map.queryRenderedFeatures(e.point, {
-            layers: [clusterLayerName]
-          });
-          const clusterId = features[0].properties.cluster_id;
-          const leftPadding = elements.sidebar.getBoundingClientRect().right;
-          map.getSource(layerName).getClusterExpansionZoom(
-              clusterId,
-              (err, zoom) => {
-                  if (err) return;
+const getHTMLPopup = (feature) => {
+  const { country_name, number_primary_studies, effect_outcomes } = feature?.properties || {};
+  const outcomesList = Object.entries(effect_outcomes)
+    .sort((a, b) => b[1] - a[1])
+    .map(([key, value]) => (`
+      <span class="text-right">${formatNumber(value)}</span>
+      <span class="font-semibold text-mod-sc-ev">${key}</span>
+    `)).join('');
 
-                  map.easeTo({
-                      center: features[0].geometry.coordinates,
-                      zoom,
-                      padding: { left: leftPadding }
-                  });
-              }
-          );
-        });
+  return `
+    <div class="h-full flex flex-col gap-y-4">
+      <h4 class="shrink-0 text-slate-700 text-lg font-serif">
+        Publications in ${country_name}
+      </h4>
+      <button type="button" id="popup-close-button" class="shrink-0 inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 font-sans bg-gray-700 hover:bg-gray-500 text-white h-10 w-10 absolute right-0 top-0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
+          <path d="M18 6 6 18"></path>
+          <path d="m6 6 12 12"></path>
+        </svg>
+        <span class="sr-only">Close popup</span>
+      </button>
+      <div class="grow overflow-y-auto overflow-x-hidden font-sans text-base">
+        <div class="grid grid-cols-[min-content_1fr] auto-rows-auto gap-x-2 w-full">
+          <span class="mb-6">${formatNumber(number_primary_studies)}</span>
+          <span class="mb-6 font-semibold text-mod-sc-ev">total</span>
+          <hr class="col-span-2 mb-4 border-dashed border-gray-200 h-0" />
+          ${outcomesList}
+        </div>
+      </div>
+    </div>
+  `;
+};
 
-        // ADD TOOLTIP
-        map.on('click', layerName, (event) => {
-          const feature = event.features?.[0];
-          const { country_name, number_primary_studies, effect_outcomes } = feature?.properties || {};
-          const parsedEffectOutcomes = effect_outcomes && JSON.parse(effect_outcomes);
-          const outcomesList = Object.entries(parsedEffectOutcomes)
-            .sort((a, b) => b[1] - a[1])
-            .map(([key, value]) => (`
-              <span class="text-right">${formatNumber(value)}</span>
-              <span>${key}</span>
-            `)).join('');
-
-          const tooltipHTML = `
-            <div class="space-y-4">
-              <h4 class="text-slate-700 text-xl font-semibold font-serif leading-[30px]">
-                ${country_name}
-              </h4>
-              <button type="button" id="popup-close-button" class="absolute right-4 top-4 !m-0">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
-                  <path d="M18 6 6 18"></path>
-                  <path d="m6 6 12 12"></path>
-                </svg>
-              </button>
-              <div class="max-h-[140px] overflow-y-auto overflow-x-hidden">
-                <div class="grid grid-cols-[min-content_1fr] auto-rows-auto gap-x-2 w-full">
-                  <span class="mb-3">${formatNumber(number_primary_studies)}</span>
-                  <span class="mb-3">total</span>
-                  ${outcomesList}
-                </div>
-              </div>
-            </div>`
-
-            const popup = new maplibregl.Popup({ closeButton: false })
-              .setLngLat(feature.geometry.coordinates)
-              .setHTML(tooltipHTML)
-              .addTo(map);
-
-            document.getElementById('popup-close-button').addEventListener("click", () => popup.remove());
-        })
-      }
-    });
+const addLayer = async (map, landUseSlug="all", mainInterventionSlug, interventionSlug, subTypeSlug) => {
+  // Remove the previous listeners from the map
+  if (mapListener) {
+    map.off('move', mapListener);
+    map.off('moveend', mapListener);
+    mapListener = null;
   }
 
-  currentLayers.forEach(({ id }) => {
-    if (id === layerName || id === clusterLayerName) {
-      map.setLayoutProperty(id, 'visibility', 'visible');
-    } else if (
-      id.startsWith('layer-') && id !== layerName ||
-      id.startsWith('clusters-') && id !== clusterLayerName
-    ) {
-      map.setLayoutProperty(id, 'visibility', 'none');
+  const layerData = await getLayer(landUseSlug, mainInterventionSlug, interventionSlug, subTypeSlug);
+  const features = Object.values(layerData ?? {}).map(country => {
+    const geom = country.geom && JSON.parse(country.geom)?.[0];
+    return ({
+      type: "Feature",
+      geometry: geom.geometry,
+      properties: {
+        number_primary_studies: country.number_primary_studies,
+        effect_outcomes: country.effect_outcomes,
+        country_name: geom?.properties?.long_name,
+        id: geom?.properties?.id,
+      }
     }
-  });
+  )});
+
+  // The clustering depends on the map's current position and zoom level
+  mapListener = () => {
+    // Remove all the markers from the map
+    markers.forEach((marker) => {
+      marker.remove();
+    });
+  
+    markers.length = 0;
+
+    const bbox = map.getBounds().toArray().flat();
+    const zoom = map.getZoom();
+    
+    const supercluster = new Supercluster({
+      radius: 100,
+      reduce: (res, { number_primary_studies }) => {
+        res.number_primary_studies += number_primary_studies;
+      },
+    }).load(features);
+    const clusters = supercluster.getClusters(bbox, zoom);
+
+    clusters.map((cluster) => {
+      const isCluster = cluster.properties.cluster;
+
+      const onClickMarker = (e) => {
+        e.stopPropagation();
+
+        if (isCluster) {
+          // We zoom to expand the cluster
+          const targetZoom = supercluster.getClusterExpansionZoom(cluster.properties.cluster_id);
+          map.flyTo({
+            center: cluster.geometry.coordinates,
+            zoom: targetZoom,
+          });
+        } else {
+          // We remove the eventual popup
+          if (popup) {
+            popup.remove();
+            popup = null;
+          }
+
+          // We display a popup with the country's publications data
+          popup = new maplibregl.Popup({ closeButton: false, offset: 40  })
+            .setLngLat(cluster.geometry.coordinates)
+            .setHTML(getHTMLPopup(cluster))
+            .addTo(map);
+
+          document.getElementById('popup-close-button').addEventListener("click", () => {
+            popup.remove();
+            popup = null;
+          });
+        }
+      };
+
+      const marker = new maplibregl.Marker({
+        element: createHTMLMarker(cluster, isCluster, onClickMarker)
+      }).setLngLat(cluster.geometry.coordinates)
+        .addTo(map);
+
+      markers.push(marker);
+    });
+  };
+
+  // Add the listener to recompute the clusters and execute it once to render the initial view
+  map.on('move', mapListener);
+  map.on('moveend', mapListener);
+
+  mapListener();
 };

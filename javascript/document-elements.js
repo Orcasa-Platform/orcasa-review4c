@@ -35,7 +35,7 @@ const elements = {
   publicationsNumber: document.getElementById('publications-number'),
   metaAnalysisNumber: document.getElementById('meta-analysis-number'),
   filtersSelectionText: document.getElementById('filters-selection-text'),
-  legendText: document.getElementById('legend-text'),
+  legendTexts: document.querySelectorAll('.legend-text'),
   chartCards: document.getElementById('chart-cards'),
   sortPublicationsButton: document.getElementById('btn-sort-publications'),
   publicationsContainer: document.getElementById('publications-container'),
