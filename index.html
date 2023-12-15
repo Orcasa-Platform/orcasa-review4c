@@ -72,11 +72,11 @@
         }
 
         .navbar-item {
-          @apply flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-4 pr-4 font-sans text-sm font-serif leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 bg-slate-700 text-white;
+          @apply flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-4 pr-4 font-sans text-sm font-serif leading-tight transition-colors duration-200 hover:bg-white hover:text-gray-700 bg-gray-700 text-white;
         }
 
         .navbar-item-active {
-          @apply flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-4 pr-4 font-sans text-sm font-serif leading-tight transition-colors duration-200 hover:bg-white hover:text-slate-700 bg-white text-slate-700;
+          @apply flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-4 pr-4 font-sans text-sm font-serif leading-tight transition-colors duration-200 hover:bg-white hover:text-gray-700 bg-white text-gray-700;
         }
 
         .btn-theme-light {
@@ -115,13 +115,16 @@
       id="navbar"
       class="absolute left-0 z-40 h-full w-[117px] overflow-y-auto overflow-x-hidden">
       <div
-        class="flex h-full w-full flex-col items-center justify-start gap-20 bg-slate-700 py-6">
-        <a href="/">
+        class="flex h-full w-full flex-col items-center justify-start gap-20 bg-gray-700 py-6">
+        <a href="/" class="flex flex-col-reverse items-center justify-center gap-3">
           <img src="/assets/images/logo.png" alt="Impact4Soil" width="58"
             height="58">
           <span class="sr-only">Impact4Soil</span>
+          <span class="rounded bg-gray-800 px-2 py-[3px] font-sans text-xs font-normal text-white">
+            Beta
+          </span>
         </a>
-        <div class="flex flex-col gap-px bg-slate-600 py-px">
+        <div class="flex flex-col gap-px bg-gray-600 py-px">
           <a
             class="navbar-item border-yellow-500"
             href="/geospatial-data">
