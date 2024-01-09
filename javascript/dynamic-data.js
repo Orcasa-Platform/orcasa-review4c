@@ -579,6 +579,11 @@ window.addEventListener('load', function () {
     }
   };
 
+  window.renderMethodologyChart = () => {
+    getMethodologyData().then(window.createMethodologyChart);
+  };
+
+
   // Add event listener on scroll on publications list to load more publications
   elements.publicationPanel.addEventListener('scroll', () => {
     const { scrollHeight, scrollTop, clientHeight } = elements.publicationPanel;

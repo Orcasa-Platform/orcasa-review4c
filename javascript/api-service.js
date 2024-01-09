@@ -39,9 +39,9 @@ const getFilters = async (filter) => {
 };
 
 const getPathname = (baseURL, landUse, sectionParams) => {
-  const filteredSectionParams = sectionParams.filter(Boolean);
+  const filteredSectionParams = sectionParams?.filter(Boolean);
   const landUsePath = landUse === 'all' ? '' : `${landUse}/`;
-  const sectionPath = filteredSectionParams.length ? `/${filteredSectionParams.join("/")}/` : '';
+  const sectionPath = filteredSectionParams?.length ? `/${filteredSectionParams.join("/")}/` : '';
   return `${baseURL}/${landUsePath}${sectionPath}index.json`;
 }
 
@@ -150,6 +150,36 @@ const getPublications = async ({ landUse, mainIntervention, intervention, subTyp
     const parsedData = parseData(filteredData);
     const paginatedData = paginate(parsedData);
     return { data: paginatedData, metadata };
+  });
+}
+
+// Publication data
+const getMethodologyYears = (data) => {
+  if(!data) return {};
+
+  const metaAnalysisYearCounts = {};
+  const publicationYearCounts = {};
+  data.concat().forEach(publication => {
+    if (publication.type === 'meta-analysis') {
+      const year = publication.year;
+      metaAnalysisYearCounts[year] = (metaAnalysisYearCounts[year] || 0) + 1;
+    }
+    if (publication.type === 'primary-paper') {
+      const year = publication.year;
+      publicationYearCounts[year] = (publicationYearCounts[year] || 0) + 1;
+    }
+  });
+
+  return {
+    metaAnalysis: metaAnalysisYearCounts,
+    publications: publicationYearCounts,
+  };
+};
+
+const getMethodologyData = async () => {
+  const url = getPathname(BASE_PUBLICATIONS_URL, 'all');
+  return getURL(url).then(data => {
+    return getMethodologyYears(data);
   });
 }
 

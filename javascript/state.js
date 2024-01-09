@@ -11,6 +11,7 @@ window.addEventListener('load', function () {
     mainInterventions: [],
     filter: null,
     publicationsOpen: false,
+    methodologyOpen: false,
     publicationDetailOpen: false,
     chartData: null,
     publicationsSort: 'asc',
@@ -33,6 +34,9 @@ window.addEventListener('load', function () {
     },
     setPublicationsOpen(publicationsOpen) {
       state.publicationsOpen = publicationsOpen;
+    },
+    setMethodologyOpen(methodologyOpen) {
+      state.methodologyOpen = methodologyOpen;
     },
     setFiltersOpen(filtersOpen) {
       state.filtersOpen = filtersOpen;
@@ -103,6 +107,7 @@ window.addEventListener('load', function () {
   window.getters = {
     sidebarOpen: () => state.sidebarOpen,
     publicationsOpen: () => state.publicationOpen,
+    methodologyOpen: () => state.publicationOpen,
     filtersOpen: () => state.filtersOpen,
     publicationDetailOpen: () => state.publicationDetailOpen,
     publicationsSort: () => state.publicationsSort,
