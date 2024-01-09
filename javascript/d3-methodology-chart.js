@@ -1,21 +1,22 @@
 window.createMethodologyChart = (data) => {
-  const element = document.querySelector('#methodology-chart');
+  const container = d3.select('#methodology-chart');
+  const element = container.node();
   const CHART_HEIGHT = 455;
-  const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+  const margin = { top: 20, right: 20, bottom: 40, left: 20 };
   const { publications, metaAnalysis } = data;
   const publicationsData = Object.keys(publications).map(key => ({ date: d3.timeParse("%Y")(key), value: publications[key] }));
   const metaAnalysisData = Object.keys(metaAnalysis).map(key => ({ date: d3.timeParse("%Y")(key), value: metaAnalysis[key] }));
 
-  const width = element.clientWidth - margin.left - margin.right;
+  const width = element.getBoundingClientRect().width - margin.left - margin.right;
   const height = CHART_HEIGHT - margin.top - margin.bottom;
 
-  const svg = d3.select('#methodology-chart')
+  const svg = container
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+          `translate(${margin.left},${margin.top})`);
 
   // Get the min and max years between the publicationsData and the metaAnalysisData
   const minYear = Math.floor(d3.min(publicationsData.concat(metaAnalysisData), d => d.date.getFullYear()) / 10) * 10;
@@ -35,15 +36,23 @@ window.createMethodologyChart = (data) => {
     years.push(new Date(i, 0, 1)); // January 1st of the year
   }
   xAxis.tickValues(years)
-
   svg.append("g")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", `translate(0,${height + 10})`)
     .call(xAxis)
-    .select(".domain").remove(); // Remove the bottom line
+    .select(".domain").remove() // Remove the bottom line
 
+    svg.selectAll(".tick text")
+    .style("font-size", 12)
+    .style("fill", gray500)
+    .attr("dy", 16);
+
+    svg.selectAll(".tick line")
+    .style("stroke", gray500);
+
+  const VERTICAL_AXIS_PADDING = 24;
   const y = d3.scaleLinear()
     .domain(d3.extent(publicationsData, d => d.value ))
-    .range([ height, 0 ]);
+    .range([ height - VERTICAL_AXIS_PADDING, 0 ]);
 
   // Add the publications line
   svg.append("path")
