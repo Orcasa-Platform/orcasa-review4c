@@ -23,10 +23,13 @@
     <script src='javascript/state.js'></script>
 
     <!-- Icons -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script
+      src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <!-- Map -->
-    <script src="https://unpkg.com/maplibre-gl@%5E3.3.0/dist/maplibre-gl.js"></script>
-    <script src="https://unpkg.com/supercluster@8.0.1/dist/supercluster.min.js"></script>
+    <script
+      src="https://unpkg.com/maplibre-gl@%5E3.3.0/dist/maplibre-gl.js"></script>
+    <script
+      src="https://unpkg.com/supercluster@8.0.1/dist/supercluster.min.js"></script>
     <link href='https://unpkg.com/maplibre-gl@3.3.0/dist/maplibre-gl.css'
       rel='stylesheet' />
 
@@ -103,6 +106,10 @@
           @apply absolute top-0 px-12 py-10 w-full max-w-[862px] left-0 h-screen bg-white transition-transform z-20 !mt-0 overflow-auto;
         }
 
+        .methodology-panel {
+          @apply absolute top-0 px-12 py-10 w-full max-w-[862px] left-0 h-screen bg-white transition-transform z-20 !mt-0 overflow-auto;
+        }
+
         .filters-panel {
           @apply absolute -right-[380px] p-12 w-[380px] h-screen bg-white transition-transform z-10 overflow-auto;
         }
@@ -174,7 +181,8 @@
             <span>These
               insights come from the analysis of</span><span
               class="font-semibold">
-              <span id="land-use-publications"></span> scientific publications</span><span>
+              <span id="land-use-publications"></span> scientific
+              publications</span><span>
               and <span id="land-use-meta-analysis"></span> meta-analysis
               related
               to </span><span
@@ -197,7 +205,7 @@
                 <i data-lucide="book-open"></i>
                 <span>Publications</span>
               </button>
-              <button type="button" disabled id="btn-methodology"
+              <button type="button" id="btn-methodology"
                 class="btn-secondary flex gap-4">
                 <i data-lucide="clipboard-list"></i>
                 <span>Methodology</span></button>
@@ -211,6 +219,74 @@
           </div>
           <div id="chart-tooltip"
             class="p-1 bg-slate-700 text-white text-sm absolute hidden rounded z-50"></div>
+          <!-- METHODOLOGY PANEL -->
+          <div id="methodology-panel"
+            class="methodology-panel -translate-x-full space-y-6">
+            <button
+              class="group flex items-center"
+              id="btn-close-methodology-panel">
+              <svg
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="mr-[15px] h-[34px] w-[34px] bg-gray-100 px-1 py-1 transition-colors group-hover:bg-slate-700 group-hover:text-white group-focus:bg-slate-700 group-focus:text-white">
+                <path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
+              <span
+                class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 -translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Go
+                back
+              </span>
+            </button>
+            <div>
+              <h3
+                class="text-slate-700 text-[32px] font-semibold font-serif">Methodology</h3>
+            </div>
+            <div
+              class="text-slate-700">We
+              conducted a literature search to retrieve all peer-reviewed meta-
+              analyses that reported at least one quantification on Soil organic
+              Carbon, expressed as a concentration (g C kg-1 soil or equivalent)
+              or a stock (t C ha-1 or equivalent). We then extracted all
+              quantification presented in the meta-analyses and combined them to
+              reach a global overview of the impacts of multiple interventions
+              on soil organic carbon, with high statistical power. We also
+              characterized the methodological quality of the meta-analyses, and
+              listed all the primary studies synthethized in the meta-analyses
+              to clearly identify and present potential bias and limitation in
+              the current scientific knowledge.</div>
+            <div id="methodology-chart"></div>
+            <div>
+              <div
+                class="text-slate-700 text-lg font-semibold font-serif">Related
+                scientific work</div>
+              <a
+                href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vge-xGEAAAAJ&citation_for_view=vge-xGEAAAAJ:NhqRSupF_l8C"
+                target="_blank"
+                class="text-teal-500 text-base font-semibold">A global database
+                of land management, land-use change and climate change effects
+                on soil organic carbon</a>
+              <a
+                href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vge-xGEAAAAJ&citation_for_view=vge-xGEAAAAJ:a0OBvERweLwC"
+                target="_blank"
+                class="text-teal-500 text-base font-semibold">A
+                global overview of studies about land management, land‐use
+                change, and climate change effects on soil organic carbon</a>
+            </div>
+            <div>
+              <div
+                class="mb-4 text-slate-700 text-lg font-semibold font-serif">Contact</div>
+              <a
+                href="mailto:?"
+                target="_blank"
+                class="text-teal-500 text-base font-semibold block">Damien
+                Bellouin</a>
+              <a
+                href="mailto:julien.demenois@cirad.fr"
+                target="_blank"
+                class="text-teal-500 text-base font-semibold block">Julien
+                Demenois</a>
+
+            </div>
+          </div>
 
           <!-- PUBLICATION PANEL -->
           <div id="publication-panel"
@@ -222,9 +298,11 @@
               <svg
                 xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"
                 class="mr-[15px] h-[34px] w-[34px] bg-gray-100 px-1 py-1 transition-colors group-hover:bg-slate-700 group-hover:text-white group-focus:bg-slate-700 group-focus:text-white">
-                <path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
+                <path d="m12 19-7-7 7-7"></path><path
+                  d="M19 12H5"></path></svg>
               <span
                 class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 -translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Back
                 to Results
@@ -331,7 +409,8 @@
                     <span
                       id="type-publication-selected"
                       aria-placeholder="Publication type"
-                      class="dropdown-selected text-slate-700">Publication type
+                      class="dropdown-selected text-slate-700">Publication
+                      type
                     </span>
                   </button>
                   <input type="search" placeholder="Search…"
@@ -344,7 +423,8 @@
                       class="flex px-1 border-b border-dashed border-gray-300">
                       <button type="button"
                         class="btn-select-all btn-link">Select all</button>
-                      <button type="button" class="btn-clear btn-link">Clear</button>
+                      <button type="button"
+                        class="btn-clear btn-link">Clear</button>
                     </div>
                     <ul class="flex flex-col">
                     </ul>
@@ -376,7 +456,8 @@
                       class="flex px-1 border-b border-dashed border-gray-300">
                       <button type="button"
                         class="btn-select-all btn-link">Select all</button>
-                      <button type="button" class="btn-clear btn-link">Clear</button>
+                      <button type="button"
+                        class="btn-clear btn-link">Clear</button>
                     </div>
                     <ul class="flex flex-col">
                     </ul>
@@ -407,7 +488,8 @@
                       class="flex px-1 border-b border-dashed border-gray-300">
                       <button type="button"
                         class="btn-select-all btn-link">Select all</button>
-                      <button type="button" class="btn-clear btn-link">Clear</button>
+                      <button type="button"
+                        class="btn-clear btn-link">Clear</button>
                     </div>
                     <ul class="flex flex-col">
                     </ul>
@@ -438,7 +520,8 @@
                       class="flex px-1 border-b border-dashed border-gray-300">
                       <button type="button"
                         class="btn-select-all btn-link">Select all</button>
-                      <button type="button" class="btn-clear btn-link">Clear</button>
+                      <button type="button"
+                        class="btn-clear btn-link">Clear</button>
                     </div>
                     <ul class="flex flex-col">
                     </ul>
@@ -494,55 +577,72 @@
     <!-- LEGEND -->
     <div class="absolute bottom-16 right-6 z-10">
       <div class="absolute -ml-px bottom-full right-0">
-        <button id="legend-toggle" class="btn-theme-dark text-xs px-2 py-1 whitespace-nowrap">
+        <button id="legend-toggle"
+          class="btn-theme-dark text-xs px-2 py-1 whitespace-nowrap">
           Hide legend
         </button>
       </div>
       <div
         id="legend"
-        class="w-[328px] p-3 bg-white shadow transition-transform"
-      >
+        class="w-[328px] p-3 bg-white shadow transition-transform">
         <div class="text-base font-semibold mb-2">
           <span class="font-semibold legend-text"></span>
           publications
         </div>
         <div class="flex flex-col gap-3">
-          <div class="flex items-center justify-start gap-1 text-sm text-slate-500">
+          <div
+            class="flex items-center justify-start gap-1 text-sm text-slate-500">
             Sum of publications.
           </div>
           <div class="flex justify-end">
             <div class="relative h-20 w-[274px] text-xs text-slate-500">
               <div class="flex flex-col">
-                <div class="-mt-px flex h-[21px] w-full items-center text-right">
+                <div
+                  class="-mt-px flex h-[21px] w-full items-center text-right">
                   <span class="mr-[10px] w-[60px]">&gt;5k</span>
-                  <span class="h-[6px] w-[8px] rotate-45 bg-gray-200 p-0"></span>
-                  <span class="mr-3 w-full border-t border-dashed border-gray-200"></span>
+                  <span
+                    class="h-[6px] w-[8px] rotate-45 bg-gray-200 p-0"></span>
+                  <span
+                    class="mr-3 w-full border-t border-dashed border-gray-200"></span>
                 </div>
-                <div class="-mt-px flex h-[21px] w-full items-center text-right">
+                <div
+                  class="-mt-px flex h-[21px] w-full items-center text-right">
                   <span class="mr-[10px] w-[60px]">500-5k</span>
-                  <span class="h-[6px] w-[8px] rotate-45 bg-gray-200 p-0"></span>
-                  <span class="mr-3 w-full border-t border-dashed border-gray-200"></span>
+                  <span
+                    class="h-[6px] w-[8px] rotate-45 bg-gray-200 p-0"></span>
+                  <span
+                    class="mr-3 w-full border-t border-dashed border-gray-200"></span>
                 </div>
-                <div class="-mt-px flex h-[21px] w-full items-center text-right">
+                <div
+                  class="-mt-px flex h-[21px] w-full items-center text-right">
                   <span class="mr-[10px] w-[60px]">10-500</span>
-                  <span class="h-[6px] w-[8px] rotate-45 bg-gray-200 p-0"></span>
-                  <span class="mr-3 w-full border-t border-dashed border-gray-200"></span>
+                  <span
+                    class="h-[6px] w-[8px] rotate-45 bg-gray-200 p-0"></span>
+                  <span
+                    class="mr-3 w-full border-t border-dashed border-gray-200"></span>
                 </div>
-                <div class="-mt-px flex h-[21px] w-full items-center text-right">
+                <div
+                  class="-mt-px flex h-[21px] w-full items-center text-right">
                   <span class="mr-[10px] w-[60px]">1-10</span>
                   <span class="h-1.5 w-2 rotate-45 bg-gray-200 p-0"></span>
-                  <span class="mr-3 w-full border-t border-dashed border-gray-200"></span>
+                  <span
+                    class="mr-3 w-full border-t border-dashed border-gray-200"></span>
                 </div>
               </div>
               <div class="absolute right-3 top-0">
-                <div class="absolute right-0 top-[70px] h-5 w-5 border border-gray-200"></div>
-                <div class="absolute right-0 top-[50px] h-10 w-10 border border-gray-200"></div>
-                <div class="absolute right-0 top-[30px] h-[60px] w-[60px] border border-gray-200"></div>
-                <div class="absolute right-0 top-[10px] h-20 w-20 border border-gray-200"></div>
+                <div
+                  class="absolute right-0 top-[70px] h-5 w-5 border border-gray-200"></div>
+                <div
+                  class="absolute right-0 top-[50px] h-10 w-10 border border-gray-200"></div>
+                <div
+                  class="absolute right-0 top-[30px] h-[60px] w-[60px] border border-gray-200"></div>
+                <div
+                  class="absolute right-0 top-[10px] h-20 w-20 border border-gray-200"></div>
               </div>
             </div>
           </div>
-          <div class="flex items-center gap-2 border-t border-gray-100 pb-1 pt-3">
+          <div
+            class="flex items-center gap-2 border-t border-gray-100 pb-1 pt-3">
             <div class="border-2 border-mod-sc-ev">
               <div class="flex h-3 w-3 bg-mod-sc-ev"></div>
             </div>
@@ -551,7 +651,8 @@
               publications
             </div>
           </div>
-          <div class="flex items-center gap-2 border-t border-gray-100 pb-1 pt-3">
+          <div
+            class="flex items-center gap-2 border-t border-gray-100 pb-1 pt-3">
             <div class="border-2 border-slate-700">
               <div class="flex h-3 w-3 bg-mod-sc-ev"></div>
             </div>
@@ -644,10 +745,12 @@
                 for="light-basemap-button">Light basemap</label>
 
               <button id="relief-basemap-button" type="button" role="radio"
-                aria-checked="true" data-state="checked" value="basemap-relief"
+                aria-checked="true" data-state="checked"
+                value="basemap-relief"
                 class="rounded-full text-main ring-offset-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:ring-2 data-[state=checked]:ring-main data-[state=checked]:ring-offset-4 cursor-pointer overflow-hidden"
                 tabindex="0">
-                <img alt="Relief basemap" loading="lazy" width="64" height="88"
+                <img alt="Relief basemap" loading="lazy" width="64"
+                  height="88"
                   src="/assets/images/basemap-relief.png">
               </button>
               <label
@@ -671,7 +774,8 @@
             </div>
 
             <div role="radiogroup" aria-required="false" dir="ltr"
-              class="grid gap-2" style="outline: none;" id="labels-radio-group">
+              class="grid gap-2" style="outline: none;"
+              id="labels-radio-group">
               <div class="group flex cursor-pointer items-center space-x-2">
                 <button type="button" role="radio" aria-checked="true"
                   data-state="checked" value="light"
@@ -721,6 +825,8 @@
 
     <script src='javascript/utils.js'></script>
 
+    <script src='javascript/constants.js'></script>
+    <script src='javascript/d3-methodology-chart.js'></script>
     <script src='javascript/d3-chart.js'></script>
 
     <!-- ELEMENT QUERIES -->

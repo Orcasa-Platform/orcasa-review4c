@@ -198,7 +198,7 @@ window.addEventListener('load', function () {
 
   const onToggleLabels = function (labels) {
     window.mutations.setLabels(labels);
-    
+
     map.setLayoutProperty('countries-labels-light', 'visibility', 'none');
     map.setLayoutProperty('countries-labels-dark', 'visibility', 'none');
 
@@ -242,7 +242,7 @@ window.addEventListener('load', function () {
   });
 
   const onToggleLabelsRadio = function (radio, checked) {
-    if (checked) { 
+    if (checked) {
       radio.setAttribute('tabindex', 0);
       radio.setAttribute('aria-checked', true);
       radio.dataset.state = 'checked';
@@ -308,6 +308,18 @@ window.addEventListener('load', function () {
 
       fitMap(map, { sidebarOpen: true });
     }
+  });
+
+  // METHODOLOGY PAGE
+  elements.methodologyButton.addEventListener("click", function() {
+    window.mutations.setMethodologyOpen(true);
+    window.renderMethodologyChart();
+    elements.methodologyPanel.classList.remove('-translate-x-full');
+  });
+
+  elements.closeMethodologyPanelButton.addEventListener("click", function() {
+    elements.methodologyPanel.classList.add('-translate-x-full');
+    window.mutations.setMethodologyOpen(false);
   });
 
   // PUBLICATION BUTTON
