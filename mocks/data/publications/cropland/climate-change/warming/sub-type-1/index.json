@@ -22,7 +22,7 @@
     },
     {
         "id": 2,
-        "title": "Emission of CO2 from biochar-amended soils and implications for soil organic carbon",
+        "title": "Emission of CO2 from biochar-amended soils and implications for Soil Organic Carbon",
         "journalIds": [67, 16],
         "year": 2013,
         "countryIsos": ["PT"],
@@ -30,7 +30,7 @@
         "authors": "Woolf, Dominic; Amonette, James E.; Street-Perrott, F. Alayne; Lehmann, Johannes; Joseph, Stephen",
         "url": "http://onlinelibrary.wiley.com/doi/10.1111/gcbb.12044/abstract",
         "source": "Google scholar",
-        "description": "Biochar is a carbon-rich solid that is produced by pyrolysis of biomass. As a soil amendment, biochar has been shown to increase crop yields, improve soil fertility, promote nutrient retention, and reduce leaching of agrochemicals. However, the effects of biochar on soil organic carbon (SOC) are less clear. Biochar may increase SOC by providing a recalcitrant carbon substrate for soil microorganisms, but it may also reduce SOC by increasing microbial biomass turnover. Here, we review the evidence for these two opposing effects of biochar on SOC, and we present a meta-analysis of 80 published studies that report the effects of biochar on SOC. We find that biochar-amended soils have lower SOC than unamended soils, and that this effect is strongest at low temperatures and in acidic soils. We also find that biochar-amended soils have lower CO2 emissions than unamended soils, and that this effect is strongest at high temperatures and in acidic soils. We conclude that biochar has a small but significant effect on SOC, and that this effect is likely to be driven by the production of CO2 from biochar-amended soils. We suggest that the effect of biochar on SOC should be considered when assessing the climate impacts of biochar as a carbon sequestration strategy.",
+        "description": "Biochar is a carbon-rich solid that is produced by pyrolysis of biomass. As a soil amendment, biochar has been shown to increase crop yields, improve soil fertility, promote nutrient retention, and reduce leaching of agrochemicals. However, the effects of biochar on Soil Organic Carbon (SOC) are less clear. Biochar may increase SOC by providing a recalcitrant carbon substrate for soil microorganisms, but it may also reduce SOC by increasing microbial biomass turnover. Here, we review the evidence for these two opposing effects of biochar on SOC, and we present a meta-analysis of 80 published studies that report the effects of biochar on SOC. We find that biochar-amended soils have lower SOC than unamended soils, and that this effect is strongest at low temperatures and in acidic soils. We also find that biochar-amended soils have lower CO2 emissions than unamended soils, and that this effect is strongest at high temperatures and in acidic soils. We conclude that biochar has a small but significant effect on SOC, and that this effect is likely to be driven by the production of CO2 from biochar-amended soils. We suggest that the effect of biochar on SOC should be considered when assessing the climate impacts of biochar as a carbon sequestration strategy.",
         "metaAnalysis": [
             1
         ]

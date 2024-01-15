@@ -138,7 +138,7 @@ window.addEventListener('load', function () {
       return `
       <div class="flex flex-col p-6 bg-gray-50 mb-2">
         <header class="mb-6">
-          Impact of <span class="font-semibold">${name}</span> on soil organic carbon for ${landUseName}
+          Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for ${landUseName}
         </header>
         <div
           class="">
