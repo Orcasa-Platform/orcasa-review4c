@@ -6,7 +6,7 @@ window.createMethodologyChart = (data) => {
   const element = container.node();
   const CHART_HEIGHT = 455;
   const margin = { top: 20, right: 20, bottom: 40, left: 36 };
-  const { publications, metaAnalysis } = data;
+  const { publications, metaAnalysis } = data || {};
   const publicationsData = Object.keys(publications).map(key => ({ date: d3.timeParse("%Y")(key), value: publications[key] }));
   const metaAnalysisData = Object.keys(metaAnalysis).map(key => ({ date: d3.timeParse("%Y")(key), value: metaAnalysis[key] }));
 
@@ -122,8 +122,7 @@ window.createMethodologyChart = (data) => {
 }
 
 // Rerender chart on window resize
-const onResize = () => {
-  createMethodologyChart(window.getters.methodologyChartData());
-};
 
-window.addEventListener('resize', onResize );
+window.addEventListener('resize', () => {
+  createMethodologyChart(window.getters.methodologyChartData());
+} );
