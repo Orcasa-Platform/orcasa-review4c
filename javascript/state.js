@@ -11,8 +11,10 @@ window.addEventListener('load', function () {
     mainInterventions: [],
     filter: null,
     publicationsOpen: false,
+    methodologyOpen: false,
     publicationDetailOpen: false,
     chartData: null,
+    methodologyChartData: null,
     publicationsSort: 'asc',
     publicationFilters: { 'type-publication': ['meta-analysis', 'primary-paper'] },
     publicationPage: 1,
@@ -33,6 +35,9 @@ window.addEventListener('load', function () {
     },
     setPublicationsOpen(publicationsOpen) {
       state.publicationsOpen = publicationsOpen;
+    },
+    setMethodologyOpen(methodologyOpen) {
+      state.methodologyOpen = methodologyOpen;
     },
     setFiltersOpen(filtersOpen) {
       state.filtersOpen = filtersOpen;
@@ -70,6 +75,9 @@ window.addEventListener('load', function () {
     setChartData(chartData) {
       state.chartData = chartData;
     },
+    setMethodologyChartData(methodologyChartData) {
+      state.methodologyChartData = methodologyChartData;
+    },
     togglePublicationsSort() {
       state.publicationsSort = state.publicationsSort === 'asc' ? 'desc' : 'asc';
     },
@@ -103,6 +111,7 @@ window.addEventListener('load', function () {
   window.getters = {
     sidebarOpen: () => state.sidebarOpen,
     publicationsOpen: () => state.publicationOpen,
+    methodologyOpen: () => state.publicationOpen,
     filtersOpen: () => state.filtersOpen,
     publicationDetailOpen: () => state.publicationDetailOpen,
     publicationsSort: () => state.publicationsSort,
@@ -110,6 +119,7 @@ window.addEventListener('load', function () {
     landUses: () => state.landUses,
     mainInterventions: () => state.mainInterventions,
     chartData: () => state.chartData,
+    methodologyChartData: () => state.methodologyChartData,
     filter: () => state.filter,
     openDropdowns: () => state.openDropdowns,
     publicationFilters: () => state.publicationFilters,

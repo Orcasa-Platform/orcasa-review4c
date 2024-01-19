@@ -2,6 +2,7 @@
 // Eg. const BASE_PUBLICATIONS_URL = 'https://review4c.org/.../publications';
 
 const BASE_PUBLICATIONS_URL = '/mocks/data/publications';
+const BASE_PUBLICATIONS_COUNT_URL = '/mocks/data/publications-count';
 const BASE_CHARTS_URL = '/mocks/data/charts';
 const BASE_LAYERS_URL = '/mocks/layers';
 const BASE_FILTERS_URL = '/mocks/filters';
@@ -39,9 +40,9 @@ const getFilters = async (filter) => {
 };
 
 const getPathname = (baseURL, landUse, sectionParams) => {
-  const filteredSectionParams = sectionParams.filter(Boolean);
+  const filteredSectionParams = sectionParams?.filter(Boolean);
   const landUsePath = landUse === 'all' ? '' : `${landUse}/`;
-  const sectionPath = filteredSectionParams.length ? `/${filteredSectionParams.join("/")}/` : '';
+  const sectionPath = filteredSectionParams?.length ? `/${filteredSectionParams.join("/")}/` : '';
   return `${baseURL}/${landUsePath}${sectionPath}index.json`;
 }
 
@@ -153,6 +154,12 @@ const getPublications = async ({ landUse, mainIntervention, intervention, subTyp
   });
 }
 
+const getMethodologyData = async () => {
+  const url = `${BASE_PUBLICATIONS_COUNT_URL}/index.json`;
+  return getURL(url);
+}
+
+// Publication data
 const getPublication = async (publicationId) => {
   // NOTE: This URL will point to the endpoint that returns the details of a publication
   const url = `${BASE_PUBLICATIONS_URL}/${publicationId}.json`;

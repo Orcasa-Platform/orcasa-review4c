@@ -138,7 +138,7 @@ window.addEventListener('load', function () {
       return `
       <div class="flex flex-col p-6 bg-gray-50 mb-2">
         <header class="mb-6">
-          Impact of <span class="font-semibold">${name}</span> on soil organic carbon for ${landUseName}
+          Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for ${landUseName}
         </header>
         <div
           class="">
@@ -578,6 +578,19 @@ window.addEventListener('load', function () {
       elements.publicationDetailPanelContent.innerHTML = '<p class="py-10 text-center font-semibold text-slate-500">Publication not found</p>';
     }
   };
+
+  window.renderMethodologyChart = () => {
+    const existingChartData = window.getters.methodologyChartData();
+    if (existingChartData) {
+      window.createMethodologyChart(existingChartData);
+    } else {
+      getMethodologyData().then(data => {
+        window.createMethodologyChart(data)
+        window.mutations.setMethodologyChartData(data)
+      });
+    }
+  };
+
 
   // Add event listener on scroll on publications list to load more publications
   elements.publicationPanel.addEventListener('scroll', () => {
