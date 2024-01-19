@@ -22,6 +22,19 @@ window.createMethodologyChart = (data) => {
   const minYear = Math.floor(d3.min(publicationsData.concat(metaAnalysisData), d => d.date.getFullYear()) / 10) * 10;
   const maxYear = Math.ceil(d3.max(publicationsData.concat(metaAnalysisData), d => d.date.getFullYear()) / 10) * 10;
 
+  // Add years with no data
+  for (let i = minYear; i <= maxYear; i++) {
+    if (!publicationsData.find(d => d.date.getFullYear() === i)) {
+      publicationsData.push({ date: new Date(i, 0, 1), value: 0 });
+    }
+    if (!metaAnalysisData.find(d => d.date.getFullYear() === i)) {
+      metaAnalysisData.push({ date: new Date(i, 0, 1), value: 0 });
+    }
+  }
+
+  // Sort the data by date
+  publicationsData.sort((a, b) => a.date - b.date);
+  metaAnalysisData.sort((a, b) => a.date - b.date);
 
   const RANGE_PADDING = 12;
   // Add X axis
