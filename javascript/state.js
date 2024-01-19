@@ -14,6 +14,7 @@ window.addEventListener('load', function () {
     methodologyOpen: false,
     publicationDetailOpen: false,
     chartData: null,
+    methodologyChartData: null,
     publicationsSort: 'asc',
     publicationFilters: { 'type-publication': ['meta-analysis', 'primary-paper'] },
     publicationPage: 1,
@@ -74,6 +75,9 @@ window.addEventListener('load', function () {
     setChartData(chartData) {
       state.chartData = chartData;
     },
+    setMethodologyChartData(methodologyChartData) {
+      state.methodologyChartData = methodologyChartData;
+    },
     togglePublicationsSort() {
       state.publicationsSort = state.publicationsSort === 'asc' ? 'desc' : 'asc';
     },
@@ -115,6 +119,7 @@ window.addEventListener('load', function () {
     landUses: () => state.landUses,
     mainInterventions: () => state.mainInterventions,
     chartData: () => state.chartData,
+    methodologyChartData: () => state.methodologyChartData,
     filter: () => state.filter,
     openDropdowns: () => state.openDropdowns,
     publicationFilters: () => state.publicationFilters,

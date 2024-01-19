@@ -1,5 +1,8 @@
 window.createMethodologyChart = (data) => {
   const container = d3.select('#methodology-chart');
+  // Clear previous chart
+  container.selectAll("*").remove();
+
   const element = container.node();
   const CHART_HEIGHT = 455;
   const margin = { top: 20, right: 20, bottom: 40, left: 36 };
@@ -117,3 +120,10 @@ window.createMethodologyChart = (data) => {
       .y(d => y(d.value))
     )
 }
+
+// Rerender chart on window resize
+const onResize = () => {
+  createMethodologyChart(window.getters.methodologyChartData());
+};
+
+window.addEventListener('resize', onResize );

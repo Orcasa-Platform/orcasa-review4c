@@ -580,7 +580,15 @@ window.addEventListener('load', function () {
   };
 
   window.renderMethodologyChart = () => {
-    getMethodologyData().then(window.createMethodologyChart);
+    const existingChartData = window.getters.methodologyChartData();
+    if (existingChartData) {
+      window.createMethodologyChart(existingChartData);
+    } else {
+      getMethodologyData().then(data => {
+        window.createMethodologyChart(data)
+        window.mutations.setMethodologyChartData(data)
+      });
+    }
   };
 
 
