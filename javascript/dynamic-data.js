@@ -183,14 +183,14 @@ window.addEventListener('load', function () {
           <span class="font-semibold">peer-reviewed literature.</span>
         </div>
         <div class="text-slate-700 text-base leading-normal">
-          We analyse the effects of land management, land-use change and climate change on Soil Organic Carbon. To date, Scientific Evidence gathers <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analyses and ${publicationsNumber} scientific publications.
+          We analyse the effects of land management, land-use change and climate change on Soil Organic Carbon. To date, Scientific Evidence gathers <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analyses and ${publicationsNumber} primary studies.
         </div>
         <div class="flex pt-6 pb-10 justify-evenly items-center gap-4">
           <div class="flex items-center gap-4">
             <img class="w-12 h-16 stroke-mod-sc-ev stroke-1" src="/assets/icons/files.svg" />
             <div class="flex-col justify-center flex">
                 <div class="text-slate-700 text-[32px] font-serif font-semibold leading-[48px]">${publicationsNumber}</div>
-                <div class="text-slate-700 text-base">Scientific publications</div>
+                <div class="text-slate-700 text-base">Primary studies</div>
             </div>
           </div>
           <img src="/assets/icons/arrow-all.svg" alt="arrow" class="w-4 h-4" />
@@ -211,7 +211,7 @@ window.addEventListener('load', function () {
         <span>These
           insights come from the analysis of</span><span
           class="font-semibold">
-          <span id="land-use-publications">${publicationsNumber}</span> scientific publications</span><span>
+          <span id="land-use-publications">${publicationsNumber}</span> primary studies</span><span>
           and <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analysis
           related
           to </span><span
@@ -325,7 +325,7 @@ window.addEventListener('load', function () {
       return intervention?.subTypes.find(({ slug }) => slug === subTypeSlug);
     };
 
-    let selection = 'all publications';
+    let selection = 'all land use types';
     if (publicationRequest.landUse !== 'all') {
       const landUseName = getLandUse(publicationRequest.landUse)?.name.toLowerCase();
 
@@ -419,7 +419,7 @@ window.addEventListener('load', function () {
     const journals = window.getters.journals();
     const { years: availableYearObjects, countries: availableCountries, journals: availableJournals } = metadata;
     const publicationTypes = [
-      { value: 'primary-paper', label: 'Primary paper' },
+      { value: 'primary-study', label: 'Primary study' },
       { value: 'meta-analysis', label: 'Meta-analysis' },
     ];
 
@@ -548,7 +548,7 @@ window.addEventListener('load', function () {
 
     try {
       const publication = await getPublication(publicationId);
-      const metaAnalysis = publication.type === 'primary-paper'
+      const metaAnalysis = publication.type === 'primary-study'
         ? await Promise.all(publication.metaAnalysis.map(id => getPublication(id)))
         : [];
 

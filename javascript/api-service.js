@@ -129,7 +129,7 @@ const getPublications = async ({ landUse, mainIntervention, intervention, subTyp
       return counts;
     }, {});
     return {
-      totalPublications: data.filter(publication => publication.type === 'primary-paper').length || 0,
+      totalPublications: data.filter(publication => publication.type === 'primary-study').length || 0,
       totalMetaAnalysis: data.filter(publication => publication.type === 'meta-analysis').length || 0,
       years: yearCounts,
       // The pages should be after filtering

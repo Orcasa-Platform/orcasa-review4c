@@ -16,7 +16,7 @@ window.addEventListener('load', function () {
     chartData: null,
     methodologyChartData: null,
     publicationsSort: 'asc',
-    publicationFilters: { 'type-publication': ['meta-analysis', 'primary-paper'] },
+    publicationFilters: { 'type-publication': ['meta-analysis', 'primary-study'] },
     publicationPage: 1,
     openDropdowns: [],
     countries: null,

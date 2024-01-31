@@ -38,7 +38,7 @@
         "countryIsos": [
             "PT"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Woolf, Dominic; Amonette, James E.; Street-Perrott, F. Alayne; Lehmann, Johannes; Joseph, Stephen",
         "url": "http://onlinelibrary.wiley.com/doi/10.1111/gcbb.12044/abstract",
         "source": "Google scholar",
@@ -108,7 +108,7 @@
         "countryIsos": [
             "GB"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Jones, Sarah; Smith, Peter; Davis, Mark",
         "url": "http://example.com/biodiversity-conservation",
         "source": "Google scholar",
@@ -128,7 +128,7 @@
         "countryIsos": [
             "BR"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Silva, Ana; Oliveira, Carlos; Santos, Maria",
         "url": "http://example.com/agroforestry-sustainability",
         "source": "Google scholar",
@@ -147,7 +147,7 @@
         "countryIsos": [
             "US"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Anderson, Robert; Turner, Lisa; Harris, James",
         "url": "http://example.com/soil-nutrient-management",
         "source": "Google scholar",
@@ -166,7 +166,7 @@
         "countryIsos": [
             "CA"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
         "url": "http://example.com/precision-agriculture",
         "source": "Google scholar",
@@ -210,7 +210,7 @@
         "countryIsos": [
             "US"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Johnson, Mark; Smith, Sarah; Davis, James",
         "url": "http://example.com/sustainable-agriculture-US",
         "source": "Google scholar",
@@ -254,7 +254,7 @@
         "countryIsos": [
             "AU"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Smith, Robert; Turner, Lisa; Harris, David",
         "url": "http://example.com/water-resource-management-AU",
         "source": "Google scholar",
@@ -273,7 +273,7 @@
         "countryIsos": [
             "GB"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Wilson, Sarah; Brown, Peter; Davis, Mark",
         "url": "http://example.com/organic-farming-UK",
         "source": "Google scholar",
@@ -317,7 +317,7 @@
         "countryIsos": [
             "US"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Brown, John; Smith, Emily; Wilson, David",
         "url": "http://example.com/soil-health-management-US",
         "source": "Google scholar",
@@ -336,7 +336,7 @@
         "countryIsos": [
             "CA"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Chen, Wei; Patel, Raj; Nguyen, Linh",
         "url": "http://example.com/pesticide-usage-Canada",
         "source": "Google scholar",
@@ -354,7 +354,7 @@
         "countryIsos": [
             "US"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Garcia, Maria; Smith, Sarah; Davis, James",
         "url": "http://example.com/wheat-crop-management-CA",
         "source": "Google scholar",
@@ -374,7 +374,7 @@
             "JP",
             "CA"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Tanaka, Yuji; Sato, Hiroshi; Yamada, Keiko",
         "url": "http://example.com/rice-farming-techniques-JP",
         "source": "Google scholar",
@@ -393,7 +393,7 @@
         "countryIsos": [
             "SA"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Ahmed, Khalid; Ali, Hassan; Khan, Nadeem",
         "url": "http://example.com/irrigation-management-SA",
         "source": "Google scholar",
@@ -413,7 +413,7 @@
         "countryIsos": [
             "DE"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Müller, Hans; Fischer, Anna; Weber, Klaus",
         "url": "http://example.com/organic-farming-DE",
         "source": "Google scholar",
@@ -457,7 +457,7 @@
         "countryIsos": [
             "IN"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Brown, John; Smith, Emily; Wilson, David",
         "url": "http://example.com/maize-crop-management-CA",
         "source": "Google scholar",
@@ -501,7 +501,7 @@
         "countryIsos": [
             "IN"
         ],
-        "type": "primary-paper",
+        "type": "primary-study",
         "authors": "Kumar, Ravi; Sharma, Priya; Singh, Amar",
         "url": "http://example.com/rice-farming-IN",
         "source": "Google scholar",
