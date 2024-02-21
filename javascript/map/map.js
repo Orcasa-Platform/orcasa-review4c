@@ -9,7 +9,7 @@ const map = new maplibregl.Map({
   // default i.e. less of the Antarctica is shown
   bounds: [-180, -80, 180, 90],
   minZoom: 1,
-  maxZoom: 20,
+  maxZoom: 12,
 });
 
 // Set the default padding
