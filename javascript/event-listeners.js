@@ -43,6 +43,22 @@ window.addEventListener('load', function () {
     }
   });
 
+  elements.infoTooltipButton.addEventListener("mouseenter", function() {
+    elements.infoTooltipContent.classList.remove('hidden');
+  });
+
+  elements.infoTooltipButton.addEventListener("mouseleave", function() {
+    elements.infoTooltipContent.classList.add('hidden');
+  });
+
+  elements.infoTooltipButton.addEventListener("click", function() {
+    if(elements.infoTooltipContent.classList.contains('hidden')) {
+      elements.infoTooltipContent.classList.remove('hidden');
+    } else {
+      elements.infoTooltipContent.classList.add('hidden');
+    }
+  });
+
   // MAP SETTINGS
 
   elements.mapSettingsButton.addEventListener("click", function() {

@@ -135,7 +135,7 @@ const createSVGChart = (slug, data) => {
   const width = widthValue - margin.left - margin.right - 100;
   const height = heightValue - margin.top - margin.bottom;
 
-  const xTickValues = [-100, -75, -50, -25, 0, 25, 50, 75, 100];
+  const xTickValues = [-150, -100, -50, 0, 50, 100, 150];
   const yTickWidth = widthValue + RIGHT_AXIS_PADDING - width - 70;
 
   // Remove any existing chart
@@ -153,7 +153,7 @@ const createSVGChart = (slug, data) => {
 
   // Create x scale
   const xScale = d3.scaleLinear()
-    .domain([-100, 100])
+    .domain([-150, 150])
     .range([0, width]);
 
     const domainTitles = data.map(d => d.active ? [d.title].concat(d.subTypes.map(dt => dt.title)) : d.title).flat();

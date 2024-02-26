@@ -657,11 +657,26 @@
       </div>
       <div
         id="legend"
-        class="w-[328px] p-3 bg-white shadow transition-transform">
-        <div class="text-base font-semibold mb-2">
+        class="w-[328px] p-3 bg-white shadow transition-transform relative">
+        <div class="text-base font-semibold mb-2 flex space-x-1">
           <span class="font-semibold legend-text"></span>
-          primary studies
+          <span>primary studies</span>
+          <div class="relative ml-3" id="btn-info-tooltip">
+            <button type="button" aria-label="Info" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mod-sc-ev">
+              <span class="sr-only">Info</span>
+              <i data-lucide="info" ></i>
+            </button>
+            <div id="info-tooltip"
+            class="hidden p-2 bg-slate-700 text-white text-sm font-normal absolute rounded z-50 bottom-8 -left-2.5 min-w-[240px] -ml-24 leading-7">
+            <div>A publication can be linked to one or more countries and thus appear several times on the map.</div>
+            <span
+              class="absolute bottom-0 transform translate-y-full left-28">
+              <img src="/assets/icons/arrow-bottom.svg" alt="Arrow">
+            </span>
+          </div>
         </div>
+        </div>
+
         <div class="flex flex-col gap-3">
           <div
             class="flex items-center justify-start gap-1 text-sm text-slate-500">
