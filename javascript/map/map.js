@@ -76,12 +76,12 @@ map.on('load', function() {
   map.touchZoomRotate.disableRotation();
 
 
-  // Disable the zoom out button if the zoom level is 0 (standard behaviour does not work)
+  // Disable the zoom out button if the zoom level is the minZoom = 1 (standard behaviour does not work)
   const zoomOutButton = document.getElementsByClassName('maplibregl-ctrl-zoom-out')?.[0];
   map.on('zoomend', () => {
     const zoomLevel = map.getZoom();
     if (zoomOutButton) {
-      zoomOutButton.disabled = zoomLevel === 0;
+      zoomOutButton.disabled = zoomLevel === 1;
     }
   });
 });
