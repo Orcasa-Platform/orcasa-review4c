@@ -3,6 +3,8 @@ const elements = {
   legend: document.getElementById('legend'),
   sidebarToggle: document.getElementById('sidebar-toggle'),
   legendToggle: document.getElementById('legend-toggle'),
+  infoTooltipButton: document.getElementById('btn-info-tooltip'),
+  infoTooltipContent: document.getElementById('info-tooltip'),
   mapSettingsButton: document.getElementById('map-settings-button'),
   mapSettingsOverlay: document.getElementById('map-settings-overlay'),
   closeMapSettingsButton: document.getElementById('close-map-settings-button'),
