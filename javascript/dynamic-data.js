@@ -179,11 +179,11 @@ window.addEventListener('load', function () {
     if (landUseSlug === 'all') {
       elements.landUseAllIntro.innerHTML = `<div class="space-y-6">
         <div class="text-slate-700 text-[32px] leading-[48px] pt-10 font-serif">
-          <span>Scientific Evidence brings impartial evidence from </span>
+          <span>Scientific evidence brings impartial evidence from </span>
           <span class="font-semibold">peer-reviewed literature.</span>
         </div>
         <div class="text-slate-700 text-base leading-normal">
-          We analyse the effects of land management, land-use change and climate change on Soil Organic Carbon. To date, Scientific Evidence gathers <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analyses and ${publicationsNumber} primary studies.
+          We analyse the effects of land management, land-use change and climate change on Soil Organic Carbon. To date, Scientific evidence gathers <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analyses and ${publicationsNumber} primary studies.
         </div>
         <div class="flex pt-6 pb-10 justify-evenly items-center gap-4">
           <div class="flex items-center gap-4">
