@@ -136,12 +136,13 @@ window.addEventListener('load', function () {
       description
     }) => {
       return `
-      <div class="flex flex-col p-6 bg-gray-50 mb-2">
-        <header class="mb-6">
-          Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for ${landUseName}
+      <div class="flex flex-col p-6 bg-gray-50 mb-2 rounded-lg text-gray-700">
+        <header class="mb-4 flex w-full justify-between items-end">
+          <div>Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for ${landUseName}</div>
+          <div class="text-gray-500 text-xs">Click in one intervention below to see more details</div>
         </header>
         <div
-          class="">
+          class="text-2xs">
           <div>${description}</div>
           <div id="chart-${slug}" class="chart w-full h-full flex items-center justify-center font-semibold uppercase bg-gray-50 mt-4"></div>
         </div>
@@ -177,25 +178,20 @@ window.addEventListener('load', function () {
     const publicationsNumber = formatNumber(publications) || '-';
     const metaAnalysisNumber = formatNumber(metaAnalysis) || '-';
     if (landUseSlug === 'all') {
-      elements.landUseAllIntro.innerHTML = `<div>
+      elements.landUseIntro.innerHTML = `<div>
         To date, we have gathered ${metaAnalysisNumber} meta-analyses and ${publicationsNumber} primary studies. Learn more, and view them geographically:
       </div>`;
-      elements.landUseIntro.innerHTML = '';
       lucide.createIcons();
 
     } else {
-      elements.landUseIntro.innerHTML = `<div class="border-b border-gray-200 border-dashed pb-6">
+      elements.landUseIntro.innerHTML = `<div>
         <span>These
-          insights come from the analysis of</span><span
+          insights come from </span><span
           class="font-semibold">
-          <span id="land-use-publications">${publicationsNumber}</span> primary studies</span><span>
-          and <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analysis
-          related
-          to </span><span
-          class="font-semibold" id="land-use-text">${name.toLowerCase()}</span><span>
-          interventions on SOC.</span>
+          <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analysis and
+          <span id="land-use-publications">${publicationsNumber}</span> primary studies.</span><span>
+          Learn more, and view them geographically:</span>
       </div>`;
-      elements.landUseAllIntro.innerHTML = '';
     }
     Array.from(elements.legendTexts).map(text => text.innerHTML = name);
 
@@ -248,8 +244,12 @@ window.addEventListener('load', function () {
           loadData(slug);
 
           element.setAttribute('aria-pressed', 'true');
-          const otherButtons = Array.from(elements.landUseButtons).filter(button => button !== element);
-          otherButtons.forEach(button => button.setAttribute('aria-pressed', 'false'));
+          // Show the chart cards of the selected land use
+          elements.initialMain.classList.add('hidden');
+          elements.chartCards.classList.remove('hidden');
+
+          // const otherButtons = Array.from(elements.landUseButtons).filter(button => button !== element);
+          // otherButtons.forEach(button => button.setAttribute('aria-pressed', 'false'));
         });
       };
     }

@@ -34,6 +34,9 @@ const zoomButtonStyling = () => {
   zoomOutButton.innerHTML = zoomOutSVG;
 };
 
+const DEFAULT_SIDEBAR_WIDTH = 550;
+const DEFAULT_NAV_WIDTH = 90;
+
 const getMapPadding = (sidebarOpen) => {
   const navWidth = document.querySelector('#navbar')?.getBoundingClientRect().width
     ?? DEFAULT_NAV_WIDTH;
