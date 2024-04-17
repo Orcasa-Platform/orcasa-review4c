@@ -22,7 +22,7 @@ tailwind.config = {
         'mod-sc-ev': '#2BB3A7',
         'mod-sc-ev-light': '#CEEEE3',
         'chart-color': '#B4E4D7',
-        'mod-sc-ev-dark': '#1E6B65',
+        'mod-sc-ev-dark': '#239288',
         brown: {
           // Practices
           500: '#BA7300',

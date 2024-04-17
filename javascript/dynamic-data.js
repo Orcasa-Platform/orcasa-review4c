@@ -173,35 +173,12 @@ window.addEventListener('load', function () {
     // Update the map
     addLayer(map, slug);
 
-    // Update the description with the land use publications and meta-analysis
+    // Update the footer with the land use publications and meta-analysis
     const publicationsNumber = formatNumber(publications) || '-';
     const metaAnalysisNumber = formatNumber(metaAnalysis) || '-';
     if (landUseSlug === 'all') {
-      elements.landUseAllIntro.innerHTML = `<div class="space-y-6">
-        <div class="text-slate-700 text-[32px] leading-[48px] pt-10 font-serif">
-          <span>Scientific evidence brings impartial evidence from </span>
-          <span class="font-semibold">peer-reviewed literature.</span>
-        </div>
-        <div class="text-slate-700 text-base leading-normal">
-          We analyse the effects of land management, land-use change and climate change on Soil Organic Carbon. To date, Scientific evidence gathers <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analyses and ${publicationsNumber} primary studies.
-        </div>
-        <div class="flex pt-6 pb-10 justify-evenly items-center gap-4">
-          <div class="flex items-center gap-4">
-            <img class="w-12 h-16 stroke-mod-sc-ev stroke-1" src="/assets/icons/files.svg" />
-            <div class="flex-col justify-center flex">
-                <div class="text-slate-700 text-[32px] font-serif font-semibold leading-[48px]">${publicationsNumber}</div>
-                <div class="text-slate-700 text-base">Primary studies</div>
-            </div>
-          </div>
-          <img src="/assets/icons/arrow-all.svg" alt="arrow" class="w-4 h-4" />
-          <div class="flex items-center gap-4">
-            <img class="w-12 h-16 stroke-mod-sc-ev stroke-1" src="/assets/icons/document.svg" />
-            <div class="flex-col justify-center flex">
-                <div class="text-slate-700 text-[32px] font-serif font-semibold leading-[48px]">${metaAnalysisNumber}</div>
-                <div class="text-slate-700 text-base">Meta-analyses</div>
-            </div>
-          </div>
-        </div>
+      elements.landUseAllIntro.innerHTML = `<div>
+        To date, we have gathered ${metaAnalysisNumber} meta-analyses and ${publicationsNumber} primary studies. Learn more, and view them geographically:
       </div>`;
       elements.landUseIntro.innerHTML = '';
       lucide.createIcons();
@@ -252,8 +229,7 @@ window.addEventListener('load', function () {
     if (elements.landUseMenu && data) {
       const landUses = Object.entries(data).map(([key, value], i) => ({ slug: key, ...value, index: i }));
       window.mutations.setLandUses(landUses);
-
-      landUses.forEach(landUse => {
+      landUses.filter(l => l.name !== 'All').forEach(landUse => {
         elements.landUseMenu.innerHTML += button(landUse);
       });
       loadData(landUses[0].slug);

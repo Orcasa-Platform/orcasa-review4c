@@ -61,18 +61,16 @@
     <style type="text/tailwindcss">
       @layer utilities {
         .btn-primary {
-          @apply p-4 text-white transition-all border border-mod-sc-ev bg-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:bg-mod-sc-ev-dark hover:border-mod-sc-ev-dark focus-visible:outline-mod-sc-ev-dark;
+          @apply h-9 px-4 py-2 rounded-lg text-sm text-white transition-all border border-mod-sc-ev bg-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:bg-mod-sc-ev-dark hover:border-mod-sc-ev-dark focus-visible:outline-mod-sc-ev-dark;
         }
-
         .btn-secondary {
-          @apply p-4 transition-all bg-gray-100 border border-gray-100 text-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:bg-gray-200 hover:text-black focus-visible:outline-black disabled:text-gray-500 disabled:cursor-not-allowed;
+          @apply h-9 px-4 py-2 rounded-lg text-sm text-white transition-all bg-gray-800 border border-white/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:bg-gray-700 focus-visible:outline-black disabled:text-gray-500 disabled:cursor-not-allowed;
         }
         .btn-light {
           @apply transition-all text-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark focus-visible:outline-black mt-0 flex text-base font-semibold;
         }
-
         .btn-filter {
-          @apply px-2 py-1 transition-all bg-transparent border border-gray-200 aria-pressed:bg-gray-700 aria-pressed:text-white focus-visible:outline focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-white hover:bg-gray-700 focus-visible:outline-mod-sc-ev-dark;
+          @apply h-9 px-4 py-2 rounded-lg inline-flex justify-center items-center gap-2 text-sm transition-all bg-transparent border border-white/25 aria-pressed:bg-gray-700 aria-pressed:text-white focus-visible:outline focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-white hover:bg-gray-500 focus-visible:outline-mod-sc-ev-dark;
         }
 
         /* focus-visible:outline-offset-[-2px] to fix the foreignObject outline */
@@ -120,8 +118,8 @@
           @apply text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none justify-center items-center flex h-10 w-10 text-white bg-slate-700 hover:bg-slate-500;
         }
 
-        .sidebar {
-          @apply absolute left-[117px] top-0 flex h-full w-full w-[calc(50%-68px)] max-w-[862px] min-w-[380px] 2xl:min-w-[862px] flex-col bg-white shadow-lg transition-transform duration-500 z-20;
+        .main {
+          @apply absolute left-[90px] top-2 right-2 bottom-[68px] flex flex-col z-20 rounded-lg bg-main;
         }
 
         .publication-panel {
@@ -138,7 +136,7 @@
       }
     </style>
   </head>
-  <body class="text-main">
+  <body class="text-main bg-gray-800">
     <!-- NAVBAR -->
     <div
       id="navbar"
@@ -190,434 +188,428 @@
       </div>
     </div>
 
-    <!-- SIDEBAR -->
-    <div id="sidebar"
-      class="sidebar">
-      <div class="flex flex-col overflow-y-auto w-full bg-white">
-        <div class="space-y-6 px-12 py-10 text-slate-700 z-20 bg-white">
-          <div
-            class="flex font-serif items-center pl-5 border-l-4 border-mod-sc-ev">
-            <h2 class="leading-7 text-lg"><span
-                class="text-slate-700">Explore
-                the </span><span
-                class="text-mod-sc-ev font-semibold">impact
-                of different soil organic carbon interventions</span><span
-                class="text-slate-700">
-                based peer-reviewed scientific evidence.</span></h2>
-          </div>
-          <div
-            id="land-use-intro"
-            class="font-serif leading-10 text-2xl mt-10">
-            <span>These
-              insights come from the analysis of</span><span
-              class="font-semibold">
-              <span id="land-use-publications"></span> scientific
-              publications</span><span>
-              and <span id="land-use-meta-analysis"></span> meta-analysis
-              related
-              to </span><span
-              class="font-semibold" id="land-use-text"></span><span>
-              interventions on SOC.
-            </span>
-          </div>
-
-          <!-- LAND USE MENU -->
-          <!-- Loaded dynamically on dynamic-data.js -->
-          <div class="flex gap-2"
-            id="land-use-menu"></div>
-          <div
-            class="w-full pt-4 justify-between items-start inline-flex">
-            <div class="text-slate-700 text-base">Know more about the
-              interventions:</div>
-            <div class="flex gap-2">
-              <button type="button" id="btn-publications"
-                class="btn-primary flex gap-4">
-                <i data-lucide="book-open"></i>
-                <span>Publications</span>
-              </button>
-              <button type="button" id="btn-methodology"
-                class="btn-secondary flex gap-4">
-                <i data-lucide="clipboard-list"></i>
-                <span>Methodology</span></button>
-            </div>
-          </div>
-          <div
-            id="land-use-all-intro"
-            class="leading-10 text-2xl mt-20"></div>
-
-          <div id="chart-cards" class="pt-4">
-          </div>
-          <div id="chart-tooltip"
-            class="p-1 bg-slate-700 text-white text-sm absolute hidden rounded z-50"></div>
-          <!-- METHODOLOGY PANEL -->
-          <div id="methodology-panel"
-            class="methodology-panel -translate-x-full space-y-6">
-            <button
-              class="group flex items-center"
-              id="btn-close-methodology-panel">
-              <svg
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="mr-[15px] h-[34px] w-[34px] bg-gray-100 px-1 py-1 transition-colors group-hover:bg-slate-700 group-hover:text-white group-focus:bg-slate-700 group-focus:text-white">
-                <path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
-              <span
-                class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 -translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Go
-                back
-              </span>
-            </button>
-            <div class="flex justify-between items-center border-b-gray-300 border-dashed border-b pb-4">
-              <h3
-                class="text-mod-sc-ev text-[32px] font-serif">Methodology</h3>
-              <div class="flex items-center">
-                <img class="w-6 h-6 pr-2" alt="calendar icon" src="/assets/icons/calendar.svg"></img>
-                <span class="text-sm text-slate-700">Data last updated: January 15, 2023</span>
-              </div>
-            </div>
-            <p
-              class="text-slate-700 text-sm leading-7">We
-              conducted a literature search to retrieve all peer-reviewed meta-
-              analyses that reported at least one quantification on Soil Organic
-              Carbon, expressed as a concentration (g C kg-1 soil or equivalent)
-              or a stock (t C ha-1 or equivalent). We then extracted all
-              quantifications presented in the meta-analyses and combined them
-              to
-              reach a global overview of the impacts of multiple interventions
-              on Soil Organic Carbon, with high statistical power. We also
-              characterized the methodological quality of the meta-analyses, and
-              listed all the primary studies synthethized in the meta-analyses
-              to clearly identify and present potential bias and limitation in
-              the current scientific knowledge.</p>
-            <p class="text-slate-700 text-sm">Please note the following elements:</p>
-            <ul class="text-slate-700 text-sm leading-7 list-disc list-inside">
-              <li>
-                A publication can be linked to one or more countries and thus appear several times on the map.
-              </li>
-              <li>
-                On the graphs, only the most relevant subcategories are displayed.
-
-              </li>
-            </ul>
-
-            <div class="flex flex-wrap">
-              <div class="flex-grow"
-                id="methodology-chart"></div>
-              <div id="methodology-legend">
-                <div class="flex items-center gap-4">
-                  <div
-                    class="border-t w-6 border-slate-700 border-dashed"></div>
-                  Primary Publications
-                </div>
-                <div class="flex items-center gap-4">
-                  <div class="h-1 w-6 bg-mod-sc-ev"></div>
-                  Meta-analyses</div>
-              </div>
-            </div>
-            <div>
-              <div
-                class="text-slate-700 text-lg font-serif mb-4">Related
-                scientific work</div>
-              <ul class="space-y-4 text-mod-sc-ev text-base font-semibold">
-                <li>
-                  <a
-                    href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vge-xGEAAAAJ&citation_for_view=vge-xGEAAAAJ:NhqRSupF_l8C"
-                    target="_blank"
-                  >A global
-                    database
-                    of land management, land-use change and climate change
-                    effects
-                    on Soil Organic Carbon
-                    <i class="inline w-6 h-6 stroke-current" data-lucide="external-link"></i>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vge-xGEAAAAJ&citation_for_view=vge-xGEAAAAJ:a0OBvERweLwC"
-                    target="_blank"
-                  >A
-                    global overview of studies about land management, land‐use
-                    change, and climate change effects on Soil Organic
-                    Carbon</a>
-                    <i class="inline w-6 h-6 stroke-current" data-lucide="external-link"></i>
-                </li>
-                <li>
-                  <a
-                    href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vge-xGEAAAAJ&citation_for_view=vge-xGEAAAAJ:738O_yMBCRsC"
-                    target="_blank"
-                    class="text-teal-500 text-base font-semibold inline">A global
-                    meta-analysis of soil organic carbon in the Anthropocene</a>
-                    <i class="inline w-6 h-6 stroke-current" data-lucide="external-link"></i>
-                </li>
-              </ul>
-            </div>
-            <div class="pb-8 space-y-4 flex flex-col">
-              <div
-                class="text-slate-700 text-lg font-serif">Contact</div>
-              <a
-                href="mailto:damien.beillouin@cirad.fr"
-                target="_blank"
-                class="text-teal-500 text-base font-semibold">Damien
-                Bellouin</a>
-              <a
-                href="mailto:julien.demenois@cirad.fr"
-                target="_blank"
-                class="text-teal-500 text-base font-semibold">Julien
-                Demenois</a>
-
-            </div>
-          </div>
-
-          <!-- PUBLICATION PANEL -->
-          <div id="publication-panel"
-            class="publication-panel -translate-x-full">
-
-            <button
-              class="group flex items-center"
-              id="btn-close-publication-panel">
-              <svg
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-[15px] h-[34px] w-[34px] bg-gray-100 px-1 py-1 transition-colors group-hover:bg-slate-700 group-hover:text-white group-focus:bg-slate-700 group-focus:text-white">
-                <path d="m12 19-7-7 7-7"></path><path
-                  d="M19 12H5"></path></svg>
-              <span
-                class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 -translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Back
-                to Results
-              </span>
-
-            </button>
-            <!-- PUBLICATION HEADER -->
-            <h2
-              class="text-mod-sc-ev font-serif text-[34px] py-6">Publications</h2>
-            <div class="flex flex-col space-y-8 mt-2">
-              <div
-                class="flex justify-between items-center gap-1 border-b border-dashed border-gray-200 pb-4">
-                <header
-                  class="text-slate-700">Showing
-                  <span id="publications-number"></span> primary studies and <span id="meta-analysis-number"></span>
-                  meta-analyses related to
-                  <span
-                    class="font-semibold" id="filters-selection-text"></span>.
-                </header>
-                <button
-                  type="button"
-                  id="btn-sort-publications"
-                  class="btn-filter flex items-center justify-between !px-4 !py-2 min-w-[150px]">
-                  Newest first
-                  <i class="h-6 w-6" data-lucide="arrow-up-narrow-wide"></i>
-                </button>
-              </div>
-              <div class="flex justify-between items-center gap-1">
-                <div id="search" class="w-[calc(100%-125px-16px)]">
-                  <div class="relative w-full">
-                    <input
-                      class="relative w-full h-14 p-4 bg-white border border-gray-200 pl-10 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev min-w-full"
-                      type="search" placeholder="Search by keyword">
-                    <div
-                      class="absolute inset-y-0 left-0 flex items-center pl-3">
-                      <i data-lucide="search"
-                        class="w-6 h-6 pointer-events-none"></i>
-                    </div>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  id="btn-filters"
-                  class="btn-primary flex items-center justify-center gap-3 w-[125px]">
-                  <i class="h-6 w-6" data-lucide="filter"></i>
-                  Filters
-                </button>
-              </div>
-              <div id="publications-container">
-              </div>
-            </div>
-          </div>
+    <!-- MAIN -->
+    <main
+      class="main bg-cover bg-no-repeat"
+      style="background-image: url('/assets/images/main-background.svg')"
+    >
+      <div class="space-y-6 px-12 py-10 text-slate-700 z-20 text-white flex flex-col h-full">
+        <div
+          class="flex font-serif items-center">
+          <h2 class="leading-[30px] text-xl max-w-[545px]"><span>Explore
+              the </span><span
+              class="text-mod-sc-ev font-semibold">impact
+              of different interventions</span><span>
+              on Soil Organic Carbon based on peer-reviewed scientific evidence.</span></h2>
         </div>
-        <div id="filters-panel"
-          class="filters-panel -translate-x-full hidden">
-          <button
-            type="button"
-            aria-label="close filters panel"
-            id="btn-close-filters-panel"
-            class="btn-icon-theme-dark absolute top-0 right-0">
-            <i class="w-6 h-6 stroke-white"
-              data-lucide="x"></i>
-          </button>
-          <!-- PUBLICATION FILTERS -->
-          <div id="publication-filters"
-            class="flex flex-col w-full justify-between space-y-[40px]">
-            <h3
-              class="text-slate-700 text-[34px] font-serif">Filters</h3>
-            <div>
-              <div
-                class="text-slate-700 mb-4">
-                Primary studies by year:
+        <!-- LAND USE MENU -->
+        <!-- Loaded dynamically on dynamic-data.js -->
+        <div class="bg-gray-600 w-full rounded-lg flex flex-col p-10 justify-center items-center text-center flex-1">
+          <img src="/assets/images/land-use-select.svg" alt="" class="w-[150px] h-[150px] mb-6"/>
+          <div>
+            <div class="text-center text-white mb-6">Select one type of land use to explore its impacts:</div>
+            <div class="mb-4"
+              id="land-use-menu"></div>
+              <div class="text-center text-gray-300 text-xs leading-tight">The numbers in brackets refer to the primary studies reviewed.</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="filters-panel"
+        class="filters-panel -translate-x-full hidden">
+        <button
+          type="button"
+          aria-label="close filters panel"
+          id="btn-close-filters-panel"
+          class="btn-icon-theme-dark absolute top-0 right-0">
+          <i class="w-6 h-6 stroke-white"
+            data-lucide="x"></i>
+        </button>
+        <!-- PUBLICATION FILTERS -->
+        <div id="publication-filters"
+          class="flex flex-col w-full justify-between space-y-[40px]">
+          <h3
+            class="text-slate-700 text-[34px] font-serif">Filters</h3>
+          <div>
+            <div
+              class="text-slate-700 mb-4">
+              Primary studies by year:
+            </div>
+            <div
+              id="year-range-container" class="relative">
+              <div id="bar-tooltip"
+                class="p-2 bg-slate-700 text-white text-sm absolute hidden rounded z-50">
+                <div id="bar-tooltip-content"></div>
+                <span
+                  class="absolute bottom-0 transform translate-y-full left-5">
+                  <img src="/assets/icons/arrow-bottom.svg" alt="Arrow">
+                </span>
               </div>
               <div
-                id="year-range-container" class="relative">
-                <div id="bar-tooltip"
-                  class="p-2 bg-slate-700 text-white text-sm absolute hidden rounded z-50">
-                  <div id="bar-tooltip-content"></div>
+                id="year-range">
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-6">
+            <button type="button" id="reset-filters"
+              class="btn-light w-min whitespace-nowrap">
+              Reset All
+            </button>
+            <div id="type-publication">
+              <label for="type-publication"
+                class="sr-only">Publication type</label>
+              <div
+                class="relative dropdown h-14 flex-col flex"
+                id="dropdown-select-type-publication">
+                <button
+                  type="button"
+                  class="btn-dropdown p-4 bg-white border border-gray-200 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
                   <span
-                    class="absolute bottom-0 transform translate-y-full left-5">
-                    <img src="/assets/icons/arrow-bottom.svg" alt="Arrow">
+                    id="type-publication-selected"
+                    aria-placeholder="Publication type"
+                    class="dropdown-selected text-slate-700">Publication
+                    type
                   </span>
-                </div>
-                <div
-                  id="year-range">
-                </div>
+                </button>
+                <input type="search" placeholder="Search…"
+                  class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
+                <i data-lucide="chevron-down"
+                  class="w-6 h-6 absolute right-4 top-4 stroke-gray-700 pointer-events-none"></i>
+                <fieldset
+                  class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                  <div
+                    class="flex px-1 border-b border-dashed border-gray-300">
+                    <button type="button"
+                      class="btn-select-all btn-link">Select all</button>
+                    <button type="button"
+                      class="btn-clear btn-link">Clear</button>
+                  </div>
+                  <ul class="flex flex-col">
+                  </ul>
+                </fieldset>
               </div>
             </div>
-            <div class="flex flex-col gap-6">
-              <button type="button" id="reset-filters"
-                class="btn-light w-min whitespace-nowrap">
-                Reset All
-              </button>
-              <div id="type-publication">
-                <label for="type-publication"
-                  class="sr-only">Publication type</label>
-                <div
-                  class="relative dropdown h-14 flex-col flex"
-                  id="dropdown-select-type-publication">
-                  <button
-                    type="button"
-                    class="btn-dropdown p-4 bg-white border border-gray-200 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
-                    <span
-                      id="type-publication-selected"
-                      aria-placeholder="Publication type"
-                      class="dropdown-selected text-slate-700">Publication
-                      type
-                    </span>
-                  </button>
-                  <input type="search" placeholder="Search…"
-                    class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
-                  <i data-lucide="chevron-down"
-                    class="w-6 h-6 absolute right-4 top-4 stroke-gray-700 pointer-events-none"></i>
-                  <fieldset
-                    class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
-                    <div
-                      class="flex px-1 border-b border-dashed border-gray-300">
-                      <button type="button"
-                        class="btn-select-all btn-link">Select all</button>
-                      <button type="button"
-                        class="btn-clear btn-link">Clear</button>
-                    </div>
-                    <ul class="flex flex-col">
-                    </ul>
-                  </fieldset>
-                </div>
+            <div id="year">
+              <label for="year"
+                class="sr-only">year</label>
+              <div
+                class="relative dropdown h-14 flex-col flex"
+                id="dropdown-select-year">
+                <button
+                  type="button"
+                  class="btn-dropdown p-4 bg-white border border-gray-200 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
+                  <span
+                    id="year-selected"
+                    aria-placeholder="Year"
+                    class="dropdown-selected text-slate-700">Year
+                  </span>
+                </button>
+                <input type="search" placeholder="Search…"
+                  class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
+                <i data-lucide="chevron-down"
+                  class="w-6 h-6 absolute right-4 top-4 stroke-gray-700 pointer-events-none"></i>
+                <fieldset
+                  class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                  <div
+                    class="flex px-1 border-b border-dashed border-gray-300">
+                    <button type="button"
+                      class="btn-select-all btn-link">Select all</button>
+                    <button type="button"
+                      class="btn-clear btn-link">Clear</button>
+                  </div>
+                  <ul class="flex flex-col">
+                  </ul>
+                </fieldset>
               </div>
-              <div id="year">
-                <label for="year"
-                  class="sr-only">year</label>
-                <div
-                  class="relative dropdown h-14 flex-col flex"
-                  id="dropdown-select-year">
-                  <button
-                    type="button"
-                    class="btn-dropdown p-4 bg-white border border-gray-200 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
-                    <span
-                      id="year-selected"
-                      aria-placeholder="Year"
-                      class="dropdown-selected text-slate-700">Year
-                    </span>
-                  </button>
-                  <input type="search" placeholder="Search…"
-                    class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
-                  <i data-lucide="chevron-down"
-                    class="w-6 h-6 absolute right-4 top-4 stroke-gray-700 pointer-events-none"></i>
-                  <fieldset
-                    class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
-                    <div
-                      class="flex px-1 border-b border-dashed border-gray-300">
-                      <button type="button"
-                        class="btn-select-all btn-link">Select all</button>
-                      <button type="button"
-                        class="btn-clear btn-link">Clear</button>
-                    </div>
-                    <ul class="flex flex-col">
-                    </ul>
-                  </fieldset>
-                </div>
+            </div>
+            <div id="journal">
+              <label for="journal"
+                class="sr-only">Journal</label>
+              <div
+                class="relative dropdown h-14 flex-col flex"
+                id="dropdown-select-journal">
+                <button
+                  type="button"
+                  class="btn-dropdown p-4 bg-white border border-gray-200 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
+                  <span
+                    id="journal-selected"
+                    aria-placeholder="Journal"
+                    class="dropdown-selected text-slate-700">Journal</span>
+                </button>
+                <input type="search" placeholder="Search…"
+                  class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
+                <i data-lucide="chevron-down"
+                  class="w-6 h-6 absolute right-4 top-4 stroke-gray-700 pointer-events-none"></i>
+                <fieldset
+                  class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                  <div
+                    class="flex px-1 border-b border-dashed border-gray-300">
+                    <button type="button"
+                      class="btn-select-all btn-link">Select all</button>
+                    <button type="button"
+                      class="btn-clear btn-link">Clear</button>
+                  </div>
+                  <ul class="flex flex-col">
+                  </ul>
+                </fieldset>
               </div>
-              <div id="journal">
-                <label for="journal"
-                  class="sr-only">Journal</label>
-                <div
-                  class="relative dropdown h-14 flex-col flex"
-                  id="dropdown-select-journal">
-                  <button
-                    type="button"
-                    class="btn-dropdown p-4 bg-white border border-gray-200 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
-                    <span
-                      id="journal-selected"
-                      aria-placeholder="Journal"
-                      class="dropdown-selected text-slate-700">Journal</span>
-                  </button>
-                  <input type="search" placeholder="Search…"
-                    class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
-                  <i data-lucide="chevron-down"
-                    class="w-6 h-6 absolute right-4 top-4 stroke-gray-700 pointer-events-none"></i>
-                  <fieldset
-                    class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
-                    <div
-                      class="flex px-1 border-b border-dashed border-gray-300">
-                      <button type="button"
-                        class="btn-select-all btn-link">Select all</button>
-                      <button type="button"
-                        class="btn-clear btn-link">Clear</button>
-                    </div>
-                    <ul class="flex flex-col">
-                    </ul>
-                  </fieldset>
-                </div>
-              </div>
-              <div id="country">
-                <label for="country"
-                  class="sr-only">Country</label>
-                <div
-                  class="relative dropdown h-14 flex-col flex"
-                  id="dropdown-select-country">
-                  <button
-                    type="button"
-                    class="btn-dropdown p-4 bg-white border border-gray-200 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
-                    <span
-                      id="country-selected"
-                      aria-placeholder="Country"
-                      class="dropdown-selected text-slate-700">Country</span>
-                  </button>
-                  <input type="search" placeholder="Search…"
-                    class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
-                  <i data-lucide="chevron-down"
-                    class="w-6 h-6 absolute right-4 top-4 stroke-gray-700 pointer-events-none"></i>
-                  <fieldset
-                    class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
-                    <div
-                      class="flex px-1 border-b border-dashed border-gray-300">
-                      <button type="button"
-                        class="btn-select-all btn-link">Select all</button>
-                      <button type="button"
-                        class="btn-clear btn-link">Clear</button>
-                    </div>
-                    <ul class="flex flex-col">
-                    </ul>
-                  </fieldset>
-                </div>
+            </div>
+            <div id="country">
+              <label for="country"
+                class="sr-only">Country</label>
+              <div
+                class="relative dropdown h-14 flex-col flex"
+                id="dropdown-select-country">
+                <button
+                  type="button"
+                  class="btn-dropdown p-4 bg-white border border-gray-200 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
+                  <span
+                    id="country-selected"
+                    aria-placeholder="Country"
+                    class="dropdown-selected text-slate-700">Country</span>
+                </button>
+                <input type="search" placeholder="Search…"
+                  class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
+                <i data-lucide="chevron-down"
+                  class="w-6 h-6 absolute right-4 top-4 stroke-gray-700 pointer-events-none"></i>
+                <fieldset
+                  class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                  <div
+                    class="flex px-1 border-b border-dashed border-gray-300">
+                    <button type="button"
+                      class="btn-select-all btn-link">Select all</button>
+                    <button type="button"
+                      class="btn-clear btn-link">Clear</button>
+                  </div>
+                  <ul class="flex flex-col">
+                  </ul>
+                </fieldset>
               </div>
             </div>
           </div>
         </div>
-        <div class="absolute -right-10 -ml-px top-0">
-          <button id="sidebar-toggle"
-            class="btn-icon-theme-dark">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="h-6 w-6 transition-transform"><polyline
-                points="15 18 9 12 15 6"></polyline></svg></button>
+      </div>
+
+      <div class="absolute -right-10 -ml-px top-0 hidden">
+        <button id="sidebar-toggle"
+          class="btn-icon-theme-dark">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="h-6 w-6 transition-transform"><polyline
+              points="15 18 9 12 15 6"></polyline></svg></button>
+      </div>
+    </main>
+
+    <!-- OTHER -->
+    <div class="hidden">
+      <div id="chart-cards" class="pt-4">
+      </div>
+      <div id="chart-tooltip"
+        class="p-1 bg-slate-700 text-white text-sm absolute hidden rounded z-50"></div>
+      <!-- METHODOLOGY PANEL -->
+      <div id="methodology-panel"
+        class="methodology-panel -translate-x-full space-y-6">
+        <button
+          class="group flex items-center"
+          id="btn-close-methodology-panel">
+          <svg
+            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="mr-[15px] h-[34px] w-[34px] bg-gray-100 px-1 py-1 transition-colors group-hover:bg-slate-700 group-hover:text-white group-focus:bg-slate-700 group-focus:text-white">
+            <path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
+          <span
+            class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 -translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Go
+            back
+          </span>
+        </button>
+        <div class="flex justify-between items-center border-b-gray-300 border-dashed border-b pb-4">
+          <h3
+            class="text-mod-sc-ev text-[32px] font-serif">Methodology</h3>
+          <div class="flex items-center">
+            <img class="w-6 h-6 pr-2" alt="calendar icon" src="/assets/icons/calendar.svg"></img>
+            <span class="text-sm text-slate-700">Data last updated: January 15, 2023</span>
+          </div>
         </div>
+        <p
+          class="text-slate-700 text-sm leading-7">We
+          conducted a literature search to retrieve all peer-reviewed meta-
+          analyses that reported at least one quantification on Soil Organic
+          Carbon, expressed as a concentration (g C kg-1 soil or equivalent)
+          or a stock (t C ha-1 or equivalent). We then extracted all
+          quantifications presented in the meta-analyses and combined them
+          to
+          reach a global overview of the impacts of multiple interventions
+          on Soil Organic Carbon, with high statistical power. We also
+          characterized the methodological quality of the meta-analyses, and
+          listed all the primary studies synthethized in the meta-analyses
+          to clearly identify and present potential bias and limitation in
+          the current scientific knowledge.</p>
+        <p class="text-slate-700 text-sm">Please note the following elements:</p>
+        <ul class="text-slate-700 text-sm leading-7 list-disc list-inside">
+          <li>
+            A publication can be linked to one or more countries and thus appear several times on the map.
+          </li>
+          <li>
+            On the graphs, only the most relevant subcategories are displayed.
+
+          </li>
+        </ul>
+
+        <div class="flex flex-wrap">
+          <div class="flex-grow"
+            id="methodology-chart"></div>
+          <div id="methodology-legend">
+            <div class="flex items-center gap-4">
+              <div
+                class="border-t w-6 border-slate-700 border-dashed"></div>
+              Primary Publications
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="h-1 w-6 bg-mod-sc-ev"></div>
+              Meta-analyses</div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="text-slate-700 text-lg font-serif mb-4">Related
+            scientific work</div>
+          <ul class="space-y-4 text-mod-sc-ev text-base font-semibold">
+            <li>
+              <a
+                href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vge-xGEAAAAJ&citation_for_view=vge-xGEAAAAJ:NhqRSupF_l8C"
+                target="_blank"
+              >A global
+                database
+                of land management, land-use change and climate change
+                effects
+                on Soil Organic Carbon
+                <i class="inline w-6 h-6 stroke-current" data-lucide="external-link"></i>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vge-xGEAAAAJ&citation_for_view=vge-xGEAAAAJ:a0OBvERweLwC"
+                target="_blank"
+              >A
+                global overview of studies about land management, land‐use
+                change, and climate change effects on Soil Organic
+                Carbon</a>
+                <i class="inline w-6 h-6 stroke-current" data-lucide="external-link"></i>
+            </li>
+            <li>
+              <a
+                href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vge-xGEAAAAJ&citation_for_view=vge-xGEAAAAJ:738O_yMBCRsC"
+                target="_blank"
+                class="text-teal-500 text-base font-semibold inline">A global
+                meta-analysis of soil organic carbon in the Anthropocene</a>
+                <i class="inline w-6 h-6 stroke-current" data-lucide="external-link"></i>
+            </li>
+          </ul>
+        </div>
+        <div class="pb-8 space-y-4 flex flex-col">
+          <div
+            class="text-slate-700 text-lg font-serif">Contact</div>
+          <a
+            href="mailto:damien.beillouin@cirad.fr"
+            target="_blank"
+            class="text-teal-500 text-base font-semibold">Damien
+            Bellouin</a>
+          <a
+            href="mailto:julien.demenois@cirad.fr"
+            target="_blank"
+            class="text-teal-500 text-base font-semibold">Julien
+            Demenois</a>
+
+        </div>
+      </div>
+
+      <!-- PUBLICATION PANEL -->
+      <div id="publication-panel"
+        class="publication-panel -translate-x-full">
+
+        <button
+          class="group flex items-center"
+          id="btn-close-publication-panel">
+          <svg
+            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round"
+            class="mr-[15px] h-[34px] w-[34px] bg-gray-100 px-1 py-1 transition-colors group-hover:bg-slate-700 group-hover:text-white group-focus:bg-slate-700 group-focus:text-white">
+            <path d="m12 19-7-7 7-7"></path><path
+              d="M19 12H5"></path></svg>
+          <span
+            class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 -translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Back
+            to Results
+          </span>
+
+        </button>
+        <!-- PUBLICATION HEADER -->
+        <h2
+          class="text-mod-sc-ev font-serif text-[34px] py-6">Publications</h2>
+        <div class="flex flex-col space-y-8 mt-2">
+          <div
+            class="flex justify-between items-center gap-1 border-b border-dashed border-gray-200 pb-4">
+            <header
+              class="text-slate-700">Showing
+              <span id="publications-number"></span> primary studies and <span id="meta-analysis-number"></span>
+              meta-analyses related to
+              <span
+                class="font-semibold" id="filters-selection-text"></span>.
+            </header>
+            <button
+              type="button"
+              id="btn-sort-publications"
+              class="btn-filter flex items-center justify-between !px-4 !py-2 min-w-[150px]">
+              Newest first
+              <i class="h-6 w-6" data-lucide="arrow-up-narrow-wide"></i>
+            </button>
+          </div>
+          <div class="flex justify-between items-center gap-1">
+            <div id="search" class="w-[calc(100%-125px-16px)]">
+              <div class="relative w-full">
+                <input
+                  class="relative w-full h-14 p-4 bg-white border border-gray-200 pl-10 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev min-w-full"
+                  type="search" placeholder="Search by keyword">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <i data-lucide="search"
+                    class="w-6 h-6 pointer-events-none"></i>
+                </div>
+              </div>
+            </div>
+            <button
+              type="button"
+              id="btn-filters"
+              class="btn-primary flex items-center justify-center gap-3 w-[125px]">
+              <i class="h-6 w-6" data-lucide="filter"></i>
+              Filters
+            </button>
+          </div>
+          <div id="publications-container">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div
+      id="footer"
+      class="footer absolute bottom-0 safe-area-inset-bottom z-40 left-[90px] h-[68px] max-h-[68px] bg-gray-800 flex justify-between items-center gap-20 pl-10 pr-12 py-4 text-white overflow-hidden w-[calc(100%-90px)]">
+      <div
+      id="land-use-all-intro" class="text-sm"></div>
+      <div class="flex gap-2">
+        <button type="button" id="btn-publications"
+          class="btn-primary flex gap-4">
+          Publications
+        </button>
+        <button type="button" id="btn-methodology"
+          class="btn-secondary flex gap-4">
+          Methodology
+        </button>
       </div>
     </div>
 
@@ -625,13 +617,13 @@
       class="absolute inset-0 w-screen h-screen bg-gray-50 z-10 bg-gray-900 bg-opacity-50 hidden"></div>
 
     <!-- MAP -->
-    <div id='map' style='width: 100wh; height: 100vh'>
+    <div id='map' style='width: 100wh; height: 100vh' class="hidden">
     </div>
 
     <!-- ATTRIBUTION -->
     <div
       id="attribution"
-      class="absolute bottom-0 right-0 z-10 max-w-[50%] gap-1 bg-gray-50/25 px-2 py-1 text-sm leading-tight">
+      class="absolute bottom-0 right-0 z-10 max-w-[50%] gap-1 bg-gray-50/25 px-2 py-1 text-sm leading-tight hidden">
       <span id="attribution-content">
         ©
         <a
@@ -653,7 +645,7 @@
     </div>
 
     <!-- LEGEND -->
-    <div class="absolute bottom-16 right-6 z-10">
+    <div class="absolute bottom-16 right-6 z-10 hidden">
       <div class="absolute -ml-px bottom-full right-0">
         <button id="legend-toggle"
           class="btn-theme-dark text-xs px-2 py-1 whitespace-nowrap">
