@@ -97,11 +97,11 @@
         }
 
         .navbar-item {
-          @apply flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-4 pr-4 font-sans text-sm font-serif leading-tight transition-colors duration-200 hover:bg-white hover:text-gray-700 bg-gray-700 text-white;
+          @apply flex w-[66px] px-1 py-2 rounded-lg flex-col items-center justify-center gap-2 cursor-pointer items-center font-sans text-xs leading-tight transition-colors duration-200 hover:bg-gray-500 bg-gray-800 text-white text-center leading-[18px];
         }
 
         .navbar-item-active {
-          @apply flex h-[68px] cursor-pointer items-center justify-start border-l-8 py-4 pl-4 pr-4 font-sans text-sm font-serif leading-tight transition-colors duration-200 hover:bg-white hover:text-gray-700 bg-white text-gray-700;
+          @apply bg-mod-sc-ev hover:bg-mod-sc-ev hover:text-white;
         }
 
         .btn-theme-light {
@@ -142,46 +142,51 @@
     <!-- NAVBAR -->
     <div
       id="navbar"
-      class="absolute left-0 z-40 h-full w-[117px] overflow-y-auto overflow-x-hidden">
+      class="absolute left-0 z-40 h-full w-[90px] overflow-y-auto overflow-x-hidden bg-gray-800">
       <div
-        class="flex h-full w-full flex-col items-center justify-start gap-20 bg-gray-700 py-6">
+        class="flex h-full w-full flex-col items-center gap-20 px-3 py-6">
         <a href="/" class="flex flex-col-reverse items-center justify-center gap-3">
-          <img src="/assets/images/logo.png" alt="Impact4Soil" width="58"
-            height="58">
           <span class="sr-only">Impact4Soil</span>
-          <span class="rounded bg-gray-800 px-2 py-[3px] font-sans text-xs font-normal text-white">
+          <span class="rounded bg-gray-700 px-[6px] py-[2px] font-sans text-2xs font-normal text-white">
             Beta
           </span>
+          <img src="/assets/images/logo.png" alt="Impact4Soil" width="48"
+            height="48" class="p-1 rounded-lg border border-gray-600 justify-start items-center gap-2 inline-flex">
         </a>
-        <div class="flex flex-col gap-px bg-gray-600 py-px">
-          <a
-            class="navbar-item border-yellow-500"
-            href="/geospatial-data">
-            Geospatial data
-          </a>
-          <a
-            class="navbar-item-active border-mod-sc-ev"
+        <div class="flex flex-col items-center gap-3">
+          <div class="navbar-item">
+            <i class="h-6 w-6 min-h-6 stroke-1" data-lucide="globe-2"></i>
+            <a
+              href="/geospatial-data">
+              Geospatial data
+            </a>
+          </div>
+          <div class="navbar-item navbar-item-active">
+            <i class="h-6 w-6 stroke-1" data-lucide="bar-chart-3"></i>
+            <a
             href="/scientific-evidence">Scientific evidence</a>
-          <a
-            class="navbar-item border-brown-500"
+          </div>
+          <div class="navbar-item">
+            <i class="h-6 w-6 stroke-1" data-lucide="tractor"></i>
+            <a
             href="/practices">Practices</a>
-          <a
-            class="navbar-item border-blue-500"
+          </div>
+          <div class="navbar-item">
+            <i class="h-6 w-6 stroke-1" data-lucide="users"></i>
+            <a
             href="/network">Network</a>
-          <a
-            class="navbar-item border-purple-700"
-            href="/datasets">
-            Datasets
-          </a>
+          </div>
+          <div class="navbar-item">
+            <i class="h-6 w-6 stroke-1" data-lucide="sheet"></i>
+            <a
+              href="/datasets">
+              Datasets
+            </a>
+          </div>
         </div>
-        <div class="mt-auto flex flex-col items-center gap-y-4">
-          <span class="text-xs text-gray-400">A project by:</span>
-          <a href="https://irc-orcasa.eu/" target="_blank" rel="noreferrer">
-            <img src="/assets/images/orcasa-logo-white.png" width="85"
-              height="26" alt="ORCaSa" />
-            <span class="sr-only text-xs text-gray-400">ORCaSa</span>
-          </a>
-        </div>
+        <a href="https://irc-orcasa.eu/" target="_blank" rel="noreferrer" class="mt-auto text-xs text-white font-semibold font-serif">
+          Impact4Soil
+        </a>
       </div>
     </div>
 
