@@ -220,10 +220,11 @@ window.addEventListener('load', function () {
     </button>
   `;
   // Create an option for each land use
-  const option = ({ slug, name, publications, index }) =>
+  const option = ({ slug, name, publications, selectedSlug }) =>
   `<option
     data-slug=${slug}
     value=${slug}
+    ${selectedSlug === slug ? "selected" : ""}
   >
     <span class="text-base">
       ${name}
@@ -266,8 +267,8 @@ window.addEventListener('load', function () {
           // Show the land use select container
           elements.landUseSelectContainer.classList.remove('hidden');
           if(landUses) {
-              landUses.filter(l => l.name !== 'All').forEach(landUse => {
-              elements.landUseSelect.innerHTML += option(landUse);
+            landUses.filter(l => l.name !== 'All').forEach(landUse => {
+              elements.landUseSelect.innerHTML += option({...landUse, selectedSlug: slug });
             });
           }
         });
