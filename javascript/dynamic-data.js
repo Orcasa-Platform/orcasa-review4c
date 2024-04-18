@@ -144,7 +144,7 @@ window.addEventListener('load', function () {
         <div
           class="text-2xs">
           <div>${description}</div>
-          <div id="chart-${slug}" class="chart w-full h-full flex items-center justify-center font-semibold uppercase bg-gray-50 mt-4"></div>
+          <div id="chart-${slug}" class="chart w-full h-full flex items-center justify-center mt-4"></div>
         </div>
       </div>
       `;

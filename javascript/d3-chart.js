@@ -123,19 +123,25 @@ const createSVGChart = (slug, data) => {
     d.active ? [d].concat(d['subTypes']) : d
   ).flat();
 
-  const ITEM_HEIGHT = 52;
+  const ITEM_HEIGHT = 36;
 
   const heightValue = (data.length + (activeData?.subTypes?.length ?? 0)) * ITEM_HEIGHT + 50;
-  const widthValue = window.innerWidth >= 1536 ? 600 : 400;
+  const widthValue = window.innerWidth >= 1536 ? 1040 : 800;
 
   const RIGHT_AXIS_PADDING = 200;
   const AXIS_PADDING = 20;
+
   const margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
-  const width = widthValue - margin.left - margin.right - 100;
-  const height = heightValue - margin.top - margin.bottom;
+  // Padding for the arrows and "Positive effect" and "Negative effect" labels
+  const LOWER_LABELS_PADDING = 40;
 
-  const xTickValues = [-150, -100, -50, 0, 50, 100, 150];
+  const width = widthValue - margin.left - margin.right - 100;
+  const height = heightValue - margin.top - margin.bottom - LOWER_LABELS_PADDING;
+
+  const xTickValues = [-150, -120, -90, -60,  -30, 0, 30, 60, 90, 120, 150];
+  // Draw intermediate ticks without labels
+  const xTickTicks = [-150, -135, -120, -105, -90, -75, -60, -45, -30, 0, 15, 30, 45,  60, 75, 90, 105, 120, 135, 150];
   const yTickWidth = widthValue + RIGHT_AXIS_PADDING - width - 70;
 
   // Remove any existing chart
@@ -165,7 +171,7 @@ const createSVGChart = (slug, data) => {
 
   // Create x axis
   const xAxis = d3.axisTop(xScale)
-    .tickFormat(d => d3.format(".0%")(d/100))
+    .tickFormat(d => d3.format("d")(d))
     .tickValues(xTickValues);
 
   // Draw x axis
@@ -176,7 +182,7 @@ const createSVGChart = (slug, data) => {
   const xAxisTick = xAxisElement.selectAll(".tick")
 
   xAxisTick.select("text")
-    .attr('class', 'font-sans text-xs text-gray-400')
+    .attr('class', 'font-sans text-2xs text-gray-500')
 
   xAxisTick.selectAll("line")
     .attr("stroke", 'none');
@@ -189,7 +195,7 @@ const createSVGChart = (slug, data) => {
 
   const buttonHTML = (title, publications, slug) =>
     `<button type="button" class="btn-filter-chart mt-0.5 max-w-[${yTickWidth}px]" aria-pressed="false" id="btn-${kebabCase(slug)}" title="${title} (${formatNumber(publications)})">
-      <span class="mr-1.5 overflow-hidden whitespace-nowrap text-ellipsis">${title}</span><span class="text-xs shrink-0">(${formatNumber(publications)})</span>
+      <span class="mr-1.5 overflow-hidden whitespace-nowrap text-ellipsis underline">${title}</span><span class="text-xs shrink-0">(${formatNumber(publications)})</span>
     </button>`;
   ;
 
@@ -233,7 +239,7 @@ const createSVGChart = (slug, data) => {
 
   // Create x grid
   const xGrid = d3.axisBottom(xScale)
-    .tickValues(xTickValues)
+    .tickValues(xTickTicks)
     .tickSize(-height + margin.top + margin.bottom)
     .tickFormat("");
 
@@ -243,14 +249,49 @@ const createSVGChart = (slug, data) => {
     .attr("transform", `translate(0, ${height - margin.bottom})`)
     .call(xGrid)
 
+
+  // Create labels for Positive and Negative effects
+  const centralPosition = xScale(0);
+  const arrowY = height + 10;
+  const INNER_PADDING = 10;
+  const arrowGroup = svg.append("g")
+  .attr("class", "arrow-group");
+
+  // Draw the positive effect arrow
+  arrowGroup.append("path")
+  .attr("class", "stroke-gray-200")
+  .attr("d", `M${centralPosition + 100},${arrowY} L${xScale(155)},${arrowY} m-3,-3 l3,3 l-3,3`)
+  .attr("fill", "none")
+
+  // Draw the negative effect arrow
+  arrowGroup.append("path")
+  .attr("class", "stroke-gray-200")
+  .attr("d", `M${centralPosition - 105},${arrowY} L${xScale(-155)},${arrowY} m5,-5 l-5,5 l5,5`)
+  .attr("fill", "none")
+
+  // Add the Positive Effect label
+  arrowGroup.append("text")
+    .attr("class", "text-xs text-gray-500 fill-current")
+    .attr("x", centralPosition + INNER_PADDING)
+    .attr("y", arrowY + 4)
+    .text("Positive effect")
+
+
+  // Add the Negative Effect label
+  arrowGroup.append("text")
+    .attr("class", "text-xs text-gray-500 fill-current")
+    .attr("x", centralPosition - INNER_PADDING)
+    .attr("y", arrowY + 4)
+    .attr("text-anchor", "end")
+    .text("Negative effect")
+
   xGridElement.selectAll(".tick line")
-    .attr("stroke-opacity",(d) => d === 0 ? 1 : 0.2)
-    .attr("stroke-dasharray", (d) => d === 0 ? 'none' : "5,3")
+    .attr("stroke-opacity", 0.2)
+    .attr("stroke-dasharray", (d) => d === 0 ? 'none' : "2,1")
     .attr("stroke", gray700);
 
   xGridElement.select(".domain").remove();
   const getOpacity = (d) => (!selected || selected?.type !== 'subType' || selected?.value === d.title) ? 1 : 0.5;
-
 
   const chartTooltip = d3.select('#chart-tooltip');
 
@@ -277,26 +318,12 @@ const createSVGChart = (slug, data) => {
       // Over zero
         g
         .append("line")
-        .attr("x1", xScale(d.low < 0 ? 0 : d.low))
+        .attr("class", "stroke-gray-700")
+        .attr("x1", xScale(Math.min(d.low, 0)))
         .attr("x2", xScale(Math.max(d.high, 0)))
         .attr("y1", yScale(d.title) + yScale.bandwidth() / 2)
         .attr("y2", yScale(d.title) + yScale.bandwidth() / 2)
-        .attr("stroke", primaryColor)
         .attr("opacity", getOpacity)
-        .attr("stroke-width", 2)
-        .on("mouseover", addTooltip)
-        .on("mouseout", () => chartTooltip.classed('hidden', true));
-
-      // Under zero
-        g
-        .append("line")
-        .attr("x1", xScale(Math.min(d.low, 0)))
-        .attr("x2", xScale(d.high > 0 ? 0 : d.high))
-        .attr("y1", yScale(d.title) + yScale.bandwidth() / 2)
-        .attr("y2", yScale(d.title) + yScale.bandwidth() / 2)
-        .attr("stroke", red)
-        .attr("opacity", getOpacity)
-        .attr("stroke-width", 2)
         .on("mouseover", addTooltip)
         .on("mouseout", () => chartTooltip.classed('hidden', true));
     });
@@ -306,12 +333,11 @@ const createSVGChart = (slug, data) => {
     .data(dataWithSubTypes)
     .enter()
     .append("circle")
-    .attr("class", "data-point")
+    .attr("class", "data-point fill-gray-700")
     .attr("cx", d => xScale(d.value))
     .attr("cy", d => yScale(d.title) + yScale.bandwidth() / 2)
-    .attr("r", 5)
+    .attr("r", 4)
     .attr("opacity", getOpacity)
-    .attr("fill", d => d.value >= 0 ? primaryColor : red)
     .on("mouseover", addTooltip)
     .on("mouseout", () => chartTooltip.classed('hidden', true));
 };
