@@ -1,6 +1,9 @@
 const elements = {
   sidebar: document.getElementById('sidebar'),
   legend: document.getElementById('legend'),
+  main: document.getElementById('main'),
+  map: document.getElementById('map'),
+  footerMenu: document.getElementById('footer-menu'),
   sidebarToggle: document.getElementById('sidebar-toggle'),
   legendToggle: document.getElementById('legend-toggle'),
   infoTooltipButton: document.getElementById('btn-info-tooltip'),

@@ -331,11 +331,21 @@ window.addEventListener('load', function () {
     window.mutations.setMethodologyOpen(true);
     window.renderMethodologyChart();
     elements.methodologyPanel.classList.remove('-translate-x-full');
+
+    elements.methodologyPanel.classList.remove('hidden');
+    // Hide the main page
+    elements.main.classList.add('hidden');
+    elements.footerMenu.classList.add('hidden');
   });
 
   elements.closeMethodologyPanelButton.addEventListener("click", function() {
     elements.methodologyPanel.classList.add('-translate-x-full');
     window.mutations.setMethodologyOpen(false);
+
+    elements.methodologyPanel.classList.add('hidden');
+    // Show the main page
+    elements.main.classList.remove('hidden');
+    elements.footerMenu.classList.remove('hidden');
   });
 
   // PUBLICATION BUTTON
@@ -349,6 +359,11 @@ window.addEventListener('load', function () {
     window.mutations.setPublicationsOpen(true);
     elements.publicationPanel.classList.remove('-translate-x-full');
     window.loadPublications();
+
+    // Hide the main page
+    elements.main.classList.add('hidden');
+    elements.map.classList.remove('hidden');
+    elements.footerMenu.classList.add('hidden');
   });
 
   elements.closePublicationPanelButton.addEventListener("click", function() {
@@ -366,6 +381,11 @@ window.addEventListener('load', function () {
     if (isFiltersPanelOpen) {
       closeFiltersPanel();
     }
+
+    // Restore main page
+    elements.main.classList.remove('hidden');
+    elements.map.classList.add('hidden');
+    elements.footerMenu.classList.remove('hidden');
   });
 
   // FILTERS BUTTON
