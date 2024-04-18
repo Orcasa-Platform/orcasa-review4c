@@ -75,7 +75,7 @@
 
         /* focus-visible:outline-offset-[-2px] to fix the foreignObject outline */
         .btn-filter-chart {
-          @apply flex justify-between items-center p-1.5 font-sans font-normal text-base text-left bg-transparent border border-gray-200 aria-pressed:bg-gray-700 aria-pressed:border-gray-700 aria-pressed:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] box-border disabled:opacity-60 disabled:pointer-events-none hover:text-black hover:bg-gray-200 focus-visible:outline-mod-sc-ev-dark;
+          @apply flex justify-between rounded-lg items-center p-1.5 font-sans font-normal text-sm text-left bg-transparent aria-pressed:bg-gray-700 aria-pressed:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] box-border disabled:opacity-60 disabled:pointer-events-none border border-transparent hover:border-gray-300 focus-visible:outline-mod-sc-ev-dark;
         }
 
         .btn-icon {
@@ -206,7 +206,7 @@
           <!-- LAND USE MENU -->
           <!-- Loaded dynamically on dynamic-data.js -->
           <div id="initial-main" class="bg-gray-600 w-full rounded-lg flex flex-col p-10 justify-center items-center text-center flex-1">
-            <img src="/assets/images/land-use-select.svg" alt="" class="w-[150px] h-[150px] mb-6"/>
+            <canvas id="canvas" width="150" height="150" class="w-[150px] h-[150px] mb-6"></canvas>
             <div>
               <div class="text-center text-white mb-6">Select one type of land use to explore its impacts:</div>
               <div class="mb-4"
@@ -934,6 +934,20 @@
 
     <!-- EVENT LISTENERS -->
     <script src='javascript/event-listeners.js'></script>
+
+    <!-- RIVE ANIMATION FOR INTRO PAGE -->
+    <script src="https://unpkg.com/@rive-app/canvas@2.7.0"></script>
+
+    <script>
+      const r = new rive.Rive({
+        src: "/assets/animations/filters_animation.riv",
+        canvas: document.getElementById("canvas"),
+        autoplay: true,
+        onLoad: () => {
+          r.resizeDrawingSurfaceToCanvas();
+        },
+      });
+    </script>
 
     <style type="text/tailwindcss">
       /* MAPLIBRE OVERRIDES */
