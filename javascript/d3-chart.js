@@ -303,7 +303,7 @@ const createSVGChart = (slug, data) => {
       .style("left", (event.clientX - chart.node().getBoundingClientRect().left) + "px")
       .classed('hidden', false);
 
-    chartTooltip.html(`<div>min: ${d.low.toFixed(1)}% median: ${d.value.toFixed(1)}% max: ${d.high.toFixed(1)}%</div>`);
+    chartTooltip.html(`<div>${d.value.toFixed(1)}% [Confidence interval -${d.low.toFixed(1)}%, +${d.high.toFixed(1)}%]</div>`);
   }
 
   // Create error bars
@@ -315,7 +315,6 @@ const createSVGChart = (slug, data) => {
     .attr("id", d => `error-bar-${getSlugByTitle(data, d.title)}`)
     .each(function(d) {
       const g = d3.select(this);
-      // Over zero
         g
         .append("line")
         .attr("class", "stroke-gray-700")

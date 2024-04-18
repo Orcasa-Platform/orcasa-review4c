@@ -50,6 +50,9 @@ tailwind.config = {
           700: '#3C4363',
           800: '#2C324B',
         },
+        neutral: {
+          300: '#C1C3CE',
+        },
         green: {
           50: '#F7FCFA',
         }

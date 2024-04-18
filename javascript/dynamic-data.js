@@ -219,6 +219,20 @@ window.addEventListener('load', function () {
     </span>
     </button>
   `;
+  // Create an option for each land use
+  const option = ({ slug, name, publications, index }) =>
+  `<option
+    data-slug=${slug}
+    value=${slug}
+  >
+    <span class="text-base">
+      ${name}
+    </span>
+    <span class="text-xs">
+    (${formatNumber(publications)})
+    </span>
+    </option>
+  `;
 
   // Get data on first load
   getMainInterventionChartData().then(data => {
@@ -229,8 +243,9 @@ window.addEventListener('load', function () {
         elements.landUseMenu.innerHTML += button(landUse);
       });
       loadData(landUses[0].slug);
+      return landUses;
     }
-  }).then(() => {
+  }).then((landUses) => {
     // Add event listeners to the land use buttons
     const landUseButtons = document.getElementsByClassName('btn-land-use');
 
@@ -248,11 +263,24 @@ window.addEventListener('load', function () {
           elements.initialMain.classList.add('hidden');
           elements.chartCards.classList.remove('hidden');
 
-          // const otherButtons = Array.from(elements.landUseButtons).filter(button => button !== element);
-          // otherButtons.forEach(button => button.setAttribute('aria-pressed', 'false'));
+          // Show the land use select container
+          elements.landUseSelectContainer.classList.remove('hidden');
+          if(landUses) {
+              landUses.filter(l => l.name !== 'All').forEach(landUse => {
+              elements.landUseSelect.innerHTML += option(landUse);
+            });
+          }
         });
       };
     }
+  });
+
+  // LAND USE SELECT
+  elements.landUseSelect.addEventListener('change', function() {
+    const slug = elements.landUseSelect.value;
+    window.mutations.setLandUse(slug);
+    window.mutations.setFilter(null);
+    loadData(slug);
   });
 
   // Populate filters

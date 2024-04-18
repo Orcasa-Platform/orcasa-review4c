@@ -36,6 +36,8 @@ const elements = {
   landUseIntro: document.getElementById('land-use-intro'),
   landUsePublications: document.getElementById('land-use-publications'),
   landUseMetaAnalysis: document.getElementById('land-use-meta-analysis'),
+  landUseSelectContainer: document.getElementById('land-use-select-container'),
+  landUseSelect: document.getElementById('land-use-select'),
   publicationsNumber: document.getElementById('publications-number'),
   metaAnalysisNumber: document.getElementById('meta-analysis-number'),
   filtersSelectionText: document.getElementById('filters-selection-text'),
