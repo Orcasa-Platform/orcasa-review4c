@@ -56,6 +56,12 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
   background-position: right 1em center;
  }
 
+ .input-search {
+  background-image: url('/assets/icons/select-white-arrow-down-big.svg');
+  background-repeat: no-repeat;
+  background-position: right 1em center;
+ }
+
  /* For Firefox, which does not support the appearance property */
  @-moz-document url-prefix() {
   #land-use-select {

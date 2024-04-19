@@ -89,7 +89,7 @@
         }
 
         .btn-link {
-          @apply p-3 font-semibold text-mod-sc-ev transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:text-gray-300 disabled:pointer-events-none hover:text-mod-sc-ev-dark focus-visible:outline-mod-sc-ev;
+          @apply p-3 font-semibold text-mod-sc-ev transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:text-gray-500 disabled:pointer-events-none hover:text-mod-sc-ev-dark focus-visible:outline-mod-sc-ev;
         }
 
         .svg-btn-publication-detail {
@@ -97,7 +97,7 @@
         }
 
         .checkbox {
-          @apply w-4 h-4 justify-center items-center flex appearance-none rounded border border-gray-700 bg-white checked:bg-gray-700 checked:border-gray-700 text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600;
+          @apply h-4 w-4 shrink-0 rounded-md text-mod-sc-ev bg-gray-650 border border-gray-400 ring-offset-main transition hover:border-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-green-700 data-[state=checked]:bg-green-700 data-[state=checked]:text-green-700 hover:data-[state=checked]:bg-green-700;
         }
 
         .navbar-item {
@@ -125,7 +125,7 @@
         }
 
         .btn-dropdown {
-          @apply px-4 py-2 text-white rounded-lg h-10 bg-main border border-gray-500 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev;
+          @apply px-4 py-2 text-white rounded-lg h-10 bg-main border border-gray-500 justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev;
         }
 
         .main {
@@ -142,6 +142,14 @@
 
         .filters-panel {
           @apply absolute left-[calc(582px+90px)] p-12 pt-4 w-[320px] h-screen bg-main transition-transform z-10 overflow-auto text-white;
+        }
+
+        .input-search {
+          @apply relative rounded-lg w-[209px] cursor-default select-none px-4 py-2 bg-main text-base leading-[22px] focus:border-gray-500 focus:ring-mod-sc-ev focus:ring-offset-0 focus:outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 items-center focus:bg-main mb-2;
+        }
+
+        .dropdown-options {
+          @apply z-30 rounded-lg border-none shadow bg-gray-650 transition-all overflow-auto;
         }
       }
     </style>
@@ -292,7 +300,7 @@
         <div>
           <div
             class="text-sm text-neutral-300 mb-4">
-            Primary studies by year:
+            Primary studies by year
           </div>
           <div
             id="year-range-container" class="relative">
@@ -314,29 +322,27 @@
             <label for="type-publication"
               class="text-neutral-300 text-sm mb-1">Publication type</label>
             <div
-              class="relative dropdown h-14 flex-col flex"
+              class="relative dropdown flex-col flex"
               id="dropdown-select-type-publication">
               <button
                 type="button"
-                class="btn-dropdown">
+                class="btn-dropdown flex">
                 <span
                   id="type-publication-selected"
                   aria-placeholder="Publication type"
                   class="dropdown-selected">Select
                 </span>
               </button>
-              <input type="search" placeholder="Search…"
-                class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
-              <i data-lucide="chevron-down"
-                class="w-6 h-6 absolute right-4 top-4 stroke-gray-700 pointer-events-none"></i>
+              <input type="search" placeholder="Search"
+                class="input-search flex hidden" />
               <fieldset
-                class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                class="dropdown-options hidden">
                 <div
-                  class="flex px-1 border-b border-dashed border-gray-300">
+                  class="flex justify-end px-1 border-b border-gray-500">
                   <button type="button"
                     class="btn-select-all btn-link">Select all</button>
                   <button type="button"
-                    class="btn-clear btn-link">Clear</button>
+                    class="btn-clear btn-link" disabled>Clear</button>
                 </div>
                 <ul class="flex flex-col">
                 </ul>
@@ -347,11 +353,11 @@
             <label for="year"
               class="text-neutral-300 text-sm mb-1">Year</label>
             <div
-              class="relative dropdown h-14 flex-col flex"
+              class="relative dropdown flex-col flex"
               id="dropdown-select-year">
               <button
                 type="button"
-                class="btn-dropdown">
+                class="btn-dropdown flex">
                 <span
                   id="year-selected"
                   aria-placeholder="Year"
@@ -359,17 +365,15 @@
                 </span>
               </button>
               <input type="search" placeholder="Search…"
-                class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
-              <i data-lucide="chevron-down"
-                class="w-6 h-6 absolute right-4 top-4 stroke-gray-700 pointer-events-none"></i>
+                class="input-search flex hidden" />
               <fieldset
-                class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                class="dropdown-options hidden">
                 <div
-                  class="flex px-1 border-b border-dashed border-gray-300">
+                  class="flex justify-end px-1 border-b border-gray-500">
                   <button type="button"
                     class="btn-select-all btn-link">Select all</button>
                   <button type="button"
-                    class="btn-clear btn-link">Clear</button>
+                    class="btn-clear btn-link" disabled>Clear</button>
                 </div>
                 <ul class="flex flex-col">
                 </ul>
@@ -380,28 +384,26 @@
             <label for="journal"
               class="text-neutral-300 text-sm mb-1">Journal</label>
             <div
-              class="relative dropdown h-14 flex-col flex"
+              class="relative dropdown flex-col flex"
               id="dropdown-select-journal">
               <button
                 type="button"
-                class="btn-dropdown">
+                class="btn-dropdown flex">
                 <span
                   id="journal-selected"
                   aria-placeholder="Journal"
                   class="dropdown-selected">Select</span>
               </button>
               <input type="search" placeholder="Search…"
-                class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
-              <i data-lucide="chevron-down"
-                class="w-6 h-6 absolute right-4 top-4 stroke-gray-700 pointer-events-none"></i>
+                class="input-search flex hidden" />
               <fieldset
-                class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                class="dropdown-options hidden">
                 <div
-                  class="flex px-1 border-b border-dashed border-gray-300">
+                  class="flex justify-end px-1 border-b border-gray-500">
                   <button type="button"
                     class="btn-select-all btn-link">Select all</button>
                   <button type="button"
-                    class="btn-clear btn-link">Clear</button>
+                    class="btn-clear btn-link" disabled>Clear</button>
                 </div>
                 <ul class="flex flex-col">
                 </ul>
@@ -412,28 +414,26 @@
             <label for="country"
               class="text-neutral-300 text-sm mb-1">Country</label>
             <div
-              class="relative dropdown h-14 flex-col flex"
+              class="relative dropdown flex-col flex"
               id="dropdown-select-country">
               <button
                 type="button"
-                class="btn-dropdown">
+                class="btn-dropdown flex">
                 <span
                   id="country-selected"
                   aria-placeholder="Country"
                   class="dropdown-selected">Select</span>
               </button>
               <input type="search" placeholder="Search…"
-                class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
-              <i data-lucide="chevron-down"
-                class="w-6 h-6 absolute right-4 top-4 stroke-gray-700 pointer-events-none"></i>
+                class="input-search flex hidden" />
               <fieldset
-                class="dropdown-options z-30 bg-white transition-min-height duration-300 overflow-auto hidden border border-gray-300">
+                class="dropdown-options hidden">
                 <div
-                  class="flex px-1 border-b border-dashed border-gray-300">
+                  class="flex justify-end px-1 border-b border-gray-500">
                   <button type="button"
                     class="btn-select-all btn-link">Select all</button>
                   <button type="button"
-                    class="btn-clear btn-link">Clear</button>
+                    class="btn-clear btn-link" disabled>Clear</button>
                 </div>
                 <ul class="flex flex-col">
                 </ul>

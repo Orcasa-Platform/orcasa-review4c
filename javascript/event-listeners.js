@@ -425,8 +425,7 @@ window.addEventListener('load', function () {
 
   for (let dropdown of elements.dropdowns) {
     const button = dropdown.querySelector('.btn-dropdown');
-    const searchInput = dropdown.querySelector('.search');
-    const buttonIcon = dropdown.querySelector('svg');
+    const searchInput = dropdown.querySelector('.input-search');
     const options = dropdown.querySelector('.dropdown-options');
     const selected = dropdown.querySelector('.dropdown-selected');
     const selectAllButton = dropdown.querySelector('.btn-select-all');
@@ -435,7 +434,6 @@ window.addEventListener('load', function () {
 
     const toggleDropdown = () => {
       button.classList.toggle('hidden');
-
       searchInput.classList.toggle('hidden');
       if (searchInput.classList.contains('hidden')) {
         searchInput.value = '';
@@ -446,8 +444,6 @@ window.addEventListener('load', function () {
 
       options.classList.toggle('min-h-[190px]');
       options.classList.toggle('hidden');
-      buttonIcon.classList.toggle('rotate-180');
-      selected.classList.toggle('text-gray-500');
     }
 
     button.addEventListener('click', () => {
@@ -481,8 +477,25 @@ window.addEventListener('load', function () {
         return;
       }
 
+      // If any option is checked, we remove disabled from the clear button
+      const anyOptionChecked = [...options.querySelectorAll('input')].some(input => input.checked);
+      if (anyOptionChecked) {
+        clearButton.removeAttribute('disabled');
+      } else {
+        clearButton.setAttribute('disabled', '');
+      }
+
+      // If all options are checked, we add disabled to the select all button
+      const allOptionsChecked = [...options.querySelectorAll('input')].every(input => input.checked);
+      if (allOptionsChecked) {
+        selectAllButton.setAttribute('disabled', '');
+      } else {
+        selectAllButton.removeAttribute('disabled');
+      }
+
       const selectedValues = [];
       const selectedLabels = [];
+
       options.querySelectorAll('input').forEach(input => {
         if (input.checked) {
           selectedValues.push(input.value);
@@ -505,6 +518,9 @@ window.addEventListener('load', function () {
     });
 
     selectAllButton.addEventListener('click', () => {
+      selectAllButton.setAttribute('disabled', '');
+      clearButton.removeAttribute('disabled');
+
       const inputs = options.querySelectorAll('input');
 
       inputs.forEach(input => {
@@ -520,6 +536,9 @@ window.addEventListener('load', function () {
     });
 
     clearButton.addEventListener('click', () => {
+      clearButton.setAttribute('disabled', '');
+      selectAllButton.removeAttribute('disabled');
+
       options.querySelectorAll('input').forEach(input => {
         input.checked = false;
       });
