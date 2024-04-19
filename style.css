@@ -48,7 +48,12 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
   background-image: url('/assets/icons/select-white-arrow.svg');
   background-repeat: no-repeat;
   background-position: right .7em center;
-  padding-right: 1.5em;
+}
+
+.btn-dropdown {
+  background-image: url('/assets/icons/select-white-arrow-big.svg');
+  background-repeat: no-repeat;
+  background-position: right 1em center;
  }
 
  /* For Firefox, which does not support the appearance property */

@@ -10,7 +10,9 @@ window.createMethodologyChart = (data) => {
   const publicationsData = Object.keys(publications).map(key => ({ date: d3.timeParse("%Y")(key), value: publications[key] }));
   const metaAnalysisData = Object.keys(metaAnalysis).map(key => ({ date: d3.timeParse("%Y")(key), value: metaAnalysis[key] }));
 
-  const width = element.getBoundingClientRect().width - margin.left - margin.right;
+  const OUTER_LEFT_MARGIN = 40;
+
+  const width = element.getBoundingClientRect().width - margin.left - margin.right - OUTER_LEFT_MARGIN;
   const height = CHART_HEIGHT - margin.top - margin.bottom;
 
   const svg = container

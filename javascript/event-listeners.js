@@ -24,9 +24,8 @@ window.addEventListener('load', function () {
     if (window.getters.publicationsSort() === 'desc') {
       window.mutations.togglePublicationsSort();
 
-      const [text, icon] = elements.sortPublicationsButton.childNodes;
+      const [, icon] = elements.sortPublicationsButton.childNodes;
       icon.classList.toggle('rotate-180');
-      text.textContent = 'Newest first';
     }
   };
 
@@ -352,7 +351,8 @@ window.addEventListener('load', function () {
   const closeFiltersPanel = () => {
     window.mutations.setFiltersOpen(false);
     elements.filtersPanel.classList.add('-translate-x-full', 'hidden');
-    elements.filtersVeil.classList.add('hidden');
+    elements.filtersButton.classList.remove('!bg-yellow-500');
+    elements.filtersButton.classList.remove('!text-gray-700');
   };
 
   elements.publicationButton.addEventListener("click", function() {
@@ -396,18 +396,17 @@ window.addEventListener('load', function () {
     // Toggle filters panel
     if (buttonState) {
       closeFiltersPanel();
+      elements.filtersButton.classList.remove('!bg-yellow-500');
+      elements.filtersButton.classList.remove('!text-gray-700');
     } else {
       window.mutations.setFiltersOpen(true);
       elements.filtersPanel.classList.remove('-translate-x-full', 'hidden');
-      elements.filtersVeil.classList.remove('hidden');
+      elements.filtersButton.classList.add('!bg-yellow-500');
+      elements.filtersButton.classList.add('!text-gray-700');
     }
   });
 
   elements.closeFiltersPanelButton.addEventListener("click", function() {
-    closeFiltersPanel();
-  });
-
-  elements.filtersVeil.addEventListener("click", function() {
     closeFiltersPanel();
   });
 
@@ -417,10 +416,8 @@ window.addEventListener('load', function () {
 
   elements.sortPublicationsButton.addEventListener("click", function() {
     window.mutations.togglePublicationsSort();
-    const publicationsSort = window.getters.publicationsSort();
-    const [text, icon] = elements.sortPublicationsButton.childNodes;
+    const [, icon] = elements.sortPublicationsButton.childNodes;
     icon.classList.toggle('rotate-180');
-    text.textContent = publicationsSort === 'asc' ? 'Newest first' : 'Oldest first';
     window.reloadPublications();
   });
 

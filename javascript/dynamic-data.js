@@ -311,51 +311,11 @@ window.addEventListener('load', function () {
     return card;
   };
 
-  const updateNumbers = (metadata, publicationRequest) => {
+  const updateNumbers = (metadata) => {
     const { totalPublications, totalMetaAnalysis } = metadata;
-
-    const getLandUse = (landUseSlug) =>
-      window.getters.landUses().find(({ slug }) => slug === landUseSlug);
-
-    const getMainIntervention = (mainInterventionSlug) =>
-      window.getters.mainInterventions().find(({ slug }) => slug === mainInterventionSlug);
-
-    const getIntervention = (mainInterventionSlug, interventionSlug) => {
-      const mainIntervention = getMainIntervention(mainInterventionSlug);
-      return mainIntervention?.interventions.find(({ slug }) => slug === interventionSlug);
-    };
-
-    const getSubType = (mainInterventionSlug, interventionSlug, subTypeSlug) => {
-      const intervention = getIntervention(mainInterventionSlug, interventionSlug);
-      return intervention?.subTypes.find(({ slug }) => slug === subTypeSlug);
-    };
-
-    let selection = 'all land use types';
-    if (publicationRequest.landUse !== 'all') {
-      const landUseName = getLandUse(publicationRequest.landUse)?.name.toLowerCase();
-
-      if (publicationRequest.subType) {
-        const subTypeName = getSubType(
-          publicationRequest.mainIntervention,
-          publicationRequest.intervention,
-          publicationRequest.subType
-        )?.title.toLowerCase();
-        selection = `${subTypeName} for ${landUseName}`;
-      } else if (publicationRequest.intervention) {
-        const interventionName = getIntervention(
-          publicationRequest.mainIntervention,
-          publicationRequest.intervention
-        )?.title.toLowerCase();
-        selection = `${interventionName} for ${landUseName}`;
-      } else {
-        selection = landUseName;
-      }
-    }
 
     elements.metaAnalysisNumber.innerHTML = formatNumber(totalMetaAnalysis) || 0;
     elements.publicationsNumber.innerHTML = formatNumber(totalPublications) || 0;
-
-    elements.filtersSelectionText.innerHTML = selection;
   };
 
   const populateYearChart = (years) => {
@@ -384,7 +344,7 @@ window.addEventListener('load', function () {
     const yearsElements = Object.entries(years).map(([year, yearCount]) => {
       const heightPercentage = (yearCount / maxYearCount) * 100;
       const yearBar = document.createElement('div');
-      yearBar.classList.add('year-bar', 'flex-1', `h-[${heightPercentage}%]`, 'bg-chart-color', 'rounded-sm');
+      yearBar.classList.add('year-bar', 'flex-1', `h-[${heightPercentage}%]`, 'bg-yellow-400', 'rounded-sm');
       yearBar.setAttribute('data-year', year);
       return yearBar.outerHTML;
     }).join('');
@@ -397,16 +357,16 @@ window.addEventListener('load', function () {
           </div>
           <div class="absolute bottom-0 left-0 w-full h-full pointer-events-none">
             <div class="flex flex-col justify-between items-end h-full">
-              <div class="flex-1 h-[1px] border-b border-gray-300 border-dashed w-full"></div>
-              <div class="flex-1 h-[1px] border-b border-gray-300 border-dashed w-full"></div>
-              <div class="flex-1 h-[1px] border-b border-gray-300 border-dashed w-full"></div>
-              <div class="flex-1 h-[1px] border-b-2 border-black w-full"></div>
+              <div class="flex-1 h-[1px] border-b border-gray-200/20 border-dashed w-full"></div>
+              <div class="flex-1 h-[1px] border-b border-gray-200/20 border-dashed w-full"></div>
+              <div class="flex-1 h-[1px] border-b border-gray-200/20 border-dashed w-full"></div>
+              <div class="flex-1 h-[1px] border-b border-white w-full"></div>
             </div>
           </div>
         </div>
         <div class="flex justify-between items-center h-full">
-          <div class="text-slate-700 text-sm">${yearKeys[0]}</div>
-          <div class="text-slate-700 text-sm">${yearKeys[yearKeys.length - 1]}</div>
+          <div class="text-neutral-300 text-sm">${yearKeys[0]}</div>
+          <div class="text-neutral-300 text-sm">${yearKeys[yearKeys.length - 1]}</div>
         </div>
       </div>
     `;
@@ -513,7 +473,7 @@ window.addEventListener('load', function () {
 
       if (data.length === 0) {
         elements.publicationsContainer.innerHTML = `
-          <p class="text-center font-semibold text-slate-500">No results based on your search criteria</p>
+          <p class="text-center font-semibold text-neutral-300">No results based on your search criteria</p>
         `;
       }
 

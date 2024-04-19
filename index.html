@@ -117,11 +117,15 @@
         }
 
         .btn-icon-theme-light {
-          @apply text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none justify-center items-center flex h-10 w-10 text-slate-700 bg-white hover:bg-slate-200 border-l border-gray-300;
+          @apply text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 justify-center items-center flex h-10 w-10 text-slate-700 bg-white hover:bg-slate-200 border-l border-gray-300;
         }
 
         .btn-icon-theme-dark {
-          @apply text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-none justify-center items-center flex h-10 w-10 text-white bg-slate-700 hover:bg-slate-500;
+          @apply text-sm rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 justify-center items-center flex h-8 w-8 text-white bg-gray-600 hover:bg-slate-500;
+        }
+
+        .btn-dropdown {
+          @apply px-4 py-2 text-white rounded-lg h-10 bg-main border border-gray-500 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev;
         }
 
         .main {
@@ -129,7 +133,7 @@
         }
 
         .publication-panel {
-          @apply absolute top-0 px-12 py-10 w-full max-w-[862px] left-[90px] h-screen bg-white transition-transform z-20 !mt-0 overflow-auto;
+          @apply absolute top-0 px-12 py-10 w-full max-w-[582px] left-[90px] h-screen bg-main transition-transform z-20 !mt-0 overflow-auto text-white space-y-8;
         }
 
         .methodology-panel {
@@ -137,7 +141,7 @@
         }
 
         .filters-panel {
-          @apply absolute -right-[380px] p-12 w-[380px] h-screen bg-white transition-transform z-10 overflow-auto;
+          @apply absolute left-[calc(582px+90px)] p-12 pt-4 w-[320px] h-screen bg-main transition-transform z-10 overflow-auto text-white;
         }
       }
     </style>
@@ -266,24 +270,34 @@
         type="button"
         aria-label="close filters panel"
         id="btn-close-filters-panel"
-        class="btn-icon-theme-dark absolute top-0 right-0">
-        <i class="w-6 h-6 stroke-white"
+        class="btn-icon-theme-dark absolute top-4 right-4">
+        <i class="w-4 h-4 stroke-white"
           data-lucide="x"></i>
       </button>
+      <h3
+        class="text-yellow-500 text-2xl font-serif">Filters</h3>
       <!-- PUBLICATION FILTERS -->
       <div id="publication-filters"
-        class="flex flex-col w-full justify-between space-y-[40px]">
-        <h3
-          class="text-slate-700 text-[34px] font-serif">Filters</h3>
+        class="flex flex-col w-full justify-between space-y-[40px] mt-[44px]">
+        <button
+          id="reset-filters"
+          class="flex items-center justify-center text-base lg:text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:pointer-events-none disabled:opacity-50 font-sans bg-gray-650 hover:bg-gray-600 rounded-lg text-sm px-2 py-1 mb-4 flex items-center gap-1 self-end rounded-2xl pr-1 text-sm text-gray-50 hover:bg-gray-500 disabled:text-gray-300 disabled:opacity-100 lg:mb-0 lg:self-start"
+          type="button">
+          Reset all
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+            fill="none" class="h-5 w-5"><path stroke="#fff"
+              stroke-linecap="round" stroke-linejoin="round"
+              d="m7.75 7.75 4.5 4.5m0-4.5-4.5 4.5M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0"></path></svg>
+        </button>
         <div>
           <div
-            class="text-slate-700 mb-4">
+            class="text-sm text-neutral-300 mb-4">
             Primary studies by year:
           </div>
           <div
             id="year-range-container" class="relative">
             <div id="bar-tooltip"
-              class="p-2 bg-slate-700 text-white text-sm absolute hidden rounded z-50">
+              class="p-2 bg-white text-gray-700 text-sm absolute hidden rounded z-50">
               <div id="bar-tooltip-content"></div>
               <span
                 class="absolute bottom-0 transform translate-y-full left-5">
@@ -296,24 +310,19 @@
           </div>
         </div>
         <div class="flex flex-col gap-6">
-          <button type="button" id="reset-filters"
-            class="btn-light w-min whitespace-nowrap">
-            Reset All
-          </button>
           <div id="type-publication">
             <label for="type-publication"
-              class="sr-only">Publication type</label>
+              class="text-neutral-300 text-sm mb-1">Publication type</label>
             <div
               class="relative dropdown h-14 flex-col flex"
               id="dropdown-select-type-publication">
               <button
                 type="button"
-                class="btn-dropdown p-4 bg-white border border-gray-200 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
+                class="btn-dropdown">
                 <span
                   id="type-publication-selected"
                   aria-placeholder="Publication type"
-                  class="dropdown-selected text-slate-700">Publication
-                  type
+                  class="dropdown-selected">Select
                 </span>
               </button>
               <input type="search" placeholder="Search…"
@@ -336,17 +345,17 @@
           </div>
           <div id="year">
             <label for="year"
-              class="sr-only">year</label>
+              class="text-neutral-300 text-sm mb-1">Year</label>
             <div
               class="relative dropdown h-14 flex-col flex"
               id="dropdown-select-year">
               <button
                 type="button"
-                class="btn-dropdown p-4 bg-white border border-gray-200 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
+                class="btn-dropdown">
                 <span
                   id="year-selected"
                   aria-placeholder="Year"
-                  class="dropdown-selected text-slate-700">Year
+                  class="dropdown-selected">Select
                 </span>
               </button>
               <input type="search" placeholder="Search…"
@@ -369,17 +378,17 @@
           </div>
           <div id="journal">
             <label for="journal"
-              class="sr-only">Journal</label>
+              class="text-neutral-300 text-sm mb-1">Journal</label>
             <div
               class="relative dropdown h-14 flex-col flex"
               id="dropdown-select-journal">
               <button
                 type="button"
-                class="btn-dropdown p-4 bg-white border border-gray-200 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
+                class="btn-dropdown">
                 <span
                   id="journal-selected"
                   aria-placeholder="Journal"
-                  class="dropdown-selected text-slate-700">Journal</span>
+                  class="dropdown-selected">Select</span>
               </button>
               <input type="search" placeholder="Search…"
                 class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
@@ -401,17 +410,17 @@
           </div>
           <div id="country">
             <label for="country"
-              class="sr-only">Country</label>
+              class="text-neutral-300 text-sm mb-1">Country</label>
             <div
               class="relative dropdown h-14 flex-col flex"
               id="dropdown-select-country">
               <button
                 type="button"
-                class="btn-dropdown p-4 bg-white border border-gray-200 flex justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev">
+                class="btn-dropdown">
                 <span
                   id="country-selected"
                   aria-placeholder="Country"
-                  class="dropdown-selected text-slate-700">Country</span>
+                  class="dropdown-selected">Select</span>
               </button>
               <input type="search" placeholder="Search…"
                 class="search relative w-[284px] h-14 p-4 bg-white shadow border border-gray-400 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev hidden min-w-full" />
@@ -437,77 +446,71 @@
 
     <!-- PUBLICATION PANEL -->
     <div id="publication-panel"
-      class="publication-panel -translate-x-full">
-
+      class="publication-panel -translate-x-full bg-cover bg-no-repeat"
+      style="background-image: url('/assets/images/sidebar-background.svg')">
       <button
-        class="group flex items-center"
+        class="group flex items-center mb-8 text-white"
         id="btn-close-publication-panel">
         <svg
           xmlns="http://www.w3.org/2000/svg" width="24" height="24"
           viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-[15px] h-[34px] w-[34px] bg-gray-100 px-1 py-1 transition-colors group-hover:bg-slate-700 group-hover:text-white group-focus:bg-slate-700 group-focus:text-white">
-          <path d="m12 19-7-7 7-7"></path><path
-            d="M19 12H5"></path></svg>
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="rounded-lg mr-[15px] h-[34px] w-[34px] bg-gray-500 p-2 transition-colors group-hover:bg-mod-sc-ev group-hover:text-white group-focus:bg-mod-sc-ev group-focus:text-white">
+          <path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
         <span
-          class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 -translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Back
-          to Results
+          class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 -translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Go
+          back
         </span>
-
       </button>
+
       <!-- PUBLICATION HEADER -->
       <h2
-        class="text-mod-sc-ev font-serif text-[34px] py-6">Publications</h2>
-      <div class="flex flex-col space-y-8 mt-2">
-        <div
-          class="flex justify-between items-center gap-1 border-b border-dashed border-gray-200 pb-4">
-          <header
-            class="text-slate-700">Showing
-            <span id="publications-number"></span> primary studies and <span
-              id="meta-analysis-number"></span>
-            meta-analyses related to
-            <span
-              class="font-semibold" id="filters-selection-text"></span>.
-          </header>
-          <button
-            type="button"
-            id="btn-sort-publications"
-            class="btn-filter flex items-center justify-between !px-4 !py-2 min-w-[150px]">
-            Newest first
-            <i class="h-6 w-6" data-lucide="arrow-up-narrow-wide"></i>
-          </button>
-        </div>
-        <div class="flex justify-between items-center gap-1">
-          <div id="search" class="w-[calc(100%-125px-16px)]">
-            <div class="relative w-full">
-              <input
-                class="relative w-full h-14 p-4 bg-white border border-gray-200 pl-10 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev min-w-full"
-                type="search" placeholder="Search by keyword">
-              <div
-                class="absolute inset-y-0 left-0 flex items-center pl-3">
-                <i data-lucide="search"
-                  class="w-6 h-6 pointer-events-none"></i>
-              </div>
+        class="font-serif text-xl">Publications</h2>
+      <div class="flex justify-between items-center gap-2">
+        <div id="search" class="flex-1">
+          <div class="relative w-full">
+            <input
+              class="relative w-full h-10 p-4 rounded-xl bg-main border border-white/25 pl-11 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev min-w-full placeholder:text-neutral-300"
+              type="search" placeholder="Search publication">
+            <div
+              class="absolute inset-y-0 left-0 flex items-center pl-3">
+              <i data-lucide="search"
+                class="w-6 h-6 pointer-events-none"></i>
             </div>
           </div>
-          <button
-            type="button"
-            id="btn-filters"
-            class="btn-primary flex items-center justify-center gap-3 w-[125px]">
-            <i class="h-6 w-6" data-lucide="filter"></i>
-            Filters
-          </button>
         </div>
-        <div id="publications-container">
+        <button
+          type="button"
+          id="btn-filters"
+          class="btn-primary flex items-center justify-center gap-2 h-10 !duration-500">
+          <i class="h-6 w-6 stroke-1" data-lucide="filter"></i>
+          Filters
+        </button>
+      </div>
+      <div class="flex items-center justify-between">
+        <div
+          class="text-neutral-300 text-sm">Showing
+          <span
+            id="meta-analysis-number"></span>
+          meta-analyses and
+          <span id="publications-number"></span> primary studies.
         </div>
+        <button
+          type="button"
+          id="btn-sort-publications"
+          class="btn-filter flex items-center justify-between !px-4 !py-2 min-w-[82px]">
+          <i class="h-4 w-4 stroke-1" data-lucide="arrow-up-narrow-wide"></i>
+          Sort
+        </button>
+      </div>
+      <div id="publications-container" class="!mt-4">
       </div>
     </div>
 
     <!-- METHODOLOGY PANEL -->
     <div id="methodology-panel"
       class="methodology-panel -translate-x-full space-y-6 block hidden bg-cover bg-no-repeat"
-      style="background-image: url('/assets/images/main-background.svg')">
+      style="background-image: url('/assets/images/methodology-background.svg')">
       <button
         class="group flex items-center mb-8"
         id="btn-close-methodology-panel">
@@ -522,34 +525,53 @@
           back
         </span>
       </button>
-      <div class="flex gap-16">
+      <div class="flex flex-wrap gap-16">
         <div class="flex-1 flex flex-col gap-6 min-w-[506px]">
           <h3 class="text-4xl font-serif">Methodology</h3>
-          <p
-            class="text-neutral-300 text-sm leading-7">We conducted a literature
-            search to retrieve all peer-reviewed meta- analyses that reported at
-            least one quantification on Soil organic Carbon, expressed as a
-            concentration (g C kg-1 soil or equivalent) or a stock (t C ha-1 or
-            equivalent). We then extracted all quantification presented in the
-            meta-analyses and combined them to reach a global overview of the
-            impacts of multiple interventions on soil organic carbon, with high
-            statistical power. We also characterized the methodological quality
-            of the meta-analyses, and listed all the primary studies
-            synthethized in the meta-analyses to clearly identify and present
-            potential bias and limitation in the current scientific
-            knowledge.</p>
+          <div class="text-neutral-300 text-sm leading-7 space-y-1">
+            <p>We conducted a literature
+              search to retrieve all peer-reviewed meta- analyses that reported
+              at
+              least one quantification on Soil organic Carbon, expressed as a
+              concentration (g C kg-1 soil or equivalent) or a stock (t C ha-1
+              or
+              equivalent). We then extracted all quantification presented in the
+              meta-analyses and combined them to reach a global overview of the
+              impacts of multiple interventions on soil organic carbon, with
+              high
+              statistical power. We also characterized the methodological
+              quality
+              of the meta-analyses, and listed all the primary studies
+              synthethized in the meta-analyses to clearly identify and present
+              potential bias and limitation in the current scientific
+              knowledge.
+            </p>
+            <p>
+              <div>Please note the following elements:</div>
+              <ul class="leading-7 list-disc list-inside">
+                <li>
+                  A publication can be linked to one or more countries and thus
+                  appear several times on the map.
+                </li>
+                <li>
+                  On the graphs, only the most relevant subcategories are
+                  displayed.
+                </li>
+              </ul>
+            </p>
+          </div>
           <div class="flex flex-wrap">
             <div class="flex-grow"
               id="methodology-chart"></div>
             <div id="methodology-legend"
               class="text-neutral-300 text-xs space-y-2">
-              <div class="flex items-center gap-4">
+              <div class="flex items-center gap-2">
                 <div
-                  class="border-t w-6 border-white"></div>
+                  class="border-t w-4 border-white"></div>
                 Primary Studies
               </div>
-              <div class="flex items-center gap-4">
-                <div class="h-1 w-6 bg-mod-sc-ev"></div>
+              <div class="flex items-center gap-2">
+                <div class="h-1 w-4 bg-mod-sc-ev"></div>
                 Meta-analyses</div>
             </div>
           </div>
@@ -602,7 +624,8 @@
                     target="_blank"
                     class="text-teal-500 text-base font-semibold inline">A
                     global
-                    meta-analysis of soil organic carbon in the Anthropocene</a>
+                    meta-analysis of soil organic carbon in the
+                    Anthropocene</a>
                   <i class="inline w-4 h-4 ml-1 stroke-current"
                     data-lucide="external-link"></i>
                 </li>
@@ -648,9 +671,6 @@
         </button>
       </div>
     </div>
-
-    <div id="filters-panel-veil"
-      class="absolute inset-0 w-screen h-screen bg-gray-50 z-10 bg-gray-900 bg-opacity-50 hidden"></div>
 
     <!-- MAP -->
     <div id='map' style='width: 100wh; height: 100vh' class="hidden">
@@ -702,7 +722,8 @@
             </button>
             <div id="info-tooltip"
               class="hidden p-2 bg-slate-700 text-white text-sm font-normal absolute rounded z-50 bottom-8 -left-2.5 min-w-[240px] -ml-24 leading-7">
-              <div>A publication can be linked to one or more countries and thus
+              <div>A publication can be linked to one or more countries and
+                thus
                 appear several times on the map.</div>
               <span
                 class="absolute bottom-0 transform translate-y-full left-28">

@@ -29,6 +29,7 @@ tailwind.config = {
         },
         yellow: {
           // Geospatial data
+          400: '#FFE08A',
           500: '#FFD500',
         },
         purple: {
@@ -47,6 +48,7 @@ tailwind.config = {
           300: '#B2B5C5',
           500: '#6E7389',
           600: '#565D79',
+          650: '#4D5370',
           700: '#3C4363',
           800: '#2C324B',
         },
