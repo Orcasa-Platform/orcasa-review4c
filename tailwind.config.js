@@ -31,6 +31,7 @@ tailwind.config = {
           // Geospatial data
           400: '#FFE08A',
           500: '#FFD500',
+          700: '#E4AE00'
         },
         purple: {
           // Datasets

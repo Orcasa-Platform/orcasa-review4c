@@ -397,10 +397,18 @@ window.addEventListener('load', function () {
     if (buttonState) {
       closeFiltersPanel();
       elements.filtersButton.classList.remove('!bg-yellow-500');
+      elements.filtersButtonBadge.classList.remove('bg-yellow-700');
+      elements.filtersButtonBadge.classList.add('bg-green-700');
+      elements.filtersButtonBadge.classList.remove('text-gray-700');
+      elements.filtersButtonBadge.classList.add('text-white');
       elements.filtersButton.classList.remove('!text-gray-700');
     } else {
       window.mutations.setFiltersOpen(true);
       elements.filtersPanel.classList.remove('-translate-x-full', 'hidden');
+      elements.filtersButtonBadge.classList.remove('bg-green-700');
+      elements.filtersButtonBadge.classList.add('bg-yellow-700');
+      elements.filtersButtonBadge.classList.remove('text-white');
+      elements.filtersButtonBadge.classList.add('text-gray-700');
       elements.filtersButton.classList.add('!bg-yellow-500');
       elements.filtersButton.classList.add('!text-gray-700');
     }
@@ -472,6 +480,31 @@ window.addEventListener('load', function () {
       }
     });
 
+    const recalculateActiveFilters = (dropdownId, options) => {
+      const anyOptionChecked = [...options.querySelectorAll('input')].some(input => input.checked);
+      const activeFilters = window.getters.activeFilters();
+
+      if (anyOptionChecked) {
+        if (activeFilters.length === 0 || !activeFilters.includes(dropdownId) ) {
+          window.mutations.setActiveFilters(activeFilters.concat(dropdownId));
+        }
+      } else {
+        if (activeFilters.includes(dropdownId)) {
+          window.mutations.setActiveFilters(activeFilters.filter(filter => filter !== dropdownId));
+        }
+      }
+
+      const filtersActiveNumber = window.getters.activeFilters().length;
+
+      if (filtersActiveNumber > 0) {
+        elements.filtersButtonBadge.textContent = filtersActiveNumber;
+        elements.filtersButtonBadge.classList.remove('hidden');
+      } else {
+        elements.filtersButtonBadge.textContent = '';
+        elements.filtersButtonBadge.classList.add('hidden');
+      }
+    };
+
     options.addEventListener('change', ({ target }) => {
       if (target.type !== 'checkbox') {
         return;
@@ -507,11 +540,13 @@ window.addEventListener('load', function () {
       const placeholder = selected.attributes['aria-placeholder'].value;
       if (selectedValues.length === 0) {
         selected.textContent = placeholder;
-        window.mutations.setPublicationFilters(dropdown.id, []);
+        window.mutations.setPublicationFilters(dropdownId, []);
       } else {
         selected.textContent = `${placeholder} (${formatNumber(selectedLabels.length)})`;
         window.mutations.setPublicationFilters(dropdown.id, selectedValues);
       };
+
+      recalculateActiveFilters(dropdown.id, options);
 
       // Reload publications
       window.reloadPublications();
@@ -532,6 +567,9 @@ window.addEventListener('load', function () {
 
       const inputValues = [...inputs].map(input => input.value);
       window.mutations.setPublicationFilters(dropdown.id, inputValues);
+
+      recalculateActiveFilters(dropdown.id, options);
+
       window.reloadPublications();
     });
 
@@ -546,6 +584,9 @@ window.addEventListener('load', function () {
       const placeholder = selected.attributes['aria-placeholder'].value;
       selected.textContent = placeholder;
       window.mutations.setPublicationFilters(dropdown.id, []);
+
+      recalculateActiveFilters(dropdown.id, options);
+
       window.reloadPublications();
     });
 
@@ -574,6 +615,20 @@ window.addEventListener('load', function () {
   elements.resetFiltersButton.addEventListener('click', () => {
     resetPublicationsFilters();
     window.reloadPublications();
+
+    // Reset the active filters badge
+    window.mutations.setActiveFilters([]);
+    elements.filtersButtonBadge.textContent = '';
+    elements.filtersButtonBadge.classList.add('hidden');
+
+    // Activate all Select All buttons and disable all Clear buttons
+    for (let dropdown of elements.dropdowns) {
+      const selectAllButton = dropdown.querySelector('.btn-select-all');
+      const clearButton = dropdown.querySelector('.btn-clear');
+
+      selectAllButton.removeAttribute('disabled');
+      clearButton.setAttribute('disabled', '');
+    }
   });
 
   // PUBLICATION DETAIL PANEL

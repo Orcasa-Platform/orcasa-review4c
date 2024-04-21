@@ -26,6 +26,7 @@ const elements = {
   closePublicationPanelButton: document.getElementById('btn-close-publication-panel'),
   closeMethodologyPanelButton: document.getElementById('btn-close-methodology-panel'),
   filtersButton: document.getElementById('btn-filters'),
+  filtersButtonBadge: document.getElementById('btn-filters-badge'),
   filtersPanel: document.getElementById('filters-panel'),
   closeFiltersPanelButton: document.getElementById('btn-close-filters-panel'),
   publicationDetailButton: document.getElementsByClassName('btn-publication-detail'),

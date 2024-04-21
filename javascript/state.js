@@ -21,6 +21,7 @@ window.addEventListener('load', function () {
     openDropdowns: [],
     countries: null,
     journals: null,
+    activeFilters: [],
   };
 
   window.mutations = {
@@ -105,6 +106,9 @@ window.addEventListener('load', function () {
     },
     setSearch(value) {
       state.search = value;
+    },
+    setActiveFilters(value) {
+      state.activeFilters = value;
     }
   };
 
@@ -129,5 +133,6 @@ window.addEventListener('load', function () {
     journals: () => state.journals,
     publications: () => state.publications,
     labels: () => state.labels,
+    activeFilters: () => state.activeFilters
   };
 });
