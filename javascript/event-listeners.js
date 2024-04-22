@@ -633,31 +633,14 @@ window.addEventListener('load', function () {
 
   // PUBLICATION DETAIL PANEL
 
-  // Hide the modal when the close button is clicked
+  // Hide the publication detail panel when the close button is clicked
   elements.closePublicationDetailPanelButton.addEventListener('click', () => {
     window.mutations.setPublicationsOpen(false);
-    elements.publicationDetailModal.classList.add('hidden');
-  });
+    elements.publicationDetailPanel.classList.add('hidden');
+    elements.publicationDetailPanelContent.innerHTML = '';
 
-  // Hide the modal when the user clicks outside of it
-  elements.publicationDetailModal.addEventListener('click', (event) => {
-    if (event.target === elements.publicationDetailModal) {
-      window.mutations.setPublicationsOpen(false);
-      elements.publicationDetailModal.classList.add('hidden');
-    }
-  });
-
-  // Trap the focus inside the modal when it is opened
-  elements.publicationDetailModal.addEventListener('focusin', (event) => {
-    if (!elements.publicationDetailModal.contains(event.target)) {
-      elements.closePublicationDetailPanelButton.focus();
-    }
-  });
-
-  // Release the focus when the modal is closed
-  elements.publicationDetailModal.addEventListener('focusout', (event) => {
-    if (!elements.publicationDetailModal.contains(event.relatedTarget)) {
-      elements.publicationDetailModal.focus();
-    }
+    // Display back publication panel and map
+    elements.publicationPanel.classList.remove('hidden');
+    elements.map.classList.remove('hidden');
   });
 });

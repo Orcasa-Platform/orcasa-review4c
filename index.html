@@ -140,6 +140,10 @@
           @apply absolute left-[90px] top-0 px-12 py-10 w-[calc(100%-90px)] h-screen bg-main text-white transition-transform z-20 !mt-0 overflow-auto;
         }
 
+        .publication-detail-panel {
+          @apply absolute left-[90px] top-0 px-12 py-10 w-[calc(100%-90px)] h-screen bg-main text-white transition-transform z-20 !mt-0 overflow-auto space-y-6 bg-cover bg-no-repeat;
+        }
+
         .filters-panel {
           @apply absolute left-[calc(582px+90px)] p-12 pt-4 w-[320px] h-screen bg-main transition-transform z-10 overflow-auto text-white;
         }
@@ -510,6 +514,27 @@
       </div>
     </div>
 
+    <!-- PUBLICATION DETAIL PANEL -->
+    <div id="publication-detail-panel"
+      class="publication-detail-panel block hidden"
+      style="background-image: url('/assets/images/methodology-background.svg')">
+      <button
+        class="group flex items-center mb-8 text-white"
+        id="btn-close-publication-detail-panel">
+        <svg
+          xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="rounded-lg mr-[15px] h-[34px] w-[34px] bg-gray-500 p-2 transition-colors group-hover:bg-mod-sc-ev group-hover:text-white group-focus:bg-mod-sc-ev group-focus:text-white">
+          <path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
+        <span
+          class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 -translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Go
+          back
+        </span>
+      </button>
+      <div id="publication-detail-panel-content"></div>
+    </div>
+
     <!-- METHODOLOGY PANEL -->
     <div id="methodology-panel"
       class="methodology-panel -translate-x-full space-y-6 block hidden bg-cover bg-no-repeat"
@@ -809,24 +834,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- PUBLICATION DETAIL MODAL -->
-    <div id="publication-detail-modal"
-      class="hidden absolute bg-gray-900 inset-0 bg-opacity-50 z-50 h-screen w-screen flex items-center justify-center"
-      tabindex="-1">
-      <div id="publication-detail-panel"
-        class="bg-white p-[50px] max-h-[90%] min-h-[90%] w-[860px] max-w-[90%] overflow-y-auto relative">
-        <button
-          type="button"
-          aria-label="close modal"
-          id="btn-close-publication-detail-panel"
-          class="btn-icon-theme-dark absolute top-0 right-0">
-          <i class="w-6 h-6 stroke-white"
-            data-lucide="x"></i>
-        </button>
-        <div id="publication-detail-panel-content"></div>
       </div>
     </div>
 

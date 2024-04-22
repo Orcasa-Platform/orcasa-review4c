@@ -7,8 +7,10 @@ window.createMethodologyChart = (data) => {
   const CHART_HEIGHT = 246;
   const margin = { top: 20, right: 20, bottom: 40, left: 50 };
   const { publications, metaAnalysis } = data || {};
-  const publicationsData = Object.keys(publications).map(key => ({ date: d3.timeParse("%Y")(key), value: publications[key] }));
-  const metaAnalysisData = Object.keys(metaAnalysis).map(key => ({ date: d3.timeParse("%Y")(key), value: metaAnalysis[key] }));
+  const publicationsData = publications && Object.keys(publications).map(key => ({ date: d3.timeParse("%Y")(key), value: publications[key] }));
+  const metaAnalysisData = metaAnalysis && Object.keys(metaAnalysis).map(key => ({ date: d3.timeParse("%Y")(key), value: metaAnalysis[key] }));
+
+  if(!publicationsData || !metaAnalysisData) { return; }
 
   const OUTER_LEFT_MARGIN = 40;
 

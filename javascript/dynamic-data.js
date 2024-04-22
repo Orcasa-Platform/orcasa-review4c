@@ -19,19 +19,7 @@ const publicationDetailButtonSVG = `<svg width="16" height="16" viewBox="0 0 16 
 
 const metaAnalysisTemplate = (metaAnalysisPublication) => {
   if(!metaAnalysisPublication) return '';
-  const { id, title, authors, description } = metaAnalysisPublication;
-  return `<div class="flex flex-col gap-1 px-[50px] py-[30px] bg-green-50">
-        <div class="flex-col gap-4 flex">
-            <div class="text-slate-700 text-lg leading-[30px]">${title}</div>
-            <div class="text-slate-700 text-xs leading-[18px]">${authors}</div>
-        </div>
-        <div>
-          <div class="text-slate-500 text-sm leading-7">${description}</div>
-        </div>
-        <div class="flex pr-1 justify-end gap-1">
-          ${publicationDetailButton(id)}
-        </div>
-    </div>`;
+  return publicationCardTemplate({ isMetaAnalysis: true, ...metaAnalysisPublication});
 };
 
 const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
@@ -50,23 +38,22 @@ const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
       return `<span class="pr-2">${value}</span>`;
     };
 
-    return `<div class="flex gap-1 justify-between items-center even:bg-gray-50 py-4 px-6">
-      <span class="text-slate-600 text-sm">${label}</span>
-      <span class="text-slate-500 text-sm leading-7 px-6 py-4">${renderValue(value)}</span>
+    return `<div class="flex justify-between items-center border border-b border-main divide-x divide-main">
+      <span class="text-neutral-300 text-xs py-4 px-6">${label}</span>
+      <span class="text-white flex items-center justify-center text-xs leading-7 px-6 py-4 w-[128px]">${renderValue(value)}</span>
     </div>`;
   }).join('');
-  return (`<div class="flex flex-col gap-4 border-t border-gray-300 border-dashed">
-    <div class="text-slate-700 text-2xl leading-10 pt-4">Methodology and attributes</div>
-    ${attributes}
-  </div>`);
+
+  return `<div class="bg-gray-650 rounded-lg">${attributes}</div>`;
 }
 
 const cardTagTemplate = ({ label, title, classNames }) => (
     `<span class="flex px-2 py-1 rounded-2xl border border-mod-sc-ev justify-start items-center text-mod-sc-ev text-xs font-medium leading-[14px] ${classNames ? classNames : ''}" ${title ? `title="${title}"` : ''} >
       <span class="truncate">${label}</span>
     </span>`);
-const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, year, countries, globalQuality, id, title, authors, description, source, url, metaAnalysis, 'methodology-and-attributes': methodologyAndAttributes }) => `
-<div class="flex flex-col ${isDetail ? '' : `p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} rounded-lg mb-4`} space-y-6 border border-gray-100">
+
+const publicationCardTemplate = ({ isMetaAnalysis, journals, year, countries, globalQuality, id, title, authors, description, source, url, metaAnalysis, 'methodology-and-attributes': methodologyAndAttributes }) => `
+<div class="flex flex-col p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} rounded-lg mb-4 space-y-6 border border-gray-100">
   <div class="h-6 justify-start items-center gap-6 inline-flex">
     <div class="w-full h-6 gap-1 flex text-gray-700 text-xs">
       ${isMetaAnalysis ? cardTagTemplate({ label: 'Meta-analysis' }) : ''}
@@ -77,41 +64,92 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
       ${isMetaAnalysis ? cardTagTemplate({label: `Global quality: ${globalQuality}%` }) : ''}
     </div>
   </div>
-  <header class="mb-6 text-gray-700">
-    <div class="font-serif ${isDetail ? 'text-slate-700 text-[34px] leading-[50px]' : 'text-xl font-serif leading-[30px] pb-4'}">
+  <header class="mb-6 text-gray-700 space-y-2">
+    <div class="font-serif text-slate-700 text-base leading-relaxed">
       ${title}
     </div>
-    <div class="text-slate-700 text-xs leading-[18px] italic ${isDetail ? 'mt-5' : ''}">${authors}</div>
+    <div class="text-slate-700 text-xs leading-[18px] italic">${authors}</div>
   </header>
-  <div class="text-sm leading-7 text-slate-500">${isDetail ? description : ellipsis(description, 230)}</div>
-  ${!isDetail ? `<div class="h-6 justify-end items-center gap-4 flex">
+  <div class="text-sm leading-7 text-slate-500">${ellipsis(description, 230)}</div>
+  <div class="h-6 justify-end items-center gap-4 flex">
     <div class="pr-1 justify-center items-center gap-1 flex">
       ${publicationDetailButton(id)}
     </div>
-  </div>`: ''}
-  ${isDetail ?
-    `<div>
-      <div class="flex w-full justify-between items-center mb-6">
-        <div>
-          <span class="text-slate-500 text-base">Source: </span>
-          <span class="text-slate-700 text-base">${source}</span>
+  </div>
+</div>
+`;
+
+const externalLinkSVG = `<svg viewBox="0 0 22 22" class="w-4 h-4" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path id="Vector"
+    d="M13.5 6H5.25C4.65326 6 4.08097 6.23705 3.65901 6.65901C3.23705 7.08097 3 7.65326 3 8.25V18.75C3 19.3467 3.23705 19.919 3.65901 20.341C4.08097 20.7629 4.65326 21 5.25 21H15.75C16.3467 21 16.919 20.7629 17.341 20.341C17.7629 19.919 18 19.3467 18 18.75V10.5M7.5 16.5L21 3M21 3H15.75M21 3V8.25"
+    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+</svg>`;
+
+const publicationDetailTemplate = ({ isMetaAnalysis, journals, year, countries, title, authors, landUse, description, source, url, metaAnalysis, 'methodology-and-attributes': methodologyAndAttributes }) => `
+<div class="flex flex-wrap gap-16">
+  <div class="flex-1 space-y-6">
+    <header class="space-y-6">
+      <div class="font-serif text-3xl leading-10">
+        ${title}
+      </div>
+      <div class="text-sm leading-normal italic">${authors}</div>
+    </header>
+    <div class="text-sm leading-7 text-neutral-300">${description}</div>
+  </div>
+  <div class="flex-1 space-y-10">
+    <div class="space-y-6">
+      <div>
+        <div class="flex gap-2 pb-4 border-b border-gray-600 mb-6">
+          <i class="w-6 h-6 text-white stroke-1" alt="details icon"
+            data-lucide="file-text"></i>
+          <h4 class="text-xl font-serif">Details</i>
         </div>
-        <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn-secondary flex gap-2 !px-5">
-          Visit DOI
-          <img class="w-6 h-6 color-slate-700 stroke-current" src="/assets/icons/external-link.svg" />
-        </a>
+      </div>
+      <ul class="space-y-6">
+        <li class="flex items-center">
+          <span class="w-[64px] lg:w-[160px] text-white text-sm leading-7">Type</span>
+          <span class="text-neutral-300 text-sm leading-tight">${isMetaAnalysis ? 'Meta-Analysis' : 'Publication'}</span>
+        </li>
+        <li class="flex items-center">
+          <span class="w-[64px] lg:w-[160px] text-white text-sm leading-7">${journals?.length === 1 ? 'Journal' : 'Journals'}</span>
+          <span class="text-neutral-300 text-sm leading-tight">${journals.join(', ')}</span>
+        </li>
+        <li class="flex items-center">
+          <span class="w-[64px] lg:w-[160px] text-white text-sm leading-7">Year</span>
+          <span class="text-neutral-300 text-sm leading-tight">${year}</span>
+        </li>
+        <li class="flex items-center">
+        <span class="w-[64px] lg:w-[160px] text-white text-sm leading-7">${countries?.length === 1 ? 'Country' : 'Countries'}</span>
+        <span class="text-neutral-300 text-sm leading-tight">${countries.join(', ')}</span>
+        </li>
+        <li class="flex items-center">
+          <span class="w-[64px] lg:w-[160px] text-white text-sm leading-7">Land Use</span>
+          <span class="text-neutral-300 text-sm leading-tight">${landUse}</span>
+        </li>
+        <li class="flex items-center">
+          <span class="w-[64px] lg:w-[160px] text-white text-sm leading-7">Source</span>
+          <span class="text-neutral-300 text-sm leading-tight flex gap-2">${source}
+            <a href="${url}" target="_blank" rel="noopener noreferrer" class="cursor-pointer font-semibold text-mod-sc-ev hover:text-mod-sc-ev-dark flex gap-2">
+              DOI ${externalLinkSVG}
+            </a>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <div class="flex gap-2 pb-4 border-b border-gray-600 mb-6">
+        <i class="w-6 h-6 text-white stroke-1" alt="Meta-Analysis icon"
+          data-lucide="file-stack"></i>
+        <h4 class="text-xl font-serif">${metaAnalysis?.length ? 'Meta-Analysis' : 'Methodology and attributes'}</i>
       </div>
       ${metaAnalysis?.length ? `
-        <div class="pt-2.5 border-t border-dashed border-gray-300 flex-col gap-5 flex">
-          <div class="text-slate-700 text-2xl leading-10 font-serif">Meta-analysis</div>
-            ${metaAnalysis.map(metaAnalysisTemplate).join('')}
-          </div>
+        <div class="flex flex-col gap-2">
+          ${metaAnalysis.map(metaAnalysisTemplate).join('')}
         </div>
       `: ''}
       ${methodologyAndAttributes ? methodologyAndAttributesTemplate(methodologyAndAttributes) : ''}
-      `
-    : ''}
-</div>
+    </div>
+  </div>
 `;
 
 window.addEventListener('load', function () {
@@ -294,7 +332,7 @@ window.addEventListener('load', function () {
   // LOAD PUBLICATIONS
   const createPublicationCard = (publication) => {
     const card = document.createElement('div');
-    card.innerHTML = publicationCardTemplate({ isDetail: false, isMetaAnalysis: publication.type === 'meta-analysis', ...publication});
+    card.innerHTML = publicationCardTemplate({ isMetaAnalysis: publication.type === 'meta-analysis', ...publication});
     return card;
   };
 
@@ -417,8 +455,11 @@ window.addEventListener('load', function () {
   const onOpenPublication = function({ target }) {
     window.mutations.setPublicationDetailOpen(true);
 
-    elements.publicationDetailModal.classList.remove('hidden');
-    elements.closePublicationDetailPanelButton.focus();
+    elements.publicationDetailPanel.classList.remove('hidden');
+
+    // Hide the main page
+    elements.publicationPanel.classList.add('hidden');
+    elements.map.classList.add('hidden');
 
     const publicationId = target.getAttribute('data-id');
     window.loadPublication(publicationId);
@@ -506,10 +547,9 @@ window.addEventListener('load', function () {
 
       const countries = window.getters.countries();
       const journals = window.getters.journals();
-
+console.log(publication)
       const card = document.createElement('div');
-      card.innerHTML = publicationCardTemplate({
-        isDetail: true,
+      card.innerHTML = publicationDetailTemplate({
         isMetaAnalysis: publication.type === 'meta-analysis',
         ...publication,
         countries: publication.countryIsos
@@ -520,6 +560,7 @@ window.addEventListener('load', function () {
           .filter(Boolean),
         metaAnalysis,
       });
+
       elements.publicationDetailPanelContent.appendChild(card);
 
       addListenerToPublicationButton();
@@ -527,7 +568,7 @@ window.addEventListener('load', function () {
       // Update lucide icons
       lucide.createIcons();
     } catch(e) {
-      elements.publicationDetailPanelContent.innerHTML = '<p class="py-10 text-center font-semibold text-slate-500">Publication not found</p>';
+      elements.publicationDetailPanelContent.innerHTML = '<p class="py-10 text-center font-semibold text-white">Publication not found</p>';
     }
   };
 
