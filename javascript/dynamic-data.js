@@ -1,4 +1,22 @@
 // TEMPLATES
+
+const publicationDetailButton = (id) =>`
+  <button
+    type="button"
+    class="btn-publication-detail group flex items-center justify-start flex-row-reverse"
+    data-id="${id}"
+  >
+    ${publicationDetailButtonSVG}
+    <span class="pointer-events-none text-gray-500 text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 translate-x-0 group-hover:-translate-x-1/3 group-focus:-translate-x-1/3">Learn more</span>
+  </button>
+`;
+
+const publicationDetailButtonSVG = `<svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg" class="svg-btn-publication-detail">
+<path d="M3.33325 8H12.6666H3.33325Z" fill="currentColor"/>
+<path d="M3.33325 8H12.6666" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8 3.33333L12.6667 8L8 12.6667" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+
 const metaAnalysisTemplate = (metaAnalysisPublication) => {
   if(!metaAnalysisPublication) return '';
   const { id, title, authors, description } = metaAnalysisPublication;
@@ -11,18 +29,7 @@ const metaAnalysisTemplate = (metaAnalysisPublication) => {
           <div class="text-slate-500 text-sm leading-7">${description}</div>
         </div>
         <div class="flex pr-1 justify-end gap-1">
-          <button
-            type="button"
-            class="btn-publication-detail group flex items-center justify-start flex-row-reverse"
-            data-id="${id}"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="svg-btn-publication-detail"
-            ><polyline points="9 18 15 12 9 6"></polyline></svg>
-            <span class="pointer-events-none text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 translate-x-0 group-hover:-translate-x-1/3 group-focus:-translate-x-1/3">Learn more</span>
-          </button>
+          ${publicationDetailButton(id)}
         </div>
     </div>`;
 };
@@ -54,29 +61,20 @@ const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
   </div>`);
 }
 
+const cardTagTemplate = ({ label, title, classNames }) => (
+    `<span class="flex px-2 py-1 rounded-2xl border border-mod-sc-ev justify-start items-center text-mod-sc-ev text-xs font-medium leading-[14px] ${classNames ? classNames : ''}" ${title ? `title="${title}"` : ''} >
+      <span class="truncate">${label}</span>
+    </span>`);
 const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, year, countries, globalQuality, id, title, authors, description, source, url, metaAnalysis, 'methodology-and-attributes': methodologyAndAttributes }) => `
-<div class="flex flex-col ${isDetail ? '' : `p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} mb-2`} space-y-4">
+<div class="flex flex-col ${isDetail ? '' : `p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} rounded-lg mb-4`} space-y-6 border border-gray-100">
   <div class="h-6 justify-start items-center gap-6 inline-flex">
-    <div class="w-full h-6 gap-4 flex text-gray-700 text-xs">
-      ${isMetaAnalysis ? `<span class="min-w-fit px-2 text-white text-sm px-2 bg-mod-sc-ev rounded border border-mod-sc-ev">
-        Meta-analysis
-      </span>` : ''}
-      ${!isMetaAnalysis && journals.length > 0 ? `<div class="justify-start items-center gap-2 flex max-w-[60%] w-fit">
-      <img class="w-6 h-6" src="/assets/icons/paper.svg" />
-      <div class="flex-1 truncate" title="${journals.join(', ')}">${journals.join(', ')}</div>
-      </div>`: ''}
-      <div class="justify-start items-center gap-2 flex">
-        <img class="w-6 h-6" src="/assets/icons/calendar.svg" />
-        <div>${year}</div>
-      </div>
-      ${!isMetaAnalysis && countries.length > 0 ? `<div class="justify-start items-center gap-2 flex max-w-[30%]">
-        <img class="w-6 h-6" src="/assets/icons/globe.svg" />
-        <div class="truncate" title="${countries.join(', ')}">${countries.join(', ')}</div>
-      </div>` : ''}
-      ${isMetaAnalysis ? `<div class="justify-start items-center gap-2 flex">
-        <img class="w-6 h-6" src="/assets/icons/check.svg" />
-        <div>Global quality: ${globalQuality}%</div>
-      </div>` : ''}
+    <div class="w-full h-6 gap-1 flex text-gray-700 text-xs">
+      ${isMetaAnalysis ? cardTagTemplate({ label: 'Meta-analysis' }) : ''}
+      ${!isMetaAnalysis && journals.length > 0 ?
+        cardTagTemplate({ label: journals.join(', '), title: journals.join(', '), classNames: 'truncate max-w-[60%]'}) : ''}
+      ${cardTagTemplate({ label: year })}
+      ${!isMetaAnalysis && countries.length > 0 ? cardTagTemplate({ label: countries.join(', '), title: countries.join(', '), classNames: 'truncate max-w-[30%]' }) : ''}
+      ${isMetaAnalysis ? cardTagTemplate({label: `Global quality: ${globalQuality}%` }) : ''}
     </div>
   </div>
   <header class="mb-6 text-gray-700">
@@ -88,18 +86,7 @@ const publicationCardTemplate = ({ isDetail = false, isMetaAnalysis, journals, y
   <div class="text-sm leading-7 text-slate-500">${isDetail ? description : ellipsis(description, 230)}</div>
   ${!isDetail ? `<div class="h-6 justify-end items-center gap-4 flex">
     <div class="pr-1 justify-center items-center gap-1 flex">
-        <button
-          type="button"
-          class="btn-publication-detail group flex items-center justify-start flex-row-reverse"
-          data-id="${id}"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="svg-btn-publication-detail"><polyline points="9 18 15 12 9 6"
-          ></polyline></svg>
-          <span class="pointer-events-none text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 translate-x-0 group-hover:-translate-x-1/3 group-focus:-translate-x-1/3">Learn more</span>
-        </button>
+      ${publicationDetailButton(id)}
     </div>
   </div>`: ''}
   ${isDetail ?
