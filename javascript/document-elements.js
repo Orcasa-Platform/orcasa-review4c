@@ -13,8 +13,7 @@ const elements = {
   closeMapSettingsButton: document.getElementById('close-map-settings-button'),
   satelliteBasemapButton: document.getElementById('satellite-basemap-button'),
   lightBasemapButton: document.getElementById('light-basemap-button'),
-  reliefBasemapButton: document.getElementById('relief-basemap-button'),
-  maplibreControls: document.getElementsByClassName('maplibregl-ctrl'),
+  mapboxControls: document.getElementsByClassName('mapbox-ctrl'),
   attribution: document.getElementById('attribution'),
   attributionContent: document.getElementById('attribution-content'),
   landUseButtons: document.getElementsByClassName('btn-land-use'),
@@ -56,5 +55,4 @@ const elements = {
   search: document.getElementById('search'),
   resetFiltersButton: document.getElementById('reset-filters'),
   labelsSwitch: document.getElementById('labels-switch'),
-  labelsRadioGroup: document.getElementById('labels-radio-group'),
 }

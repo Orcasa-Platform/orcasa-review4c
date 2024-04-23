@@ -196,9 +196,6 @@ window.addEventListener('load', function () {
     // Set on state the first land use
     window.mutations.setLandUse(slug);
 
-    // Update the map
-    addLayer(map, slug);
-
     // Update the footer with the land use publications and meta-analysis
     const publicationsNumber = formatNumber(publications) || '-';
     const metaAnalysisNumber = formatNumber(metaAnalysis) || '-';
@@ -547,7 +544,7 @@ window.addEventListener('load', function () {
 
       const countries = window.getters.countries();
       const journals = window.getters.journals();
-console.log(publication)
+
       const card = document.createElement('div');
       card.innerHTML = publicationDetailTemplate({
         isMetaAnalysis: publication.type === 'meta-analysis',

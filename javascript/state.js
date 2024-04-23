@@ -4,8 +4,8 @@ window.addEventListener('load', function () {
     legendOpen: true,
     filtersOpen: false,
     mapSettingsOpen: false,
-    basemap: 'relief',
-    labels: null,
+    basemap: 'basemap-light',
+    labels: false,
     landUse: 'all',
     landUses: null,
     mainInterventions: [],
@@ -133,6 +133,7 @@ window.addEventListener('load', function () {
     journals: () => state.journals,
     publications: () => state.publications,
     labels: () => state.labels,
+    basemap: () => state.basemap,
     activeFilters: () => state.activeFilters
   };
 });

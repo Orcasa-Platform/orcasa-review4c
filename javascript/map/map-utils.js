@@ -13,12 +13,12 @@ const addSquareIcon = (map) => {
     }
   }
   // sdf is needed to be able to change icon color
-  map.addImage('square', { width, height: width, data}, { sdf: true } );
+  window.map.addImage('square', { width, height: width, data}, { sdf: true } );
 }
 
 const zoomButtonStyling = () => {
-  const zoomInButton = document.querySelector('button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon');
-  const zoomOutButton = document.querySelector('button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon');
+  const zoomInButton = document.querySelector('button.mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon');
+  const zoomOutButton = document.querySelector('button.mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon');
 
   const zoomInSVG = `<svg xmlns="http://www.w3.org/2000/svg" class="h-[24px] w-[24px]" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-full w-full">
@@ -52,7 +52,7 @@ const getMapPadding = (sidebarOpen) => {
 };
 
 const fitMap = (map, { sidebarOpen }) => {
-  map.easeTo({
+  window.map.easeTo({
     padding: getMapPadding(sidebarOpen),
     duration: 500
   });

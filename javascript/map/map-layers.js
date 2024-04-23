@@ -73,15 +73,15 @@ const getHTMLPopup = (feature) => {
   `;
 };
 
-const addLayer = async (map, landUseSlug="all", mainInterventionSlug, interventionSlug, subTypeSlug) => {
+const addDataLayer = async (map, landUseSlug="all") => {
   // Remove the previous listeners from the map
   if (mapListener) {
-    map.off('move', mapListener);
-    map.off('moveend', mapListener);
+    window.map.off('move', mapListener);
+    window.map.off('moveend', mapListener);
     mapListener = null;
   }
 
-  const layerData = await getLayer(landUseSlug, mainInterventionSlug, interventionSlug, subTypeSlug);
+  const layerData = await getLayer('all');
   const features = Object.values(layerData ?? {}).map(country => {
     const geom = country.geom && JSON.parse(country.geom)?.[0];
     return ({
@@ -102,12 +102,12 @@ const addLayer = async (map, landUseSlug="all", mainInterventionSlug, interventi
     markers.forEach((marker) => {
       marker.remove();
     });
-  
+
     markers.length = 0;
 
-    const bbox = map.getBounds().toArray().flat();
-    const zoom = map.getZoom();
-    
+    const bbox = window.map.getBounds().toArray().flat();
+    const zoom = window.map.getZoom();
+
     const supercluster = new Supercluster({
       radius: 100,
       reduce: (res, { number_primary_studies }) => {
@@ -125,7 +125,7 @@ const addLayer = async (map, landUseSlug="all", mainInterventionSlug, interventi
         if (isCluster) {
           // We zoom to expand the cluster
           const targetZoom = supercluster.getClusterExpansionZoom(cluster.properties.cluster_id);
-          map.flyTo({
+          window.map.flyTo({
             center: cluster.geometry.coordinates,
             zoom: targetZoom,
           });
@@ -137,7 +137,7 @@ const addLayer = async (map, landUseSlug="all", mainInterventionSlug, interventi
           }
 
           // We display a popup with the country's publications data
-          popup = new maplibregl.Popup({ closeButton: false, offset: 40  })
+          popup = new mapboxgl.Popup({ closeButton: false, offset: 40  })
             .setLngLat(cluster.geometry.coordinates)
             .setHTML(getHTMLPopup(cluster))
             .addTo(map);
@@ -149,7 +149,7 @@ const addLayer = async (map, landUseSlug="all", mainInterventionSlug, interventi
         }
       };
 
-      const marker = new maplibregl.Marker({
+      const marker = new mapboxgl.Marker({
         element: createHTMLMarker(cluster, isCluster, onClickMarker)
       }).setLngLat(cluster.geometry.coordinates)
         .addTo(map);
@@ -159,8 +159,8 @@ const addLayer = async (map, landUseSlug="all", mainInterventionSlug, interventi
   };
 
   // Add the listener to recompute the clusters and execute it once to render the initial view
-  map.on('move', mapListener);
-  map.on('moveend', mapListener);
+  window.map.on('move', mapListener);
+  window.map.on('moveend', mapListener);
 
   mapListener();
 };

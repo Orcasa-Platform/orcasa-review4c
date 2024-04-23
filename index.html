@@ -49,17 +49,17 @@
     <script src='tailwind.config.js'></script>
 
     <script src='javascript/state.js'></script>
-
+    <script src='env.js'></script>
     <!-- Icons -->
     <script
       src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <!-- Map -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css"
+      rel="stylesheet">
     <script
-      src="https://unpkg.com/maplibre-gl@%5E3.3.0/dist/maplibre-gl.js"></script>
+      src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
     <script
       src="https://unpkg.com/supercluster@8.0.1/dist/supercluster.min.js"></script>
-    <link href='https://unpkg.com/maplibre-gl@3.3.0/dist/maplibre-gl.css'
-      rel='stylesheet' />
 
     <!-- This style tag defines the custom grouped classes for tailwind -->
     <!-- On the first case btn-primary will apply all the subsequent classes when applied to an element -->
@@ -701,7 +701,7 @@
     </div>
 
     <!-- MAP -->
-    <div id='map' style='width: 100wh; height: 100vh' class="hidden">
+    <div id='map' style='width: 100vw; height: 100vh' class>
     </div>
 
     <!-- ATTRIBUTION -->
@@ -887,7 +887,7 @@
                 for="satellite-basemap-button">Satellite basemap</label>
 
               <button id="light-basemap-button" type="button" role="radio"
-                aria-checked="false" data-state="unchecked"
+                aria-checked="false" data-state="checked"
                 value="basemap-light"
                 class="rounded-full text-main ring-offset-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:ring-2 data-[state=checked]:ring-main data-[state=checked]:ring-offset-4 cursor-pointer overflow-hidden"
                 tabindex="-1">
@@ -897,19 +897,6 @@
               <label
                 class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 sr-only text-base"
                 for="light-basemap-button">Light basemap</label>
-
-              <button id="relief-basemap-button" type="button" role="radio"
-                aria-checked="true" data-state="checked"
-                value="basemap-relief"
-                class="rounded-full text-main ring-offset-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:ring-2 data-[state=checked]:ring-main data-[state=checked]:ring-offset-4 cursor-pointer overflow-hidden"
-                tabindex="0">
-                <img alt="Relief basemap" loading="lazy" width="64"
-                  height="88"
-                  src="/assets/images/basemap-relief.png">
-              </button>
-              <label
-                class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 sr-only text-base"
-                for="relief-basemap-button">Relief basemap</label>
             </div>
           </fieldset>
 
@@ -925,29 +912,6 @@
                 <span data-state="unchecked"
                   class="pointer-events-none block h-4 w-4 rounded-full bg-main shadow ring-0 transition data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 data-[state=checked]:bg-white"></span>
               </button>
-            </div>
-
-            <div role="radiogroup" aria-required="false" dir="ltr"
-              class="grid gap-2" style="outline: none;"
-              id="labels-radio-group">
-              <div class="group flex cursor-pointer items-center space-x-2">
-                <button type="button" role="radio" aria-checked="true"
-                  data-state="checked" value="light"
-                  class="aspect-square h-4 w-4 rounded-full border-2 border-main text-main ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:border-[5px]"
-                  id="light" tabindex="0" disabled data-disabled></button>
-                <label
-                  class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 text-base"
-                  for="light">Light</label>
-              </div>
-              <div class="group flex cursor-pointer items-center space-x-2">
-                <button type="button" role="radio" aria-checked="false"
-                  data-state="unchecked" value="dark"
-                  class="aspect-square h-4 w-4 rounded-full border-2 border-main text-main ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:border-[5px]"
-                  id="dark" tabindex="-1" disabled data-disabled></button>
-                <label
-                  class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 text-base"
-                  for="dark">Dark</label>
-              </div>
             </div>
           </div>
         </div>
@@ -989,7 +953,6 @@
     <script src='javascript/api-service.js'></script>
 
     <!-- MAP -->
-    <script src='javascript/map/map-style.js'></script>
     <script src='javascript/map/map-utils.js'></script>
     <script src='javascript/map/map-layers.js'></script>
     <script src='javascript/map/map.js'></script>
@@ -1015,18 +978,18 @@
     </script>
 
     <style type="text/tailwindcss">
-      /* MAPLIBRE OVERRIDES */
+      /* MAPBOX OVERRIDES */
 
       @layer utilities {
-        .maplibregl-ctrl-top-right .maplibregl-ctrl {
+        .mapboxgl-ctrl-top-right .mapboxgl-ctrl {
           @apply mt-[72px] mr-6 rounded-none bg-transparent;
         }
 
-        .maplibregl-ctrl-group:not(:empty) {
+        .mapboxgl-ctrl-group:not(:empty) {
           @apply shadow-none;
         }
 
-        .maplibregl-ctrl button {
+        .mapboxgl-ctrl button {
           @apply bg-main text-white w-10 h-10;
 
           transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
@@ -1034,39 +997,60 @@
           transition-duration: 150ms;
         }
 
-        .maplibregl-ctrl button:focus {
+        .mapboxgl-ctrl button:focus {
           @apply rounded-none !important;
         }
 
-        .theme-light.maplibregl-ctrl button {
+        .theme-light.mapboxgl-ctrl button {
           @apply bg-white text-main stroke-none;
         }
 
-        .maplibregl-ctrl button:not(:disabled):hover {
+        .mapboxgl-ctrl button:not(:disabled):hover {
           @apply bg-hover-main;
         }
 
-        .theme-light.maplibregl-ctrl button:not(:disabled):hover {
+        .theme-light.mapboxgl-ctrl button:not(:disabled):hover {
           @apply bg-hover-light;
         }
 
-        .maplibregl-ctrl-icon {
+        .mapboxgl-ctrl-icon {
           @apply !flex justify-center items-center p-1.5 bg-no-repeat bg-center bg-contain !bg-none;
         }
 
-        .maplibregl-ctrl-group button+button {
+        .mapboxgl-ctrl-group button+button {
           @apply border-gray-300;
         }
-        .maplibregl-popup {
+
+        .mapboxgl-popup {
           @apply !max-w-none;
         }
 
-        .maplibregl-popup-content {
-          @apply z-50 w-[400px] h-[240px] p-6 overflow-hidden rounded-none backdrop-blur-sm;
+        .mapboxgl-popup-content {
+          @apply z-50 w-[400px] h-[240px] p-6 overflow-hidden backdrop-blur-sm !rounded-lg !p-0;
         }
 
-        .maplibregl-popup-tip {
-          @apply !hidden;
+        .mapboxgl-popup-tip {
+          @apply !border-[5px]
+        }
+
+        .mapboxgl-ctrl-bottom-right {
+          @apply max-w-[65%];
+        }
+
+        .mapboxgl-ctrl-attrib {
+          @apply !px-1 !py-px font-sans font-medium text-white !bg-gray-800/80 text-2xs;
+        }
+
+        .mapboxgl-ctrl-attrib.mapboxgl-compact {
+          @apply !rounded-md;
+        }
+
+        .mapboxgl-ctrl-attrib a {
+          @apply !text-white;
+        }
+
+        .mapboxgl-ctrl-attrib-button {
+          @apply !static !bg-white/50;
         }
       }
     </style>

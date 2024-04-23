@@ -29,6 +29,20 @@ window.addEventListener('load', function () {
     }
   };
 
+  const getGroupLayers = (groupId) => {
+    const layers = window.map.getStyle().layers;
+    return layers.filter(layer => layer.metadata && layer.metadata['mapbox:group'] === groupId);
+  }
+
+  const getGroupById = (layerId) => {
+    const layers = window.map.getStyle().layers;
+    return layers.find(layer => layer.id === layerId)?.metadata['mapbox:group'];
+  };
+
+  const setLayerVisibility = (layers, visibility) => layers.forEach(layer => {
+    window.map.setLayoutProperty(layer.id, 'visibility', visibility);
+  });
+
   // LEGEND
 
   elements.legendToggle.addEventListener("click", function() {
@@ -77,91 +91,51 @@ window.addEventListener('load', function () {
   const onToggleBasemapRadio = function(basemap) {
     window.mutations.setBasemap(basemap);
 
-    // Change theme of the controls
-    const isDarkTheme = basemap === 'satellite';
-
-    if (elements.maplibreControls) {
-      for (let element of elements.maplibreControls) {
-        element.classList.toggle('theme-light', isDarkTheme);
-      };
-    }
-
-    elements.sidebarToggle.classList.toggle('btn-icon-theme-dark', !isDarkTheme);
-    elements.sidebarToggle.classList.toggle('btn-icon-theme-light', isDarkTheme);
-
-    elements.mapSettingsButton.classList.toggle('btn-theme-dark', !isDarkTheme);
-    elements.mapSettingsButton.classList.toggle('btn-theme-light', isDarkTheme);
-
-    elements.attribution.classList.toggle('text-black', !isDarkTheme);
-    elements.attribution.classList.toggle('text-white', isDarkTheme);
-
-    // Update the attributions
-    if (basemap === 'satellite') {
-      elements.attributionContent.innerHTML = `
-        <span>
-          Tiles ©
-          <a
-            className="hover:underline"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://esri.com"
-          >
-            Esri
-          </a>
-          — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP,
-          and the GIS User Community
-        </span>
-      `;
-    } else if (basemap === 'light') {
-      elements.attributionContent.innerHTML = `
-        <span>
-          ©
-          <a
-            class="hover:underline"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://www.openstreetmap.org/"
-          >
-            OpenStreetMap
-          </a>
-          contributors ©
-          <a
-            class="hover:underline"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://carto.com/"
-          >
-            CARTO
-          </a>
-        </span>
-      `;
-    } else if (basemap === 'relief') {
-      elements.attributionContent.innerHTML = `
-        <span>
-          Tiles ©
-          <a
-            className="hover:underline"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://esri.com"
-          >
-            Esri
-          </a>
-          — Source: Esri
-        </span>
-      `;
-    }
+    // elements.attribution.classList.toggle('text-black', !isDarkTheme);
+    elements.attribution.classList.toggle('text-white', true);
 
     // Change basemap
-    map.setPaintProperty('basemap-satellite', 'raster-opacity', Number(basemap === 'satellite'));
-    map.setPaintProperty('basemap-light', 'raster-opacity', Number(basemap === 'light'));
-    map.setPaintProperty('basemap-relief', 'raster-opacity', Number(basemap === 'relief'));
+
+    const layers = window.map.getStyle().layers;
+
+    const lightGroupId = layers.find(layer => layer.id === 'background-light').metadata['mapbox:group'];
+    const satelliteGroupId = layers.find(layer => layer.id === 'background-satellite').metadata['mapbox:group'];
+
+    const lightLayers = layers.filter(layer => layer.metadata && layer.metadata['mapbox:group'] === lightGroupId);
+    const satelliteLayers = layers.filter(layer => layer.metadata && layer.metadata['mapbox:group'] === satelliteGroupId);
+
+    // Show or hide each layer in the group
+    lightLayers.forEach(layer => {
+      window.map.setLayoutProperty(layer.id, 'visibility', basemap === 'basemap-light' ? 'visible' : 'none');
+    });
+
+    satelliteLayers.forEach(layer => {
+      window.map.setLayoutProperty(layer.id, 'visibility', basemap === 'basemap-satellite' ? 'visible' : 'none');
+    });
+
+    // Update labels
+    const lightLabelsGroupId = getGroupById('country-label-light');
+    const satelliteLabelsGroupId = getGroupById('country-label-dark');
+
+    const lightLabelLayers = getGroupLayers(lightLabelsGroupId);
+    const satelliteLabelLayers = getGroupLayers(satelliteLabelsGroupId);
+
+    const labelsActive = window.getters.labels();
+
+    if (labelsActive) {
+      if (basemap === 'basemap-light') {
+        setLayerVisibility(lightLabelLayers, 'none');
+        setLayerVisibility(satelliteLabelLayers, 'visible');
+      } else {
+        setLayerVisibility(satelliteLabelLayers, 'none');
+        setLayerVisibility(lightLabelLayers, 'visible');
+      }
+    };
 
     // Update the UI
     const basemapEntries = Object.entries({
-      satellite: elements.satelliteBasemapButton,
-      light: elements.lightBasemapButton,
-      relief: elements.reliefBasemapButton,
+      'basemap-satellite': elements.satelliteBasemapButton,
+      'basemap-light': elements.lightBasemapButton,
     });
 
     for(const [id, radio] of basemapEntries) {
@@ -176,134 +150,60 @@ window.addEventListener('load', function () {
   };
 
   elements.satelliteBasemapButton.addEventListener("click", function() {
-    onToggleBasemapRadio('satellite');
+    onToggleBasemapRadio('basemap-satellite');
   });
 
   elements.satelliteBasemapButton.addEventListener('keydown', function ({ key }) {
     if (key === 'ArrowUp' || key === 'ArrowLeft') {
-      onToggleBasemapRadio('relief')
+      onToggleBasemapRadio('basemap-satellite')
     } else if (key === 'ArrowDown' || key === 'ArrowRight') {
-      onToggleBasemapRadio('light')
+      onToggleBasemapRadio('basemap-light')
     }
   });
 
   elements.lightBasemapButton.addEventListener("click", function() {
-    onToggleBasemapRadio('light');
+    onToggleBasemapRadio('basemap-light');
   });
 
   elements.lightBasemapButton.addEventListener('keydown', function ({ key }) {
     if (key === 'ArrowUp' || key === 'ArrowLeft') {
-      onToggleBasemapRadio('satellite')
+      onToggleBasemapRadio('basemap-satellite')
     } else if (key === 'ArrowDown' || key === 'ArrowRight') {
-      onToggleBasemapRadio('relief')
+      onToggleBasemapRadio('basemap-light')
     }
   });
 
-  elements.reliefBasemapButton.addEventListener("click", function() {
-    onToggleBasemapRadio('relief');
-  });
+  // LABELS
 
-  elements.reliefBasemapButton.addEventListener('keydown', function ({ key }) {
-    if (key === 'ArrowUp' || key === 'ArrowLeft') {
-      onToggleBasemapRadio('light')
-    } else if (key === 'ArrowDown' || key === 'ArrowRight') {
-      onToggleBasemapRadio('satellite')
+  const onToggleLabels = function () {
+    const labelsActive = window.getters.labels();
+    const selectedBasemap = window.getters.basemap();
+
+    const lightGroupId = getGroupById('country-label-light');
+    const satelliteGroupId = getGroupById('country-label-dark');
+
+    const lightLabelLayers = getGroupLayers(lightGroupId);
+    const satelliteLabelLayers = getGroupLayers(satelliteGroupId);
+
+    if (labelsActive) {
+      setLayerVisibility([...lightLabelLayers, ...satelliteLabelLayers], 'none');
+    } else {
+      const targetLayers = selectedBasemap === 'basemap-light' ? satelliteLabelLayers : lightLabelLayers;
+      setLayerVisibility(targetLayers, 'visible');
     }
-  });
 
-  const onToggleLabels = function (labels) {
-    window.mutations.setLabels(labels);
-
-    map.setLayoutProperty('countries-labels-light', 'visibility', 'none');
-    map.setLayoutProperty('countries-labels-dark', 'visibility', 'none');
-
-    if (labels !== null) {
-      map.setLayoutProperty(`countries-labels-${labels}`, 'visibility', 'visible');
-    }
+    window.mutations.setLabels(!labelsActive);
   };
 
   elements.labelsSwitch.addEventListener("click", function () {
-    const checked = window.getters.labels() !== null;
+    const checked = !!window.getters.labels();
 
     elements.labelsSwitch.setAttribute('aria-checked', `${!checked}`);
     elements.labelsSwitch.dataset.state = checked ? 'unchecked' : 'checked';
 
     elements.labelsSwitch.children[0].dataset.state = checked ? 'unchecked' : 'checked';
 
-    const radios = Array.from(elements.labelsRadioGroup.querySelectorAll('button[role="radio"]'));
-    radios.forEach((radio) => {
-      if (checked) {
-        radio.setAttribute('disabled', '');
-        radio.dataset.disabled = '';
-        if (radio.children.length > 0) {
-          radio.children[0].dataset.disabled = '';
-        }
-      } else {
-        radio.removeAttribute('disabled');
-        delete radio.dataset.disabled;
-        if (radio.children.length > 0) {
-          delete radio.children[0].dataset.disabled;
-        }
-      }
-    });
-
-    if (checked) {
-      radios.forEach((radio, index) => onToggleLabelsRadio(radio, index === 0));
-      onToggleLabels(null);
-    } else {
-      const labels = radios[0].value;
-      onToggleLabels(labels)
-    }
-  });
-
-  const onToggleLabelsRadio = function (radio, checked) {
-    if (checked) {
-      radio.setAttribute('tabindex', 0);
-      radio.setAttribute('aria-checked', true);
-      radio.dataset.state = 'checked';
-
-      onToggleLabels(radio.value);
-    } else {
-      radio.setAttribute('tabindex', -1);
-      radio.setAttribute('aria-checked', false);
-      radio.dataset.state = 'unchecked';
-    }
-  };
-
-  Array.from(
-    elements.labelsRadioGroup.querySelectorAll('button[role="radio"]')
-  ).forEach((radio, index, radios) => {
-    radio.addEventListener('click', function () {
-      const disabled = radio.getAttribute('disabled') === '';
-      if (!disabled) {
-        onToggleLabelsRadio(radio, true);
-
-        radios
-          .filter((_, otherIndex) => otherIndex !== index)
-          .map((otherRadio) => onToggleLabelsRadio(otherRadio, false));
-      }
-    });
-
-    radio.addEventListener('keydown', function ({ key }) {
-      const disabled = radio.getAttribute('disabled') === '';
-      if (!disabled) {
-        let checkedIndex;
-
-        if (key === 'ArrowUp' || key === 'ArrowLeft') {
-          checkedIndex = index === 0 ? radios.length - 1 : index - 1;
-        } else if (key === 'ArrowDown' || key === 'ArrowRight') {
-          checkedIndex = index + 1 === radios.length ? 0 : index + 1;
-        }
-
-        onToggleLabelsRadio(radios[checkedIndex], true);
-
-        radios
-          .filter((_, otherIndex) => otherIndex !== checkedIndex)
-          .map((otherRadio) => onToggleLabelsRadio(otherRadio, false));
-
-        radios[checkedIndex].focus();
-      }
-    });
+    onToggleLabels();
   });
 
   // SIDEBAR
@@ -363,6 +263,9 @@ window.addEventListener('load', function () {
     // Hide the main page
     elements.main.classList.add('hidden');
     elements.map.classList.remove('hidden');
+
+    window.loadMap();
+
     elements.footerMenu.classList.add('hidden');
   });
 
