@@ -45,17 +45,6 @@ window.addEventListener('load', function () {
 
   // LEGEND
 
-  elements.legendToggle.addEventListener("click", function() {
-    window.mutations.toggleLegend();
-    if (!state.legendOpen) {
-      elements.legend.classList.add('hidden');
-      elements.legendToggle.innerHTML = 'Show legend';
-    } else {
-      elements.legend.classList.remove('hidden');
-      elements.legendToggle.innerHTML = 'Hide legend';
-    }
-  });
-
   elements.infoTooltipButton.addEventListener("mouseenter", function() {
     elements.infoTooltipContent.classList.remove('hidden');
   });
@@ -78,8 +67,13 @@ window.addEventListener('load', function () {
     window.mutations.toggleMapSettings();
     if (state.mapSettingsOpen) {
       elements.mapSettingsOverlay.classList.remove('hidden');
+
+      // Turn the button green if active
+      elements.mapSettingsButton.classList.add('!bg-mod-sc-ev', 'hover:!bg-gray-500','!border-mod-bg-mod-sc-ev');
     } else {
       elements.mapSettingsOverlay.classList.add('hidden');
+
+      elements.mapSettingsButton.classList.remove('!bg-mod-sc-ev', 'hover:!bg-gray-500','!border-mod-bg-mod-sc-ev');
     }
   });
 
@@ -90,9 +84,6 @@ window.addEventListener('load', function () {
 
   const onToggleBasemapRadio = function(basemap) {
     window.mutations.setBasemap(basemap);
-
-    // elements.attribution.classList.toggle('text-black', !isDarkTheme);
-    elements.attribution.classList.toggle('text-white', true);
 
     // Change basemap
 
@@ -263,14 +254,16 @@ window.addEventListener('load', function () {
     window.mutations.toggleSidebar();
     if (state.sidebarOpen) {
       // Closing sidebar
-      elements.sidebar.classList.add('-translate-x-full');
-      elements.sidebarToggle.classList.add('rotate-180');
+      elements.publicationPanel.classList.add('-translate-x-full');
+      elements.sidebarToggle.classList.add('rotate-180', '!rounded-l-lg', '!rounded-r-none');
+      elements.sidebarToggleContainer.classList.add('!left-[90px]');
 
       fitMap(map, { sidebarOpen: false });
     } else {
       // Opening sidebar
-      elements.sidebar.classList.remove('-translate-x-full');
-      elements.sidebarToggle.classList.remove('rotate-180');
+      elements.publicationPanel.classList.remove('-translate-x-full');
+      elements.sidebarToggle.classList.remove('rotate-180', '!rounded-l-lg', '!rounded-r-none');
+      elements.sidebarToggleContainer.classList.remove('!left-[90px]');
 
       fitMap(map, { sidebarOpen: true });
     }

@@ -75,7 +75,6 @@ window.loadMap = function() {
     lightLabelLayers.forEach((layer) => {
       window.map.setLayoutProperty(layer.id, 'visibility', 'visible');
     });
-    console.log('layers', layers.map(layer => [layer.id, layer.layout?.visibility]));
   }).catch((error) => {
     console.error('Error loading style:', error);
   });

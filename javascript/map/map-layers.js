@@ -14,7 +14,7 @@ const getMarkerSizeClasses = (feature) => {
   return countClassesTuples.find(([limit]) => count < limit)[1];
 }
 
-const createHTMLMarker = (feature, isCluster, onClick) => {
+const createHTMLMarker = (feature, onClick) => {
   const element = document.createElement('button');
   element.type = 'button';
 
@@ -23,8 +23,8 @@ const createHTMLMarker = (feature, isCluster, onClick) => {
     'items-center',
     'justify-center',
     'bg-mod-sc-ev',
+    'rounded-full',
     ...getMarkerSizeClasses(feature),
-    ...(!isCluster ? ['border-2', 'border-gray-800'] : [])
   ];
   element.classList.add(...classes);
 
@@ -49,13 +49,13 @@ const getHTMLPopup = (feature) => {
     `)).join('');
 
   return `
-    <div class="h-full flex flex-col gap-y-4">
+    <div class="p-6 h-full flex flex-col gap-y-6">
       <h4 class="shrink-0 text-slate-700 text-lg font-serif">
-        Publications in ${country_name}
+        Publications in <span class="font-semibold">${country_name}</span>
       </h4>
-      <button type="button" id="popup-close-button" class="shrink-0 inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 font-sans bg-gray-700 hover:bg-gray-500 text-white h-10 w-10 absolute right-0 top-0">
+      <button type="button" id="popup-close-button" class="btn-close absolute right-6 top-4">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-gray-700">
           <path d="M18 6 6 18"></path>
           <path d="m6 6 12 12"></path>
         </svg>
@@ -150,7 +150,7 @@ const addDataLayer = async (map, landUseSlug="all") => {
       };
 
       const marker = new mapboxgl.Marker({
-        element: createHTMLMarker(cluster, isCluster, onClickMarker)
+        element: createHTMLMarker(cluster, onClickMarker)
       }).setLngLat(cluster.geometry.coordinates)
         .addTo(map);
 
