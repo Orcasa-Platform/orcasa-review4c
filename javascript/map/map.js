@@ -41,5 +41,42 @@ window.loadMap = function() {
     });
   });
 
+  // Start with light boundaries and labels active
+  window.mutations.setLabels(true);
+  window.mutations.setBoundaries(true);
+
   addDataLayer(map);
+
+  new Promise((resolve) => {
+    if (window.map.isStyleLoaded()) {
+      resolve();
+    } else {
+      window.map.on('load', resolve);
+    }
+  }).then(() => {
+    const layers = window.map.getStyle().layers;
+    // Hide the dark boundary layers from the map
+    const darkBoundaryLayersGroup = layers.find((layer) => layer.id === 'admin-0-boundary-bg-dark').metadata['mapbox:group'];
+    const darkBoundaryLayers = layers.filter((layer) => layer.metadata?.['mapbox:group'] === darkBoundaryLayersGroup);
+    darkBoundaryLayers.forEach((layer) => {
+      window.map.setLayoutProperty(layer.id, 'visibility', 'none');
+    });
+
+    // Show light boundary layers
+    const lightBoundaryLayersGroup = layers.find((layer) => layer.id === 'admin-0-boundary-light').metadata['mapbox:group'];
+    const lightBoundaryLayers = layers.filter((layer) => layer.metadata?.['mapbox:group'] === lightBoundaryLayersGroup);
+    lightBoundaryLayers.forEach((layer) => {
+      window.map.setLayoutProperty(layer.id, 'visibility', 'visible');
+    });
+
+    // Show the light label layers
+    const lightLabelLayersGroup = layers.find((layer) => layer.id === 'country-label-dark');
+    const lightLabelLayers = layers.filter((layer) => layer.metadata?.['mapbox:group'] === lightLabelLayersGroup.metadata['mapbox:group']);
+    lightLabelLayers.forEach((layer) => {
+      window.map.setLayoutProperty(layer.id, 'visibility', 'visible');
+    });
+    console.log('layers', layers.map(layer => [layer.id, layer.layout?.visibility]));
+  }).catch((error) => {
+    console.error('Error loading style:', error);
+  });
 };

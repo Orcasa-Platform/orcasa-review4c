@@ -132,8 +132,12 @@
           @apply absolute left-[90px] top-2 right-2 bottom-[68px] flex-col z-20 rounded-lg bg-main;
         }
 
+        .map {
+          @apply w-[calc(100vw-90px-8px)] h-[calc(100vh-16px)] rounded-lg top-2 bottom-2 right-2 left-[90px];
+        }
+
         .publication-panel {
-          @apply absolute top-0 px-12 py-10 w-full max-w-[582px] left-[90px] h-screen bg-main transition-transform z-20 !mt-0 overflow-auto text-white space-y-8;
+          @apply absolute top-2 bottom-2 px-12 py-10 w-full max-w-[582px] left-[90px] h-[calc(100vh-16px)] rounded-lg rounded-r-none bg-main transition-transform z-20 !mt-0 overflow-auto text-white space-y-8;
         }
 
         .methodology-panel {
@@ -154,6 +158,18 @@
 
         .dropdown-options {
           @apply z-30 rounded-lg border-none shadow bg-gray-650 transition-all overflow-auto;
+        }
+
+        .btn-basemap {
+          @apply transition-colors ring-offset-white focus-visible:ring-2 focus-visible:ring-mod-sc-ev focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 rounded-[20px] data-[state=checked]:ring-1 hover:ring-1 hover:ring-gray-200 hover:ring-offset-4 data-[state=checked]:ring-mod-sc-ev data-[state=checked]:ring-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-mod-sc-ev cursor-pointer overflow-hidden;
+        }
+
+        .btn-switch {
+          @apply inline-flex h-4 w-7 p-0.5 shrink-0 cursor-pointer items-center rounded-xl py-0.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mod-sc-ev focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-gray-150 data-[state=checked]:bg-mod-sc-ev;
+        }
+
+        .switch-span {
+          @apply pointer-events-none block h-3 w-3 rounded-full shadow ring-0 transition data-[state=checked]:translate-x-3 data-[state=unchecked]:translate-x-0 bg-white;
         }
       }
     </style>
@@ -701,7 +717,7 @@
     </div>
 
     <!-- MAP -->
-    <div id='map' style='width: 100vw; height: 100vh' class>
+    <div id='map' class="map">
     </div>
 
     <!-- ATTRIBUTION -->
@@ -838,17 +854,17 @@
     </div>
 
     <!-- MAP SETTINGS BUTTON -->
-    <div class="flex flex-col space-y-2 absolute right-6 top-6">
+    <div class="flex flex-col space-y-2 absolute right-8 top-9">
       <button
         id="map-settings-button"
-        class="relative flex items-center justify-center w-10 h-10 transition-colors active:outline active:outline-2 btn-theme-dark"
+        class="relative flex justify-center h-7 w-7 items-center transition-colors rounded-lg text-white border hover:bg-gray-500 hover:border-gray-500 bg-green-700 border-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:cursor-default disabled:pointer-events-none disabled:bg-gray-150 disabled:border-gray-150 disabled:text-gray-300 btn-theme-dark"
         aria-label="Map settings" type="button" data-state="open"
         aria-haspopup="dialog" aria-expanded="true">
         <!-- Map settings icons can not be imported as it has to change color -->
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
           viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          class="w-6 h-6">
+          stroke-linecap="round" stroke-linejoin="round"
+          class="w-5 h-5">
           <path
             d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
           </path>
@@ -858,29 +874,33 @@
     </div>
 
     <!-- MAP SETTINGS POPUP -->
-    <div class="fixed z-40 hidden pointer-events-none top-6 right-20"
+    <div
+      class="fixed z-40 hidden rounded-2xl pointer-events-none top-9 right-20"
       id="map-settings-overlay">
       <div
         role="dialog" aria-label="Map settings"
         aria-modal="true" aria-expanded="true"
         id="map-settings-modal"
-        class="relative pointer-events-auto bg-white text-slate-700 w-[310px] rounded-sm border px-6 py-4 outline-none"
+        class="relative rounded-2xl shadow pointer-events-auto bg-white text-slate-700 w-[240px] p-6 outline-none"
         tabindex="-1">
-        <div class="flex flex-col gap-y-4">
-          <h1 class="font-serif text-2xl">Map settings</h1>
-
+        <div class="flex flex-col gap-y-6">
+          <h1 class="font-serif text-xl text-gray-700">Map settings</h1>
           <fieldset>
-            <legend class="font-serif text-lg">Basemap style</legend>
+            <legend
+              class="w-full border-b border-gray-150 pb-1 font-serif text-lg">Basemap
+              style</legend>
             <div role="radiogroup" aria-required="false" dir="ltr"
-              class="gap-2 mt-4 flex items-center justify-between gap-x-2 p-2"
+              class="gap-2 mt-4 flex gap-x-4 px-1 pt-1 lg:justify-between"
               style="outline: none;">
               <button id="satellite-basemap-button" type="button" role="radio"
                 aria-checked="false" data-state="unchecked"
                 value="basemap-satellite"
-                class="rounded-full text-main ring-offset-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:ring-2 data-[state=checked]:ring-main data-[state=checked]:ring-offset-4 cursor-pointer overflow-hidden"
+                class="btn-basemap"
                 tabindex="-1">
-                <img alt="Satellite basemap" loading="lazy" width="64"
-                  height="88" src="/assets/images/basemap-satellite.png">
+
+                <img alt="Satellite basemap" loading="lazy" width="80"
+                  height="72"
+                  src="/assets/images/basemap-satellite.png">
               </button>
               <label
                 class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 sr-only text-base"
@@ -889,9 +909,9 @@
               <button id="light-basemap-button" type="button" role="radio"
                 aria-checked="false" data-state="checked"
                 value="basemap-light"
-                class="rounded-full text-main ring-offset-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300 data-[state=checked]:ring-2 data-[state=checked]:ring-main data-[state=checked]:ring-offset-4 cursor-pointer overflow-hidden"
+                class="btn-basemap"
                 tabindex="-1">
-                <img alt="Light basemap" loading="lazy" width="64" height="88"
+                <img alt="Light basemap" loading="lazy" width="80" height="72"
                   src="/assets/images/basemap-light.png">
               </button>
               <label
@@ -900,26 +920,36 @@
             </div>
           </fieldset>
 
-          <div class="border-t border-dashed border-gray-200 pt-2">
-            <div class="mb-4 flex items-center justify-between">
-              <label
-                class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 font-serif text-lg"
-                for="labels-switch">Labels</label>
-              <button type="button" role="switch" aria-checked="false"
-                data-state="unchecked" value="on"
-                class="peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-xl border-2 border-slate-700 py-0.5 pl-0.5 pr-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-transparent data-[state=checked]:bg-main"
-                id="labels-switch">
-                <span data-state="unchecked"
-                  class="pointer-events-none block h-4 w-4 rounded-full bg-main shadow ring-0 transition data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 data-[state=checked]:bg-white"></span>
-              </button>
-            </div>
+          <div class="flex items-center justify-between">
+            <label
+              class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 font-serif text-lg"
+              for="labels-switch">Labels</label>
+            <button type="button" role="switch" aria-checked="true"
+              data-state="checked" value="on"
+              class="btn-switch peer"
+              id="labels-switch">
+              <span data-state="checked"
+                class="switch-span"></span>
+            </button>
+          </div>
+          <div class="flex items-center justify-between">
+            <label
+              class="font-medium peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 font-serif text-lg"
+              for="labels-switch">Boundaries</label>
+            <button type="button" role="switch" aria-checked="true"
+              data-state="checked" value="on"
+              class="btn-switch peer"
+              id="boundaries-switch">
+              <span data-state="checked"
+                class="switch-span"></span>
+            </button>
           </div>
         </div>
 
         <button
           id="close-map-settings-button"
           type="button"
-          class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 font-sans bg-gray-700 hover:bg-gray-500 text-white h-10 w-10 absolute right-0 top-0">
+          class="flex bg-gray-100 items-center justify-center text-base lg:text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:pointer-events-none disabled:opacity-50 font-sans bg-secondary text-secondary-foreground hover:bg-gray-50 rounded-lg h-8 w-8 absolute right-3 top-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -930,7 +960,7 @@
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="h-6 w-6">
+            class="h-4 w-4">
             <path d="M18 6 6 18"></path>
             <path d="m6 6 12 12"></path>
           </svg>
@@ -982,7 +1012,7 @@
 
       @layer utilities {
         .mapboxgl-ctrl-top-right .mapboxgl-ctrl {
-          @apply mt-[72px] mr-6 rounded-none bg-transparent;
+          @apply mt-[60px] mr-6 rounded-none bg-transparent;
         }
 
         .mapboxgl-ctrl-group:not(:empty) {
@@ -990,27 +1020,19 @@
         }
 
         .mapboxgl-ctrl button {
-          @apply bg-main text-white w-10 h-10;
-
-          transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-          transition-duration: 150ms;
+          @apply relative flex justify-center h-7 w-7 items-center transition-colors rounded-lg text-white border hover:bg-gray-500 hover:border-gray-500 bg-gray-700 border-mod-sc-ev focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mod-sc-ev disabled:cursor-default disabled:pointer-events-none disabled:bg-gray-150 disabled:border-gray-150 disabled:text-gray-700;
         }
 
-        .mapboxgl-ctrl button:focus {
-          @apply rounded-none !important;
+        .mapboxgl-ctrl-zoom-in {
+          @apply !rounded-lg !rounded-b-none;
         }
 
-        .theme-light.mapboxgl-ctrl button {
-          @apply bg-white text-main stroke-none;
+        .mapboxgl-ctrl-zoom-out {
+          @apply !rounded-lg !rounded-t-none;
         }
 
         .mapboxgl-ctrl button:not(:disabled):hover {
           @apply bg-hover-main;
-        }
-
-        .theme-light.mapboxgl-ctrl button:not(:disabled):hover {
-          @apply bg-hover-light;
         }
 
         .mapboxgl-ctrl-icon {
@@ -1018,7 +1040,7 @@
         }
 
         .mapboxgl-ctrl-group button+button {
-          @apply border-gray-300;
+          @apply border-gray-500;
         }
 
         .mapboxgl-popup {

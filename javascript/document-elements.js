@@ -13,7 +13,6 @@ const elements = {
   closeMapSettingsButton: document.getElementById('close-map-settings-button'),
   satelliteBasemapButton: document.getElementById('satellite-basemap-button'),
   lightBasemapButton: document.getElementById('light-basemap-button'),
-  mapboxControls: document.getElementsByClassName('mapbox-ctrl'),
   attribution: document.getElementById('attribution'),
   attributionContent: document.getElementById('attribution-content'),
   landUseButtons: document.getElementsByClassName('btn-land-use'),
@@ -55,4 +54,5 @@ const elements = {
   search: document.getElementById('search'),
   resetFiltersButton: document.getElementById('reset-filters'),
   labelsSwitch: document.getElementById('labels-switch'),
+  boundariesSwitch: document.getElementById('boundaries-switch'),
 }

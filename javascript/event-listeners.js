@@ -132,6 +132,25 @@ window.addEventListener('load', function () {
       }
     };
 
+    // Update boundaries
+    const lightBoundariesGroupId = getGroupById('admin-0-boundary-bg-dark');
+    const satelliteBoundariesGroupId = getGroupById('admin-0-boundary-light');
+
+    const lightBoundariesLayers = getGroupLayers(lightBoundariesGroupId);
+    const satelliteBoundariesLayers = getGroupLayers(satelliteBoundariesGroupId);
+
+    const boundariesActive = window.getters.boundaries();
+
+    if (boundariesActive) {
+      if (basemap === 'basemap-light') {
+        setLayerVisibility(lightBoundariesLayers, 'none');
+        setLayerVisibility(satelliteBoundariesLayers, 'visible');
+      } else {
+        setLayerVisibility(satelliteBoundariesLayers, 'none');
+        setLayerVisibility(lightBoundariesLayers, 'visible');
+      }
+    };
+
     // Update the UI
     const basemapEntries = Object.entries({
       'basemap-satellite': elements.satelliteBasemapButton,
@@ -204,6 +223,38 @@ window.addEventListener('load', function () {
     elements.labelsSwitch.children[0].dataset.state = checked ? 'unchecked' : 'checked';
 
     onToggleLabels();
+  });
+
+  // BOUNDARIES
+
+  const onToggleBoundaries = function () {
+    const boundariesActive = window.getters.boundaries();
+    const selectedBasemap = window.getters.basemap();
+    const lightGroupId = getGroupById('admin-0-boundary-bg-dark');
+    const satelliteGroupId = getGroupById('admin-0-boundary-light');
+
+    const lightLabelBoundaries = getGroupLayers(lightGroupId);
+    const satelliteLabelBoundaries = getGroupLayers(satelliteGroupId);
+
+    if (boundariesActive) {
+      setLayerVisibility([...lightLabelBoundaries, ...satelliteLabelBoundaries], 'none');
+    } else {
+      const targetBoundaries = selectedBasemap === 'basemap-light' ? satelliteLabelBoundaries : lightLabelBoundaries;
+      setLayerVisibility(targetBoundaries, 'visible');
+    }
+
+    window.mutations.setBoundaries(!boundariesActive);
+  };
+
+  elements.boundariesSwitch.addEventListener("click", function () {
+    const checked = !!window.getters.boundaries();
+
+    elements.boundariesSwitch.setAttribute('aria-checked', `${!checked}`);
+    elements.boundariesSwitch.dataset.state = checked ? 'unchecked' : 'checked';
+
+    elements.boundariesSwitch.children[0].dataset.state = checked ? 'unchecked' : 'checked';
+
+    onToggleBoundaries();
   });
 
   // SIDEBAR

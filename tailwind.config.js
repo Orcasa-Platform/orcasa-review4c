@@ -45,6 +45,7 @@ tailwind.config = {
         gray: {
           50: '#F7F7F9',
           100: '#F0F0F5',
+          150: '#E9EAF0',
           200: '#CFD1DB',
           300: '#B2B5C5',
           500: '#6E7389',

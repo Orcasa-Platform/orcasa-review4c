@@ -6,6 +6,7 @@ window.addEventListener('load', function () {
     mapSettingsOpen: false,
     basemap: 'basemap-light',
     labels: false,
+    boundaries: false,
     landUse: 'all',
     landUses: null,
     mainInterventions: [],
@@ -54,6 +55,9 @@ window.addEventListener('load', function () {
     },
     setLabels(labels) {
       state.labels = labels;
+    },
+    setBoundaries(boundaries) {
+      state.boundaries = boundaries;
     },
     setLandUse(landUse) {
       state.landUse = landUse;
@@ -133,6 +137,7 @@ window.addEventListener('load', function () {
     journals: () => state.journals,
     publications: () => state.publications,
     labels: () => state.labels,
+    boundaries: () => state.boundaries,
     basemap: () => state.basemap,
     activeFilters: () => state.activeFilters
   };
