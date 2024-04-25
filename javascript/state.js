@@ -10,6 +10,9 @@ window.addEventListener('load', function () {
     landUse: 'all',
     landUses: null,
     mainInterventions: [],
+    mainIntervention: null,
+    intervention: null,
+    subType: null,
     filter: null,
     publicationsOpen: false,
     methodologyOpen: false,
@@ -61,6 +64,15 @@ window.addEventListener('load', function () {
     },
     setLandUse(landUse) {
       state.landUse = landUse;
+    },
+    setMainIntervention(mainIntervention) {
+      state.mainIntervention = mainIntervention;
+    },
+    setIntervention(intervention) {
+      state.intervention = intervention;
+    },
+    setSubType(subType) {
+      state.subType = subType;
     },
     setLandUses(landUses) {
       state.landUses = landUses;

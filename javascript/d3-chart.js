@@ -35,6 +35,13 @@ const updateChartAndButtons = ({ slug, title, data, resetAllCharts }) => {
   updateButtons(title, data)
 }
 
+const updateMapLayer = (chartSlug, interventionSlug, subTypeSlug) => {
+  // We can't have a main intervention without an intervention
+  window.mutations.setMainIntervention(interventionSlug ? chartSlug : null);
+  window.mutations.setIntervention(interventionSlug);
+  window.mutations.setSubType(subTypeSlug);
+};
+
 const click = (_, title, chartSlug, data, isIntervention) => {
   const currentSelection = window.getters.filter();
   let currentTitle = title;
@@ -50,6 +57,7 @@ const click = (_, title, chartSlug, data, isIntervention) => {
       active: false,
     }));
     updateChartAndButtons({ slug: chartSlug, title: null, data: updatedData })
+    updateMapLayer(null, null, null);
     return;
   }
 
@@ -72,6 +80,7 @@ const click = (_, title, chartSlug, data, isIntervention) => {
       };
     });
     updateChartAndButtons({ slug: chartSlug, title: currentTitle, data: updatedData })
+    updateMapLayer(chartSlug, activeInterventionItem.slug, null);
     return;
   }
 
@@ -96,28 +105,36 @@ const click = (_, title, chartSlug, data, isIntervention) => {
   window.mutations.setFilter({ type: isIntervention ? 'intervention' : 'sub-type', value: slug, mainIntervention: chartSlug, intervention: !isIntervention && data.find((item) => item.active).slug });
   // Rerender to show sub-types or filter opacity of error bars
   updateChartAndButtons({ slug: chartSlug, title, data: updatedData, resetAllCharts: isIntervention })
+  updateMapLayer(chartSlug, isIntervention ? slug : activeInterventionItem.slug, isIntervention ? null : slug)
 };
 
 // Create the SVG container
 const createSVGChart = (slug, data) => {
   if(!data || data.length === 0) return;
 
+  // Sort data by value
+  const sortedData = data.sort((a, b) => b.value - a.value).map(d => {
+    if (d.subTypes) {
+      d.subTypes = d.subTypes.sort((a, b) => b.value - a.value);
+    }
+    return d;
+  });
+
   // Save data for resize
   const savedData = window.getters.chartData();
-  window.mutations.setChartData({...savedData, [slug]: data });
+  window.mutations.setChartData({...savedData, [slug]: sortedData });
 
   const selected = window.getters.filter();
 
   // Data with active sub-types
-  const activeData = data.find(d => d.active);
-
-  const dataWithSubTypes = data.map(d =>
+  const activeData = sortedData.find(d => d.active);
+  const dataWithSubTypes = sortedData.map(d =>
     d.active ? [d].concat(d['subTypes']) : d
   ).flat();
 
-  const ITEM_HEIGHT = 36;
+  const ITEM_HEIGHT = 40;
 
-  const heightValue = (data.length + (activeData?.subTypes?.length ?? 0)) * ITEM_HEIGHT + 50;
+  const heightValue = (sortedData.length + (activeData?.subTypes?.length ?? 0)) * ITEM_HEIGHT + 50;
   const widthValue = window.innerWidth >= 1536 ? 1040 : 800;
 
   const RIGHT_AXIS_PADDING = 200;
@@ -154,7 +171,7 @@ const createSVGChart = (slug, data) => {
     .domain([-150, 150])
     .range([0, width]);
 
-    const domainTitles = data.map(d => d.active ? [d.title].concat(d.subTypes.map(dt => dt.title)) : d.title).flat();
+    const domainTitles = sortedData.map(d => d.active ? [d.title].concat(d.subTypes.map(dt => dt.title)) : d.title).flat();
   // Create y scale
   const yScale = d3.scaleBand()
     .domain(domainTitles)
@@ -219,12 +236,12 @@ const createSVGChart = (slug, data) => {
     .attr("height", ITEM_HEIGHT)
     .style("text-align", 'left')
     .html((title) => {
-      const interventionItem = getInterventionByTitle(data, title);
-      const activeInterventionItem = !interventionItem && data.find((item) => item.active);
+      const interventionItem = getInterventionByTitle(sortedData, title);
+      const activeInterventionItem = !interventionItem && sortedData.find((item) => item.active);
       const dataItem = interventionItem || activeInterventionItem.subTypes.find(st => st.title === title);
-      const slug = getSlugByTitle(data, title);
+      const slug = getSlugByTitle(sortedData, title);
       return buttonHTML(title, dataItem?.publications, slug);
-    }).on("click", (_, title) => click(_, title, slug, data, !!getInterventionByTitle(data, title)));
+    }).on("click", (_, title) => click(_, title, slug, sortedData, !!getInterventionByTitle(sortedData, title)));
 
   // Remove all domain lines
   svg.selectAll('.domain').attr('stroke-width', 0);
@@ -298,18 +315,19 @@ const createSVGChart = (slug, data) => {
     chartTooltip.html(`<div>${d.value.toFixed(1)}% [Confidence interval -${d.low.toFixed(1)}%, +${d.high.toFixed(1)}%]</div>`);
   }
 
+  const currentSelection = window.getters.filter();
   // Create error bars
   svg.selectAll(".error-bar")
     .data(dataWithSubTypes)
     .enter()
     .append("g")
     .attr("class", "error-bar")
-    .attr("id", d => `error-bar-${getSlugByTitle(data, d.title)}`)
+    .attr("id", d => `error-bar-${getSlugByTitle(sortedData, d.title)}`)
     .each(function(d) {
       const g = d3.select(this);
         g
         .append("line")
-        .attr("class", "stroke-gray-700")
+        .attr("class", !currentSelection || currentSelection.value === d.slug ? "stroke-gray-700" : "stroke-gray-200")
         .attr("x1", xScale(Math.min(d.low, 0)))
         .attr("x2", xScale(Math.max(d.high, 0)))
         .attr("y1", yScale(d.title) + yScale.bandwidth() / 2)
@@ -324,7 +342,9 @@ const createSVGChart = (slug, data) => {
     .data(dataWithSubTypes)
     .enter()
     .append("circle")
-    .attr("class", "data-point fill-gray-700")
+    .attr("class", (d) => {
+      return `data-point ${!currentSelection || currentSelection.value === d.slug ? "fill-gray-700" : "fill-gray-200"}`;
+    })
     .attr("cx", d => xScale(d.value))
     .attr("cy", d => yScale(d.title) + yScale.bandwidth() / 2)
     .attr("r", 4)

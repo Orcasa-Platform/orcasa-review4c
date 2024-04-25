@@ -161,7 +161,7 @@ window.addEventListener('load', function () {
       description
     }) => {
       return `
-      <div class="flex flex-col p-6 bg-gray-50 mb-2 rounded-lg text-gray-700">
+      <div class="flex flex-col p-6 bg-white mb-2 rounded-lg text-gray-700">
         <header class="mb-4 flex w-full justify-between items-end">
           <div>Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for ${landUseName}</div>
           <div class="text-gray-500 text-xs">Click in one intervention below to see more details</div>

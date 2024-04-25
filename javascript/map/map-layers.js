@@ -73,15 +73,14 @@ const getHTMLPopup = (feature) => {
   `;
 };
 
-const addDataLayer = async (map, landUseSlug="all") => {
+const addDataLayer = async (map, landUseSlug="all", mainInterventionSlug, interventionSlug, subTypeSlug) => {
   // Remove the previous listeners from the map
   if (mapListener) {
     window.map.off('move', mapListener);
     window.map.off('moveend', mapListener);
     mapListener = null;
   }
-
-  const layerData = await getLayer('all');
+  const layerData = await getLayer(landUseSlug, mainInterventionSlug, interventionSlug, subTypeSlug);
   const features = Object.values(layerData ?? {}).map(country => {
     const geom = country.geom && JSON.parse(country.geom)?.[0];
     return ({

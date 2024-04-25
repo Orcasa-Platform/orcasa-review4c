@@ -45,7 +45,8 @@ window.loadMap = function() {
   window.mutations.setLabels(true);
   window.mutations.setBoundaries(true);
 
-  addDataLayer(map);
+  const { landUse, mainIntervention, intervention, subType } = window.state;
+  addDataLayer(map, landUse, mainIntervention, intervention, subType);
 
   new Promise((resolve) => {
     if (window.map.isStyleLoaded()) {
