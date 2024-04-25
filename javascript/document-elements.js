@@ -13,7 +13,6 @@ const elements = {
   closeMapSettingsButton: document.getElementById('close-map-settings-button'),
   satelliteBasemapButton: document.getElementById('satellite-basemap-button'),
   lightBasemapButton: document.getElementById('light-basemap-button'),
-  attribution: document.getElementById('attribution'),
   landUseButtons: document.getElementsByClassName('btn-land-use'),
   dropdowns: document.getElementsByClassName('dropdown'),
   publicationButton: document.getElementById('btn-publications'),
