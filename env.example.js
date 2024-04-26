@@ -1,1 +1,1 @@
-window.MAPBOX_TOKEN=
+window.MAPBOX_TOKEN='';
