@@ -43,6 +43,16 @@ window.addEventListener('load', function () {
     window.map.setLayoutProperty(layer.id, 'visibility', visibility);
   });
 
+  // MOBILE MENU
+
+  elements.mobileMenuButton.addEventListener("click", function() {
+    elements.mobileMenu.classList.remove('-translate-x-full');
+  });
+
+  elements.mobileMenuClose.addEventListener("click", function() {
+    elements.mobileMenu.classList.add('-translate-x-full');
+  });
+
   // LEGEND
 
   elements.infoTooltipButton.addEventListener("mouseenter", function() {

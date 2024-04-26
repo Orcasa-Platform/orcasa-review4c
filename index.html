@@ -186,7 +186,7 @@
     <!-- NAVBAR -->
     <div
       id="navbar"
-      class="absolute left-0 z-40 h-full w-[90px] overflow-y-auto overflow-x-hidden bg-gray-800">
+      class="absolute left-0 z-40 h-full w-[90px] overflow-y-auto overflow-x-hidden bg-gray-800 hidden lg:block">
       <div
         class="flex h-full w-full flex-col items-center gap-20 px-3 py-6">
         <a href="/"
@@ -232,6 +232,71 @@
           Impact4Soil
         </a>
       </div>
+    </div>
+
+    <!-- MOBILE NAVBAR -->
+    <div
+      id="navbar-mobile"
+      class="absolute top-0 z-40 h-14 w-full overflow-y-auto overflow-x-hidden bg-main lg:hidden border-b border-gray-650">
+      <div
+        class="flex h-full w-full items-center justify-between py-4 px-6">
+        <a href="/"
+          class="flex items-center gap-1">
+          <img src="/assets/images/logo.png" alt="Impact4Soil"
+            width="24"
+            height="24"
+            class="h-6 w-6">
+          <span class="text-white">Impact4Soil</span>
+        </a>
+        <button id="btn-mobile-menu">
+          <img src="/assets/icons/burger.svg" alt="Menu"
+            width="24"
+            height="24"
+            class="h-6 w-6">
+        </button>
+      </div>
+    </div>
+
+    <!-- MOBILE MENU -->
+    <div
+      id="mobile-menu"
+      class="absolute left-0 top-0 z-50 h-screen w-screen transform bg-gray-700 text-white animate-in slide-in-from-right-full overflow-hidden -translate-x-full">
+      <button type="button" id="btn-close-mobile-menu"
+        class="absolute right-4 top-4">
+        <svg
+          xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-x h-6 w-6 text-white"><path
+            d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+        </svg>
+      </button>
+      <nav
+        class="flex h-full w-screen flex-col items-center justify-center gap-10 font-serif text-lg">
+        <a
+          class="box-border flex items-center border-b-4 border-transparent pb-2 transition-colors hover:border-yellow-500"
+          href="/geospatial-data">Geospatial data
+        </a>
+        <a
+          class="box-border flex items-center border-b-4 border-transparent pb-2 transition-colors hover:border-yellow-500"
+          href="/scientific-evidence">Scientific
+          evidence</a>
+        <a
+          class="box-border flex items-center border-b-4 border-transparent pb-2 transition-colors hover:border-yellow-500"
+          href="/practices">Practices</a>
+        <a
+          class="box-border flex items-center border-b-4 border-transparent pb-2 transition-colors hover:border-yellow-500"
+          href="/network">Network</a>
+        <a
+          class="box-border flex items-center border-b-4 border-transparent pb-2 transition-colors hover:border-yellow-500"
+          href="/datasets">Datasets</a>
+        <div
+          class="flex w-[calc(100%_-_20px)] justify-center border-t border-gray-600 py-10">
+          <a
+            href="/#about"
+            class="box-border flex items-center border-b-4 border-transparent pb-2 transition-colors hover:border-yellow-500">About</a>
+        </div>
+      </nav>
     </div>
 
     <!-- MAIN -->
