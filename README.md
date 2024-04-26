@@ -1,6 +1,9 @@
 # orcasa-review4c
 Static Orcasa project code to work as documentation or template for the Review4c website
 
+## Installation
+
+Rename env.example.js to env.js and fill the variables with the correct values
 
 ## Main data endpoints
 
