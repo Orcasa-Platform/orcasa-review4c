@@ -79,6 +79,10 @@
           @apply h-9 px-4 py-2 rounded-lg inline-flex justify-center items-center gap-2 text-sm transition-all bg-transparent border border-white/25 aria-pressed:bg-gray-700 aria-pressed:text-white focus-visible:outline focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-white hover:bg-gray-500 focus-visible:outline-mod-sc-ev-dark;
         }
 
+        .btn-land-use-option {
+          @apply w-full h-10 justify-between items-center flex px-4 py-2 bg-gray-650 gap-2 text-white text-sm leading-tight focus-visible:outline-mod-sc-ev;
+        }
+
         /* focus-visible:outline-offset-[-2px] to fix the foreignObject outline */
         .btn-filter-chart {
           @apply flex justify-between rounded-lg items-center p-1.5 font-sans font-normal text-sm text-left bg-transparent aria-pressed:bg-white aria-pressed:border-gray-300 aria-pressed:shadow hover:border-gray-300 hover:bg-white hover:shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] box-border disabled:opacity-60 disabled:pointer-events-none border border-transparent focus-visible:outline-mod-sc-ev-dark;
@@ -247,10 +251,35 @@
                 based on peer-reviewed scientific evidence.</span></h2>
             <div class="flex flex-col gap-1 hidden"
               id="land-use-select-container">
-              <div class="text-neutral-300 text-sm leading-tight">Land use</div>
-              <select id="land-use-select"
-                class="w-[290px] h-10 text-white rounded-lg bg-gray-700 rounded-lg shadow border border-gray-500 justify-start items-center inline-flex hover:border-gray-500">
+              <!-- Native select for mobile -->
+              <label for="land-use-select-mobile"
+                class="lg:hidden text-neutral-300 text-sm">Land use</label>
+              <select id="land-use-select-mobile"
+                class="lg:hidden w-[290px] h-10 text-white rounded-lg bg-gray-700 rounded-lg shadow border border-gray-500 justify-start items-center inline-flex hover:border-gray-500">
               </select>
+              <!-- Custom select for desktop -->
+              <div id="land-use-select" class="hidden lg:block">
+                <label for="btn-land-use-select"
+                  class="text-neutral-300 text-sm mb-1">Land use</label>
+                <div
+                  class="relative select flex-col flex"
+                  id="dropdown-select-land-use">
+                  <button
+                    type="button"
+                    id="btn-land-use-select"
+                    class="btn-dropdown flex">
+                    <span
+                      id="land-use-selected"
+                      aria-placeholder="Land use"
+                      class="dropdown-selected">
+                    </span>
+                  </button>
+                  <fieldset
+                    class="flex flex-col hidden absolute z-30 mt-12 rounded-lg border-none shadow bg-gray-650 transition-all overflow-auto w-full"
+                    id="land-use-dropdown-options">
+                  </fieldset>
+                </div>
+              </div>
               <div class="text-neutral-300 text-xs leading-tight">The numbers
                 refer to the primary studies reviewed.</div>
             </div>

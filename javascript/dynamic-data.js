@@ -242,20 +242,37 @@ window.addEventListener('load', function () {
     </button>
   `;
   // Create an option for each land use
-  const option = ({ slug, name, publications, selectedSlug }) =>
-  `<option
-    data-slug=${slug}
-    value=${slug}
-    ${selectedSlug === slug ? "selected" : ""}
-  >
-    <span class="text-base">
-      ${name}
-    </span>
-    <span class="text-xs">
-    (${formatNumber(publications)})
-    </span>
-    </option>
-  `;
+  const option = ({ slug, name, publications, selectedSlug, mobile = true }) => {
+
+    return mobile ? `<option
+      data-slug=${slug}
+      value=${slug}
+      ${selectedSlug === slug ? "selected" : ""}
+    >
+      <span class="text-base">
+        ${name}
+      </span>
+      <span class="text-xs">
+      (${formatNumber(publications)})
+      </span>
+      </option>
+    ` :
+    `<button
+      data-slug=${slug}
+      data-=${slug}
+      value=${slug}
+      class="btn-land-use-option group"
+      ${selectedSlug === slug ? "selected" : ""}
+    >
+      <span>
+        ${name} (${formatNumber(publications)})
+      </span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="${selectedSlug === slug ? '' : 'hidden'}">
+        <path d="M20 6L9 17L4 12" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    `;
+  }
 
   // Get data on first load
   getMainInterventionChartData().then(data => {
@@ -286,19 +303,106 @@ window.addEventListener('load', function () {
           elements.initialMain.classList.add('hidden');
           elements.chartCards.classList.remove('hidden');
 
-          // Show the land use select container
           elements.landUseSelectContainer.classList.remove('hidden');
-          if(landUses) {
-            landUses.filter(l => l.name !== 'All').forEach(landUse => {
-              elements.landUseSelect.innerHTML += option({...landUse, selectedSlug: slug });
-            });
-          }
+          elements.landUseSelectButton.innerHTML = element.innerText;
+
+          landUses.filter(l => l.name !== 'All').forEach(landUse => {
+            elements.landUseSelectMobile.innerHTML += option({...landUse, selectedSlug: slug });
+            elements.landUseOptions.innerHTML += option({...landUse, selectedSlug: slug, mobile: false });
+          });
         });
       };
     }
+
+    elements.landUseSelectButton.addEventListener('click', function() {
+      elements.landUseOptions.classList.toggle('hidden');
+      const options = document.getElementsByClassName('btn-land-use-option');
+      if (options) {
+        options[0].focus();
+      }
+    });
+
+    elements.landUseSelectButton.addEventListener('keydown', function(event) {
+      const options = document.getElementsByClassName('btn-land-use-option');
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === ' ') {
+        event.preventDefault(); // Prevent scrolling
+        if (options) {
+          if (elements.landUseOptions.classList.contains('hidden')) {
+            elements.landUseOptions.classList.remove('hidden');
+          }
+          options[0].focus();
+        }
+      }
+    });
+
+    const selectOption = (target) => {
+      // Get the slug of the selected land use
+      const slug = target.getAttribute('data-slug');
+
+      window.mutations.setLandUse(slug);
+      window.mutations.setFilter(null);
+      loadData(slug);
+      // Close the dropdown
+      elements.landUseOptions.classList.add('hidden');
+      // Update the selected text
+      const textSpan = target.querySelector('span');
+      elements.landUseSelectButton.innerHTML = textSpan.innerText;
+
+      // Update the selected option
+      const options = document.getElementsByClassName('btn-land-use-option');
+      for (let option of options) {
+        const svg = option.querySelector('svg');
+        if (option === target) {
+          svg.classList.remove('hidden');
+        } else {
+          svg.classList.add('hidden');
+        }
+      }
+      target.setAttribute('selected', 'true');
+    };
+
+    elements.landUseOptions.addEventListener('click', function({ target }) {
+      let buttonTarget = target;
+      // Check if the target is a child of the button
+      if (buttonTarget.nodeName !== 'BUTTON' && this.contains(buttonTarget)) {
+        // Get the button
+        buttonTarget = target.parentNode;
+      }
+      selectOption(buttonTarget);
+    });
+
+    elements.landUseOptions.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        selectOption(event.target);
+      } else if (event.key === 'ArrowDown') {
+        event.preventDefault(); // Prevent scrolling
+        const nextButton = event.target.nextElementSibling;
+        if (nextButton) {
+          nextButton.focus();
+        }
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault(); // Prevent scrolling
+        const prevButton = event.target.previousElementSibling;
+        if (prevButton) {
+          prevButton.focus();
+        }
+      } else if (event.key === 'Escape') {
+        elements.landUseOptions.classList.add('hidden');
+      } else if (event.key === 'Tab') {
+        elements.landUseOptions.classList.add('hidden');
+      }
+    });
   });
 
   // LAND USE SELECT
+  elements.landUseSelectMobile.addEventListener('change', function() {
+    const slug = elements.landUseSelect.value;
+    window.mutations.setLandUse(slug);
+    window.mutations.setFilter(null);
+    loadData(slug);
+  });
+
   elements.landUseSelect.addEventListener('change', function() {
     const slug = elements.landUseSelect.value;
     window.mutations.setLandUse(slug);
