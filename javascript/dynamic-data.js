@@ -123,10 +123,6 @@ const publicationDetailTemplate = ({ isMetaAnalysis, journals, year, countries, 
         <span class="text-neutral-300 text-sm leading-tight">${countries.join(', ')}</span>
         </li>
         <li class="flex items-center">
-          <span class="w-[64px] lg:w-[160px] text-white text-sm leading-7">Land Use</span>
-          <span class="text-neutral-300 text-sm leading-tight">${landUse}</span>
-        </li>
-        <li class="flex items-center">
           <span class="w-[64px] lg:w-[160px] text-white text-sm leading-7">Source</span>
           <span class="text-neutral-300 text-sm leading-tight flex gap-2">${source}
             <a href="${url}" target="_blank" rel="noopener noreferrer" class="cursor-pointer font-semibold text-mod-sc-ev hover:text-mod-sc-ev-dark flex gap-2">
