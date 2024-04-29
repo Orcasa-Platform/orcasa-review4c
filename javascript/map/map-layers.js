@@ -40,13 +40,11 @@ const createHTMLMarker = (feature, onClick) => {
 };
 
 const getHTMLPopup = (feature) => {
-  const { country_name, number_primary_studies, effect_outcomes } = feature?.properties || {};
+  const { country_name, effect_outcomes } = feature?.properties || {};
+  const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
   const outcomesList = Object.entries(effect_outcomes)
     .sort((a, b) => b[1] - a[1])
-    .map(([key, value]) => (`
-      <span class="text-right">${formatNumber(value)}</span>
-      <span class="font-semibold text-mod-sc-ev">${key}</span>
-    `)).join('');
+    .map(([key, value]) => (`<div class="text-gray-700">${capitalize(key)} (${formatNumber(value)})</div>`)).join('');
 
   return `
     <div class="p-6 h-full flex flex-col gap-y-6">
@@ -62,11 +60,16 @@ const getHTMLPopup = (feature) => {
         <span class="sr-only">Close popup</span>
       </button>
       <div class="grow overflow-y-auto overflow-x-hidden font-sans text-base">
-        <div class="grid grid-cols-[min-content_1fr] auto-rows-auto gap-x-2 w-full">
-          <span class="mb-6">${formatNumber(number_primary_studies)}</span>
-          <span class="mb-6 font-semibold text-mod-sc-ev">total</span>
-          <hr class="col-span-2 mb-4 border-dashed border-gray-200 h-0" />
+        <div class="w-full space-y-3">
           ${outcomesList}
+        </div>
+        <div class="flex w-full mt-6 pt-6 border-t border-gray-200 items-center gap-6">
+          <div class="text-slate-700 text-sm">Learn more about concrete practices on the ground:</div>
+          <a href="/practices" rel="noreferrer" class="flex px-4 py-2 rounded-lg border border-neutral-300 justify-center items-center gap-2 bg-white hover:bg-gray-50">
+              <i class="w-4 h-4 relative" data-lucide="tractor"></i>
+              <div class="text-slate-700 text-sm font-normal font-['Roboto'] leading-snug">Practices</div>
+          </a>
+          </div>
         </div>
       </div>
     </div>
@@ -140,6 +143,9 @@ const addDataLayer = async (map, landUseSlug="all", mainInterventionSlug, interv
             .setLngLat(cluster.geometry.coordinates)
             .setHTML(getHTMLPopup(cluster))
             .addTo(map);
+
+          // Show the tractor icon
+          lucide.createIcons();
 
           document.getElementById('popup-close-button').addEventListener("click", () => {
             popup.remove();
