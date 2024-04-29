@@ -108,8 +108,11 @@ const click = (_, title, chartSlug, data, isIntervention) => {
   updateMapLayerSelection(chartSlug, isIntervention ? slug : activeInterventionItem.slug, isIntervention ? null : slug)
 };
 
+const startCase = (str) => str.replace(/_/g, ' ').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
 // Create the SVG container
 const createSVGChart = (slug, data) => {
+  const mainInterventionName = startCase(slug);
   if(!data || data.length === 0) return;
 
   // Sort data by value
@@ -133,7 +136,8 @@ const createSVGChart = (slug, data) => {
   ).flat();
 
   const ITEM_HEIGHT = 40;
-
+  const ACTIVE_ITEMS_TEXT_HEIGHT = 78;
+  const activeItemsTextOffset = activeData ? ACTIVE_ITEMS_TEXT_HEIGHT : 0;
   const heightValue = (sortedData.length + (activeData?.subTypes?.length ?? 0)) * ITEM_HEIGHT + 50;
   const widthValue = window.innerWidth >= 1536 ? 1040 : 800;
 
@@ -160,7 +164,7 @@ const createSVGChart = (slug, data) => {
     .style("text-align", 'center')
     .append("svg")
     .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox", `-${AXIS_PADDING} -${AXIS_PADDING} ${widthValue + RIGHT_AXIS_PADDING} ${heightValue}`)
+    .attr("viewBox", `-${AXIS_PADDING} -${AXIS_PADDING} ${widthValue + RIGHT_AXIS_PADDING} ${heightValue + activeItemsTextOffset}`)
 
   const svg = chart
   .append("g")
@@ -209,9 +213,25 @@ const createSVGChart = (slug, data) => {
   ;
 
   const yAxisRegions = svg
-  .append("g")
-  .attr("class", "y-axis-regions")
-  .attr("transform", `translate(0, ${-ITEM_HEIGHT / 2 - 6})`)
+    .append("g")
+    .attr("class", "y-axis-regions")
+    .attr("transform", `translate(0, ${-ITEM_HEIGHT / 2 - 6})`)
+
+  const previousItemOffset = (interventionItem, title) => {
+    const isSubType = !interventionItem;
+    const anyPreviousItemsAreActive = dataWithSubTypes.find((item, index) => (
+      item.active
+      && ((interventionItem && index < dataWithSubTypes.indexOf(interventionItem)) ||
+      (isSubType && !!item.subTypes?.find(st => st.title === title)))
+    ));
+
+    return anyPreviousItemsAreActive ? ACTIVE_ITEMS_TEXT_HEIGHT : 0;
+  }
+
+  const calculateY = ({ title, interventionItem }) => {
+    const _interventionItem = interventionItem || getInterventionByTitle(sortedData, title);
+    return yScale(_interventionItem.title) + previousItemOffset(_interventionItem, title);
+  };
 
   const yAxisTicks = svg
     .append("g")
@@ -224,23 +244,38 @@ const createSVGChart = (slug, data) => {
     .append("rect")
     .attr("class", "y-axis-region pointer-events-none")
     .attr("x", -AXIS_PADDING)
-    .attr("y", d => yScale(d.title))
+    .attr("y", interventionItem => calculateY({ interventionItem }))
     .attr("width", widthValue + RIGHT_AXIS_PADDING)
-    .attr("height", ITEM_HEIGHT)
-    .attr("fill", (d) => d.subTypes ? 'transparent' : gray100)
+    .attr("height", (d) => d.active ? ITEM_HEIGHT + ACTIVE_ITEMS_TEXT_HEIGHT : ITEM_HEIGHT)
+    .attr("fill", 'transparent');
 
   yAxisTicks.call(yAxis)
   .selectAll(".tick")
   .append("foreignObject")
     .attr("width", yTickWidth)
-    .attr("height", ITEM_HEIGHT)
+    .attr("height", (title) => {
+      const interventionItem = getInterventionByTitle(sortedData, title);
+      return (interventionItem?.active) ? ITEM_HEIGHT + ACTIVE_ITEMS_TEXT_HEIGHT : ITEM_HEIGHT;
+    })
+    .attr("y", (title) => {
+      const interventionItem = getInterventionByTitle(sortedData, title);
+      return previousItemOffset(interventionItem, title);
+    })
     .style("text-align", 'left')
     .html((title) => {
       const interventionItem = getInterventionByTitle(sortedData, title);
       const activeInterventionItem = !interventionItem && sortedData.find((item) => item.active);
       const dataItem = interventionItem || activeInterventionItem.subTypes.find(st => st.title === title);
       const slug = getSlugByTitle(sortedData, title);
-      return buttonHTML(title, dataItem?.publications, slug);
+      const isActive = !!interventionItem?.active;
+      const fixedValue = interventionItem?.value.toFixed(1);
+      const text = {
+        'Climate Change': `Overall, ${title} led to a ${fixedValue}% change in soil organic carbon compared to its absence.`,
+        'Management': `On average, using ${title} was ${Math.abs(fixedValue)}% ${fixedValue > 0 ? 'more' : 'less'} effective compared to not using it.`,
+        'Land Use Change': `On average, converting ${title} ${fixedValue > 0 ? 'increased' : 'decreased'} by ${Math.abs(fixedValue)}% SOC.`
+      }[mainInterventionName] || '';
+      const activeText = `<div class="text-xs leading-5 py-3 px-1">${text}</div>`
+      return isActive ? `<div>${buttonHTML(title, dataItem?.publications, slug)}${activeText}</div>`: buttonHTML(title, dataItem?.publications, slug);
     }).on("click", (_, title) => click(_, title, slug, sortedData, !!getInterventionByTitle(sortedData, title)));
 
   // Remove all domain lines
@@ -249,19 +284,19 @@ const createSVGChart = (slug, data) => {
   // Create x grid
   const xGrid = d3.axisBottom(xScale)
     .tickValues(xTickTicks)
-    .tickSize(-height + margin.top + margin.bottom)
+    .tickSize(-height + margin.top + margin.bottom - activeItemsTextOffset)
     .tickFormat("");
 
   // Draw x grid
   const xGridElement = svg.append("g")
     .attr("class", "x-grid")
-    .attr("transform", `translate(0, ${height - margin.bottom})`)
+    .attr("transform", `translate(0, ${height - margin.bottom + activeItemsTextOffset})`)
     .call(xGrid)
 
 
   // Create labels for Positive and Negative effects
   const centralPosition = xScale(0);
-  const arrowY = height + 10;
+  const arrowY = height + activeItemsTextOffset + 10;
   const INNER_PADDING = 10;
   const arrowGroup = svg.append("g")
   .attr("class", "arrow-group");
@@ -324,14 +359,15 @@ const createSVGChart = (slug, data) => {
     .attr("class", "error-bar")
     .attr("id", d => `error-bar-${getSlugByTitle(sortedData, d.title)}`)
     .each(function(d) {
+      const y = calculateY({ interventionItem: d }) + yScale.bandwidth() / 2;
       const g = d3.select(this);
         g
         .append("line")
         .attr("class", !currentSelection || currentSelection.value === d.slug ? "stroke-gray-700" : "stroke-gray-200")
         .attr("x1", xScale(Math.min(d.low, 0)))
         .attr("x2", xScale(Math.max(d.high, 0)))
-        .attr("y1", yScale(d.title) + yScale.bandwidth() / 2)
-        .attr("y2", yScale(d.title) + yScale.bandwidth() / 2)
+        .attr("y1", y)
+        .attr("y2", y)
         .attr("opacity", getOpacity)
         .on("mouseover", addTooltip)
         .on("mouseout", () => chartTooltip.classed('hidden', true));
@@ -346,7 +382,7 @@ const createSVGChart = (slug, data) => {
       return `data-point ${!currentSelection || currentSelection.value === d.slug ? "fill-gray-700" : "fill-gray-200"}`;
     })
     .attr("cx", d => xScale(d.value))
-    .attr("cy", d => yScale(d.title) + yScale.bandwidth() / 2)
+    .attr("cy", d => calculateY({ interventionItem: d }) + yScale.bandwidth() / 2)
     .attr("r", 4)
     .attr("opacity", getOpacity)
     .on("mouseover", addTooltip)
