@@ -390,7 +390,7 @@ window.addEventListener('load', function () {
           }
 
           // Show the chart cards of the selected land use
-          elements.initialMain.classList.add('hidden');
+          elements.initialMain.classList.add('lg:hidden');
           elements.chartCards.classList.remove('hidden');
           elements.chartCardsMobile.classList.remove('hidden');
 

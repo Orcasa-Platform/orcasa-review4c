@@ -287,8 +287,8 @@ window.addEventListener('load', function () {
 
     elements.methodologyPanel.classList.remove('hidden');
     // Hide the main page
-    elements.main.classList.add('hidden');
-    elements.footerMenu.classList.add('hidden');
+    elements.main.classList.add('lg:hidden');
+    elements.footerMenu.classList.add('lg:hidden');
   });
 
   elements.closeMethodologyPanelButton.addEventListener("click", function() {
@@ -297,8 +297,8 @@ window.addEventListener('load', function () {
 
     elements.methodologyPanel.classList.add('hidden');
     // Show the main page
-    elements.main.classList.remove('hidden');
-    elements.footerMenu.classList.remove('hidden');
+    elements.main.classList.remove('lg:hidden');
+    elements.footerMenu.classList.remove('lg:hidden');
   });
 
   // PUBLICATION BUTTON
@@ -315,12 +315,12 @@ window.addEventListener('load', function () {
     window.loadPublications();
 
     // Hide the main page
-    elements.main.classList.add('hidden');
-    elements.map.classList.remove('hidden');
+    elements.main.classList.add('lg:hidden');
+    elements.map.classList.remove('lg:hidden');
 
     window.loadMap();
 
-    elements.footerMenu.classList.add('hidden');
+    elements.footerMenu.classList.add('lg:hidden');
   });
 
   elements.closePublicationPanelButton.addEventListener("click", function() {
@@ -340,9 +340,9 @@ window.addEventListener('load', function () {
     }
 
     // Restore main page
-    elements.main.classList.remove('hidden');
-    elements.map.classList.add('hidden');
-    elements.footerMenu.classList.remove('hidden');
+    elements.main.classList.remove('lg:hidden');
+    elements.map.classList.add('lg:hidden');
+    elements.footerMenu.classList.remove('lg:hidden');
   });
 
   // FILTERS BUTTON
@@ -593,11 +593,11 @@ window.addEventListener('load', function () {
   // Hide the publication detail panel when the close button is clicked
   elements.closePublicationDetailPanelButton.addEventListener('click', () => {
     window.mutations.setPublicationsOpen(false);
-    elements.publicationDetailPanel.classList.add('hidden');
+    elements.publicationDetailPanel.classList.add('lg:hidden');
     elements.publicationDetailPanelContent.innerHTML = '';
 
     // Display back publication panel and map
-    elements.publicationPanel.classList.remove('hidden');
-    elements.map.classList.remove('hidden');
+    elements.publicationPanel.classList.remove('lg:hidden');
+    elements.map.classList.remove('lg:hidden');
   });
 });

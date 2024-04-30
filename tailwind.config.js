@@ -62,6 +62,7 @@ tailwind.config = {
         },
         darkRed: {
           500: '#B95E6F',
+          600: '#9C586C',
         },
       },
     },
