@@ -354,11 +354,23 @@ const createSVGChart = (slug, data) => {
     .each(function(d) {
       const y = calculateY({ interventionItem: d }) + yScale.bandwidth() / 2;
       const g = d3.select(this);
+
+      g
+        .append("line")
+        .attr("class", (!currentSelection || currentSelection.mainIntervention !== slug) || currentSelection.value === d.slug ? "stroke-gray-700" : "stroke-gray-200")
+        .attr("x1", xScale(d.low < 0 ? 0 : d.low))
+        .attr("x2", xScale(Math.max(d.high, 0)))
+        .attr("y1", y)
+        .attr("y2", y)
+        .attr("opacity", getOpacity)
+        .on("mouseover", addTooltip)
+        .on("mouseout", () => chartTooltip.classed('hidden', true));
+
         g
         .append("line")
-        .attr("class", !currentSelection || currentSelection.value === d.slug ? "stroke-gray-700" : "stroke-gray-200")
+        .attr("class", (!currentSelection || currentSelection.mainIntervention !== slug) || currentSelection.value === d.slug ? "stroke-darkRed-600" : "stroke-gray-200")
         .attr("x1", xScale(Math.min(d.low, 0)))
-        .attr("x2", xScale(Math.max(d.high, 0)))
+        .attr("x2", xScale(d.high > 0 ? 0 : d.high))
         .attr("y1", y)
         .attr("y2", y)
         .attr("opacity", getOpacity)
@@ -372,7 +384,7 @@ const createSVGChart = (slug, data) => {
     .enter()
     .append("circle")
     .attr("class", (d) => {
-      return `data-point ${!currentSelection || currentSelection.value === d.slug ? "fill-gray-700" : "fill-gray-200"}`;
+      return `data-point ${(!currentSelection || currentSelection.mainIntervention !== slug) || currentSelection.value === d.slug ? "fill-gray-700" : "fill-gray-200"}`;
     })
     .attr("cx", d => xScale(d.value))
     .attr("cy", d => calculateY({ interventionItem: d }) + yScale.bandwidth() / 2)

@@ -185,11 +185,19 @@ window.addEventListener('load', function () {
     });
 
     if (isMobile) {
-      elements.chartCardsMobile.innerHTML = cards.join('');
-      existingData.map(d => createMobileChart(d.slug, d["interventions"]));
+      if (existingData.length === 0) {
+        elements.chartCardsMobile.innerHTML = `<p class="font-semibold text-neutral-300">No results</p>`;
+      } else {
+        elements.chartCardsMobile.innerHTML = cards.join('');
+        existingData.map(d => createMobileChart(d.slug, d["interventions"]));
+      }
     } else {
-      elements.chartCards.innerHTML = cards.join('');
-      existingData.map(d => createSVGChart(d.slug, d["interventions"]));
+      if (existingData.length === 0) {
+        elements.chartCards.innerHTML = `<p class="font-semibold text-neutral-300">No results</p>`;
+      } else {
+        elements.chartCards.innerHTML = cards.join('');
+        existingData.map(d => createSVGChart(d.slug, d["interventions"]));
+      }
     }
   };
 
@@ -277,8 +285,8 @@ window.addEventListener('load', function () {
     window.mutations.setLandUse(slug);
 
     // Update the footer with the land use publications and meta-analysis
-    const publicationsNumber = formatNumber(publications) || '-';
-    const metaAnalysisNumber = formatNumber(metaAnalysis) || '-';
+    const publicationsNumber = publications ? formatNumber(publications) : 0;
+    const metaAnalysisNumber = metaAnalysis ? formatNumber(metaAnalysis) : 0;
     if (landUseSlug === 'all') {
       elements.landUseIntro.innerHTML = `<div>
         To date, we have gathered ${metaAnalysisNumber} meta-analyses and ${publicationsNumber} primary studies. Learn more, and view them geographically:
@@ -531,13 +539,16 @@ window.addEventListener('load', function () {
   const updateNumbers = (metadata) => {
     const { totalPublications, totalMetaAnalysis } = metadata;
 
-    elements.metaAnalysisNumber.innerHTML = formatNumber(totalMetaAnalysis) || 0;
-    elements.publicationsNumber.innerHTML = formatNumber(totalPublications) || 0;
+    elements.metaAnalysisNumber.innerHTML = totalMetaAnalysis ? formatNumber(totalMetaAnalysis) : 0;
+    elements.publicationsNumber.innerHTML = totalPublications ? formatNumber(totalPublications) : 0;
   };
 
   const populateYearChart = (years) => {
-    if (!years) return;
-
+    if (!years) {
+      elements.yearRange.innerHTML = `<div class="h-[125px] border-b border-white w-full"></div>`;
+      return;
+    }
+console.log(years)
     const yearKeys = Object.keys(years);
 
     const maxYearCount = Math.max(...Object.values(years));
@@ -705,6 +716,7 @@ window.addEventListener('load', function () {
       addListenerToPublicationButton();
 
       if(!reload) {
+        console.log('populate years', metadata)
         populateYearChart(metadata.years);
         populateFilters(metadata);
       }

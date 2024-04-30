@@ -466,7 +466,6 @@ window.addEventListener('load', function () {
       if (target.type !== 'checkbox') {
         return;
       }
-
       // If any option is checked, we remove disabled from the clear button
       const anyOptionChecked = [...options.querySelectorAll('input')].some(input => input.checked);
       if (anyOptionChecked) {
@@ -497,7 +496,7 @@ window.addEventListener('load', function () {
       const placeholder = selected.attributes['aria-placeholder'].value;
       if (selectedValues.length === 0) {
         selected.textContent = placeholder;
-        window.mutations.setPublicationFilters(dropdownId, []);
+        window.mutations.setPublicationFilters(dropdown.id, []);
       } else {
         selected.textContent = `${placeholder} (${formatNumber(selectedLabels.length)})`;
         window.mutations.setPublicationFilters(dropdown.id, selectedValues);

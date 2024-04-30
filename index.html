@@ -161,11 +161,11 @@
         }
 
         .input-search {
-          @apply relative rounded-lg w-[209px] cursor-default select-none px-4 py-2 bg-main text-base leading-[22px] focus:border-gray-500 focus:ring-mod-sc-ev focus:ring-offset-0 focus:outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 items-center focus:bg-main mb-2;
+          @apply relative rounded-lg w-full cursor-default select-none px-4 py-2 bg-main text-base leading-[22px] focus:border-gray-500 focus:ring-mod-sc-ev focus:ring-offset-0 focus:outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 items-center focus:bg-main mb-2;
         }
 
         .dropdown-options {
-          @apply z-30 rounded-lg border-none shadow bg-gray-650 transition-all overflow-auto;
+          @apply z-30 rounded-lg border-none shadow bg-gray-650 transition-all overflow-auto absolute w-full mt-[50px];
         }
 
         .btn-basemap {
@@ -340,7 +340,7 @@
                     class="btn-dropdown flex">
                     <span
                       id="land-use-selected"
-                      aria-placeholder="Land use"
+                      aria-placeholder="Select"
                       class="dropdown-selected">
                     </span>
                   </button>
@@ -454,7 +454,7 @@
                 class="btn-dropdown flex">
                 <span
                   id="type-publication-selected"
-                  aria-placeholder="Publication type"
+                  aria-placeholder="Select"
                   class="dropdown-selected">Select
                 </span>
               </button>
@@ -485,7 +485,7 @@
                 class="btn-dropdown flex">
                 <span
                   id="year-selected"
-                  aria-placeholder="Year"
+                  aria-placeholder="Select"
                   class="dropdown-selected">Select
                 </span>
               </button>
@@ -516,7 +516,7 @@
                 class="btn-dropdown flex">
                 <span
                   id="journal-selected"
-                  aria-placeholder="Journal"
+                  aria-placeholder="Select"
                   class="dropdown-selected">Select</span>
               </button>
               <input type="search" placeholder="Search…"
@@ -546,7 +546,7 @@
                 class="btn-dropdown flex">
                 <span
                   id="country-selected"
-                  aria-placeholder="Country"
+                  aria-placeholder="Select"
                   class="dropdown-selected">Select</span>
               </button>
               <input type="search" placeholder="Search…"
@@ -571,8 +571,8 @@
 
     <!-- PUBLICATION PANEL -->
     <div id="publication-panel"
-      class="hidden lg:block publication-panel -translate-x-full bg-cover bg-no-repeat"
-      style="background-image: url('/assets/images/sidebar-background.svg')">
+      class="hidden lg:block publication-panel -translate-x-full bg-no-repeat"
+      style="background-image: url('/assets/images/publications-background.svg')">
       <button
         class="group flex items-center mb-8 text-white"
         id="btn-close-publication-panel">
@@ -783,8 +783,7 @@
                 <li>
                   <a
                     href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vge-xGEAAAAJ&citation_for_view=vge-xGEAAAAJ:738O_yMBCRsC"
-                    target="_blank"
-                    class="text-teal-500 text-base font-semibold inline">A
+                    target="_blank">A
                     global
                     meta-analysis of soil organic carbon in the
                     Anthropocene</a>
@@ -839,10 +838,10 @@
     </div>
 
     <!-- LEGEND -->
-    <div class="absolute bottom-16 right-8 z-10 hidden lg:block">
+    <div class="absolute bottom-11 right-8 z-10 hidden lg:block">
       <div
         id="legend"
-        class="px-4 py-2 bg-main shadow transition-transform relative text-white flex gap-2 shadow rounded-lg items-center">
+        class="px-4 py-2 h-10 bg-gray-800 shadow transition-transform relative text-white flex gap-2 shadow rounded-lg items-center">
         <span class="h-4 w-2 rounded-lg bg-mod-sc-ev"></span>
         <div class="flex gap-1 font-sans text-xs items-center">
           <span class="font-semibold legend-text"></span>
