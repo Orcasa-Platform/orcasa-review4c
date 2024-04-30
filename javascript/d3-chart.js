@@ -108,8 +108,6 @@ const click = (_, title, chartSlug, data, isIntervention) => {
   updateMapLayerSelection(chartSlug, isIntervention ? slug : activeInterventionItem.slug, isIntervention ? null : slug)
 };
 
-const startCase = (str) => str.replace(/_/g, ' ').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-
 // Create the SVG container
 const createSVGChart = (slug, data) => {
   const mainInterventionName = startCase(slug);
@@ -269,12 +267,7 @@ const createSVGChart = (slug, data) => {
       const slug = getSlugByTitle(sortedData, title);
       const isActive = !!interventionItem?.active;
       const fixedValue = interventionItem?.value.toFixed(1);
-      const text = {
-        'Climate Change': `Overall, ${title} led to a ${fixedValue}% change in soil organic carbon compared to its absence.`,
-        'Management': `On average, using ${title} was ${Math.abs(fixedValue)}% ${fixedValue > 0 ? 'more' : 'less'} effective compared to not using it.`,
-        'Land Use Change': `On average, converting ${title} ${fixedValue > 0 ? 'increased' : 'decreased'} by ${Math.abs(fixedValue)}% SOC.`
-      }[mainInterventionName] || '';
-      const activeText = `<div class="text-xs leading-5 py-3 px-1">${text}</div>`
+      const activeText = `<div class="text-xs leading-5 py-3 px-1">${descriptionText(mainInterventionName, title, fixedValue)}</div>`
       return isActive ? `<div>${buttonHTML(title, dataItem?.publications, slug)}${activeText}</div>`: buttonHTML(title, dataItem?.publications, slug);
     }).on("click", (_, title) => click(_, title, slug, sortedData, !!getInterventionByTitle(sortedData, title)));
 

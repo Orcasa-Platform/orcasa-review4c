@@ -156,7 +156,20 @@ window.addEventListener('load', function () {
       slug,
       description
     }) => {
-      return `
+      return isMobile ?
+      `
+      <div class="flex flex-col mb-2 py-4 border-b border-slate-600 gap-3">
+        <header class="w-full text-base">
+          Impact of <span class="font-semibold"> ${name} </span> on Soil Organic Carbon for ${landUseName}
+        </header>
+        <div
+          class="text-neutral-300 text-sm leading-7">
+          <div>${description}</div>
+          <div id="chart-mobile-${slug}" class="chart w-full h-full"></div>
+        </div>
+      </div>
+      `
+      : `
       <div class="flex flex-col p-6 bg-white mb-2 rounded-lg text-gray-700">
         <header class="mb-4 flex w-full justify-between items-end">
           <div>Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for ${landUseName}</div>
@@ -170,9 +183,80 @@ window.addEventListener('load', function () {
       </div>
       `;
     });
-    elements.chartCards.innerHTML = cards.join('');
-    existingData.map(d => createSVGChart(d.slug, d["interventions"]));
+
+    if (isMobile) {
+      elements.chartCardsMobile.innerHTML = cards.join('');
+      existingData.map(d => createMobileChart(d.slug, d["interventions"]));
+    } else {
+      elements.chartCards.innerHTML = cards.join('');
+      existingData.map(d => createSVGChart(d.slug, d["interventions"]));
+    }
   };
+
+  const createMobileChart = (slug, data) => {
+    const chartElement = document.getElementById(`chart-mobile-${slug}`);
+    if(!data || data.length === 0) return;
+
+    // Sort data by value
+    const sortedData = data.sort((a, b) => b.value - a.value).map(d => {
+      if (d.subTypes) {
+        d.subTypes = d.subTypes.sort((a, b) => b.value - a.value);
+      }
+      return d;
+    });
+
+    if (chartElement) {
+      const chart = `<div class="flex flex-col justify-between mt-4 gap-[12px]">
+        ${sortedData.map(({ title, value, publications }) => (`
+          <div class="flex gap-4 text-white items-center justify-between">
+            <span class="text-base min-w-6 font-semibold ${value > 0 ? 'text-darkRed-500' : ''}">
+              ${value.toFixed(1)}%
+            </span>
+            <button type="button" class="btn-filter flex-1 btn-chart-mobile" aria-pressed="false" id="btn-${kebabCase(title)}" data-main-intervention-slug="${slug}" data-intervention-name="${title}" data-fixed-value="${value.toFixed(1)}" title="${title} (${formatNumber(publications)})">
+              <span class="underline">${title}</span> (${formatNumber(publications)})
+            </button>
+            <div class="flex items-center justify-between">
+              <span class="text-sm">
+              </span>
+            </div>
+          </div>`)).join('')
+        }
+        <div class="hidden" id="chart-description-${slug}"></div>
+      </div>`;
+
+      chartElement.innerHTML = chart;
+
+      // Mobile chart buttons click
+      const chartMobileButtons = document.getElementsByClassName('btn-chart-mobile');
+      if (chartMobileButtons) {
+        for (let element of chartMobileButtons) {
+          element.addEventListener("click", function() {
+            // Hide other chart descriptions
+            const chartDescriptions = document.querySelectorAll('[id^="chart-description-"]');
+            Array.from(chartDescriptions).map(d => d.classList.add('hidden'));
+
+            // Fill and show the chart description
+
+            const mainInterventionSlug = element.getAttribute('data-main-intervention-slug');
+            const mainInterventionName = startCase(mainInterventionSlug);
+            const interventionName = element.getAttribute('data-intervention-name');
+            const fixedValue = element.getAttribute('data-fixed-value');
+
+            const chartDescription = document.getElementById(`chart-description-${mainInterventionSlug}`);
+            const chartDescriptionText =  descriptionText(mainInterventionName, interventionName, fixedValue)
+
+            chartDescription.innerHTML = chartDescriptionText;
+            chartDescription.classList.remove('hidden');
+
+            // Set the button as pressed
+            Array.from(chartMobileButtons).filter(b => b !== element).map(b => b.setAttribute('aria-pressed', 'false'));
+            element.setAttribute('aria-pressed', 'true');
+          });
+        };
+      }
+    };
+  };
+
 
   const loadMainInterventionCharts = (landUse) => {
     const { name: landUseName, mainInterventions, slug: landUseSlug } = landUse;
@@ -271,12 +355,14 @@ window.addEventListener('load', function () {
   }
 
   // Get data on first load
+
   getMainInterventionChartData().then(data => {
-    if (elements.landUseMenu && data) {
+    const landUseMenu = isMobile ? elements.landUseMenuMobile : elements.landUseMenu;
+    if (landUseMenu && data) {
       const landUses = Object.entries(data).map(([key, value], i) => ({ slug: key, ...value, index: i }));
       window.mutations.setLandUses(landUses);
       landUses.filter(l => l.name !== 'All').forEach(landUse => {
-        elements.landUseMenu.innerHTML += button(landUse);
+        landUseMenu.innerHTML += button(landUse);
       });
       loadData(landUses[0].slug);
       return landUses;
@@ -284,20 +370,29 @@ window.addEventListener('load', function () {
   }).then((landUses) => {
     // Add event listeners to the land use buttons
     const landUseButtons = document.getElementsByClassName('btn-land-use');
-
     // LAND USE BUTTONS
     if (landUseButtons) {
       for (let element of elements.landUseButtons) {
         element.addEventListener("click", function() {
+          elements.landUseMenuMobile.classList.add('land-use-menu-mobile-scroll');
           const slug = element.getAttribute('data-slug');
           window.mutations.setLandUse(slug);
           window.mutations.setFilter(null);
           loadData(slug);
 
           element.setAttribute('aria-pressed', 'true');
+
+          // Only for mobile
+          Array.from(landUseButtons).filter(b => b !== element).map(b => b.setAttribute('aria-pressed', 'false'));
+          const studiesDisclaimer = document.getElementById('primary-studies-disclaimer')
+          if(studiesDisclaimer) {
+            studiesDisclaimer.classList.add('hidden');
+          }
+
           // Show the chart cards of the selected land use
           elements.initialMain.classList.add('hidden');
           elements.chartCards.classList.remove('hidden');
+          elements.chartCardsMobile.classList.remove('hidden');
 
           elements.landUseSelectContainer.classList.remove('hidden');
           elements.landUseSelectButton.innerHTML = element.innerText;

@@ -1,3 +1,5 @@
+const isMobile = window.innerWidth < 1024;
+
 const kebabCase = text => text
     .replace(/([a-z])([A-Z])/g, "$1-$2")
     .replace(/[\s_]+/g, '-')
@@ -28,3 +30,11 @@ const formatNumber = (value) => {
   const formatter = Intl.NumberFormat('fr');
   return formatter.format(value);
 };
+
+const descriptionText = (mainInterventionName, title, fixedValue) => ({
+  'Climate Change': `Overall, ${title} led to a ${fixedValue > 0 ? '+' : ''}${fixedValue}% change in soil organic carbon compared to its absence.`,
+  'Management': `On average, using ${title} was ${Math.abs(fixedValue)}% ${fixedValue > 0 ? 'more' : 'less'} effective compared to not using it.`,
+  'Land Use Change': `On average, converting ${title} ${fixedValue > 0 ? 'increased' : 'decreased'} by ${Math.abs(fixedValue)}% SOC.`
+}[mainInterventionName] || '');
+
+const startCase = (str) => str.replace(/_/g, ' ').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());

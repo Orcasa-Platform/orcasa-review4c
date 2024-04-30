@@ -59,7 +59,10 @@ tailwind.config = {
         },
         green: {
           50: '#F7FCFA',
-        }
+        },
+        darkRed: {
+          500: '#B95E6F',
+        },
       },
     },
   },
