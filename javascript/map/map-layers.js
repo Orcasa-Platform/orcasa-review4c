@@ -14,7 +14,7 @@ const getMarkerSizeClasses = (feature) => {
   return countClassesTuples.find(([limit]) => count < limit)[1];
 }
 
-const createHTMLMarker = (feature, isCluster, onClick) => {
+const createHTMLMarker = (feature, onClick) => {
   const element = document.createElement('button');
   element.type = 'button';
 
@@ -23,8 +23,8 @@ const createHTMLMarker = (feature, isCluster, onClick) => {
     'items-center',
     'justify-center',
     'bg-mod-sc-ev',
+    'rounded-full',
     ...getMarkerSizeClasses(feature),
-    ...(!isCluster ? ['border-2', 'border-gray-800'] : [])
   ];
   element.classList.add(...classes);
 
@@ -40,47 +40,49 @@ const createHTMLMarker = (feature, isCluster, onClick) => {
 };
 
 const getHTMLPopup = (feature) => {
-  const { country_name, number_primary_studies, effect_outcomes } = feature?.properties || {};
+  const { country_name, effect_outcomes } = feature?.properties || {};
+  const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
   const outcomesList = Object.entries(effect_outcomes)
     .sort((a, b) => b[1] - a[1])
-    .map(([key, value]) => (`
-      <span class="text-right">${formatNumber(value)}</span>
-      <span class="font-semibold text-mod-sc-ev">${key}</span>
-    `)).join('');
+    .map(([key, value]) => (`<div class="text-gray-700">${capitalize(key)} (${formatNumber(value)})</div>`)).join('');
 
   return `
-    <div class="h-full flex flex-col gap-y-4">
+    <div class="p-6 h-full flex flex-col gap-y-6">
       <h4 class="shrink-0 text-slate-700 text-lg font-serif">
-        Publications in ${country_name}
+        Publications in <span class="font-semibold">${country_name}</span>
       </h4>
-      <button type="button" id="popup-close-button" class="shrink-0 inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 font-sans bg-gray-700 hover:bg-gray-500 text-white h-10 w-10 absolute right-0 top-0">
+      <button type="button" id="popup-close-button" class="btn-close absolute right-6 top-4">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-gray-700">
           <path d="M18 6 6 18"></path>
           <path d="m6 6 12 12"></path>
         </svg>
         <span class="sr-only">Close popup</span>
       </button>
       <div class="grow overflow-y-auto overflow-x-hidden font-sans text-base">
-        <div class="grid grid-cols-[min-content_1fr] auto-rows-auto gap-x-2 w-full">
-          <span class="mb-6">${formatNumber(number_primary_studies)}</span>
-          <span class="mb-6 font-semibold text-mod-sc-ev">total</span>
-          <hr class="col-span-2 mb-4 border-dashed border-gray-200 h-0" />
+        <div class="w-full space-y-3">
           ${outcomesList}
+        </div>
+        <div class="flex w-full mt-6 pt-6 border-t border-gray-200 items-center gap-6">
+          <div class="text-slate-700 text-sm">Learn more about concrete practices on the ground:</div>
+          <a href="/practices" rel="noreferrer" class="flex px-4 py-2 rounded-lg border border-neutral-300 justify-center items-center gap-2 bg-white hover:bg-gray-50">
+              <i class="w-4 h-4 relative" data-lucide="tractor"></i>
+              <div class="text-slate-700 text-sm font-normal font-['Roboto'] leading-snug">Practices</div>
+          </a>
+          </div>
         </div>
       </div>
     </div>
   `;
 };
 
-const addLayer = async (map, landUseSlug="all", mainInterventionSlug, interventionSlug, subTypeSlug) => {
+const addDataLayer = async (map, landUseSlug="all", mainInterventionSlug, interventionSlug, subTypeSlug) => {
   // Remove the previous listeners from the map
   if (mapListener) {
-    map.off('move', mapListener);
-    map.off('moveend', mapListener);
+    window.map.off('move', mapListener);
+    window.map.off('moveend', mapListener);
     mapListener = null;
   }
-
   const layerData = await getLayer(landUseSlug, mainInterventionSlug, interventionSlug, subTypeSlug);
   const features = Object.values(layerData ?? {}).map(country => {
     const geom = country.geom && JSON.parse(country.geom)?.[0];
@@ -102,12 +104,12 @@ const addLayer = async (map, landUseSlug="all", mainInterventionSlug, interventi
     markers.forEach((marker) => {
       marker.remove();
     });
-  
+
     markers.length = 0;
 
-    const bbox = map.getBounds().toArray().flat();
-    const zoom = map.getZoom();
-    
+    const bbox = window.map.getBounds().toArray().flat();
+    const zoom = window.map.getZoom();
+
     const supercluster = new Supercluster({
       radius: 100,
       reduce: (res, { number_primary_studies }) => {
@@ -125,7 +127,7 @@ const addLayer = async (map, landUseSlug="all", mainInterventionSlug, interventi
         if (isCluster) {
           // We zoom to expand the cluster
           const targetZoom = supercluster.getClusterExpansionZoom(cluster.properties.cluster_id);
-          map.flyTo({
+          window.map.flyTo({
             center: cluster.geometry.coordinates,
             zoom: targetZoom,
           });
@@ -137,10 +139,13 @@ const addLayer = async (map, landUseSlug="all", mainInterventionSlug, interventi
           }
 
           // We display a popup with the country's publications data
-          popup = new maplibregl.Popup({ closeButton: false, offset: 40  })
+          popup = new mapboxgl.Popup({ closeButton: false, offset: 40  })
             .setLngLat(cluster.geometry.coordinates)
             .setHTML(getHTMLPopup(cluster))
             .addTo(map);
+
+          // Show the tractor icon
+          lucide.createIcons();
 
           document.getElementById('popup-close-button').addEventListener("click", () => {
             popup.remove();
@@ -149,8 +154,8 @@ const addLayer = async (map, landUseSlug="all", mainInterventionSlug, interventi
         }
       };
 
-      const marker = new maplibregl.Marker({
-        element: createHTMLMarker(cluster, isCluster, onClickMarker)
+      const marker = new mapboxgl.Marker({
+        element: createHTMLMarker(cluster, onClickMarker)
       }).setLngLat(cluster.geometry.coordinates)
         .addTo(map);
 
@@ -159,8 +164,8 @@ const addLayer = async (map, landUseSlug="all", mainInterventionSlug, interventi
   };
 
   // Add the listener to recompute the clusters and execute it once to render the initial view
-  map.on('move', mapListener);
-  map.on('moveend', mapListener);
+  window.map.on('move', mapListener);
+  window.map.on('moveend', mapListener);
 
   mapListener();
 };

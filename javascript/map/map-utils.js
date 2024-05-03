@@ -13,26 +13,21 @@ const addSquareIcon = (map) => {
     }
   }
   // sdf is needed to be able to change icon color
-  map.addImage('square', { width, height: width, data}, { sdf: true } );
+  window.map.addImage('square', { width, height: width, data}, { sdf: true } );
 }
 
 const zoomButtonStyling = () => {
-  const zoomInButton = document.querySelector('button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon');
-  const zoomOutButton = document.querySelector('button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon');
+  const zoomInIcon = document.querySelector('button.mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon');
+  const zoomInSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 min-w-[20px]"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>`
 
-  const zoomInSVG = `<svg xmlns="http://www.w3.org/2000/svg" class="h-[24px] w-[24px]" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-full w-full">
-    <line x1="12" x2="12" y1="5" y2="19">
-    </line>
-    <line x1="5" x2="19" y1="12" y2="12"></line>
-  </svg>`
-  const zoomOutSVG = `<svg xmlns="http://www.w3.org/2000/svg" class="h-[24px] w-[24px]" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-full w-full">
-    <line x1="5" x2="19" y1="12" y2="12"></line>
-  </svg>`;
-  zoomInButton.innerHTML = zoomInSVG;
-  zoomOutButton.innerHTML = zoomOutSVG;
+  const zoomOutIcon = document.querySelector('button.mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon');
+  const zoomOutSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 min-w-[20px]"><path d="M5 12h14"></path></svg>`;
+  zoomInIcon.innerHTML = zoomInSVG;
+  zoomOutIcon.innerHTML = zoomOutSVG;
 };
+
+const DEFAULT_SIDEBAR_WIDTH = 550;
+const DEFAULT_NAV_WIDTH = 90;
 
 const getMapPadding = (sidebarOpen) => {
   const navWidth = document.querySelector('#navbar')?.getBoundingClientRect().width
@@ -49,7 +44,7 @@ const getMapPadding = (sidebarOpen) => {
 };
 
 const fitMap = (map, { sidebarOpen }) => {
-  map.easeTo({
+  window.map.easeTo({
     padding: getMapPadding(sidebarOpen),
     duration: 500
   });

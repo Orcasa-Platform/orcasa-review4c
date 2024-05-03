@@ -13,6 +13,7 @@ tailwind.config = {
       },
       fontSize: {
         '3.5xl': ['32px', '48px'],
+        '2xs': ['10px', '16px'],
       },
       colors: {
         'main': '#3C4363',
@@ -21,14 +22,16 @@ tailwind.config = {
         'mod-sc-ev': '#2BB3A7',
         'mod-sc-ev-light': '#CEEEE3',
         'chart-color': '#B4E4D7',
-        'mod-sc-ev-dark': '#1E6B65',
+        'mod-sc-ev-dark': '#239288',
         brown: {
           // Practices
           500: '#BA7300',
         },
         yellow: {
           // Geospatial data
+          400: '#FFE08A',
           500: '#FFD500',
+          700: '#E4AE00'
         },
         purple: {
           // Datasets
@@ -42,15 +45,25 @@ tailwind.config = {
         gray: {
           50: '#F7F7F9',
           100: '#F0F0F5',
+          150: '#E9EAF0',
           200: '#CFD1DB',
           300: '#B2B5C5',
+          500: '#6E7389',
           600: '#565D79',
+          650: '#4D5370',
           700: '#3C4363',
           800: '#2C324B',
         },
+        neutral: {
+          300: '#C1C3CE',
+        },
         green: {
           50: '#F7FCFA',
-        }
+        },
+        darkRed: {
+          500: '#B95E6F',
+          600: '#9C586C',
+        },
       },
     },
   },

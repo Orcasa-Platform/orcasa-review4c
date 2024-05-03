@@ -4,11 +4,15 @@ window.addEventListener('load', function () {
     legendOpen: true,
     filtersOpen: false,
     mapSettingsOpen: false,
-    basemap: 'relief',
-    labels: null,
+    basemap: 'basemap-light',
+    labels: false,
+    boundaries: false,
     landUse: 'all',
     landUses: null,
     mainInterventions: [],
+    mainIntervention: null,
+    intervention: null,
+    subType: null,
     filter: null,
     publicationsOpen: false,
     methodologyOpen: false,
@@ -21,6 +25,7 @@ window.addEventListener('load', function () {
     openDropdowns: [],
     countries: null,
     journals: null,
+    activeFilters: [],
   };
 
   window.mutations = {
@@ -54,8 +59,20 @@ window.addEventListener('load', function () {
     setLabels(labels) {
       state.labels = labels;
     },
+    setBoundaries(boundaries) {
+      state.boundaries = boundaries;
+    },
     setLandUse(landUse) {
       state.landUse = landUse;
+    },
+    setMainIntervention(mainIntervention) {
+      state.mainIntervention = mainIntervention;
+    },
+    setIntervention(intervention) {
+      state.intervention = intervention;
+    },
+    setSubType(subType) {
+      state.subType = subType;
     },
     setLandUses(landUses) {
       state.landUses = landUses;
@@ -105,6 +122,9 @@ window.addEventListener('load', function () {
     },
     setSearch(value) {
       state.search = value;
+    },
+    setActiveFilters(value) {
+      state.activeFilters = value;
     }
   };
 
@@ -129,5 +149,8 @@ window.addEventListener('load', function () {
     journals: () => state.journals,
     publications: () => state.publications,
     labels: () => state.labels,
+    boundaries: () => state.boundaries,
+    basemap: () => state.basemap,
+    activeFilters: () => state.activeFilters
   };
 });

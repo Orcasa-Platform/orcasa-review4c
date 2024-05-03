@@ -34,10 +34,12 @@ const updateChartAndButtons = ({ slug, title, data, resetAllCharts }) => {
   createSVGChart(slug, data);
   updateButtons(title, data)
 }
-const updateMapLayer = (map, chartSlug, interventionSlug, subTypeSlug) => {
-  const currentLandUse = window.getters.landUse();
-   // We can't have a main intervention without an intervention
-  addLayer(map, currentLandUse, interventionSlug ? chartSlug : null, interventionSlug, subTypeSlug);
+
+const updateMapLayerSelection = (chartSlug, interventionSlug, subTypeSlug) => {
+  // We can't have a main intervention without an intervention
+  window.mutations.setMainIntervention(interventionSlug ? chartSlug : null);
+  window.mutations.setIntervention(interventionSlug);
+  window.mutations.setSubType(subTypeSlug);
 };
 
 const click = (_, title, chartSlug, data, isIntervention) => {
@@ -55,7 +57,7 @@ const click = (_, title, chartSlug, data, isIntervention) => {
       active: false,
     }));
     updateChartAndButtons({ slug: chartSlug, title: null, data: updatedData })
-    updateMapLayer(map, null, null, null);
+    updateMapLayerSelection(null, null, null);
     return;
   }
 
@@ -77,8 +79,8 @@ const click = (_, title, chartSlug, data, isIntervention) => {
         active: false,
       };
     });
-    updateMapLayer(map, chartSlug, activeInterventionItem.slug, null);
     updateChartAndButtons({ slug: chartSlug, title: currentTitle, data: updatedData })
+    updateMapLayerSelection(chartSlug, activeInterventionItem.slug, null);
     return;
   }
 
@@ -102,40 +104,55 @@ const click = (_, title, chartSlug, data, isIntervention) => {
   }
   window.mutations.setFilter({ type: isIntervention ? 'intervention' : 'sub-type', value: slug, mainIntervention: chartSlug, intervention: !isIntervention && data.find((item) => item.active).slug });
   // Rerender to show sub-types or filter opacity of error bars
-  updateMapLayer(map, chartSlug, isIntervention ? slug : activeInterventionItem.slug, isIntervention ? null : slug)
   updateChartAndButtons({ slug: chartSlug, title, data: updatedData, resetAllCharts: isIntervention })
+  updateMapLayerSelection(chartSlug, isIntervention ? slug : activeInterventionItem.slug, isIntervention ? null : slug)
 };
 
 // Create the SVG container
 const createSVGChart = (slug, data) => {
+  const mainInterventionName = startCase(slug);
   if(!data || data.length === 0) return;
+
+  // Sort data by value
+  const sortedData = data.sort((a, b) => b.value - a.value).map(d => {
+    if (d.subTypes) {
+      d.subTypes = d.subTypes.sort((a, b) => b.value - a.value);
+    }
+    return d;
+  });
 
   // Save data for resize
   const savedData = window.getters.chartData();
-  window.mutations.setChartData({...savedData, [slug]: data });
+  window.mutations.setChartData({...savedData, [slug]: sortedData });
 
   const selected = window.getters.filter();
 
   // Data with active sub-types
-  const activeData = data.find(d => d.active);
-
-  const dataWithSubTypes = data.map(d =>
+  const activeData = sortedData.find(d => d.active);
+  const dataWithSubTypes = sortedData.map(d =>
     d.active ? [d].concat(d['subTypes']) : d
   ).flat();
 
-  const ITEM_HEIGHT = 52;
-
-  const heightValue = (data.length + (activeData?.subTypes?.length ?? 0)) * ITEM_HEIGHT + 50;
-  const widthValue = window.innerWidth >= 1536 ? 600 : 400;
+  const ITEM_HEIGHT = 40;
+  const ACTIVE_ITEMS_TEXT_HEIGHT = 78;
+  const activeItemsTextOffset = activeData ? ACTIVE_ITEMS_TEXT_HEIGHT : 0;
+  const heightValue = (sortedData.length + (activeData?.subTypes?.length ?? 0)) * ITEM_HEIGHT + 50;
+  const widthValue = window.innerWidth >= 1536 ? 1040 : 800;
 
   const RIGHT_AXIS_PADDING = 200;
   const AXIS_PADDING = 20;
+
   const margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
-  const width = widthValue - margin.left - margin.right - 100;
-  const height = heightValue - margin.top - margin.bottom;
+  // Padding for the arrows and "Positive effect" and "Negative effect" labels
+  const LOWER_LABELS_PADDING = 40;
 
-  const xTickValues = [-150, -100, -50, 0, 50, 100, 150];
+  const width = widthValue - margin.left - margin.right - 100;
+  const height = heightValue - margin.top - margin.bottom - LOWER_LABELS_PADDING;
+
+  const xTickValues = [-150, -120, -90, -60,  -30, 0, 30, 60, 90, 120, 150];
+  // Draw intermediate ticks without labels
+  const xTickTicks = [-150, -135, -120, -105, -90, -75, -60, -45, -30, 0, 15, 30, 45,  60, 75, 90, 105, 120, 135, 150];
   const yTickWidth = widthValue + RIGHT_AXIS_PADDING - width - 70;
 
   // Remove any existing chart
@@ -145,7 +162,7 @@ const createSVGChart = (slug, data) => {
     .style("text-align", 'center')
     .append("svg")
     .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox", `-${AXIS_PADDING} -${AXIS_PADDING} ${widthValue + RIGHT_AXIS_PADDING} ${heightValue}`)
+    .attr("viewBox", `-${AXIS_PADDING} -${AXIS_PADDING} ${widthValue + RIGHT_AXIS_PADDING} ${heightValue + activeItemsTextOffset}`)
 
   const svg = chart
   .append("g")
@@ -156,7 +173,7 @@ const createSVGChart = (slug, data) => {
     .domain([-150, 150])
     .range([0, width]);
 
-    const domainTitles = data.map(d => d.active ? [d.title].concat(d.subTypes.map(dt => dt.title)) : d.title).flat();
+    const domainTitles = sortedData.map(d => d.active ? [d.title].concat(d.subTypes.map(dt => dt.title)) : d.title).flat();
   // Create y scale
   const yScale = d3.scaleBand()
     .domain(domainTitles)
@@ -165,7 +182,7 @@ const createSVGChart = (slug, data) => {
 
   // Create x axis
   const xAxis = d3.axisTop(xScale)
-    .tickFormat(d => d3.format(".0%")(d/100))
+    .tickFormat(d => d3.format("d")(d))
     .tickValues(xTickValues);
 
   // Draw x axis
@@ -176,7 +193,7 @@ const createSVGChart = (slug, data) => {
   const xAxisTick = xAxisElement.selectAll(".tick")
 
   xAxisTick.select("text")
-    .attr('class', 'font-sans text-xs text-gray-400')
+    .attr('class', 'font-sans text-2xs text-gray-500')
 
   xAxisTick.selectAll("line")
     .attr("stroke", 'none');
@@ -187,16 +204,35 @@ const createSVGChart = (slug, data) => {
     .tickPadding(10)
     .tickFormat(() => '');
 
-  const buttonHTML = (title, publications, slug) =>
+  const buttonHTML = (title, publications, slug, isSubType) =>
+    isSubType ? `<div class="flex items-center"><span class="mx-1">•</span><button type="button" class="btn-filter-chart btn-filter-chart-subtype mt-0.5 max-w-[${yTickWidth}px]" aria-pressed="false" id="btn-${kebabCase(slug)}" title="${title} (${formatNumber(publications)})">
+  <span class="mr-1.5 overflow-hidden whitespace-nowrap text-ellipsis underline">${title}</span><span class="text-xs shrink-0">(${formatNumber(publications)})</span>
+</button></div>` :
     `<button type="button" class="btn-filter-chart mt-0.5 max-w-[${yTickWidth}px]" aria-pressed="false" id="btn-${kebabCase(slug)}" title="${title} (${formatNumber(publications)})">
-      <span class="mr-1.5 overflow-hidden whitespace-nowrap text-ellipsis">${title}</span><span class="text-xs shrink-0">(${formatNumber(publications)})</span>
+      <span class="mr-1.5 overflow-hidden whitespace-nowrap text-ellipsis underline">${title}</span><span class="text-xs shrink-0">(${formatNumber(publications)})</span>
     </button>`;
   ;
 
   const yAxisRegions = svg
-  .append("g")
-  .attr("class", "y-axis-regions")
-  .attr("transform", `translate(0, ${-ITEM_HEIGHT / 2 - 6})`)
+    .append("g")
+    .attr("class", "y-axis-regions")
+    .attr("transform", `translate(0, ${-ITEM_HEIGHT / 2 - 6})`)
+
+  const previousItemOffset = (interventionItem, title) => {
+    const isSubType = !interventionItem;
+    const anyPreviousItemsAreActive = dataWithSubTypes.find((item, index) => (
+      item.active
+      && ((interventionItem && index < dataWithSubTypes.indexOf(interventionItem)) ||
+      (isSubType && !!item.subTypes?.find(st => st.title === title)))
+    ));
+
+    return anyPreviousItemsAreActive ? ACTIVE_ITEMS_TEXT_HEIGHT : 0;
+  }
+
+  const calculateY = ({ title, interventionItem }) => {
+    const _interventionItem = interventionItem || getInterventionByTitle(sortedData, title);
+    return yScale(_interventionItem.title) + previousItemOffset(_interventionItem, title);
+  };
 
   const yAxisTicks = svg
     .append("g")
@@ -209,48 +245,94 @@ const createSVGChart = (slug, data) => {
     .append("rect")
     .attr("class", "y-axis-region pointer-events-none")
     .attr("x", -AXIS_PADDING)
-    .attr("y", d => yScale(d.title))
+    .attr("y", interventionItem => calculateY({ interventionItem }))
     .attr("width", widthValue + RIGHT_AXIS_PADDING)
-    .attr("height", ITEM_HEIGHT)
-    .attr("fill", (d) => d.subTypes ? 'transparent' : gray100)
+    .attr("height", (d) => d.active ? ITEM_HEIGHT + ACTIVE_ITEMS_TEXT_HEIGHT : ITEM_HEIGHT)
+    .attr("fill", 'transparent');
 
   yAxisTicks.call(yAxis)
   .selectAll(".tick")
   .append("foreignObject")
     .attr("width", yTickWidth)
-    .attr("height", ITEM_HEIGHT)
+    .attr("height", (title) => {
+      const interventionItem = getInterventionByTitle(sortedData, title);
+      return (interventionItem?.active) ? ITEM_HEIGHT + ACTIVE_ITEMS_TEXT_HEIGHT : ITEM_HEIGHT;
+    })
+    .attr("y", (title) => {
+      const interventionItem = getInterventionByTitle(sortedData, title);
+      return previousItemOffset(interventionItem, title);
+    })
     .style("text-align", 'left')
     .html((title) => {
-      const interventionItem = getInterventionByTitle(data, title);
-      const activeInterventionItem = !interventionItem && data.find((item) => item.active);
+      const interventionItem = getInterventionByTitle(sortedData, title);
+      const activeInterventionItem = !interventionItem && sortedData.find((item) => item.active);
       const dataItem = interventionItem || activeInterventionItem.subTypes.find(st => st.title === title);
-      const slug = getSlugByTitle(data, title);
-      return buttonHTML(title, dataItem?.publications, slug);
-    }).on("click", (_, title) => click(_, title, slug, data, !!getInterventionByTitle(data, title)));
+      const slug = getSlugByTitle(sortedData, title);
+      const isActive = !!interventionItem?.active;
+      const fixedValue = interventionItem?.value.toFixed(1);
+      const activeText = `<div class="text-xs leading-5 py-3 px-1">${descriptionText(mainInterventionName, title, fixedValue)}</div>`
+      const isSubType = !interventionItem;
+      return isActive ? `<div>${buttonHTML(title, dataItem?.publications, slug, isSubType)}${activeText}</div>`: buttonHTML(title, dataItem?.publications, slug, isSubType);
+    }).on("click", (_, title) => click(_, title, slug, sortedData, !!getInterventionByTitle(sortedData, title)));
 
   // Remove all domain lines
   svg.selectAll('.domain').attr('stroke-width', 0);
 
   // Create x grid
   const xGrid = d3.axisBottom(xScale)
-    .tickValues(xTickValues)
-    .tickSize(-height + margin.top + margin.bottom)
+    .tickValues(xTickTicks)
+    .tickSize(-height + margin.top + margin.bottom - activeItemsTextOffset)
     .tickFormat("");
 
   // Draw x grid
   const xGridElement = svg.append("g")
     .attr("class", "x-grid")
-    .attr("transform", `translate(0, ${height - margin.bottom})`)
+    .attr("transform", `translate(0, ${height - margin.bottom + activeItemsTextOffset})`)
     .call(xGrid)
 
+
+  // Create labels for Positive and Negative effects
+  const centralPosition = xScale(0);
+  const arrowY = height + activeItemsTextOffset + 10;
+  const INNER_PADDING = 10;
+  const arrowGroup = svg.append("g")
+  .attr("class", "arrow-group");
+
+  // Draw the positive effect arrow
+  arrowGroup.append("path")
+  .attr("class", "stroke-gray-200")
+  .attr("d", `M${centralPosition + 100},${arrowY} L${xScale(155)},${arrowY} m-3,-3 l3,3 l-3,3`)
+  .attr("fill", "none")
+
+  // Draw the negative effect arrow
+  arrowGroup.append("path")
+  .attr("class", "stroke-gray-200")
+  .attr("d", `M${centralPosition - 105},${arrowY} L${xScale(-155)},${arrowY} m5,-5 l-5,5 l5,5`)
+  .attr("fill", "none")
+
+  // Add the Positive Effect label
+  arrowGroup.append("text")
+    .attr("class", "text-xs text-gray-500 fill-current")
+    .attr("x", centralPosition + INNER_PADDING)
+    .attr("y", arrowY + 4)
+    .text("Positive effect")
+
+
+  // Add the Negative Effect label
+  arrowGroup.append("text")
+    .attr("class", "text-xs text-gray-500 fill-current")
+    .attr("x", centralPosition - INNER_PADDING)
+    .attr("y", arrowY + 4)
+    .attr("text-anchor", "end")
+    .text("Negative effect")
+
   xGridElement.selectAll(".tick line")
-    .attr("stroke-opacity",(d) => d === 0 ? 1 : 0.2)
-    .attr("stroke-dasharray", (d) => d === 0 ? 'none' : "5,3")
+    .attr("stroke-opacity", 0.2)
+    .attr("stroke-dasharray", (d) => d === 0 ? 'none' : "2,1")
     .attr("stroke", gray700);
 
   xGridElement.select(".domain").remove();
   const getOpacity = (d) => (!selected || selected?.type !== 'subType' || selected?.value === d.title) ? 1 : 0.5;
-
 
   const chartTooltip = d3.select('#chart-tooltip');
 
@@ -262,41 +344,40 @@ const createSVGChart = (slug, data) => {
       .style("left", (event.clientX - chart.node().getBoundingClientRect().left) + "px")
       .classed('hidden', false);
 
-    chartTooltip.html(`<div>min: ${d.low.toFixed(1)}% median: ${d.value.toFixed(1)}% max: ${d.high.toFixed(1)}%</div>`);
+    chartTooltip.html(`<div>${d.value.toFixed(1)}% [Confidence interval -${d.low.toFixed(1)}%, +${d.high.toFixed(1)}%]</div>`);
   }
 
+  const currentSelection = window.getters.filter();
   // Create error bars
   svg.selectAll(".error-bar")
     .data(dataWithSubTypes)
     .enter()
     .append("g")
     .attr("class", "error-bar")
-    .attr("id", d => `error-bar-${getSlugByTitle(data, d.title)}`)
+    .attr("id", d => `error-bar-${getSlugByTitle(sortedData, d.title)}`)
     .each(function(d) {
+      const y = calculateY({ interventionItem: d }) + yScale.bandwidth() / 2;
       const g = d3.select(this);
-      // Over zero
-        g
+
+      g
         .append("line")
+        .attr("class", (!currentSelection || currentSelection.mainIntervention !== slug) || currentSelection.value === d.slug ? "stroke-gray-700" : "stroke-gray-200")
         .attr("x1", xScale(d.low < 0 ? 0 : d.low))
         .attr("x2", xScale(Math.max(d.high, 0)))
-        .attr("y1", yScale(d.title) + yScale.bandwidth() / 2)
-        .attr("y2", yScale(d.title) + yScale.bandwidth() / 2)
-        .attr("stroke", primaryColor)
+        .attr("y1", y)
+        .attr("y2", y)
         .attr("opacity", getOpacity)
-        .attr("stroke-width", 2)
         .on("mouseover", addTooltip)
         .on("mouseout", () => chartTooltip.classed('hidden', true));
 
-      // Under zero
         g
         .append("line")
+        .attr("class", (!currentSelection || currentSelection.mainIntervention !== slug) || currentSelection.value === d.slug ? "stroke-darkRed-600" : "stroke-gray-200")
         .attr("x1", xScale(Math.min(d.low, 0)))
         .attr("x2", xScale(d.high > 0 ? 0 : d.high))
-        .attr("y1", yScale(d.title) + yScale.bandwidth() / 2)
-        .attr("y2", yScale(d.title) + yScale.bandwidth() / 2)
-        .attr("stroke", red)
+        .attr("y1", y)
+        .attr("y2", y)
         .attr("opacity", getOpacity)
-        .attr("stroke-width", 2)
         .on("mouseover", addTooltip)
         .on("mouseout", () => chartTooltip.classed('hidden', true));
     });
@@ -306,12 +387,13 @@ const createSVGChart = (slug, data) => {
     .data(dataWithSubTypes)
     .enter()
     .append("circle")
-    .attr("class", "data-point")
+    .attr("class", (d) => {
+      return `data-point ${(!currentSelection || currentSelection.mainIntervention !== slug) || currentSelection.value === d.slug ? "fill-gray-700" : "fill-gray-200"}`;
+    })
     .attr("cx", d => xScale(d.value))
-    .attr("cy", d => yScale(d.title) + yScale.bandwidth() / 2)
-    .attr("r", 5)
+    .attr("cy", d => calculateY({ interventionItem: d }) + yScale.bandwidth() / 2)
+    .attr("r", 4)
     .attr("opacity", getOpacity)
-    .attr("fill", d => d.value >= 0 ? primaryColor : red)
     .on("mouseover", addTooltip)
     .on("mouseout", () => chartTooltip.classed('hidden', true));
 };

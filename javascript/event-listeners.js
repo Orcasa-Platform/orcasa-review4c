@@ -24,24 +24,36 @@ window.addEventListener('load', function () {
     if (window.getters.publicationsSort() === 'desc') {
       window.mutations.togglePublicationsSort();
 
-      const [text, icon] = elements.sortPublicationsButton.childNodes;
+      const [, icon] = elements.sortPublicationsButton.childNodes;
       icon.classList.toggle('rotate-180');
-      text.textContent = 'Newest first';
     }
   };
 
-  // LEGEND
+  const getGroupLayers = (groupId) => {
+    const layers = window.map.getStyle().layers;
+    return layers.filter(layer => layer.metadata && layer.metadata['mapbox:group'] === groupId);
+  }
 
-  elements.legendToggle.addEventListener("click", function() {
-    window.mutations.toggleLegend();
-    if (!state.legendOpen) {
-      elements.legend.classList.add('hidden');
-      elements.legendToggle.innerHTML = 'Show legend';
-    } else {
-      elements.legend.classList.remove('hidden');
-      elements.legendToggle.innerHTML = 'Hide legend';
-    }
+  const getGroupById = (layerId) => {
+    const layers = window.map.getStyle().layers;
+    return layers.find(layer => layer.id === layerId)?.metadata['mapbox:group'];
+  };
+
+  const setLayerVisibility = (layers, visibility) => layers.forEach(layer => {
+    window.map.setLayoutProperty(layer.id, 'visibility', visibility);
   });
+
+  // MOBILE MENU
+
+  elements.mobileMenuButton.addEventListener("click", function() {
+    elements.mobileMenu.classList.remove('-translate-x-full');
+  });
+
+  elements.mobileMenuClose.addEventListener("click", function() {
+    elements.mobileMenu.classList.add('-translate-x-full');
+  });
+
+  // LEGEND
 
   elements.infoTooltipButton.addEventListener("mouseenter", function() {
     elements.infoTooltipContent.classList.remove('hidden');
@@ -65,8 +77,13 @@ window.addEventListener('load', function () {
     window.mutations.toggleMapSettings();
     if (state.mapSettingsOpen) {
       elements.mapSettingsOverlay.classList.remove('hidden');
+
+      // Turn the button green if active
+      elements.mapSettingsButton.classList.add('!bg-mod-sc-ev', 'hover:!bg-gray-500','!border-mod-bg-mod-sc-ev');
     } else {
       elements.mapSettingsOverlay.classList.add('hidden');
+
+      elements.mapSettingsButton.classList.remove('!bg-mod-sc-ev', 'hover:!bg-gray-500','!border-mod-bg-mod-sc-ev');
     }
   });
 
@@ -78,91 +95,67 @@ window.addEventListener('load', function () {
   const onToggleBasemapRadio = function(basemap) {
     window.mutations.setBasemap(basemap);
 
-    // Change theme of the controls
-    const isDarkTheme = basemap === 'satellite';
-
-    if (elements.maplibreControls) {
-      for (let element of elements.maplibreControls) {
-        element.classList.toggle('theme-light', isDarkTheme);
-      };
-    }
-
-    elements.sidebarToggle.classList.toggle('btn-icon-theme-dark', !isDarkTheme);
-    elements.sidebarToggle.classList.toggle('btn-icon-theme-light', isDarkTheme);
-
-    elements.mapSettingsButton.classList.toggle('btn-theme-dark', !isDarkTheme);
-    elements.mapSettingsButton.classList.toggle('btn-theme-light', isDarkTheme);
-
-    elements.attribution.classList.toggle('text-black', !isDarkTheme);
-    elements.attribution.classList.toggle('text-white', isDarkTheme);
-
-    // Update the attributions
-    if (basemap === 'satellite') {
-      elements.attributionContent.innerHTML = `
-        <span>
-          Tiles ©
-          <a
-            className="hover:underline"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://esri.com"
-          >
-            Esri
-          </a>
-          — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP,
-          and the GIS User Community
-        </span>
-      `;
-    } else if (basemap === 'light') {
-      elements.attributionContent.innerHTML = `
-        <span>
-          ©
-          <a
-            class="hover:underline"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://www.openstreetmap.org/"
-          >
-            OpenStreetMap
-          </a>
-          contributors ©
-          <a
-            class="hover:underline"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://carto.com/"
-          >
-            CARTO
-          </a>
-        </span>
-      `;
-    } else if (basemap === 'relief') {
-      elements.attributionContent.innerHTML = `
-        <span>
-          Tiles ©
-          <a
-            className="hover:underline"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://esri.com"
-          >
-            Esri
-          </a>
-          — Source: Esri
-        </span>
-      `;
-    }
-
     // Change basemap
-    map.setPaintProperty('basemap-satellite', 'raster-opacity', Number(basemap === 'satellite'));
-    map.setPaintProperty('basemap-light', 'raster-opacity', Number(basemap === 'light'));
-    map.setPaintProperty('basemap-relief', 'raster-opacity', Number(basemap === 'relief'));
+
+    const layers = window.map.getStyle().layers;
+
+    const lightGroupId = layers.find(layer => layer.id === 'background-light').metadata['mapbox:group'];
+    const satelliteGroupId = layers.find(layer => layer.id === 'background-satellite').metadata['mapbox:group'];
+
+    const lightLayers = layers.filter(layer => layer.metadata && layer.metadata['mapbox:group'] === lightGroupId);
+    const satelliteLayers = layers.filter(layer => layer.metadata && layer.metadata['mapbox:group'] === satelliteGroupId);
+
+    // Show or hide each layer in the group
+    lightLayers.forEach(layer => {
+      window.map.setLayoutProperty(layer.id, 'visibility', basemap === 'basemap-light' ? 'visible' : 'none');
+    });
+
+    satelliteLayers.forEach(layer => {
+      window.map.setLayoutProperty(layer.id, 'visibility', basemap === 'basemap-satellite' ? 'visible' : 'none');
+    });
+
+    // Update labels
+    const lightLabelsGroupId = getGroupById('country-label-light');
+    const satelliteLabelsGroupId = getGroupById('country-label-dark');
+
+    const lightLabelLayers = getGroupLayers(lightLabelsGroupId);
+    const satelliteLabelLayers = getGroupLayers(satelliteLabelsGroupId);
+
+    const labelsActive = window.getters.labels();
+
+    if (labelsActive) {
+      if (basemap === 'basemap-light') {
+        setLayerVisibility(lightLabelLayers, 'none');
+        setLayerVisibility(satelliteLabelLayers, 'visible');
+      } else {
+        setLayerVisibility(satelliteLabelLayers, 'none');
+        setLayerVisibility(lightLabelLayers, 'visible');
+      }
+    };
+
+    // Update boundaries
+    const lightBoundariesGroupId = getGroupById('admin-0-boundary-bg-dark');
+    const satelliteBoundariesGroupId = getGroupById('admin-0-boundary-light');
+
+    const lightBoundariesLayers = getGroupLayers(lightBoundariesGroupId);
+    const satelliteBoundariesLayers = getGroupLayers(satelliteBoundariesGroupId);
+
+    const boundariesActive = window.getters.boundaries();
+
+    if (boundariesActive) {
+      if (basemap === 'basemap-light') {
+        setLayerVisibility(lightBoundariesLayers, 'none');
+        setLayerVisibility(satelliteBoundariesLayers, 'visible');
+      } else {
+        setLayerVisibility(satelliteBoundariesLayers, 'none');
+        setLayerVisibility(lightBoundariesLayers, 'visible');
+      }
+    };
 
     // Update the UI
     const basemapEntries = Object.entries({
-      satellite: elements.satelliteBasemapButton,
-      light: elements.lightBasemapButton,
-      relief: elements.reliefBasemapButton,
+      'basemap-satellite': elements.satelliteBasemapButton,
+      'basemap-light': elements.lightBasemapButton,
     });
 
     for(const [id, radio] of basemapEntries) {
@@ -177,134 +170,92 @@ window.addEventListener('load', function () {
   };
 
   elements.satelliteBasemapButton.addEventListener("click", function() {
-    onToggleBasemapRadio('satellite');
+    onToggleBasemapRadio('basemap-satellite');
   });
 
   elements.satelliteBasemapButton.addEventListener('keydown', function ({ key }) {
     if (key === 'ArrowUp' || key === 'ArrowLeft') {
-      onToggleBasemapRadio('relief')
+      onToggleBasemapRadio('basemap-satellite')
     } else if (key === 'ArrowDown' || key === 'ArrowRight') {
-      onToggleBasemapRadio('light')
+      onToggleBasemapRadio('basemap-light')
     }
   });
 
   elements.lightBasemapButton.addEventListener("click", function() {
-    onToggleBasemapRadio('light');
+    onToggleBasemapRadio('basemap-light');
   });
 
   elements.lightBasemapButton.addEventListener('keydown', function ({ key }) {
     if (key === 'ArrowUp' || key === 'ArrowLeft') {
-      onToggleBasemapRadio('satellite')
+      onToggleBasemapRadio('basemap-satellite')
     } else if (key === 'ArrowDown' || key === 'ArrowRight') {
-      onToggleBasemapRadio('relief')
+      onToggleBasemapRadio('basemap-light')
     }
   });
 
-  elements.reliefBasemapButton.addEventListener("click", function() {
-    onToggleBasemapRadio('relief');
-  });
+  // LABELS
 
-  elements.reliefBasemapButton.addEventListener('keydown', function ({ key }) {
-    if (key === 'ArrowUp' || key === 'ArrowLeft') {
-      onToggleBasemapRadio('light')
-    } else if (key === 'ArrowDown' || key === 'ArrowRight') {
-      onToggleBasemapRadio('satellite')
+  const onToggleLabels = function () {
+    const labelsActive = window.getters.labels();
+    const selectedBasemap = window.getters.basemap();
+
+    const lightGroupId = getGroupById('country-label-light');
+    const satelliteGroupId = getGroupById('country-label-dark');
+
+    const lightLabelLayers = getGroupLayers(lightGroupId);
+    const satelliteLabelLayers = getGroupLayers(satelliteGroupId);
+
+    if (labelsActive) {
+      setLayerVisibility([...lightLabelLayers, ...satelliteLabelLayers], 'none');
+    } else {
+      const targetLayers = selectedBasemap === 'basemap-light' ? satelliteLabelLayers : lightLabelLayers;
+      setLayerVisibility(targetLayers, 'visible');
     }
-  });
 
-  const onToggleLabels = function (labels) {
-    window.mutations.setLabels(labels);
-
-    map.setLayoutProperty('countries-labels-light', 'visibility', 'none');
-    map.setLayoutProperty('countries-labels-dark', 'visibility', 'none');
-
-    if (labels !== null) {
-      map.setLayoutProperty(`countries-labels-${labels}`, 'visibility', 'visible');
-    }
+    window.mutations.setLabels(!labelsActive);
   };
 
   elements.labelsSwitch.addEventListener("click", function () {
-    const checked = window.getters.labels() !== null;
+    const checked = !!window.getters.labels();
 
     elements.labelsSwitch.setAttribute('aria-checked', `${!checked}`);
     elements.labelsSwitch.dataset.state = checked ? 'unchecked' : 'checked';
 
     elements.labelsSwitch.children[0].dataset.state = checked ? 'unchecked' : 'checked';
 
-    const radios = Array.from(elements.labelsRadioGroup.querySelectorAll('button[role="radio"]'));
-    radios.forEach((radio) => {
-      if (checked) {
-        radio.setAttribute('disabled', '');
-        radio.dataset.disabled = '';
-        if (radio.children.length > 0) {
-          radio.children[0].dataset.disabled = '';
-        }
-      } else {
-        radio.removeAttribute('disabled');
-        delete radio.dataset.disabled;
-        if (radio.children.length > 0) {
-          delete radio.children[0].dataset.disabled;
-        }
-      }
-    });
-
-    if (checked) {
-      radios.forEach((radio, index) => onToggleLabelsRadio(radio, index === 0));
-      onToggleLabels(null);
-    } else {
-      const labels = radios[0].value;
-      onToggleLabels(labels)
-    }
+    onToggleLabels();
   });
 
-  const onToggleLabelsRadio = function (radio, checked) {
-    if (checked) {
-      radio.setAttribute('tabindex', 0);
-      radio.setAttribute('aria-checked', true);
-      radio.dataset.state = 'checked';
+  // BOUNDARIES
 
-      onToggleLabels(radio.value);
+  const onToggleBoundaries = function () {
+    const boundariesActive = window.getters.boundaries();
+    const selectedBasemap = window.getters.basemap();
+    const lightGroupId = getGroupById('admin-0-boundary-bg-dark');
+    const satelliteGroupId = getGroupById('admin-0-boundary-light');
+
+    const lightLabelBoundaries = getGroupLayers(lightGroupId);
+    const satelliteLabelBoundaries = getGroupLayers(satelliteGroupId);
+
+    if (boundariesActive) {
+      setLayerVisibility([...lightLabelBoundaries, ...satelliteLabelBoundaries], 'none');
     } else {
-      radio.setAttribute('tabindex', -1);
-      radio.setAttribute('aria-checked', false);
-      radio.dataset.state = 'unchecked';
+      const targetBoundaries = selectedBasemap === 'basemap-light' ? satelliteLabelBoundaries : lightLabelBoundaries;
+      setLayerVisibility(targetBoundaries, 'visible');
     }
+
+    window.mutations.setBoundaries(!boundariesActive);
   };
 
-  Array.from(
-    elements.labelsRadioGroup.querySelectorAll('button[role="radio"]')
-  ).forEach((radio, index, radios) => {
-    radio.addEventListener('click', function () {
-      const disabled = radio.getAttribute('disabled') === '';
-      if (!disabled) {
-        onToggleLabelsRadio(radio, true);
+  elements.boundariesSwitch.addEventListener("click", function () {
+    const checked = !!window.getters.boundaries();
 
-        radios
-          .filter((_, otherIndex) => otherIndex !== index)
-          .map((otherRadio) => onToggleLabelsRadio(otherRadio, false));
-      }
-    });
+    elements.boundariesSwitch.setAttribute('aria-checked', `${!checked}`);
+    elements.boundariesSwitch.dataset.state = checked ? 'unchecked' : 'checked';
 
-    radio.addEventListener('keydown', function ({ key }) {
-      const disabled = radio.getAttribute('disabled') === '';
-      if (!disabled) {
-        let checkedIndex;
+    elements.boundariesSwitch.children[0].dataset.state = checked ? 'unchecked' : 'checked';
 
-        if (key === 'ArrowUp' || key === 'ArrowLeft') {
-          checkedIndex = index === 0 ? radios.length - 1 : index - 1;
-        } else if (key === 'ArrowDown' || key === 'ArrowRight') {
-          checkedIndex = index + 1 === radios.length ? 0 : index + 1;
-        }
-
-        onToggleLabelsRadio(radios[checkedIndex], true);
-
-        radios
-          .filter((_, otherIndex) => otherIndex !== checkedIndex)
-          .map((otherRadio) => onToggleLabelsRadio(otherRadio, false));
-
-        radios[checkedIndex].focus();
-      }
-    });
+    onToggleBoundaries();
   });
 
   // SIDEBAR
@@ -313,14 +264,16 @@ window.addEventListener('load', function () {
     window.mutations.toggleSidebar();
     if (state.sidebarOpen) {
       // Closing sidebar
-      elements.sidebar.classList.add('-translate-x-full');
-      elements.sidebarToggle.classList.add('rotate-180');
+      elements.publicationPanel.classList.add('-translate-x-full');
+      elements.sidebarToggle.classList.add('rotate-180', '!rounded-l-lg', '!rounded-r-none');
+      elements.sidebarToggleContainer.classList.add('!left-[90px]');
 
       fitMap(map, { sidebarOpen: false });
     } else {
       // Opening sidebar
-      elements.sidebar.classList.remove('-translate-x-full');
-      elements.sidebarToggle.classList.remove('rotate-180');
+      elements.publicationPanel.classList.remove('-translate-x-full');
+      elements.sidebarToggle.classList.remove('rotate-180', '!rounded-l-lg', '!rounded-r-none');
+      elements.sidebarToggleContainer.classList.remove('!left-[90px]');
 
       fitMap(map, { sidebarOpen: true });
     }
@@ -331,24 +284,43 @@ window.addEventListener('load', function () {
     window.mutations.setMethodologyOpen(true);
     window.renderMethodologyChart();
     elements.methodologyPanel.classList.remove('-translate-x-full');
+
+    elements.methodologyPanel.classList.remove('hidden');
+    // Hide the main page
+    elements.main.classList.add('lg:hidden');
+    elements.footerMenu.classList.add('lg:hidden');
   });
 
   elements.closeMethodologyPanelButton.addEventListener("click", function() {
     elements.methodologyPanel.classList.add('-translate-x-full');
     window.mutations.setMethodologyOpen(false);
+
+    elements.methodologyPanel.classList.add('hidden');
+    // Show the main page
+    elements.main.classList.remove('lg:hidden');
+    elements.footerMenu.classList.remove('lg:hidden');
   });
 
   // PUBLICATION BUTTON
   const closeFiltersPanel = () => {
     window.mutations.setFiltersOpen(false);
     elements.filtersPanel.classList.add('-translate-x-full', 'hidden');
-    elements.filtersVeil.classList.add('hidden');
+    elements.filtersButton.classList.remove('!bg-yellow-500');
+    elements.filtersButton.classList.remove('!text-gray-700');
   };
 
   elements.publicationButton.addEventListener("click", function() {
     window.mutations.setPublicationsOpen(true);
     elements.publicationPanel.classList.remove('-translate-x-full');
     window.loadPublications();
+
+    // Hide the main page
+    elements.main.classList.add('lg:hidden');
+    elements.map.classList.remove('lg:hidden');
+
+    window.loadMap();
+
+    elements.footerMenu.classList.add('lg:hidden');
   });
 
   elements.closePublicationPanelButton.addEventListener("click", function() {
@@ -366,6 +338,11 @@ window.addEventListener('load', function () {
     if (isFiltersPanelOpen) {
       closeFiltersPanel();
     }
+
+    // Restore main page
+    elements.main.classList.remove('lg:hidden');
+    elements.map.classList.add('lg:hidden');
+    elements.footerMenu.classList.remove('lg:hidden');
   });
 
   // FILTERS BUTTON
@@ -376,18 +353,25 @@ window.addEventListener('load', function () {
     // Toggle filters panel
     if (buttonState) {
       closeFiltersPanel();
+      elements.filtersButton.classList.remove('!bg-yellow-500');
+      elements.filtersButtonBadge.classList.remove('bg-yellow-700');
+      elements.filtersButtonBadge.classList.add('bg-green-700');
+      elements.filtersButtonBadge.classList.remove('text-gray-700');
+      elements.filtersButtonBadge.classList.add('text-white');
+      elements.filtersButton.classList.remove('!text-gray-700');
     } else {
       window.mutations.setFiltersOpen(true);
       elements.filtersPanel.classList.remove('-translate-x-full', 'hidden');
-      elements.filtersVeil.classList.remove('hidden');
+      elements.filtersButtonBadge.classList.remove('bg-green-700');
+      elements.filtersButtonBadge.classList.add('bg-yellow-700');
+      elements.filtersButtonBadge.classList.remove('text-white');
+      elements.filtersButtonBadge.classList.add('text-gray-700');
+      elements.filtersButton.classList.add('!bg-yellow-500');
+      elements.filtersButton.classList.add('!text-gray-700');
     }
   });
 
   elements.closeFiltersPanelButton.addEventListener("click", function() {
-    closeFiltersPanel();
-  });
-
-  elements.filtersVeil.addEventListener("click", function() {
     closeFiltersPanel();
   });
 
@@ -397,10 +381,8 @@ window.addEventListener('load', function () {
 
   elements.sortPublicationsButton.addEventListener("click", function() {
     window.mutations.togglePublicationsSort();
-    const publicationsSort = window.getters.publicationsSort();
-    const [text, icon] = elements.sortPublicationsButton.childNodes;
+    const [, icon] = elements.sortPublicationsButton.childNodes;
     icon.classList.toggle('rotate-180');
-    text.textContent = publicationsSort === 'asc' ? 'Newest first' : 'Oldest first';
     window.reloadPublications();
   });
 
@@ -408,8 +390,7 @@ window.addEventListener('load', function () {
 
   for (let dropdown of elements.dropdowns) {
     const button = dropdown.querySelector('.btn-dropdown');
-    const searchInput = dropdown.querySelector('.search');
-    const buttonIcon = dropdown.querySelector('svg');
+    const searchInput = dropdown.querySelector('.input-search');
     const options = dropdown.querySelector('.dropdown-options');
     const selected = dropdown.querySelector('.dropdown-selected');
     const selectAllButton = dropdown.querySelector('.btn-select-all');
@@ -418,7 +399,6 @@ window.addEventListener('load', function () {
 
     const toggleDropdown = () => {
       button.classList.toggle('hidden');
-
       searchInput.classList.toggle('hidden');
       if (searchInput.classList.contains('hidden')) {
         searchInput.value = '';
@@ -427,10 +407,18 @@ window.addEventListener('load', function () {
         searchInput.focus();
       }
 
-      options.classList.toggle('min-h-[190px]');
+      Popper.createPopper(searchInput, options, {
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 10],
+            },
+          },
+        ],
+      });
+
       options.classList.toggle('hidden');
-      buttonIcon.classList.toggle('rotate-180');
-      selected.classList.toggle('text-gray-500');
     }
 
     button.addEventListener('click', () => {
@@ -459,13 +447,54 @@ window.addEventListener('load', function () {
       }
     });
 
+    const recalculateActiveFilters = (dropdownId, options) => {
+      const anyOptionChecked = [...options.querySelectorAll('input')].some(input => input.checked);
+      const activeFilters = window.getters.activeFilters();
+
+      if (anyOptionChecked) {
+        if (activeFilters.length === 0 || !activeFilters.includes(dropdownId) ) {
+          window.mutations.setActiveFilters(activeFilters.concat(dropdownId));
+        }
+      } else {
+        if (activeFilters.includes(dropdownId)) {
+          window.mutations.setActiveFilters(activeFilters.filter(filter => filter !== dropdownId));
+        }
+      }
+
+      const filtersActiveNumber = window.getters.activeFilters().length;
+
+      if (filtersActiveNumber > 0) {
+        elements.filtersButtonBadge.textContent = filtersActiveNumber;
+        elements.filtersButtonBadge.classList.remove('hidden');
+      } else {
+        elements.filtersButtonBadge.textContent = '';
+        elements.filtersButtonBadge.classList.add('hidden');
+      }
+    };
+
     options.addEventListener('change', ({ target }) => {
       if (target.type !== 'checkbox') {
         return;
       }
+      // If any option is checked, we remove disabled from the clear button
+      const anyOptionChecked = [...options.querySelectorAll('input')].some(input => input.checked);
+      if (anyOptionChecked) {
+        clearButton.removeAttribute('disabled');
+      } else {
+        clearButton.setAttribute('disabled', '');
+      }
+
+      // If all options are checked, we add disabled to the select all button
+      const allOptionsChecked = [...options.querySelectorAll('input')].every(input => input.checked);
+      if (allOptionsChecked) {
+        selectAllButton.setAttribute('disabled', '');
+      } else {
+        selectAllButton.removeAttribute('disabled');
+      }
 
       const selectedValues = [];
       const selectedLabels = [];
+
       options.querySelectorAll('input').forEach(input => {
         if (input.checked) {
           selectedValues.push(input.value);
@@ -483,11 +512,16 @@ window.addEventListener('load', function () {
         window.mutations.setPublicationFilters(dropdown.id, selectedValues);
       };
 
+      recalculateActiveFilters(dropdown.id, options);
+
       // Reload publications
       window.reloadPublications();
     });
 
     selectAllButton.addEventListener('click', () => {
+      selectAllButton.setAttribute('disabled', '');
+      clearButton.removeAttribute('disabled');
+
       const inputs = options.querySelectorAll('input');
 
       inputs.forEach(input => {
@@ -499,10 +533,16 @@ window.addEventListener('load', function () {
 
       const inputValues = [...inputs].map(input => input.value);
       window.mutations.setPublicationFilters(dropdown.id, inputValues);
+
+      recalculateActiveFilters(dropdown.id, options);
+
       window.reloadPublications();
     });
 
     clearButton.addEventListener('click', () => {
+      clearButton.setAttribute('disabled', '');
+      selectAllButton.removeAttribute('disabled');
+
       options.querySelectorAll('input').forEach(input => {
         input.checked = false;
       });
@@ -510,6 +550,9 @@ window.addEventListener('load', function () {
       const placeholder = selected.attributes['aria-placeholder'].value;
       selected.textContent = placeholder;
       window.mutations.setPublicationFilters(dropdown.id, []);
+
+      recalculateActiveFilters(dropdown.id, options);
+
       window.reloadPublications();
     });
 
@@ -538,35 +581,32 @@ window.addEventListener('load', function () {
   elements.resetFiltersButton.addEventListener('click', () => {
     resetPublicationsFilters();
     window.reloadPublications();
+
+    // Reset the active filters badge
+    window.mutations.setActiveFilters([]);
+    elements.filtersButtonBadge.textContent = '';
+    elements.filtersButtonBadge.classList.add('hidden');
+
+    // Activate all Select All buttons and disable all Clear buttons
+    for (let dropdown of elements.dropdowns) {
+      const selectAllButton = dropdown.querySelector('.btn-select-all');
+      const clearButton = dropdown.querySelector('.btn-clear');
+
+      selectAllButton.removeAttribute('disabled');
+      clearButton.setAttribute('disabled', '');
+    }
   });
 
   // PUBLICATION DETAIL PANEL
 
-  // Hide the modal when the close button is clicked
+  // Hide the publication detail panel when the close button is clicked
   elements.closePublicationDetailPanelButton.addEventListener('click', () => {
     window.mutations.setPublicationsOpen(false);
-    elements.publicationDetailModal.classList.add('hidden');
-  });
+    elements.publicationDetailPanel.classList.add('lg:hidden');
+    elements.publicationDetailPanelContent.innerHTML = '';
 
-  // Hide the modal when the user clicks outside of it
-  elements.publicationDetailModal.addEventListener('click', (event) => {
-    if (event.target === elements.publicationDetailModal) {
-      window.mutations.setPublicationsOpen(false);
-      elements.publicationDetailModal.classList.add('hidden');
-    }
-  });
-
-  // Trap the focus inside the modal when it is opened
-  elements.publicationDetailModal.addEventListener('focusin', (event) => {
-    if (!elements.publicationDetailModal.contains(event.target)) {
-      elements.closePublicationDetailPanelButton.focus();
-    }
-  });
-
-  // Release the focus when the modal is closed
-  elements.publicationDetailModal.addEventListener('focusout', (event) => {
-    if (!elements.publicationDetailModal.contains(event.relatedTarget)) {
-      elements.publicationDetailModal.focus();
-    }
+    // Display back publication panel and map
+    elements.publicationPanel.classList.remove('lg:hidden');
+    elements.map.classList.remove('lg:hidden');
   });
 });

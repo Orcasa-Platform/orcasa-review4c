@@ -4,13 +4,17 @@ window.createMethodologyChart = (data) => {
   container.selectAll("*").remove();
 
   const element = container.node();
-  const CHART_HEIGHT = 455;
+  const CHART_HEIGHT = 246;
   const margin = { top: 20, right: 20, bottom: 40, left: 50 };
   const { publications, metaAnalysis } = data || {};
-  const publicationsData = Object.keys(publications).map(key => ({ date: d3.timeParse("%Y")(key), value: publications[key] }));
-  const metaAnalysisData = Object.keys(metaAnalysis).map(key => ({ date: d3.timeParse("%Y")(key), value: metaAnalysis[key] }));
+  const publicationsData = publications && Object.keys(publications).map(key => ({ date: d3.timeParse("%Y")(key), value: publications[key] }));
+  const metaAnalysisData = metaAnalysis && Object.keys(metaAnalysis).map(key => ({ date: d3.timeParse("%Y")(key), value: metaAnalysis[key] }));
 
-  const width = element.getBoundingClientRect().width - margin.left - margin.right;
+  if(!publicationsData || !metaAnalysisData) { return; }
+
+  const OUTER_LEFT_MARGIN = 40;
+
+  const width = element.getBoundingClientRect().width - margin.left - margin.right - OUTER_LEFT_MARGIN;
   const height = CHART_HEIGHT - margin.top - margin.bottom;
 
   const svg = container
@@ -61,8 +65,8 @@ window.createMethodologyChart = (data) => {
 
 
   xAxisTicks.selectAll(".tick text")
+    .attr('class', "text-neutral-300")
     .style("font-size", 12)
-    .style("fill", gray500);
 
   xAxisTicks.selectAll(".tick line").remove();
 
@@ -89,20 +93,20 @@ window.createMethodologyChart = (data) => {
   yAxisTicks.select(".domain").remove() // Remove the left line
 
   yAxisTicks.selectAll(".tick text")
+    .attr('class', "text-neutral-300")
     .attr("transform", "translate(-20,0)");
 
   yAxisTicks.selectAll(".tick line")
     .style("stroke", gray400);
   yAxisTicks.selectAll(".tick:not(:first-child) line")
-    .style("stroke-dasharray", "2,10")
+    .style("stroke-dasharray", "6,6")
     .style("stroke", gray400);
 
   // Add the publications line
   svg.append("path")
     .datum(publicationsData)
     .attr("fill", "none")
-    .attr("stroke", gray700)
-    .attr('stroke-dasharray', '2,2')
+    .attr("stroke", 'white')
     .attr("stroke-width", 1.5)
     .attr("d", d3.line()
       .x(d => x(d.date))

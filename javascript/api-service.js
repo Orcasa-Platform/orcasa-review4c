@@ -123,17 +123,19 @@ const getPublications = async ({ landUse, mainIntervention, intervention, subTyp
   const getMetadata = (data) => {
     if(!data) return {};
 
-    const yearCounts = data.concat().reduce((counts, publication) => {
+    const filteredData = applyFilters(data);
+
+    const yearCounts = filteredData.concat().reduce((counts, publication) => {
       const year = publication.year;
       counts[year] = (counts[year] || 0) + 1;
       return counts;
     }, {});
+
     return {
-      totalPublications: data.filter(publication => publication.type === 'primary-study').length || 0,
-      totalMetaAnalysis: data.filter(publication => publication.type === 'meta-analysis').length || 0,
+      totalPublications: filteredData.filter(publication => publication.type === 'primary-study').length || 0,
+      totalMetaAnalysis: filteredData.filter(publication => publication.type === 'meta-analysis').length || 0,
       years: yearCounts,
-      // The pages should be after filtering
-      pages: Math.ceil(applyFilters(data).length / PAGE_SIZE),
+      pages: Math.ceil(filteredData.length / PAGE_SIZE),
       countries: uniq(data.map(d => d.countryIsos).flat()),
       journals: uniq(data.map(d => d.journalIds).flat()),
     };
