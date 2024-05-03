@@ -148,194 +148,177 @@ const publicationDetailTemplate = ({ isMetaAnalysis, journals, year, countries, 
   </div>
 `;
 
-window.addEventListener('load', function () {
-  const createCards = (data, landUseName) => {
-    const existingData = data?.filter(Boolean);
-    const cards = existingData.map(({
-      name,
-      slug,
-      description
-    }) => {
-      return isMobile ?
-      `
-      <div class="flex flex-col mb-2 py-4 border-b border-slate-600 gap-3">
-        <header class="w-full text-base">
-          Impact of <span class="font-semibold"> ${name} </span> on Soil Organic Carbon for ${landUseName}
-        </header>
-        <div
-          class="text-neutral-300 text-sm leading-7">
-          <div>${description}</div>
-          <div id="chart-mobile-${slug}" class="chart w-full h-full"></div>
-        </div>
-      </div>
-      `
-      : `
-      <div class="flex flex-col p-6 bg-white mb-2 rounded-lg text-gray-700">
-        <header class="mb-4 flex w-full justify-between items-end">
-          <div>Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for ${landUseName}</div>
-          <div class="text-gray-500 text-xs">Click in one intervention below to see more details</div>
-        </header>
-        <div
-          class="text-2xs">
-          <div>${description}</div>
-          <div id="chart-${slug}" class="chart w-full h-full flex items-center justify-center mt-4"></div>
-        </div>
-      </div>
-      `;
-    });
+// Load data on first load or when the user clicks on an main intervention menu button
+window.loadData = (landUseSlug) => {
+  const landUsesData = window.getters.landUses();
+  const landUse = landUsesData.find(({ slug }) => slug === landUseSlug);
+  const { name, publications, metaAnalysis, slug } = landUse;
 
-    if (isMobile) {
-      if (existingData.length === 0) {
-        elements.chartCardsMobile.innerHTML = `<p class="font-semibold text-neutral-300">No results</p>`;
-      } else {
-        elements.chartCardsMobile.innerHTML = cards.join('');
-        existingData.map(d => createMobileChart(d.slug, d["interventions"]));
-      }
+  // Set on state the first land use
+  window.mutations.setLandUse(slug);
+
+  // Update the footer with the land use publications and meta-analysis
+  const publicationsNumber = publications ? formatNumber(publications) : 0;
+  const metaAnalysisNumber = metaAnalysis ? formatNumber(metaAnalysis) : 0;
+  if (landUseSlug === 'all') {
+    elements.landUseIntro.innerHTML = `<div>
+      To date, we have gathered ${metaAnalysisNumber} meta-analyses and ${publicationsNumber} primary studies. Learn more, and view them geographically:
+    </div>`;
+    lucide.createIcons();
+
+  } else {
+    elements.landUseIntro.innerHTML = `<div>
+      <span>These
+        insights come from </span><span
+        class="font-semibold">
+        <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analysis and
+        <span id="land-use-publications">${publicationsNumber}</span> primary studies.</span><span>
+        Learn more, and view them geographically:</span>
+    </div>`;
+  }
+  Array.from(elements.legendTexts).map(text => text.innerHTML = name);
+
+  // Load main intervention charts
+  if (landUse.mainInterventions) {
+    loadMainInterventionCharts(landUse);
+  } else {
+    elements.chartCards.innerHTML = '';
+  }
+};
+
+const loadMainInterventionCharts = (landUse) => {
+  const { name: landUseName, mainInterventions, slug: landUseSlug } = landUse;
+  const mainInterventionPromises = mainInterventions.map((mainInterventionSlug) => getMainInterventionChartData(landUseSlug, mainInterventionSlug));
+  Promise.all(mainInterventionPromises).then((data) => {
+    window.mutations.setMainInterventions(data);
+    createCards(data, landUseName);
+  });
+};
+
+const createCards = (data, landUseName) => {
+  const existingData = data?.filter(Boolean);
+  const cards = existingData.map(({
+    name,
+    slug,
+    description
+  }) => {
+    return isMobile() ?
+    `
+    <div class="flex flex-col mb-2 py-4 border-b border-slate-600 gap-3">
+      <header class="w-full text-base">
+        Impact of <span class="font-semibold"> ${name} </span> on Soil Organic Carbon for ${landUseName}
+      </header>
+      <div
+        class="text-neutral-300 text-sm leading-7">
+        <div>${description}</div>
+        <div id="chart-mobile-${slug}" class="chart w-full h-full"></div>
+      </div>
+    </div>
+    `
+    : `
+    <div class="flex flex-col p-6 bg-white mb-2 rounded-lg text-gray-700">
+      <header class="mb-4 flex w-full justify-between items-end">
+        <div>Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for ${landUseName}</div>
+        <div class="text-gray-500 text-xs">Click in one intervention below to see more details</div>
+      </header>
+      <div
+        class="text-2xs">
+        <div>${description}</div>
+        <div id="chart-${slug}" class="chart w-full h-full flex items-center justify-center mt-4"></div>
+      </div>
+    </div>
+    `;
+  });
+
+  if (isMobile()) {
+    if (existingData.length === 0) {
+      elements.chartCardsMobile.innerHTML = `<p class="font-semibold text-neutral-300 text-lg h-full flex items-center justify-center">No data</p>`;
     } else {
-      if (existingData.length === 0) {
-        elements.chartCards.innerHTML = `<p class="font-semibold text-neutral-300">No results</p>`;
-      } else {
-        elements.chartCards.innerHTML = cards.join('');
-        existingData.map(d => createSVGChart(d.slug, d["interventions"]));
-      }
+      elements.chartCardsMobile.innerHTML = cards.join('');
+      existingData.map(d => createMobileChart(d.slug, d["interventions"]));
     }
-  };
+  } else {
+    if (existingData.length === 0) {
+      elements.chartCards.innerHTML = `<p class="font-semibold text-neutral-300 text-lg h-full flex items-center justify-center">No data</p>`;
+    } else {
+      elements.chartCards.innerHTML = cards.join('');
+      existingData.map(d => createSVGChart(d.slug, d["interventions"]));
+    }
+  }
+};
 
-  const createMobileChart = (slug, data) => {
-    const chartElement = document.getElementById(`chart-mobile-${slug}`);
-    if(!data || data.length === 0) return;
+const createMobileChart = (slug, data) => {
+  const chartElement = document.getElementById(`chart-mobile-${slug}`);
+  if(!data || data.length === 0) return;
 
-    // Sort data by value
-    const sortedData = data.sort((a, b) => b.value - a.value).map(d => {
-      if (d.subTypes) {
-        d.subTypes = d.subTypes.sort((a, b) => b.value - a.value);
-      }
-      return d;
-    });
+  // Sort data by value
+  const sortedData = data.sort((a, b) => b.value - a.value).map(d => {
+    if (d.subTypes) {
+      d.subTypes = d.subTypes.sort((a, b) => b.value - a.value);
+    }
+    return d;
+  });
 
-    if (chartElement) {
-      const chart = `<div class="flex flex-col justify-between mt-4 gap-[12px]">
-        ${sortedData.map(({ title, value, publications }) => (`
-          <div class="flex gap-4 text-white items-center justify-between">
-            <span class="text-base min-w-6 font-semibold ${value > 0 ? 'text-darkRed-500' : ''}">
-              ${value.toFixed(1)}%
+  if (chartElement) {
+    const chart = `<div class="flex flex-col justify-between mt-4 gap-[12px]">
+      ${sortedData.map(({ title, value, publications }) => (`
+        <div class="flex gap-4 text-white items-center justify-between">
+          <span class="text-base min-w-6 font-semibold ${value > 0 ? 'text-darkRed-500' : ''}">
+            ${value.toFixed(1)}%
+          </span>
+          <button type="button" class="btn-filter flex-1 btn-chart-mobile" aria-pressed="false" id="btn-${kebabCase(title)}" data-main-intervention-slug="${slug}" data-intervention-name="${title}" data-fixed-value="${value.toFixed(1)}" title="${title} (${formatNumber(publications)})">
+            <span class="underline">${title}</span> (${formatNumber(publications)})
+          </button>
+          <div class="flex items-center justify-between">
+            <span class="text-sm">
             </span>
-            <button type="button" class="btn-filter flex-1 btn-chart-mobile" aria-pressed="false" id="btn-${kebabCase(title)}" data-main-intervention-slug="${slug}" data-intervention-name="${title}" data-fixed-value="${value.toFixed(1)}" title="${title} (${formatNumber(publications)})">
-              <span class="underline">${title}</span> (${formatNumber(publications)})
-            </button>
-            <div class="flex items-center justify-between">
-              <span class="text-sm">
-              </span>
-            </div>
-          </div>`)).join('')
-        }
-        <div class="hidden" id="chart-description-${slug}"></div>
-      </div>`;
-
-      chartElement.innerHTML = chart;
-
-      // Mobile chart buttons click
-      const chartMobileButtons = document.getElementsByClassName('btn-chart-mobile');
-      if (chartMobileButtons) {
-        for (let element of chartMobileButtons) {
-          element.addEventListener("click", function() {
-            // Hide other chart descriptions
-            const chartDescriptions = document.querySelectorAll('[id^="chart-description-"]');
-            Array.from(chartDescriptions).map(d => d.classList.add('hidden'));
-
-            // Fill and show the chart description
-
-            const mainInterventionSlug = element.getAttribute('data-main-intervention-slug');
-            const mainInterventionName = startCase(mainInterventionSlug);
-            const interventionName = element.getAttribute('data-intervention-name');
-            const fixedValue = element.getAttribute('data-fixed-value');
-
-            const chartDescription = document.getElementById(`chart-description-${mainInterventionSlug}`);
-            const chartDescriptionText =  descriptionText(mainInterventionName, interventionName, fixedValue)
-
-            chartDescription.innerHTML = chartDescriptionText;
-            chartDescription.classList.remove('hidden');
-
-            // Set the button as pressed
-            Array.from(chartMobileButtons).filter(b => b !== element).map(b => b.setAttribute('aria-pressed', 'false'));
-            element.setAttribute('aria-pressed', 'true');
-          });
-        };
+          </div>
+        </div>`)).join('')
       }
-    };
-  };
+      <div class="hidden" id="chart-description-${slug}"></div>
+    </div>`;
 
+    chartElement.innerHTML = chart;
 
-  const loadMainInterventionCharts = (landUse) => {
-    const { name: landUseName, mainInterventions, slug: landUseSlug } = landUse;
-    const mainInterventionPromises = mainInterventions.map((mainInterventionSlug) => getMainInterventionChartData(landUseSlug, mainInterventionSlug));
-    Promise.all(mainInterventionPromises).then((data) => {
-      window.mutations.setMainInterventions(data);
-      createCards(data, landUseName);
-    });
-  };
+    // Mobile chart buttons click
+    const chartMobileButtons = document.getElementsByClassName('btn-chart-mobile');
+    if (chartMobileButtons) {
+      for (let element of chartMobileButtons) {
+        element.addEventListener("click", function() {
+          // Hide other chart descriptions
+          const chartDescriptions = document.querySelectorAll('[id^="chart-description-"]');
+          Array.from(chartDescriptions).map(d => d.classList.add('hidden'));
 
-  // Load data on first load or when the user clicks on an main intervention menu button
-  window.loadData = (landUseSlug) => {
-    const landUsesData = window.getters.landUses();
-    const landUse = landUsesData.find(({ slug }) => slug === landUseSlug);
-    const { name, publications, metaAnalysis, slug } = landUse;
+          // Fill and show the chart description
 
-    // Set on state the first land use
-    window.mutations.setLandUse(slug);
+          const mainInterventionSlug = element.getAttribute('data-main-intervention-slug');
+          const mainInterventionName = startCase(mainInterventionSlug);
+          const interventionName = element.getAttribute('data-intervention-name');
+          const fixedValue = element.getAttribute('data-fixed-value');
 
-    // Update the footer with the land use publications and meta-analysis
-    const publicationsNumber = publications ? formatNumber(publications) : 0;
-    const metaAnalysisNumber = metaAnalysis ? formatNumber(metaAnalysis) : 0;
-    if (landUseSlug === 'all') {
-      elements.landUseIntro.innerHTML = `<div>
-        To date, we have gathered ${metaAnalysisNumber} meta-analyses and ${publicationsNumber} primary studies. Learn more, and view them geographically:
-      </div>`;
-      lucide.createIcons();
+          const chartDescription = document.getElementById(`chart-description-${mainInterventionSlug}`);
+          const chartDescriptionText =  descriptionText(mainInterventionName, interventionName, fixedValue)
 
-    } else {
-      elements.landUseIntro.innerHTML = `<div>
-        <span>These
-          insights come from </span><span
-          class="font-semibold">
-          <span id="land-use-meta-analysis">${metaAnalysisNumber}</span> meta-analysis and
-          <span id="land-use-publications">${publicationsNumber}</span> primary studies.</span><span>
-          Learn more, and view them geographically:</span>
-      </div>`;
-    }
-    Array.from(elements.legendTexts).map(text => text.innerHTML = name);
+          chartDescription.innerHTML = chartDescriptionText;
+          chartDescription.classList.remove('hidden');
 
-    // Load main intervention charts
-    if (landUse.mainInterventions) {
-      loadMainInterventionCharts(landUse);
-    } else {
-      elements.chartCards.innerHTML = '';
+          // Set the button as pressed
+          Array.from(chartMobileButtons).filter(b => b !== element).map(b => b.setAttribute('aria-pressed', 'false'));
+          element.setAttribute('aria-pressed', 'true');
+        });
+      };
     }
   };
+};
 
+const loadDataAndSetButtons = () => {
   // Create a button for each land use
   const button = ({ slug, name, publications, index }) =>
-  `<button
-    type="button"
-    data-slug=${slug}
-    class="btn-filter btn-land-use"
-    aria-pressed="${index === 0 ? "true" : "false"}"
-  >
-    <span class="text-base">
-      ${name}
-    </span>
-    <span class="text-xs">
-    (${formatNumber(publications)})
-    </span>
-    </button>
-  `;
-  // Create an option for each land use
-  const option = ({ slug, name, publications, selectedSlug, mobile = true }) => {
-
-    return mobile ? `<option
+    `<button
+      type="button"
       data-slug=${slug}
-      value=${slug}
-      ${selectedSlug === slug ? "selected" : ""}
+      class="btn-filter btn-land-use"
+      aria-pressed="${index === 0 ? "true" : "false"}"
     >
       <span class="text-base">
         ${name}
@@ -343,32 +326,47 @@ window.addEventListener('load', function () {
       <span class="text-xs">
       (${formatNumber(publications)})
       </span>
-      </option>
-    ` :
-    `<button
-      data-slug=${slug}
-      data-=${slug}
-      value=${slug}
-      class="btn-land-use-option group"
-      ${selectedSlug === slug ? "selected" : ""}
-    >
-      <span>
-        ${name} (${formatNumber(publications)})
-      </span>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="${selectedSlug === slug ? '' : 'hidden'}">
-        <path d="M20 6L9 17L4 12" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
+      </button>
     `;
-  }
+    // Create an option for each land use
+    const option = ({ slug, name, publications, selectedSlug, mobile = true }) => {
 
-  // Get data on first load
+      return mobile ? `<option
+        data-slug=${slug}
+        value=${slug}
+        ${selectedSlug === slug ? "selected" : ""}
+      >
+        <span class="text-base">
+          ${name}
+        </span>
+        <span class="text-xs">
+        (${formatNumber(publications)})
+        </span>
+        </option>
+      ` :
+      `<button
+        data-slug=${slug}
+        data-=${slug}
+        value=${slug}
+        class="btn-land-use-option group"
+        ${selectedSlug === slug ? "selected" : ""}
+      >
+        <span>
+          ${name} (${formatNumber(publications)})
+        </span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="${selectedSlug === slug ? '' : 'hidden'}">
+          <path d="M20 6L9 17L4 12" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      `;
+    };
 
   getMainInterventionChartData().then(data => {
-    const landUseMenu = isMobile ? elements.landUseMenuMobile : elements.landUseMenu;
+    const landUseMenu = isMobile() ? elements.landUseMenuMobile : elements.landUseMenu;
     if (landUseMenu && data) {
       const landUses = Object.entries(data).map(([key, value], i) => ({ slug: key, ...value, index: i }));
       window.mutations.setLandUses(landUses);
+      landUseMenu.innerHTML = '';
       landUses.filter(l => l.name !== 'All').forEach(landUse => {
         landUseMenu.innerHTML += button(landUse);
       });
@@ -404,6 +402,9 @@ window.addEventListener('load', function () {
 
           elements.landUseSelectContainer.classList.remove('hidden');
           elements.landUseSelectButton.innerHTML = element.innerText;
+
+          elements.landUseOptions.innerHTML = '';
+          elements.landUseSelectMobile.innerHTML = '';
 
           landUses.filter(l => l.name !== 'All').forEach(landUse => {
             elements.landUseSelectMobile.innerHTML += option({...landUse, selectedSlug: slug });
@@ -493,6 +494,16 @@ window.addEventListener('load', function () {
       }
     });
   });
+};
+
+window.addEventListener('resize', function () {
+  loadDataAndSetButtons();
+  window.loadPublications(true);
+});
+
+window.addEventListener('load', function () {
+  // Get data on first load
+  loadDataAndSetButtons();
 
   // LAND USE SELECT
   elements.landUseSelectMobile.addEventListener('change', function() {
@@ -514,7 +525,7 @@ window.addEventListener('load', function () {
     const listElement = document.createElement('li');
     listElement.classList.add('max-w-[265px]');
     listElement.innerHTML = `
-    <label for="${slug}-${value}" class="flex items-center gap-2 p-4">
+    <label for="${slug}-${value}" class="flex items-center gap-2 py-2 px-4 text-sm">
       <input
         type="checkbox"
         class="checkbox"
@@ -591,8 +602,8 @@ window.addEventListener('load', function () {
           </div>
         </div>
         <div class="flex justify-between items-center h-full">
-          <div class="text-neutral-300 text-sm">${yearKeys[0]}</div>
-          <div class="text-neutral-300 text-sm">${yearKeys[yearKeys.length - 1]}</div>
+          <div class="text-neutral-300 text-sm">${yearKeys[0] || ''}</div>
+          <div class="text-neutral-300 text-sm">${yearKeys[yearKeys.length - 1] || ''}</div>
         </div>
       </div>
     `;

@@ -412,7 +412,7 @@ window.addEventListener('load', function () {
           {
             name: 'offset',
             options: {
-              offset: [0, 10],
+              offset: [0, 8],
             },
           },
         ],
@@ -508,7 +508,8 @@ window.addEventListener('load', function () {
         selected.textContent = placeholder;
         window.mutations.setPublicationFilters(dropdown.id, []);
       } else {
-        selected.textContent = `${placeholder} (${formatNumber(selectedLabels.length)})`;
+        const label = document.querySelector(`label[for="${selected?.id?.replace('-selected', '')}"]`);
+        selected.textContent = `${label?.textContent} (${formatNumber(selectedLabels.length)})`;
         window.mutations.setPublicationFilters(dropdown.id, selectedValues);
       };
 
