@@ -407,7 +407,17 @@ window.addEventListener('load', function () {
         searchInput.focus();
       }
 
-      options.classList.toggle('min-h-[190px]');
+      Popper.createPopper(searchInput, options, {
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 10],
+            },
+          },
+        ],
+      });
+
       options.classList.toggle('hidden');
     }
 

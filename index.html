@@ -61,6 +61,9 @@
     <script
       src="https://unpkg.com/supercluster@8.0.1/dist/supercluster.min.js"></script>
 
+    <!-- Popper library for dropdowns -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+
     <!-- This style tag defines the custom grouped classes for tailwind -->
     <!-- On the first case btn-primary will apply all the subsequent classes when applied to an element -->
     <!-- If the code is integrated with Symfony this script could be moved to a different file -->
@@ -165,11 +168,11 @@
         }
 
         .input-search {
-          @apply relative rounded-lg w-full cursor-default select-none px-4 py-2 bg-main text-base leading-[22px] focus:border-gray-500 focus:ring-mod-sc-ev focus:ring-offset-0 focus:outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 items-center focus:bg-main mb-2;
+          @apply relative rounded-lg w-full cursor-default select-none px-4 py-2 bg-main text-base leading-[22px] focus:border-gray-500 focus:ring-mod-sc-ev focus:ring-offset-0 focus:outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 items-center focus:bg-main;
         }
 
         .dropdown-options {
-          @apply z-30 rounded-lg border-none shadow bg-gray-650 transition-all overflow-auto absolute w-full mt-[50px];
+          @apply z-30 rounded-lg border-none shadow bg-gray-650 transition-all overflow-auto absolute w-full mt-[50px] min-h-[100px] max-h-[200px];
         }
 
         .btn-basemap {
