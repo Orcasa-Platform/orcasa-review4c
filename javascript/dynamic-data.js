@@ -538,7 +538,6 @@ window.addEventListener('load', function () {
 
   const updateNumbers = (metadata) => {
     const { totalPublications, totalMetaAnalysis } = metadata;
-
     elements.metaAnalysisNumber.innerHTML = totalMetaAnalysis ? formatNumber(totalMetaAnalysis) : 0;
     elements.publicationsNumber.innerHTML = totalPublications ? formatNumber(totalPublications) : 0;
   };
@@ -548,7 +547,6 @@ window.addEventListener('load', function () {
       elements.yearRange.innerHTML = `<div class="h-[125px] border-b border-white w-full"></div>`;
       return;
     }
-console.log(years)
     const yearKeys = Object.keys(years);
 
     const maxYearCount = Math.max(...Object.values(years));
@@ -715,14 +713,15 @@ console.log(years)
 
       addListenerToPublicationButton();
 
+
+
       if(!reload) {
-        console.log('populate years', metadata)
         populateYearChart(metadata.years);
         populateFilters(metadata);
       }
 
       if(!addNewPage) {
-        updateNumbers(metadata, publicationRequest);
+        updateNumbers(metadata);
       }
 
       // Update lucide icons
