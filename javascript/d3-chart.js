@@ -204,7 +204,10 @@ const createSVGChart = (slug, data) => {
     .tickPadding(10)
     .tickFormat(() => '');
 
-  const buttonHTML = (title, publications, slug) =>
+  const buttonHTML = (title, publications, slug, isSubType) =>
+    isSubType ? `<div class="flex items-center"><span class="mx-1">•</span><button type="button" class="btn-filter-chart btn-filter-chart-subtype mt-0.5 max-w-[${yTickWidth}px]" aria-pressed="false" id="btn-${kebabCase(slug)}" title="${title} (${formatNumber(publications)})">
+  <span class="mr-1.5 overflow-hidden whitespace-nowrap text-ellipsis underline">${title}</span><span class="text-xs shrink-0">(${formatNumber(publications)})</span>
+</button></div>` :
     `<button type="button" class="btn-filter-chart mt-0.5 max-w-[${yTickWidth}px]" aria-pressed="false" id="btn-${kebabCase(slug)}" title="${title} (${formatNumber(publications)})">
       <span class="mr-1.5 overflow-hidden whitespace-nowrap text-ellipsis underline">${title}</span><span class="text-xs shrink-0">(${formatNumber(publications)})</span>
     </button>`;
@@ -268,7 +271,8 @@ const createSVGChart = (slug, data) => {
       const isActive = !!interventionItem?.active;
       const fixedValue = interventionItem?.value.toFixed(1);
       const activeText = `<div class="text-xs leading-5 py-3 px-1">${descriptionText(mainInterventionName, title, fixedValue)}</div>`
-      return isActive ? `<div>${buttonHTML(title, dataItem?.publications, slug)}${activeText}</div>`: buttonHTML(title, dataItem?.publications, slug);
+      const isSubType = !interventionItem;
+      return isActive ? `<div>${buttonHTML(title, dataItem?.publications, slug, isSubType)}${activeText}</div>`: buttonHTML(title, dataItem?.publications, slug, isSubType);
     }).on("click", (_, title) => click(_, title, slug, sortedData, !!getInterventionByTitle(sortedData, title)));
 
   // Remove all domain lines
