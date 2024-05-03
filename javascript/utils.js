@@ -1,4 +1,4 @@
-const isMobile = window.innerWidth < 1024;
+const isMobile = () => window.innerWidth < 1024;
 
 const kebabCase = text => text
     .replace(/([a-z])([A-Z])/g, "$1-$2")
