@@ -714,13 +714,12 @@ window.addEventListener('load', function () {
       addListenerToPublicationButton();
 
 
-
       if(!reload) {
-        populateYearChart(metadata.years);
         populateFilters(metadata);
       }
 
       if(!addNewPage) {
+        populateYearChart(metadata.years);
         updateNumbers(metadata);
       }
 
