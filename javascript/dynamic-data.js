@@ -317,7 +317,7 @@ const loadDataAndSetButtons = () => {
     `<button
       type="button"
       data-slug=${slug}
-      class="btn-filter btn-land-use"
+      class="btn-filter flex btn-land-use"
       aria-pressed="${index === 0 ? "true" : "false"}"
     >
       <span class="text-base">
@@ -505,6 +505,39 @@ window.addEventListener('load', function () {
   // Get data on first load
   loadDataAndSetButtons();
 
+  // Close the mobile banner if it was closed before
+  const mobileBannerClosed = localStorage.getItem('MOBILE_BANNER_CLOSED');
+  if (!mobileBannerClosed) {
+    elements.mobileBanner.classList.remove('hidden');
+  }
+
+  window.mobileFiltersDrawer = new CupertinoPane(
+    '.cupertino-pane',
+    {
+      parentElement: 'body',
+      fitHeight: true, // Open the drawer to the height of the content
+      backdrop: true, // Adds veil
+      bottomClose: true, // Close the drawer by swiping down
+      buttonDestroy: false, // Remove the close button
+      breaks: {
+          middle: { enabled: true, height: 300 },
+          bottom: { enabled: true, height: 80 },
+      },
+      events: {
+        onBackdropTap: () => {
+          // Close the drawer when the backdrop is clicked
+          window.mobileFiltersDrawer.destroy({animate: true});
+        },
+      }
+    }
+  );
+
+  elements.bannerCloseButton.addEventListener('click', function() {
+    elements.mobileBanner.classList.add('hidden');
+    // Add to local storage
+    localStorage.setItem('MOBILE_BANNER_CLOSED', 'true');
+  });
+
   // LAND USE SELECT
   elements.landUseSelectMobile.addEventListener('change', function() {
     const slug = elements.landUseSelect.value;
@@ -625,13 +658,15 @@ window.addEventListener('load', function () {
       { value: 'meta-analysis', label: 'Meta-analysis' },
     ];
 
-    const publicationTypesList = elements.publicationTypeDropdown.querySelector('ul');
+    const publicationFilters = isMobile() ? elements.publicationFiltersMobile : elements.publicationFilters;
+
+    const publicationTypesList = publicationFilters.querySelector('#dropdown-select-type-publication ul')
     publicationTypesList.innerHTML = '';
     publicationTypes.forEach(({ value, label }) => {
       appendListElement(publicationTypesList, value, label, 'type-publication');
     });
 
-    const countryList = elements.countryDropdown.querySelector('ul');
+    const countryList = publicationFilters.querySelector('#dropdown-select-country ul')
     countryList.innerHTML = '';
     const filteredCountries = availableCountries ? countries.filter(c => availableCountries.includes(c.iso_2digit)) : [];
     filteredCountries.forEach(country => {
@@ -642,7 +677,7 @@ window.addEventListener('load', function () {
     // Start with all countries selected
     window.mutations.setPublicationFilters('countries', filteredCountries.map(c => c.iso_2digit));
 
-    const journalList = elements.journalDropdown.querySelector('ul');
+    const journalList = publicationFilters.querySelector('#dropdown-select-journal ul')
     journalList.innerHTML = '';
     const filteredJournals = availableJournals ? journals.filter(j => availableJournals.includes(j.journal_id)) : [];
     filteredJournals.forEach(journal => {
@@ -654,7 +689,7 @@ window.addEventListener('load', function () {
     window.mutations.setPublicationFilters('journals', filteredJournals.map(c => c.journal_id));
 
     const availableYears = availableYearObjects && Object.keys(availableYearObjects) || [];
-    const yearList = elements.yearDropdown.querySelector('ul');
+    const yearList = publicationFilters.querySelector('#dropdown-select-year ul')
     yearList.innerHTML = '';
     availableYears.forEach((year) => {
       appendListElement(yearList, year, year, 'year');

@@ -53,6 +53,52 @@ window.addEventListener('load', function () {
     elements.mobileMenu.classList.add('-translate-x-full');
   });
 
+  // MOBILE FOOTER
+
+  const footerButton = (label, id) => {
+    const footerButtonElement = document.createElement('button');
+    footerButtonElement.type = 'button';
+    footerButtonElement.id = id;
+    footerButtonElement.classList.add('btn-mobile-footer');
+    footerButtonElement.textContent = label;
+    return footerButtonElement;
+  };
+
+  // MOBILE FOOTER BUTTONS
+  if(elements.mobileFooterPublicationsButton) {
+    elements.mobileFooterPublicationsButton.addEventListener("click", function() {
+      window.mutations.setPublicationsOpen(true);
+      elements.publicationPanel.classList.remove('hidden');
+      window.loadPublications();
+      // Hide the main page and footer
+      elements.main.classList.add('hidden');
+      elements.mobileFooter.innerHTML = '';
+
+      const filterButton = footerButton('Filters', 'btn-mobile-footer-filters');
+      filterButton.addEventListener("click", function() {
+        // Show the filters vault
+        console.log('mobile', mobileFiltersDrawer)
+        mobileFiltersDrawer.present({ animate: true }).then(res => {
+          console.log('CupertinoPane is presented', res);
+        });
+      });
+      elements.mobileFooter.appendChild(filterButton);
+
+      console.log(filterButton)
+    });
+  };
+
+  if(elements.mobileFooterMethodologyButton) {
+    elements.mobileFooterMethodologyButton.addEventListener("click", function() {
+      window.mutations.setMethodologyOpen(true);
+      window.renderMethodologyChart();
+      elements.methodologyPanel.classList.remove('hidden');
+      // Hide the main page and footer
+      elements.main.classList.add('hidden');
+      elements.mobileFooter.classList.add('hidden');
+    });
+  };
+
   // LEGEND
 
   elements.infoTooltipButton.addEventListener("mouseenter", function() {
@@ -387,188 +433,192 @@ window.addEventListener('load', function () {
   });
 
   // DROPDOWNS
+  window.loadDropdowns = () => {
+    const dropdowns = isMobile() ? elements.mobileDropdowns : elements.dropdowns;
 
-  for (let dropdown of elements.dropdowns) {
-    const button = dropdown.querySelector('.btn-dropdown');
-    const searchInput = dropdown.querySelector('.input-search');
-    const options = dropdown.querySelector('.dropdown-options');
-    const selected = dropdown.querySelector('.dropdown-selected');
-    const selectAllButton = dropdown.querySelector('.btn-select-all');
-    const clearButton = dropdown.querySelector('.btn-clear');
+    for (let dropdown of dropdowns) {
+      const button = dropdown.querySelector('.btn-dropdown');
+      const searchInput = dropdown.querySelector('.input-search');
+      const options = dropdown.querySelector('.dropdown-options');
+      const selected = dropdown.querySelector('.dropdown-selected');
+      const selectAllButton = dropdown.querySelector('.btn-select-all');
+      const clearButton = dropdown.querySelector('.btn-clear');
 
+      const toggleDropdown = () => {
+        button.classList.toggle('hidden');
+        searchInput.classList.toggle('hidden');
+        if (searchInput.classList.contains('hidden')) {
+          searchInput.value = '';
+          options.querySelectorAll('li').forEach(option => option.classList.remove('hidden'));
+        } else {
+          searchInput.focus();
+        }
 
-    const toggleDropdown = () => {
-      button.classList.toggle('hidden');
-      searchInput.classList.toggle('hidden');
-      if (searchInput.classList.contains('hidden')) {
-        searchInput.value = '';
-        options.querySelectorAll('li').forEach(option => option.classList.remove('hidden'));
-      } else {
-        searchInput.focus();
-      }
-
-      Popper.createPopper(searchInput, options, {
-        modifiers: [
-          {
-            name: 'offset',
-            options: {
-              offset: [0, 8],
+        Popper.createPopper(searchInput, options, {
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: [0, 8],
+              },
             },
-          },
-        ],
+          ],
+        });
+
+        options.classList.toggle('hidden');
+      }
+
+      button.addEventListener('click', () => {
+        const openDropdownsInitial = window.getters.openDropdowns();
+        window.mutations.setOpenDropdown(dropdown.id, !openDropdownsInitial.includes(dropdown.id));
+        toggleDropdown();
       });
 
-      options.classList.toggle('hidden');
-    }
-
-    button.addEventListener('click', () => {
-      const openDropdownsInitial = window.getters.openDropdowns();
-      window.mutations.setOpenDropdown(dropdown.id, !openDropdownsInitial.includes(dropdown.id));
-      toggleDropdown();
-    });
-
-    // Detect clicks outside the dropdown
-    document.addEventListener('click', (event) => {
-      const openDropdowns = window.getters.openDropdowns();
-      const isClickInsideDropdown = dropdown.contains(event.target);
-      if (openDropdowns.includes(dropdown.id) && !isClickInsideDropdown) {
-        window.mutations.setOpenDropdown(dropdown.id, false);
-        toggleDropdown();
-      }
-    });
-
-    // Detect focus outside the dropdown
-    document.addEventListener('focusin', (event) => {
-      const openDropdowns = window.getters.openDropdowns();
-      const isFocusInsideDropdown = dropdown.contains(event.target);
-      if (openDropdowns.includes(dropdown.id) && !isFocusInsideDropdown) {
-        window.mutations.setOpenDropdown(dropdown.id, false);
-        toggleDropdown();
-      }
-    });
-
-    const recalculateActiveFilters = (dropdownId, options) => {
-      const anyOptionChecked = [...options.querySelectorAll('input')].some(input => input.checked);
-      const activeFilters = window.getters.activeFilters();
-
-      if (anyOptionChecked) {
-        if (activeFilters.length === 0 || !activeFilters.includes(dropdownId) ) {
-          window.mutations.setActiveFilters(activeFilters.concat(dropdownId));
-        }
-      } else {
-        if (activeFilters.includes(dropdownId)) {
-          window.mutations.setActiveFilters(activeFilters.filter(filter => filter !== dropdownId));
-        }
-      }
-
-      const filtersActiveNumber = window.getters.activeFilters().length;
-
-      if (filtersActiveNumber > 0) {
-        elements.filtersButtonBadge.textContent = filtersActiveNumber;
-        elements.filtersButtonBadge.classList.remove('hidden');
-      } else {
-        elements.filtersButtonBadge.textContent = '';
-        elements.filtersButtonBadge.classList.add('hidden');
-      }
-    };
-
-    options.addEventListener('change', ({ target }) => {
-      if (target.type !== 'checkbox') {
-        return;
-      }
-      // If any option is checked, we remove disabled from the clear button
-      const anyOptionChecked = [...options.querySelectorAll('input')].some(input => input.checked);
-      if (anyOptionChecked) {
-        clearButton.removeAttribute('disabled');
-      } else {
-        clearButton.setAttribute('disabled', '');
-      }
-
-      // If all options are checked, we add disabled to the select all button
-      const allOptionsChecked = [...options.querySelectorAll('input')].every(input => input.checked);
-      if (allOptionsChecked) {
-        selectAllButton.setAttribute('disabled', '');
-      } else {
-        selectAllButton.removeAttribute('disabled');
-      }
-
-      const selectedValues = [];
-      const selectedLabels = [];
-
-      options.querySelectorAll('input').forEach(input => {
-        if (input.checked) {
-          selectedValues.push(input.value);
-          const label = document.querySelector(`label[for="${input.id}"]`);
-          selectedLabels.push(label.textContent);
+      // Detect clicks outside the dropdown
+      document.addEventListener('click', (event) => {
+        const openDropdowns = window.getters.openDropdowns();
+        const isClickInsideDropdown = dropdown.contains(event.target);
+        if (openDropdowns.includes(dropdown.id) && !isClickInsideDropdown) {
+          window.mutations.setOpenDropdown(dropdown.id, false);
+          toggleDropdown();
         }
       });
 
-      const placeholder = selected.attributes['aria-placeholder'].value;
-      if (selectedValues.length === 0) {
-        selected.textContent = placeholder;
-        window.mutations.setPublicationFilters(dropdown.id, []);
-      } else {
-        const label = document.querySelector(`label[for="${selected?.id?.replace('-selected', '')}"]`);
-        selected.textContent = `${label?.textContent} (${formatNumber(selectedLabels.length)})`;
-        window.mutations.setPublicationFilters(dropdown.id, selectedValues);
+      // Detect focus outside the dropdown
+      document.addEventListener('focusin', (event) => {
+        const openDropdowns = window.getters.openDropdowns();
+        const isFocusInsideDropdown = dropdown.contains(event.target);
+        if (openDropdowns.includes(dropdown.id) && !isFocusInsideDropdown) {
+          window.mutations.setOpenDropdown(dropdown.id, false);
+          toggleDropdown();
+        }
+      });
+
+      const recalculateActiveFilters = (dropdownId, options) => {
+        const anyOptionChecked = [...options.querySelectorAll('input')].some(input => input.checked);
+        const activeFilters = window.getters.activeFilters();
+
+        if (anyOptionChecked) {
+          if (activeFilters.length === 0 || !activeFilters.includes(dropdownId) ) {
+            window.mutations.setActiveFilters(activeFilters.concat(dropdownId));
+          }
+        } else {
+          if (activeFilters.includes(dropdownId)) {
+            window.mutations.setActiveFilters(activeFilters.filter(filter => filter !== dropdownId));
+          }
+        }
+
+        const filtersActiveNumber = window.getters.activeFilters().length;
+
+        if (filtersActiveNumber > 0) {
+          elements.filtersButtonBadge.textContent = filtersActiveNumber;
+          elements.filtersButtonBadge.classList.remove('hidden');
+        } else {
+          elements.filtersButtonBadge.textContent = '';
+          elements.filtersButtonBadge.classList.add('hidden');
+        }
       };
 
-      recalculateActiveFilters(dropdown.id, options);
-
-      // Reload publications
-      window.reloadPublications();
-    });
-
-    selectAllButton.addEventListener('click', () => {
-      selectAllButton.setAttribute('disabled', '');
-      clearButton.removeAttribute('disabled');
-
-      const inputs = options.querySelectorAll('input');
-
-      inputs.forEach(input => {
-        input.checked = true;
-      });
-
-      const placeholder = selected.attributes['aria-placeholder'].value;
-      selected.textContent = `${placeholder} (${formatNumber(inputs.length)})`;
-
-      const inputValues = [...inputs].map(input => input.value);
-      window.mutations.setPublicationFilters(dropdown.id, inputValues);
-
-      recalculateActiveFilters(dropdown.id, options);
-
-      window.reloadPublications();
-    });
-
-    clearButton.addEventListener('click', () => {
-      clearButton.setAttribute('disabled', '');
-      selectAllButton.removeAttribute('disabled');
-
-      options.querySelectorAll('input').forEach(input => {
-        input.checked = false;
-      });
-
-      const placeholder = selected.attributes['aria-placeholder'].value;
-      selected.textContent = placeholder;
-      window.mutations.setPublicationFilters(dropdown.id, []);
-
-      recalculateActiveFilters(dropdown.id, options);
-
-      window.reloadPublications();
-    });
-
-    searchInput.addEventListener('input', ({ target: { value: keyword } }) => {
-      options.querySelectorAll('li').forEach(option => {
-        const { textContent } = option.querySelector('label');
-
-        if (keyword.length === 0 || textContent.toLowerCase().includes(keyword.toLowerCase())) {
-          option.classList.remove('hidden');
-        } else {
-          option.classList.add('hidden');
+      options.addEventListener('change', ({ target }) => {
+        if (target.type !== 'checkbox') {
+          return;
         }
-      })
-    });
+        // If any option is checked, we remove disabled from the clear button
+        const anyOptionChecked = [...options.querySelectorAll('input')].some(input => input.checked);
+        if (anyOptionChecked) {
+          clearButton.removeAttribute('disabled');
+        } else {
+          clearButton.setAttribute('disabled', '');
+        }
+
+        // If all options are checked, we add disabled to the select all button
+        const allOptionsChecked = [...options.querySelectorAll('input')].every(input => input.checked);
+        if (allOptionsChecked) {
+          selectAllButton.setAttribute('disabled', '');
+        } else {
+          selectAllButton.removeAttribute('disabled');
+        }
+
+        const selectedValues = [];
+        const selectedLabels = [];
+
+        options.querySelectorAll('input').forEach(input => {
+          if (input.checked) {
+            selectedValues.push(input.value);
+            const label = document.querySelector(`label[for="${input.id}"]`);
+            selectedLabels.push(label.textContent);
+          }
+        });
+
+        const placeholder = selected.attributes['aria-placeholder'].value;
+        if (selectedValues.length === 0) {
+          selected.textContent = placeholder;
+          window.mutations.setPublicationFilters(dropdown.id, []);
+        } else {
+          const label = document.querySelector(`label[for="${selected?.id?.replace('-selected', '')}"]`);
+          selected.textContent = `${label?.textContent} (${formatNumber(selectedLabels.length)})`;
+          window.mutations.setPublicationFilters(dropdown.id, selectedValues);
+        };
+
+        recalculateActiveFilters(dropdown.id, options);
+
+        // Reload publications
+        window.reloadPublications();
+      });
+
+      selectAllButton.addEventListener('click', () => {
+        selectAllButton.setAttribute('disabled', '');
+        clearButton.removeAttribute('disabled');
+
+        const inputs = options.querySelectorAll('input');
+
+        inputs.forEach(input => {
+          input.checked = true;
+        });
+
+        const placeholder = selected.attributes['aria-placeholder'].value;
+        selected.textContent = `${placeholder} (${formatNumber(inputs.length)})`;
+
+        const inputValues = [...inputs].map(input => input.value);
+        window.mutations.setPublicationFilters(dropdown.id, inputValues);
+
+        recalculateActiveFilters(dropdown.id, options);
+
+        window.reloadPublications();
+      });
+
+      clearButton.addEventListener('click', () => {
+        clearButton.setAttribute('disabled', '');
+        selectAllButton.removeAttribute('disabled');
+
+        options.querySelectorAll('input').forEach(input => {
+          input.checked = false;
+        });
+
+        const placeholder = selected.attributes['aria-placeholder'].value;
+        selected.textContent = placeholder;
+        window.mutations.setPublicationFilters(dropdown.id, []);
+
+        recalculateActiveFilters(dropdown.id, options);
+
+        window.reloadPublications();
+      });
+
+      searchInput.addEventListener('input', ({ target: { value: keyword } }) => {
+        options.querySelectorAll('li').forEach(option => {
+          const { textContent } = option.querySelector('label');
+
+          if (keyword.length === 0 || textContent.toLowerCase().includes(keyword.toLowerCase())) {
+            option.classList.remove('hidden');
+          } else {
+            option.classList.add('hidden');
+          }
+        })
+      });
+    }
   }
+
+  window.loadDropdowns();
 
   // SEARCH
   elements.search.addEventListener('input', debounce(() => {

@@ -61,9 +61,6 @@
     <script
       src="https://unpkg.com/supercluster@8.0.1/dist/supercluster.min.js"></script>
 
-    <!-- Popper library for dropdowns -->
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-
     <!-- This style tag defines the custom grouped classes for tailwind -->
     <!-- On the first case btn-primary will apply all the subsequent classes when applied to an element -->
     <!-- If the code is integrated with Symfony this script could be moved to a different file -->
@@ -79,7 +76,7 @@
           @apply transition-all text-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark focus-visible:outline-black mt-0 flex text-base font-semibold;
         }
         .btn-filter {
-          @apply h-11 lg:h-9 px-4 py-2 rounded-lg inline-flex justify-center items-center gap-2 text-sm transition-all bg-transparent border border-white/25 aria-pressed:bg-white aria-pressed:bg-opacity-10 aria-pressed:text-white focus-visible:outline focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-white hover:bg-gray-500 focus-visible:outline-mod-sc-ev-dark;
+          @apply h-11 lg:h-9 px-4 py-2 rounded-lg justify-center items-center gap-2 text-sm transition-all bg-transparent border border-white/25 aria-pressed:bg-white aria-pressed:bg-opacity-10 aria-pressed:text-white focus-visible:outline focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-white hover:bg-gray-500 focus-visible:outline-mod-sc-ev-dark;
         }
 
         .btn-land-use-option {
@@ -103,6 +100,10 @@
           @apply p-3 font-semibold text-mod-sc-ev text-sm transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:text-gray-500 disabled:pointer-events-none hover:text-mod-sc-ev-dark focus-visible:outline-mod-sc-ev;
         }
 
+        .btn-mobile-footer {
+          @apply flex-1 h-full inline-flex items-center justify-center text-base lg:text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:pointer-events-none disabled:opacity-50 px-4;
+        }
+
         .svg-btn-publication-detail {
           @apply pointer-events-none text-gray-700 bg-gray-50 rounded-lg h-[32px] w-[32px] p-2 transition-colors group-hover:bg-mod-sc-ev group-hover:text-white group-focus:bg-mod-sc-ev group-focus:text-white ;
         }
@@ -117,6 +118,11 @@
 
         .navbar-item-active {
           @apply bg-mod-sc-ev hover:bg-mod-sc-ev hover:text-white;
+        }
+
+        .mobile-footer {
+          @apply lg:hidden fixed z-30 h-14 w-full bottom-0 transform divide-x bg-mod-sc-ev text-white;
+          padding-bottom: env(safe-area-inset-bottom);
         }
 
         .btn-theme-light {
@@ -152,11 +158,11 @@
         }
 
         .publication-panel {
-          @apply absolute top-2 bottom-2 px-12 py-10 w-full max-w-[582px] left-[90px] h-[calc(100vh-16px)] rounded-lg rounded-r-none bg-main transition-transform z-20 !mt-0 overflow-auto text-white space-y-8;
+          @apply absolute top-0 lg:top-2 lg:bottom-2 px-4 lg:px-12 py-10 w-full lg:max-w-[582px] lg:left-[90px] h-[calc(100vh-16px)] lg:rounded-lg lg:rounded-r-none bg-main transition-transform z-20 !mt-0 overflow-auto text-white space-y-8;
         }
 
         .methodology-panel {
-          @apply absolute left-[90px] top-0 px-12 py-10 w-[calc(100%-90px)] h-screen bg-main text-white transition-transform z-20 !mt-0 overflow-auto;
+          @apply absolute left-0 lg:left-[90px] top-0 px-4 lg:px-12 py-10 w-full lg:w-[calc(100%-90px)] h-screen bg-main text-white transition-transform z-20 !mt-0 overflow-auto;
         }
 
         .publication-detail-panel {
@@ -165,6 +171,10 @@
 
         .filters-panel {
           @apply absolute left-[calc(582px+90px)] p-12 pt-4 w-[320px] h-screen bg-main transition-transform z-20 overflow-auto text-white;
+        }
+
+        .filters-panel-mobile {
+          @apply px-4 bg-main overflow-auto text-white;
         }
 
         .input-search {
@@ -189,6 +199,22 @@
 
         .land-use-menu-mobile-scroll {
           @apply flex-row overflow-x-auto min-h-[68px] whitespace-nowrap;
+        }
+
+        .cupertino-pane-wrapper {
+          @apply z-50 mb-14;
+
+          .pane {
+            @apply max-w-none;
+          }
+
+          .cupertino-pane {
+            @apply bg-main;
+          }
+
+          .draggable {
+            @apply bg-main;
+          }
         }
       }
     </style>
@@ -372,7 +398,7 @@
             <div>
               <div class="text-center text-white mb-6">Select one type of land
                 use to explore its impacts:</div>
-              <div class="mb-4"
+              <div class="mb-4 flex gap-3"
                 id="land-use-menu"></div>
               <div
                 class="text-center text-gray-300 text-xs leading-tight">The
@@ -578,10 +604,10 @@
 
     <!-- PUBLICATION PANEL -->
     <div id="publication-panel"
-      class="hidden lg:block publication-panel -translate-x-full bg-no-repeat"
+      class="hidden lg:block publication-panel lg:-translate-x-full bg-no-repeat"
       style="background-image: url('/assets/images/publications-background.svg')">
       <button
-        class="group flex items-center mb-8 text-white"
+        class="group hidden lg:flex items-center mb-8 text-white"
         id="btn-close-publication-panel">
         <svg
           xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -597,7 +623,7 @@
 
       <!-- PUBLICATION HEADER -->
       <h2
-        class="font-serif text-xl">Publications</h2>
+        class="font-serif text-2xl lg:text-xl">Publications</h2>
       <div class="flex justify-between items-center gap-2">
         <div id="search" class="flex-1">
           <div class="relative w-full">
@@ -614,7 +640,7 @@
         <button
           type="button"
           id="btn-filters"
-          class="btn-primary flex items-center justify-center gap-2 h-10 !duration-500">
+          class="btn-primary hidden lg:flex items-center justify-center gap-2 h-10 !duration-500">
           <i class="h-6 w-6 stroke-1" data-lucide="filter"></i>
           Filters
           <div id="btn-filters-badge"
@@ -633,7 +659,7 @@
         <button
           type="button"
           id="btn-sort-publications"
-          class="btn-filter flex items-center justify-between !px-4 !py-2 min-w-[82px]">
+          class="btn-filter hidden lg:flex items-center justify-between !px-4 !py-2 min-w-[82px]">
           <i class="h-4 w-4 stroke-1" data-lucide="arrow-up-narrow-wide"></i>
           Sort
         </button>
@@ -678,10 +704,10 @@
 
     <!-- METHODOLOGY PANEL -->
     <div id="methodology-panel"
-      class="methodology-panel -translate-x-full space-y-6 block hidden bg-cover bg-no-repeat"
+      class="methodology-panel hidden lg:-translate-x-full space-y-6 lg:block bg-cover bg-no-repeat"
       style="background-image: url('/assets/images/methodology-background.svg')">
       <button
-        class="group flex items-center mb-8"
+        class="group hidden lg:flex items-center mb-8"
         id="btn-close-methodology-panel">
         <svg
           xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -694,9 +720,9 @@
           back
         </span>
       </button>
-      <div class="flex flex-wrap gap-16">
-        <div class="flex-1 flex flex-col gap-6 min-w-[506px]">
-          <h3 class="text-4xl font-serif">Methodology</h3>
+      <div class="flex flex-wrap flex-col lg:flex-row gap-16">
+        <div class="flex-1 flex flex-col gap-6 lg:min-w-[506px]">
+          <h3 class="text-2xl lg:text-4xl font-serif">Methodology</h3>
           <div class="text-neutral-300 text-sm leading-7 space-y-1">
             <p>We conducted a literature
               search to retrieve all peer-reviewed meta- analyses that reported
@@ -729,7 +755,7 @@
               </ul>
             </p>
           </div>
-          <div class="flex flex-wrap">
+          <div class="flex flex-wrap flex-col lg:flex-row">
             <div class="flex-grow"
               id="methodology-chart"></div>
             <div id="methodology-legend"
@@ -817,6 +843,197 @@
               class="text-teal-500 text-sm font-semibold">Julien
               Demenois</a>
 
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE FOOTER -->
+
+    <nav
+      id="mobile-footer" class="mobile-footer flex">
+      <button type="button" id="btn-mobile-footer-publications"
+        class="btn-mobile-footer">
+        Publications
+      </button>
+      <button type="button" id="btn-mobile-footer-methodology"
+        class="btn-mobile-footer">
+        Methodology
+      </button>
+    </nav>
+
+    <div
+      id="mobile-banner"
+      class="hidden safe-area-inset-bottom fixed bottom-0 pb-14 bg-gray-800 z-10 h-fit min-h-[60px] w-full lg:hidden z-20">-
+      <div
+        class="relative z-10 h-[230px] bg-gray-800 text-white">
+        <div
+          class="flex justify-center gap-6 self-stretch px-4 pb-6 pt-4">
+          <div
+            class="font-serif text-base leading-relaxed">
+            <span>Navigate in a
+            </span>
+            <span class="font-semibold leading-normal">desktop
+              screen</span>
+            <span> for a complete experience.</span>
+          </div>
+          <button
+            id="btn-banner-close"
+            class="inline-flex items-center justify-center text-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:pointer-events-none disabled:opacity-50 font-sans rounded-lg border border-gray-500 hover:bg-gray-600 text-white hover:text-white focus-visible:ring-offset-gray-700 h-10 px-4 py-0 box-content">Close</button>
+        </div>
+        <div
+          class="flex items-end gap-8">
+          <img alt loading="lazy" width="75" height="75" decoding="async"
+            data-nimg="1" class="h-[75px]"
+            src="/assets/images/mobile-banner-icons.webp">
+        </div>
+        <img
+          alt="Desktop screen mockup of the website" loading="lazy"
+          width="546"
+          height="286" decoding="async"
+          class="absolute bottom-0 -right-[20%] -mb-[120px] h-[286px] w-[546px] object-contain pl-[30px]"
+          src="/assets/images/desktop-mockup.png" />
+      </div>
+    </div>
+
+    <!-- MOBILE -->
+    <div class="cupertino-pane">
+      <!-- PUBLICATION FILTERS MOBILE -->
+      <div
+        id="publication-filters-mobile"
+        class="filters-panel-mobile flex flex-col w-full justify-between space-y-[40px] mt-[14px] pb-8">
+        <button
+          id="reset-filters"
+          class="flex items-center justify-center text-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:pointer-events-none disabled:opacity-50 font-sans bg-gray-650 hover:bg-gray-600 rounded-lg text-sm px-2 py-1 flex items-center gap-1 self-end rounded-2xl pr-1 text-sm text-gray-50 hover:bg-gray-500 disabled:text-gray-300 disabled:opacity-100"
+          type="button">
+          Reset all
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+            fill="none" class="h-5 w-5"><path stroke="#fff"
+              stroke-linecap="round" stroke-linejoin="round"
+              d="m7.75 7.75 4.5 4.5m0-4.5-4.5 4.5M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0"></path></svg>
+        </button>
+        <div class="flex flex-col gap-6">
+          <div id="type-publication">
+            <label for="type-publication"
+              class="text-neutral-300 text-sm mb-1">Publication type</label>
+            <div
+              class="relative mobile-dropdown flex-col flex"
+              id="dropdown-select-type-publication">
+              <button
+                type="button"
+                class="btn-dropdown flex">
+                <span
+                  id="type-publication-selected"
+                  aria-placeholder="Select"
+                  class="dropdown-selected">Select
+                </span>
+              </button>
+              <input type="search" placeholder="Search"
+                class="input-search flex hidden" />
+              <fieldset
+                class="dropdown-options hidden">
+                <div
+                  class="flex justify-end px-1 border-b border-gray-500">
+                  <button type="button"
+                    class="btn-select-all btn-link">Select all</button>
+                  <button type="button"
+                    class="btn-clear btn-link" disabled>Clear</button>
+                </div>
+                <ul class="flex flex-col">
+                </ul>
+              </fieldset>
+            </div>
+          </div>
+          <div id="year">
+            <label for="year"
+              class="text-neutral-300 text-sm mb-1">Year</label>
+            <div
+              class="relative mobile-dropdown flex-col flex"
+              id="dropdown-select-year">
+              <button
+                type="button"
+                class="btn-dropdown flex">
+                <span
+                  id="year-selected"
+                  aria-placeholder="Select"
+                  class="dropdown-selected">Select
+                </span>
+              </button>
+              <input type="search" placeholder="Search…"
+                class="input-search flex hidden" />
+              <fieldset
+                class="dropdown-options hidden">
+                <div
+                  class="flex justify-end px-1 border-b border-gray-500">
+                  <button type="button"
+                    class="btn-select-all btn-link">Select all</button>
+                  <button type="button"
+                    class="btn-clear btn-link" disabled>Clear</button>
+                </div>
+                <ul class="flex flex-col">
+                </ul>
+              </fieldset>
+            </div>
+          </div>
+          <div id="journal">
+            <label for="journal"
+              class="text-neutral-300 text-sm mb-1">Journal</label>
+            <div
+              class="relative mobile-dropdown flex-col flex"
+              id="dropdown-select-journal">
+              <button
+                type="button"
+                class="btn-dropdown flex">
+                <span
+                  id="journal-selected"
+                  aria-placeholder="Select"
+                  class="dropdown-selected">Select</span>
+              </button>
+              <input type="search" placeholder="Search…"
+                class="input-search flex hidden" />
+              <fieldset
+                class="dropdown-options hidden">
+                <div
+                  class="flex justify-end px-1 border-b border-gray-500">
+                  <button type="button"
+                    class="btn-select-all btn-link">Select all</button>
+                  <button type="button"
+                    class="btn-clear btn-link" disabled>Clear</button>
+                </div>
+                <ul class="flex flex-col">
+                </ul>
+              </fieldset>
+            </div>
+          </div>
+          <div id="country">
+            <label for="country"
+              class="text-neutral-300 text-sm mb-1">Country</label>
+            <div
+              class="relative mobile-dropdown flex-col flex"
+              id="dropdown-select-country">
+              <button
+                type="button"
+                class="btn-dropdown flex">
+                <span
+                  id="country-selected"
+                  aria-placeholder="Select"
+                  class="dropdown-selected">Select</span>
+              </button>
+              <input type="search" placeholder="Search…"
+                class="input-search flex hidden" />
+              <fieldset
+                class="dropdown-options hidden">
+                <div
+                  class="flex justify-end px-1 border-b border-gray-500">
+                  <button type="button"
+                    class="btn-select-all btn-link">Select all</button>
+                  <button type="button"
+                    class="btn-clear btn-link" disabled>Clear</button>
+                </div>
+                <ul class="flex flex-col">
+                </ul>
+              </fieldset>
+            </div>
           </div>
         </div>
       </div>
@@ -1017,6 +1234,15 @@
 
     <!-- RIVE ANIMATION FOR INTRO PAGE -->
     <script src="https://unpkg.com/@rive-app/canvas@2.7.0"></script>
+
+    <!-- POPPER LIBRARY FOR DROPDOWNS -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+
+    <!-- CUPERTINO-PANE LIBRARY FOR MOBILE DRAWER (FILTERS) -->
+    <script
+      src="https://unpkg.com/cupertino-pane/dist/cupertino-pane.js"></script>
+    <script
+      src="https://unpkg.com/cupertino-pane/dist/cupertino-pane.min.js"></script>
 
     <script>
       const r = new rive.Rive({
