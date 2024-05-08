@@ -41,13 +41,14 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 /* Overrides */
 
 /* Select arrow */
-#land-use-select {
+select {
   -webkit-appearance: none; /* for Chrome and Safari */
   -moz-appearance: none; /* for Firefox */
   appearance: none;
-  background-image: url('/assets/icons/select-white-arrow.svg');
+  background-image: url('/assets/icons/select-white-arrow.svg') !important;
   background-repeat: no-repeat;
-  background-position: right .7em center;
+  background-size: 18px !important;
+  background-position: right 12px center !important;
 }
 
 .btn-dropdown {

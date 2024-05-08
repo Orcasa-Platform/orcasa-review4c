@@ -26,6 +26,7 @@ window.addEventListener('load', function () {
     countries: null,
     journals: null,
     activeFilters: [],
+    landUseSelectActionsInitialized: false
   };
 
   window.mutations = {
@@ -125,6 +126,9 @@ window.addEventListener('load', function () {
     },
     setActiveFilters(value) {
       state.activeFilters = value;
+    },
+    setLandUseSelectActionsInitialized(value) {
+      state.landUseSelectActionsInitialized = value;
     }
   };
 
@@ -151,6 +155,7 @@ window.addEventListener('load', function () {
     labels: () => state.labels,
     boundaries: () => state.boundaries,
     basemap: () => state.basemap,
-    activeFilters: () => state.activeFilters
+    activeFilters: () => state.activeFilters,
+    landUseSelectActionsInitialized: () => state.landUseSelectActionsInitialized
   };
 });
