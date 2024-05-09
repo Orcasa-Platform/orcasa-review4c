@@ -31,16 +31,11 @@ const updateChartAndButtons = ({ slug, title, data, resetAllCharts }) => {
       }
     });
   }
-  createSVGChart(slug, data);
-  updateButtons(title, data)
+  if (slug !== 'all') {
+    createSVGChart(slug, data);
+    updateButtons(title, data)
+  }
 }
-
-const updateMapLayerSelection = (chartSlug, interventionSlug, subTypeSlug) => {
-  // We can't have a main intervention without an intervention
-  window.mutations.setMainIntervention(interventionSlug ? chartSlug : null);
-  window.mutations.setIntervention(interventionSlug);
-  window.mutations.setSubType(subTypeSlug);
-};
 
 const click = (_, title, chartSlug, data, isIntervention) => {
   const currentSelection = window.getters.filter();
@@ -57,7 +52,6 @@ const click = (_, title, chartSlug, data, isIntervention) => {
       active: false,
     }));
     updateChartAndButtons({ slug: chartSlug, title: null, data: updatedData })
-    updateMapLayerSelection(null, null, null);
     return;
   }
 
@@ -80,7 +74,6 @@ const click = (_, title, chartSlug, data, isIntervention) => {
       };
     });
     updateChartAndButtons({ slug: chartSlug, title: currentTitle, data: updatedData })
-    updateMapLayerSelection(chartSlug, activeInterventionItem.slug, null);
     return;
   }
 
@@ -105,7 +98,6 @@ const click = (_, title, chartSlug, data, isIntervention) => {
   window.mutations.setFilter({ type: isIntervention ? 'intervention' : 'sub-type', value: slug, mainIntervention: chartSlug, intervention: !isIntervention && data.find((item) => item.active).slug });
   // Rerender to show sub-types or filter opacity of error bars
   updateChartAndButtons({ slug: chartSlug, title, data: updatedData, resetAllCharts: isIntervention })
-  updateMapLayerSelection(chartSlug, isIntervention ? slug : activeInterventionItem.slug, isIntervention ? null : slug)
 };
 
 // Create the SVG container

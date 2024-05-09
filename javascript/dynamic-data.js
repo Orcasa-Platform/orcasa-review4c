@@ -257,9 +257,13 @@ const initSelectActions = ({ filters = false, select } = {}) => {
         window.loadMainInterventionSelect();
       }
     } else if (select === 'mainIntervention') {
-      window.mutations.setMainIntervention(slug);
+      window.mutations.setFilter({ mainIntervention: slug });
+
       if (slug === 'all') {
         window.mutations.setFilter(null);
+
+        // Update the chart deselecting any intervention
+        updateChartAndButtons({ slug: 'all', resetAllCharts: true })
       } else {
         // Add only the main intervention to the filter
         // This is the chart filter too
