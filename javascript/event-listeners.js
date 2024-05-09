@@ -17,7 +17,10 @@ window.recalculateActiveFilters = (dropdownId, options) => {
   const selectedLandUse = window.getters.landUse() !== 'all';
   const selectedMainIntervention = window.getters.filter()?.mainIntervention;
   const isMainInterventionSelected = selectedMainIntervention && selectedMainIntervention !== 'all';
-  const filtersActiveNumber = window.getters.activeFilters().length + (selectedLandUse ? 1 : 0) + (isMainInterventionSelected ? 1 : 0);
+  const isInterventionSelected = window.getters.filter()?.intervention || window.getters.filter()?.type === 'intervention' && !!window.getters.filter()?.value;
+  const isSubTypeSelected = window.getters.filter()?.type === 'sub-type' && !!window.getters.filter()?.value;
+  const landUseFiltersCount = [selectedLandUse, isMainInterventionSelected, isInterventionSelected, isSubTypeSelected].filter(Boolean).length;
+  const filtersActiveNumber = window.getters.activeFilters().length + landUseFiltersCount;
 
   if (filtersActiveNumber > 0) {
     elements.filtersButtonBadge.textContent = filtersActiveNumber;
@@ -439,10 +442,35 @@ window.addEventListener('load', function () {
     elements.mainInterventionSelectFiltersButton.innerHTML = 'All';
   }
 
+  const setAllInterventionOption = () => {
+    elements.interventionOptionsFilters.innerHTML = '';
+    elements.interventionOptionsFilters.innerHTML += option({ slug: 'all', dropdownSlug: 'intervention',name: 'All', selectedSlug: 'all', mobile: false });
+    elements.interventionSelectFiltersButton.innerHTML = 'All';
+  }
+
+  const setAllSubTypeOption = () => {
+    elements.subTypeOptionsFilters.innerHTML = '';
+    elements.subTypeOptionsFilters.innerHTML += option({ slug: 'all', dropdownSlug: 'sub-type',name: 'All', selectedSlug: 'all', mobile: false });
+    elements.subTypeSelectFiltersButton.innerHTML = 'All';
+  }
+
   window.resetMainInterventionSelect = () => {
     elements.mainInterventionSelectFilters.classList.add('lg:hidden');
     window.mutations.setFilter(null);
     setAllMainInterventionOption();
+    window.resetInterventionSelect();
+  }
+
+  window.resetInterventionSelect = () => {
+    elements.interventionSelectFilters.classList.add('lg:hidden');
+    window.mutations.setFilter(null);
+    setAllInterventionOption();
+    window.resetSubTypeSelect();
+  }
+
+  window.resetSubTypeSelect = () => {
+    elements.subTypeSelectFilters.classList.add('lg:hidden');
+    setAllSubTypeOption();
   }
 
   window.loadMainInterventionSelect = () => {
@@ -480,9 +508,79 @@ window.addEventListener('load', function () {
     });
 
     // Initialize event listeners if they were not already initialized
-    if (!window.getters.interventionSelectActionsInitialized()) {
+    if (!window.getters.mainInterventionSelectActionsInitialized()) {
       initSelectActions({ filters: true, select: 'mainIntervention'});
+      window.mutations.setMainInterventionActionsInitialized(true);
+    }
+  };
+
+  window.loadInterventionSelect = () => {
+    const selectedMainIntervention = window.getters.filter()?.mainIntervention;
+    const data = window.getters.chartData();
+    const mainInterventionData = data?.[selectedMainIntervention];
+    const selectedIntervention = window.getters.filter()?.type === 'intervention' ? window.getters.filter()?.value : window.getters.filter()?.intervention;
+    if (mainInterventionData && mainInterventionData.length > 0) {
+      elements.interventionOptionsFilters.innerHTML = '';
+      elements.interventionSelectFiltersButton.innerHTML = selectedIntervention ? startCase(selectedIntervention) : 'All';
+      elements.interventionOptionsFilters.innerHTML += option({ slug: 'all', dropdownSlug: 'intervention', name: 'All', selectedSlug: selectedIntervention || 'all', mobile: false });
+
+      mainInterventionData.forEach(intervention => {
+        elements.interventionOptionsFilters.innerHTML += option({ dropdownSlug: 'intervention', slug: intervention.slug, name: intervention.title, selectedSlug: selectedIntervention, mobile: false });
+      });
+      elements.interventionSelectFilters.classList.remove('lg:hidden');
+    }
+
+    Popper.createPopper(elements.interventionSelectFiltersButton, elements.interventionOptionsFilters, {
+      modifiers: [
+        {
+          name: 'offset',
+          options: {
+            offset: [0, 8],
+          },
+        },
+      ],
+    });
+
+    // Initialize event listeners if they were not already initialized
+    if (!window.getters.interventionSelectActionsInitialized()) {
+      initSelectActions({ filters: true, select: 'intervention'});
       window.mutations.setInterventionActionsInitialized(true);
+    }
+  };
+
+  window.loadSubTypeSelect = () => {
+    const selectedMainIntervention = window.getters.filter()?.mainIntervention;
+    const data = window.getters.chartData();
+    const selectedIntervention = window.getters.filter()?.type === 'intervention' ? window.getters.filter()?.value : window.getters.filter()?.intervention;
+    const subtypesData = data?.[selectedMainIntervention]?.find(d => d.slug === selectedIntervention)?.subTypes;
+    const selectedSubType = window.getters.filter()?.type === 'sub-type' && window.getters.filter()?.value;
+
+    if (subtypesData && subtypesData.length > 0) {
+      elements.subTypeOptionsFilters.innerHTML = '';
+      elements.subTypeSelectFiltersButton.innerHTML = selectedSubType ? startCase(selectedSubType) : 'All';
+      elements.subTypeOptionsFilters.innerHTML += option({ slug: 'all', dropdownSlug: 'sub-type', name: 'All', selectedSlug: selectedSubType || 'all', mobile: false });
+
+      subtypesData.forEach(subType => {
+        elements.subTypeOptionsFilters.innerHTML += option({ dropdownSlug: 'sub-type', slug: subType.slug, name: subType.title, selectedSlug: selectedSubType, mobile: false });
+      });
+      elements.subTypeSelectFilters.classList.remove('lg:hidden');
+    }
+
+    Popper.createPopper(elements.subTypeSelectFiltersButton, elements.subTypeOptionsFilters, {
+      modifiers: [
+        {
+          name: 'offset',
+          options: {
+            offset: [0, 8],
+          },
+        },
+      ],
+    });
+
+    // Initialize event listeners if they were not already initialized
+    if (!window.getters.subTypeSelectActionsInitialized()) {
+      initSelectActions({ filters: true, select: 'subType'});
+      window.mutations.setSubTypeActionsInitialized(true);
     }
   };
 
@@ -498,6 +596,8 @@ window.addEventListener('load', function () {
       // Load LAND USE SELECT on filters dropdown
       loadLandUseSelect();
       window.loadMainInterventionSelect();
+      window.loadInterventionSelect();
+      window.loadSubTypeSelect();
     }
 
     // Hide the main page
@@ -762,6 +862,10 @@ window.addEventListener('load', function () {
   // RESET FILTERS
   elements.resetFiltersButton.addEventListener('click', () => {
     resetPublicationsFilters();
+
+    window.mutations.setLandUse('all');
+    window.mutations.setFilter(null);
+    resetMainInterventionSelect();
     window.reloadPublications();
 
     // Reset the active filters badge

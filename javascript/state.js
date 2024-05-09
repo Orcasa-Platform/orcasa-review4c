@@ -31,7 +31,9 @@ window.addEventListener('load', function () {
     journals: null,
     activeFilters: [],
     landUseSelectActionsInitialized: false,
+    mainInterventionSelectActionsInitialized: false,
     interventionSelectActionsInitialized: false,
+    subTypeSelectActionsInitialized: false,
   };
 
   window.mutations = {
@@ -128,6 +130,12 @@ window.addEventListener('load', function () {
     },
     setInterventionActionsInitialized(value) {
       state.interventionSelectActionsInitialized = value;
+    },
+    setMainInterventionActionsInitialized(value) {
+      state.mainInterventionSelectActionsInitialized = value;
+    },
+    setSubTypeActionsInitialized(value) {
+      state.subTypeSelectActionsInitialized = value;
     }
   };
 
@@ -156,6 +164,8 @@ window.addEventListener('load', function () {
     basemap: () => state.basemap,
     activeFilters: () => state.activeFilters,
     landUseSelectActionsInitialized: () => state.landUseSelectActionsInitialized,
-    interventionSelectActionsInitialized: () => state.interventionSelectActionsInitialized
+    mainInterventionSelectActionsInitialized: () => state.mainInterventionSelectActionsInitialized,
+    interventionSelectActionsInitialized: () => state.interventionSelectActionsInitialized,
+    subTypeSelectActionsInitialized: () => state.subTypeSelectActionsInitialized
   };
 });

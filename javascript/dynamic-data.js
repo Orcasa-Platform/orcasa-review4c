@@ -245,6 +245,9 @@ const initSelectActions = ({ filters = false, select } = {}) => {
   const selectOption = (target) => {
     // Get the slug of the selected land use
     const slug = target.getAttribute('data-slug');
+    const filter = window.getters.filter();
+    const selectedMainIntervention = filter?.mainIntervention;
+    const selectedIntervention = filter?.type === 'intervention' ? filter?.value : filter?.intervention;
 
     if (select === 'landUse') {
       window.mutations.setLandUse(slug);
@@ -260,22 +263,31 @@ const initSelectActions = ({ filters = false, select } = {}) => {
       window.mutations.setFilter({ mainIntervention: slug });
 
       if (slug === 'all') {
-        window.mutations.setFilter(null);
+        window.resetInterventionSelect();
 
+        window.mutations.setFilter(null);
         // Update the chart deselecting any intervention
         updateChartAndButtons({ slug: 'all', resetAllCharts: true })
       } else {
-        // Add only the main intervention to the filter
+        window.loadInterventionSelect();
+
         // This is the chart filter too
         window.mutations.setFilter({ mainIntervention: slug })
       }
     } else if (select === 'intervention') {
       if (slug === 'all') {
-        const filter = window.getters.filter();
-        window.mutations.setFilter({ mainIntervention: filter.mainIntervention })
+        window.mutations.setFilter({ mainIntervention: selectedMainIntervention })
+        window.resetSubTypeSelect();
       } else {
-        const filter = window.getters.filter();
         window.mutations.setFilter({ type: 'intervention', value: slug, mainIntervention: filter.mainIntervention, intervention: slug });
+        window.loadSubTypeSelect();
+      }
+    } else if (select === 'subType') {
+
+      if (slug === 'all') {
+        window.mutations.setFilter({ type: 'intervention', value: selectedIntervention, mainIntervention: selectedMainIntervention, intervention: selectedIntervention });
+      } else {
+        window.mutations.setFilter({ type: 'sub-type', value: slug, mainIntervention: filter.mainIntervention, intervention: selectedIntervention });
       }
     }
 
@@ -292,7 +304,7 @@ const initSelectActions = ({ filters = false, select } = {}) => {
     const textSpan = target.querySelector('span');
     selectButton.innerHTML = textSpan.innerText;
     // Update the selected option
-    // Set selected false to all options+
+    // Set selected false to all options
     for (let option of options) {
       option.setAttribute('selected', 'false');
       const svg = option.querySelector('svg');
