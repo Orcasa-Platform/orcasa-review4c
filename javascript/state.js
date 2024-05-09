@@ -10,9 +10,13 @@ window.addEventListener('load', function () {
     landUse: 'all',
     landUses: null,
     mainInterventions: [],
-    mainIntervention: null,
     intervention: null,
     subType: null,
+    // filter stores the selected chart main-intervention, intervention, and sub-type
+    // Also used to store the filters on publications
+    // { type: 'intervention' | 'sub-type', value: <selected-slug>, mainIntervention: <main-intevention-slug>, intervention: <intervention-slug> }
+    // Could be used to store only the selected main-intervention on the publication filters without affecting the chart
+    // { mainIntervention: <main-intevention-slug> }
     filter: null,
     publicationsOpen: false,
     methodologyOpen: false,
@@ -26,7 +30,8 @@ window.addEventListener('load', function () {
     countries: null,
     journals: null,
     activeFilters: [],
-    landUseSelectActionsInitialized: false
+    landUseSelectActionsInitialized: false,
+    interventionSelectActionsInitialized: false,
   };
 
   window.mutations = {
@@ -65,15 +70,6 @@ window.addEventListener('load', function () {
     },
     setLandUse(landUse) {
       state.landUse = landUse;
-    },
-    setMainIntervention(mainIntervention) {
-      state.mainIntervention = mainIntervention;
-    },
-    setIntervention(intervention) {
-      state.intervention = intervention;
-    },
-    setSubType(subType) {
-      state.subType = subType;
     },
     setLandUses(landUses) {
       state.landUses = landUses;
@@ -129,6 +125,9 @@ window.addEventListener('load', function () {
     },
     setLandUseSelectActionsInitialized(value) {
       state.landUseSelectActionsInitialized = value;
+    },
+    setInterventionActionsInitialized(value) {
+      state.interventionSelectActionsInitialized = value;
     }
   };
 
@@ -156,6 +155,7 @@ window.addEventListener('load', function () {
     boundaries: () => state.boundaries,
     basemap: () => state.basemap,
     activeFilters: () => state.activeFilters,
-    landUseSelectActionsInitialized: () => state.landUseSelectActionsInitialized
+    landUseSelectActionsInitialized: () => state.landUseSelectActionsInitialized,
+    interventionSelectActionsInitialized: () => state.interventionSelectActionsInitialized
   };
 });

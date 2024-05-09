@@ -15,7 +15,9 @@ window.recalculateActiveFilters = (dropdownId, options) => {
     }
   }
   const selectedLandUse = window.getters.landUse() !== 'all';
-  const filtersActiveNumber = window.getters.activeFilters().length + (selectedLandUse ? 1 : 0);
+  const selectedMainIntervention = window.getters.filter()?.mainIntervention;
+  const isMainInterventionSelected = selectedMainIntervention && selectedMainIntervention !== 'all';
+  const filtersActiveNumber = window.getters.activeFilters().length + (selectedLandUse ? 1 : 0) + (isMainInterventionSelected ? 1 : 0);
 
   if (filtersActiveNumber > 0) {
     elements.filtersButtonBadge.textContent = filtersActiveNumber;
@@ -400,6 +402,84 @@ window.addEventListener('load', function () {
     elements.filtersButton.classList.remove('!text-gray-700');
   };
 
+  const loadLandUseSelect = () => {
+    const landUses = window.getters.landUses();
+    const landUseMenuFilters = elements.landUseOptionsFilters;
+    landUseMenuFilters.innerHTML = '';
+    const selectedSlug = window.getters.landUse();
+    landUses.forEach(landUse => {
+      landUseMenuFilters.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug, mobile: false });
+    });
+
+    const selectedLandUse = landUses.find(l => l.slug === selectedSlug);
+    const selectedLandUseLabel = selectedLandUse.name;
+    elements.landUseSelectFiltersButton.innerHTML = selectedLandUseLabel;
+
+    Popper.createPopper(elements.landUseSelectFiltersButton, landUseMenuFilters, {
+      modifiers: [
+        {
+          name: 'offset',
+          options: {
+            offset: [0, 8],
+          },
+        },
+      ],
+    });
+
+    // Initialize event listeners if they were not already initialized
+    if (!window.getters.landUseSelectActionsInitialized()) {
+      initSelectActions({ filters: true, select: 'landUse' });
+      window.mutations.setLandUseSelectActionsInitialized(true);
+    }
+  };
+
+  const setAllMainInterventionOption = () => {
+    elements.mainInterventionOptionsFilters.innerHTML = '';
+    elements.mainInterventionOptionsFilters.innerHTML += option({ slug: 'all', dropdownSlug: 'main-intervention',name: 'All', selectedSlug: 'all', mobile: false });
+    elements.mainInterventionSelectFiltersButton.innerHTML = 'All';
+  }
+
+  window.resetMainInterventionSelect = () => {
+    elements.mainInterventionSelectFilters.classList.add('lg:hidden');
+    window.mutations.setMainIntervention(undefined);
+    window.mutations.setFilter(null);
+    setAllMainInterventionOption();
+  }
+
+  window.loadMainInterventionSelect = () => {
+    const landUses = window.getters.landUses();
+    const selectedSlug = window.getters.landUse();
+    setAllMainInterventionOption();
+
+    if (selectedSlug !== 'all') {
+      const selectedLandUse = landUses.find(l => l.slug === selectedSlug);
+      const mainInterventions = selectedLandUse?.mainInterventions;
+      const selectedMainIntervention = window.getters.filter()?.mainIntervention;
+      if (mainInterventions && mainInterventions.length > 0) {
+        mainInterventions.forEach(intervention => {
+          elements.mainInterventionOptionsFilters.innerHTML += option({ dropdownSlug: 'main-intervention', slug: intervention, name: startCase(intervention), selectedSlug: selectedMainIntervention, mobile: false });
+        });
+        elements.mainInterventionSelectFilters.classList.remove('lg:hidden');
+      }
+    }
+    Popper.createPopper(elements.mainInterventionSelectFiltersButton, elements.mainInterventionOptionsFilters, {
+      modifiers: [
+        {
+          name: 'offset',
+          options: {
+            offset: [0, 8],
+          },
+        },
+      ],
+    });
+
+    // Initialize event listeners if they were not already initialized
+    if (!window.getters.interventionSelectActionsInitialized()) {
+      initSelectActions({ filters: true, select: 'mainIntervention'});
+      window.mutations.setInterventionActionsInitialized(true);
+    }
+  };
+
   elements.publicationButton.addEventListener("click", function() {
     window.mutations.setPublicationsOpen(true);
     elements.publicationPanel.classList.remove('lg:-translate-x-full');
@@ -410,35 +490,8 @@ window.addEventListener('load', function () {
 
     if(!isMobile()) {
       // Load LAND USE SELECT on filters dropdown
-
-      const landUses = window.getters.landUses();
-      const landUseMenuFilters = elements.landUseOptionsFilters;
-      landUseMenuFilters.innerHTML = '';
-      const selectedSlug = window.getters.landUse();
-      landUses.forEach(landUse => {
-        landUseMenuFilters.innerHTML += option({...landUse, selectedSlug, mobile: false });
-      });
-
-      Popper.createPopper(elements.landUseSelectFiltersButton, landUseMenuFilters, {
-        modifiers: [
-          {
-            name: 'offset',
-            options: {
-              offset: [0, 8],
-            },
-          },
-        ],
-      });
-
-      const selectedLandUse = landUses.find(l => l.slug === selectedSlug);
-      const selectedLandUseLabel = `${selectedLandUse.name} (${formatNumber(selectedLandUse.publications)})`;
-      elements.landUseSelectFiltersButton.innerHTML = selectedLandUseLabel;
-
-      // Initialize event listeners if they were not already initialized
-      if (!window.getters.landUseSelectActionsInitialized()) {
-        initLandUseSelectActions({ filters: true });
-        window.mutations.setLandUseSelectActionsInitialized(true);
-      }
+      loadLandUseSelect();
+      window.loadMainInterventionSelect();
     }
 
     // Hide the main page
@@ -494,7 +547,7 @@ window.addEventListener('load', function () {
       elements.landUseOptions.innerHTML = '';
 
       landUses.filter(l => l.name !== 'All').forEach(landUse => {
-        elements.landUseOptions.innerHTML += option({...landUse, selectedSlug: landUse, mobile: false });
+        elements.landUseOptions.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: landUse, mobile: false, filters: true, publicationNumbers: true });
       });
     }
   });

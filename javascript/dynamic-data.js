@@ -149,8 +149,7 @@ const publicationDetailTemplate = ({ isMetaAnalysis, journals, year, countries, 
 `;
 
   // Create an option for each land use
-  const option = ({ slug, name, publications, selectedSlug, mobile = true }) => {
-
+  const option = ({ dropdownSlug = "land-use", slug, name, publications, selectedSlug, mobile = true, publicationNumbers = false }) => {
     return mobile ? `<option
       data-slug=${slug}
       value=${slug}
@@ -159,20 +158,20 @@ const publicationDetailTemplate = ({ isMetaAnalysis, journals, year, countries, 
       <span class="text-base">
         ${name}
       </span>
-      <span class="text-xs">
+      ${publicationNumbers ? `<span class="text-xs">
       (${formatNumber(publications)})
-      </span>
+      </span`: ''}
       </option>
     ` :
     `<button
       data-slug=${slug}
       data-=${slug}
       value=${slug}
-      class="btn-land-use-option group"
+      class="btn-select-option btn-${dropdownSlug}-option group"
       ${selectedSlug === slug ? "selected" : ""}
     >
       <span>
-        ${name} (${formatNumber(publications)})
+        ${name}${publicationNumbers ? ` (${formatNumber(publications)})`: ''}
       </span>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="${selectedSlug === slug ? '' : 'hidden'}">
         <path d="M20 6L9 17L4 12" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
@@ -181,21 +180,52 @@ const publicationDetailTemplate = ({ isMetaAnalysis, journals, year, countries, 
     `;
   };
 
-const initLandUseSelectActions = ({ filters = false } = {}) => {
-  const options =  filters ? document.getElementsByClassName('btn-land-use-option') : document.getElementsByClassName('btn-land-use-option');
-  const selectButton = filters ? elements.landUseSelectFiltersButton : elements.landUseSelectButton;
-  const landUseOptions = filters ? elements.landUseOptionsFilters : elements.landUseOptions;
+const initSelectActions = ({ filters = false, select } = {}) => {
+  const selectElements = {
+    filters: {
+      landUse: {
+        options: document.getElementsByClassName('btn-land-use-option'),
+        selectButton: elements.landUseSelectFiltersButton,
+        selectOptions: elements.landUseOptionsFilters,
+      },
+      mainIntervention: {
+        options: document.getElementsByClassName('btn-main-intervention-option'),
+        selectButton: elements.mainInterventionSelectFiltersButton,
+        selectOptions: elements.mainInterventionOptionsFilters,
+      },
+      intervention: {
+        options: document.getElementsByClassName('btn-intervention-option'),
+        selectButton: elements.interventionSelectFiltersButton,
+        selectOptions: elements.interventionOptionsFilters,
+      },
+      subType: {
+        options: document.getElementsByClassName('btn-sub-type-option'),
+        selectButton: elements.subTypeSelectFiltersButton,
+        selectOptions: elements.subTypeOptionsFilters,
+      }
+    },
+    main: {
+      landUse: {
+        options: document.getElementsByClassName('btn-land-use-option'),
+        selectButton: elements.landUseSelectButton,
+        selectOptions: elements.landUseOptions,
+      }
+    }
+  }
+  const options =  selectElements[filters ? 'filters' : 'main'][select].options;
+  const selectButton = selectElements[filters ? 'filters' : 'main'][select].selectButton;
+  const selectOptions = selectElements[filters ? 'filters' : 'main'][select].selectOptions;
 
   // Close on click outside
   document.addEventListener('click', function(event) {
-    if (!landUseOptions.contains(event.target) && !selectButton.contains(event.target)) {
-      landUseOptions.classList.add('hidden');
+    if (!selectOptions.contains(event.target) && !selectButton.contains(event.target)) {
+      selectOptions.classList.add('hidden');
     }
   });
 
   selectButton.addEventListener('click', function() {
-    landUseOptions.classList.toggle('hidden');
-    if (options) {
+    selectOptions.classList.toggle('hidden');
+    if (options && options.length > 0) {
       options[0].focus();
     }
   });
@@ -204,8 +234,8 @@ const initLandUseSelectActions = ({ filters = false } = {}) => {
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === ' ') {
       event.preventDefault(); // Prevent scrolling
       if (options) {
-        if (landUseOptions.classList.contains('hidden')) {
-          landUseOptions.classList.remove('hidden');
+        if (selectOptions.classList.contains('hidden')) {
+          selectOptions.classList.remove('hidden');
         }
         options[0].focus();
       }
@@ -216,10 +246,36 @@ const initLandUseSelectActions = ({ filters = false } = {}) => {
     // Get the slug of the selected land use
     const slug = target.getAttribute('data-slug');
 
-    window.mutations.setLandUse(slug);
-    window.mutations.setFilter(null);
-    loadData(slug);
-    if(filters) {
+    if (select === 'landUse') {
+      window.mutations.setLandUse(slug);
+      window.mutations.setFilter(null);
+      loadData(slug);
+
+      if (slug === 'all') {
+        window.resetMainInterventionSelect();
+      } else {
+        window.loadMainInterventionSelect();
+      }
+    } else if (select === 'mainIntervention') {
+      window.mutations.setMainIntervention(slug);
+      if (slug === 'all') {
+        window.mutations.setFilter(null);
+      } else {
+        // Add only the main intervention to the filter
+        // This is the chart filter too
+        window.mutations.setFilter({ mainIntervention: slug })
+      }
+    } else if (select === 'intervention') {
+      if (slug === 'all') {
+        const filter = window.getters.filter();
+        window.mutations.setFilter({ mainIntervention: filter.mainIntervention })
+      } else {
+        const filter = window.getters.filter();
+        window.mutations.setFilter({ type: 'intervention', value: slug, mainIntervention: filter.mainIntervention, intervention: slug });
+      }
+    }
+
+    if (filters) {
       window.reloadPublications();
     }
 
@@ -227,13 +283,12 @@ const initLandUseSelectActions = ({ filters = false } = {}) => {
     window.recalculateActiveFilters();
 
     // Close the dropdown
-    landUseOptions.classList.add('hidden');
+    selectOptions.classList.add('hidden');
     // Update the selected text
     const textSpan = target.querySelector('span');
     selectButton.innerHTML = textSpan.innerText;
-
     // Update the selected option
-    // Set selected false to all options
+    // Set selected false to all options+
     for (let option of options) {
       option.setAttribute('selected', 'false');
       const svg = option.querySelector('svg');
@@ -246,7 +301,7 @@ const initLandUseSelectActions = ({ filters = false } = {}) => {
     target.setAttribute('selected', 'true');
   };
 
-  landUseOptions.addEventListener('click', function({ target }) {
+  selectOptions.addEventListener('click', function({ target }) {
     let buttonTarget = target;
     // Check if the target is a child of the button
     if (buttonTarget.nodeName !== 'BUTTON' && this.contains(buttonTarget)) {
@@ -256,7 +311,7 @@ const initLandUseSelectActions = ({ filters = false } = {}) => {
     selectOption(buttonTarget);
   });
 
-  landUseOptions.addEventListener('keydown', function(event) {
+  selectOptions.addEventListener('keydown', function(event) {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       selectOption(event.target);
@@ -273,9 +328,9 @@ const initLandUseSelectActions = ({ filters = false } = {}) => {
         prevButton.focus();
       }
     } else if (event.key === 'Escape') {
-      landUseOptions.classList.add('hidden');
+      selectOptions.classList.add('hidden');
     } else if (event.key === 'Tab') {
-      landUseOptions.classList.add('hidden');
+      selectOptions.classList.add('hidden');
     }
   });
 };
@@ -506,14 +561,14 @@ const loadDataAndSetButtons = () => {
           elements.landUseOptions.innerHTML = '';
 
           landUses.filter(l => l.name !== 'All').forEach(landUse => {
-            elements.landUseOptions.innerHTML += option({...landUse, selectedSlug: slug, mobile: false });
+            elements.landUseOptions.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: slug, mobile: false, publicationNumbers: true});
           });
         });
       };
     }
 
     // LAND USE SELECT ACTIONS
-    initLandUseSelectActions();
+    initSelectActions({ select: 'landUse' });
   });
 };
 
@@ -733,7 +788,7 @@ window.addEventListener('load', function () {
       landUseList.innerHTML = '';
       const currentLandUse = window.getters.landUse();
       landUsesData.forEach(landUse => {
-        landUseList.innerHTML += option({...landUse, selectedSlug: currentLandUse });
+        landUseList.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: currentLandUse });
       });
 
       loadData(currentLandUse);
