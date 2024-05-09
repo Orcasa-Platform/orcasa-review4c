@@ -340,6 +340,12 @@ const createSVGChart = (slug, data) => {
   }
 
   const currentSelection = window.getters.filter();
+
+  const isHighlighted = (d) =>  !currentSelection ||
+    currentSelection.mainIntervention !== slug ||
+    !currentSelection.value ||
+    (currentSelection.mainIntervention === slug && currentSelection.value === d.slug);
+
   // Create error bars
   svg.selectAll(".error-bar")
     .data(dataWithSubTypes)
@@ -353,7 +359,7 @@ const createSVGChart = (slug, data) => {
 
       g
         .append("line")
-        .attr("class", (!currentSelection || currentSelection.mainIntervention !== slug) || currentSelection.value === d.slug ? "stroke-gray-700" : "stroke-gray-200")
+        .attr("class", isHighlighted(d) ? "stroke-gray-700" : "stroke-gray-200")
         .attr("x1", xScale(d.low < 0 ? 0 : d.low))
         .attr("x2", xScale(Math.max(d.high, 0)))
         .attr("y1", y)
@@ -364,7 +370,7 @@ const createSVGChart = (slug, data) => {
 
         g
         .append("line")
-        .attr("class", (!currentSelection || currentSelection.mainIntervention !== slug) || currentSelection.value === d.slug ? "stroke-darkRed-600" : "stroke-gray-200")
+        .attr("class", isHighlighted(d) ? "stroke-darkRed-600" : "stroke-gray-200")
         .attr("x1", xScale(Math.min(d.low, 0)))
         .attr("x2", xScale(d.high > 0 ? 0 : d.high))
         .attr("y1", y)
@@ -380,7 +386,7 @@ const createSVGChart = (slug, data) => {
     .enter()
     .append("circle")
     .attr("class", (d) => {
-      return `data-point ${(!currentSelection || currentSelection.mainIntervention !== slug) || currentSelection.value === d.slug ? "fill-gray-700" : "fill-gray-200"}`;
+         return `data-point ${isHighlighted(d) ? "fill-gray-700" : "fill-gray-200"}`;
     })
     .attr("cx", d => xScale(d.value))
     .attr("cy", d => calculateY({ interventionItem: d }) + yScale.bandwidth() / 2)

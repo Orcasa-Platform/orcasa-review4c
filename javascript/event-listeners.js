@@ -656,6 +656,35 @@ window.addEventListener('load', function () {
         elements.landUseOptions.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: landUse, mobile: false, filters: true, publicationNumbers: true });
       });
     }
+
+    // Reload the chart with the correspondant opened items
+    const currentData = window.getters.chartData();
+    const currentMainIntervention = window.getters.filter()?.mainIntervention;
+    const currentIntervention = window.getters.filter()?.type === 'intervention' && window.getters.filter()?.value;
+    const currentSubType = window.getters.filter()?.type === 'sub-type' && window.getters.filter()?.value;
+
+    if (!currentIntervention) {
+      updateChartAndButtons({ slug: 'all', resetAllCharts: true });
+    } else {
+      // If a intervention is selected, we need to update the data marking it as active
+      // If a sub-type is selected, we need to update the data marking it as active
+      const updatedMainInterventionData = currentData?.[currentMainIntervention]?.map(intervention => {
+        return (intervention.slug === currentIntervention) ?
+          {
+            ...intervention,
+            active: true,
+            subTypes: intervention.subTypes.map(subType => ({
+              ...subType,
+              active: subType.slug === currentSubType,
+            }))
+          } :
+          {...intervention, subtypes: intervention.subTypes.map(subType => ({...subType, active: false })), active: false };
+      });
+      const currentSubTypeTitle = currentIntervention && currentSubType && updatedMainInterventionData.find(intervention => intervention.slug === currentIntervention)?.subTypes.find(subType => subType.slug === currentSubType)?.title;
+      const currentInterventionTitle = currentIntervention && updatedMainInterventionData.find(intervention => intervention.slug === currentIntervention)?.title;
+      updateChartAndButtons({ slug: currentMainIntervention, title: currentSubTypeTitle || currentInterventionTitle , data: updatedMainInterventionData, resetAllCharts: true });
+    }
+
   });
 
   // FILTERS BUTTON
