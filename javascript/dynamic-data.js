@@ -160,7 +160,7 @@ window.addEventListener('load', function () {
       `
       <div class="flex flex-col mb-2 py-4 border-b border-slate-600 gap-3">
         <header class="w-full text-base">
-          Impact of <span class="font-semibold"> ${name} </span> on Soil Organic Carbon for ${landUseName}
+          Impact of <span class="font-semibold"> ${name} </span> on Soil Organic Carbon for <span class="font-bold">${landUseName}</span>
         </header>
         <div
           class="text-neutral-300 text-sm leading-7">
@@ -172,7 +172,7 @@ window.addEventListener('load', function () {
       : `
       <div class="flex flex-col p-6 bg-white mb-2 rounded-lg text-gray-700">
         <header class="mb-4 flex w-full justify-between items-end">
-          <div>Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for ${landUseName}</div>
+          <div>Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for <span class="font-bold">${landUseName}</span></div>
           <div class="text-gray-500 text-xs">Click in one intervention below to see more details</div>
         </header>
         <div
