@@ -216,18 +216,43 @@ const initSelectActions = ({ filters = false, select } = {}) => {
   const selectButton = selectElements[filters ? 'filters' : 'main'][select].selectButton;
   const selectOptions = selectElements[filters ? 'filters' : 'main'][select].selectOptions;
 
+  // Store the popper of the last opened filter
+  let popper = null;
+
+  const toggleSelect = () => {
+    if (popper) {
+      // Without this line, the position of the popper is incorrect
+      popper.destroy();
+    }
+
+    popper = Popper.createPopper(selectButton, selectOptions, {
+      modifiers: [
+        {
+          name: 'offset',
+          options: {
+            offset: [0, 8],
+          },
+        },
+      ],
+    });
+
+    selectOptions.classList.toggle('hidden');
+
+    if (!selectOptions.classList.contains('hidden') && options && options.length > 0) {
+      options[0].focus();
+    }
+  }
+
   // Close on click outside
   document.addEventListener('click', function(event) {
-    if (!selectOptions.contains(event.target) && !selectButton.contains(event.target)) {
-      selectOptions.classList.add('hidden');
+    const isOpen = !selectOptions.classList.contains('hidden');
+    if (isOpen && !selectOptions.contains(event.target) && !selectButton.contains(event.target)) {
+      toggleSelect();
     }
   });
 
   selectButton.addEventListener('click', function() {
-    selectOptions.classList.toggle('hidden');
-    if (options && options.length > 0) {
-      options[0].focus();
-    }
+    toggleSelect();
   });
 
   selectButton.addEventListener('keydown', function(event) {

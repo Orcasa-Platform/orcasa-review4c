@@ -419,17 +419,6 @@ window.addEventListener('load', function () {
     const selectedLandUseLabel = selectedLandUse.name;
     elements.landUseSelectFiltersButton.innerHTML = selectedLandUseLabel;
 
-    Popper.createPopper(elements.landUseSelectFiltersButton, landUseMenuFilters, {
-      modifiers: [
-        {
-          name: 'offset',
-          options: {
-            offset: [0, 8],
-          },
-        },
-      ],
-    });
-
     // Initialize event listeners if they were not already initialized
     if (!window.getters.landUseSelectActionsInitialized()) {
       initSelectActions({ filters: true, select: 'landUse' });
@@ -497,17 +486,6 @@ window.addEventListener('load', function () {
       setAllMainInterventionOption();
     }
 
-    Popper.createPopper(elements.mainInterventionSelectFiltersButton, elements.mainInterventionOptionsFilters, {
-      modifiers: [
-        {
-          name: 'offset',
-          options: {
-            offset: [0, 8],
-          },
-        },
-      ],
-    });
-
     // Initialize event listeners if they were not already initialized
     if (!window.getters.mainInterventionSelectActionsInitialized()) {
       initSelectActions({ filters: true, select: 'mainIntervention'});
@@ -530,17 +508,6 @@ window.addEventListener('load', function () {
       });
       elements.interventionSelectFilters.classList.remove('lg:hidden');
     }
-
-    Popper.createPopper(elements.interventionSelectFiltersButton, elements.interventionOptionsFilters, {
-      modifiers: [
-        {
-          name: 'offset',
-          options: {
-            offset: [0, 8],
-          },
-        },
-      ],
-    });
 
     // Initialize event listeners if they were not already initialized
     if (!window.getters.interventionSelectActionsInitialized()) {
@@ -566,17 +533,6 @@ window.addEventListener('load', function () {
       });
       elements.subTypeSelectFilters.classList.remove('lg:hidden');
     }
-
-    Popper.createPopper(elements.subTypeSelectFiltersButton, elements.subTypeOptionsFilters, {
-      modifiers: [
-        {
-          name: 'offset',
-          options: {
-            offset: [0, 8],
-          },
-        },
-      ],
-    });
 
     // Initialize event listeners if they were not already initialized
     if (!window.getters.subTypeSelectActionsInitialized()) {
