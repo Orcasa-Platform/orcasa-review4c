@@ -158,15 +158,15 @@
         }
 
         .publication-panel {
-          @apply absolute top-0 lg:top-2 lg:bottom-2 px-4 lg:px-12 py-10 w-full lg:max-w-[582px] lg:left-[90px] h-[calc(100vh-16px)] lg:rounded-lg lg:rounded-r-none bg-main transition-transform z-20 !mt-0 overflow-auto text-white space-y-8;
+          @apply absolute top-14 lg:top-2 lg:bottom-2 p-4 lg:px-12 lg:py-10 w-full lg:max-w-[582px] lg:left-[90px] h-[calc(100vh-56px)] lg:h-[calc(100vh-16px)] lg:rounded-lg lg:rounded-r-none bg-main transition-transform z-20 !mt-0 overflow-auto text-white space-y-8;
         }
 
         .methodology-panel {
-          @apply absolute left-0 lg:left-[90px] top-0 px-4 lg:px-12 py-10 w-full lg:w-[calc(100%-90px)] h-screen bg-main text-white transition-transform z-20 !mt-0 overflow-auto;
+          @apply absolute left-0 lg:left-[90px] top-14 lg:top-0 p-4 lg:px-12 lg:py-10 w-full lg:w-[calc(100%-90px)] h-[calc(100vh-56px)] lg:h-screen bg-main text-white transition-transform z-20 !mt-0 overflow-auto;
         }
 
         .publication-detail-panel {
-          @apply absolute left-[90px] top-0 px-12 py-10 w-[calc(100%-90px)] h-screen bg-main text-white transition-transform z-20 !mt-0 overflow-auto space-y-6 bg-cover bg-no-repeat;
+          @apply absolute left-0 lg:left-[90px] top-14 lg:top-0 p-4 lg:px-12 lg:py-10 w-full lg:w-[calc(100%-90px)] h-[calc(100vh-56px)] lg:h-screen bg-main text-white transition-transform z-40 !mt-0 overflow-auto space-y-6 bg-[length:0px] lg:bg-cover lg:bg-no-repeat;
         }
 
         .filters-panel {
@@ -205,7 +205,7 @@
           @apply z-50 mb-14;
 
           .pane {
-            @apply max-w-none;
+            @apply max-w-none rounded-t-[10px] overflow-hidden bg-transparent;
           }
 
           .cupertino-pane {
@@ -274,22 +274,19 @@
     <!-- MOBILE NAVBAR -->
     <div
       id="navbar-mobile"
-      class="fixed top-0 z-40 h-14 w-screen overflow-y-auto overflow-x-hidden bg-main lg:hidden border-b border-gray-650">
+      class="fixed top-0 z-50 h-14 w-screen overflow-y-auto overflow-x-hidden bg-main lg:hidden border-b border-gray-600">
       <div
         class="flex h-full w-full items-center justify-between py-4 px-6">
         <a href="/"
-          class="flex items-center gap-1">
+          class="flex items-center gap-2">
           <img src="/assets/images/logo.png" alt="Impact4Soil"
-            width="24"
-            height="24"
-            class="h-6 w-6">
-          <span class="text-white">Impact4Soil</span>
+            width="30"
+            height="30"
+            >
+          <span class="font-serif text-white">Impact4Soil</span>
         </a>
         <button id="btn-mobile-menu">
-          <img src="/assets/icons/burger.svg" alt="Menu"
-            width="24"
-            height="24"
-            class="h-6 w-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu h-6 w-6 text-white"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
         </button>
       </div>
     </div>
@@ -695,16 +692,16 @@
       class="hidden lg:block publication-panel lg:-translate-x-full bg-no-repeat"
       style="background-image: url('/assets/images/publications-background.svg')">
       <button
-        class="group hidden lg:flex items-center mb-8 text-white"
+        class="group hidden lg:flex items-center lg:mb-8 text-white"
         id="btn-close-publication-panel">
         <svg
           xmlns="http://www.w3.org/2000/svg" width="24" height="24"
           viewBox="0 0 24 24" fill="none" stroke="currentColor"
           stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          class="rounded-lg mr-[15px] h-[34px] w-[34px] bg-gray-500 p-2 transition-colors group-hover:bg-mod-sc-ev group-hover:text-white group-focus:bg-mod-sc-ev group-focus:text-white">
+          class="rounded-lg mr-[15px] h-[32px] w-[32px] bg-gray-500 p-2 transition-colors group-hover:bg-mod-sc-ev group-hover:text-white group-focus:bg-mod-sc-ev group-focus:text-white">
           <path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
         <span
-          class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 -translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Go
+          class="text-xs lg:opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 lg:-translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Go
           back
         </span>
       </button>
@@ -768,17 +765,16 @@
       class="publication-detail-panel block hidden"
       style="background-image: url('/assets/images/methodology-background.svg')">
       <button
-        class="group flex items-center mb-8 text-white"
+        class="group flex items-center lg:mb-8 text-white"
         id="btn-close-publication-detail-panel">
         <svg
           xmlns="http://www.w3.org/2000/svg" width="24" height="24"
           viewBox="0 0 24 24" fill="none" stroke="currentColor"
           stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          class="rounded-lg mr-[15px] h-[34px] w-[34px] bg-gray-500 p-2 transition-colors group-hover:bg-mod-sc-ev group-hover:text-white group-focus:bg-mod-sc-ev group-focus:text-white">
+          class="rounded-lg mr-[15px] h-[32px] w-[32px] bg-gray-500 p-2 transition-colors group-hover:bg-mod-sc-ev group-hover:text-white group-focus:bg-mod-sc-ev group-focus:text-white">
           <path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
         <span
-          class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 -translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Go
-          back
+          class="text-xs lg:opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 lg:-translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Back to results
         </span>
       </button>
       <div id="publication-detail-panel-content"></div>
@@ -786,23 +782,23 @@
 
     <!-- METHODOLOGY PANEL -->
     <div id="methodology-panel"
-      class="methodology-panel hidden lg:-translate-x-full space-y-6 lg:block bg-cover bg-no-repeat"
+      class="methodology-panel hidden lg:-translate-x-full space-y-6 lg:block bg-[length:0px] lg:bg-cover lg:bg-no-repeat"
       style="background-image: url('/assets/images/methodology-background.svg')">
       <button
-        class="group hidden lg:flex items-center mb-8"
+        class="group flex items-center mb-8"
         id="btn-close-methodology-panel">
         <svg
           xmlns="http://www.w3.org/2000/svg" width="24" height="24"
           viewBox="0 0 24 24" fill="none" stroke="currentColor"
           stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          class="rounded-lg mr-[15px] h-[34px] w-[34px] bg-gray-500 p-2 transition-colors group-hover:bg-mod-sc-ev group-hover:text-white group-focus:bg-mod-sc-ev group-focus:text-white">
+          class="rounded-lg mr-[15px] h-[32px] w-[32px] bg-gray-500 p-2 transition-colors group-hover:bg-mod-sc-ev group-hover:text-white group-focus:bg-mod-sc-ev group-focus:text-white">
           <path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
         <span
-          class="text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 -translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Go
+          class="text-xs lg:opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 lg:-translate-x-1/3 group-hover:translate-x-0 group-focus:translate-x-0">Go
           back
         </span>
       </button>
-      <div class="flex flex-wrap flex-col lg:flex-row gap-16">
+      <div class="flex flex-wrap flex-col lg:flex-row gap-10 lg:gap-16">
         <div class="flex-1 flex flex-col gap-6 lg:min-w-[506px]">
           <h3 class="text-2xl lg:text-4xl font-serif">Methodology</h3>
           <div class="text-neutral-300 text-sm leading-7 space-y-1">

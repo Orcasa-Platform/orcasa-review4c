@@ -40,7 +40,7 @@ const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
 
     return `<div class="flex justify-between items-center border border-b border-main divide-x divide-main">
       <span class="text-neutral-300 text-xs py-4 px-6">${label}</span>
-      <span class="text-white flex items-center justify-center text-xs leading-7 px-6 py-4 w-[128px]">${renderValue(value)}</span>
+      <span class="text-white flex items-center justify-center text-xs leading-7 px-6 py-4 w-[128px] shrink-0">${renderValue(value)}</span>
     </div>`;
   }).join('');
 
@@ -86,10 +86,10 @@ const externalLinkSVG = `<svg viewBox="0 0 22 22" class="w-4 h-4" stroke="curren
 </svg>`;
 
 const publicationDetailTemplate = ({ isMetaAnalysis, journals, year, countries, title, authors, landUse, description, source, url, metaAnalysis, 'methodology-and-attributes': methodologyAndAttributes }) => `
-<div class="flex flex-wrap gap-16">
-  <div class="flex-1 space-y-6">
-    <header class="space-y-6">
-      <div class="font-serif text-3xl leading-10">
+<div class="flex flex-col lg:flex-row gap-4 lg:gap-16">
+  <div class="flex-1 space-y-4 lg:space-y-6">
+    <header class="space-y-4 lg:space-y-6">
+      <div class="font-serif text-2xl lg:text-3xl leading-10">
         ${title}
       </div>
       <div class="text-sm leading-normal italic">${authors}</div>
@@ -107,23 +107,23 @@ const publicationDetailTemplate = ({ isMetaAnalysis, journals, year, countries, 
       </div>
       <ul class="space-y-6">
         <li class="flex items-center">
-          <span class="w-[64px] lg:w-[160px] text-white text-sm leading-7">Type</span>
+          <span class="shrink-0 w-[128px] lg:w-[160px] text-white text-sm leading-7">Type</span>
           <span class="text-neutral-300 text-sm leading-tight">${isMetaAnalysis ? 'Meta-Analysis' : 'Publication'}</span>
         </li>
         <li class="flex items-center">
-          <span class="w-[64px] lg:w-[160px] text-white text-sm leading-7">${journals?.length === 1 ? 'Journal' : 'Journals'}</span>
+          <span class="shrink-0 w-[128px] lg:w-[160px] text-white text-sm leading-7">${journals?.length === 1 ? 'Journal' : 'Journals'}</span>
           <span class="text-neutral-300 text-sm leading-tight">${journals.join(', ')}</span>
         </li>
         <li class="flex items-center">
-          <span class="w-[64px] lg:w-[160px] text-white text-sm leading-7">Year</span>
+          <span class="shrink-0 w-[128px] lg:w-[160px] text-white text-sm leading-7">Year</span>
           <span class="text-neutral-300 text-sm leading-tight">${year}</span>
         </li>
         <li class="flex items-center">
-        <span class="w-[64px] lg:w-[160px] text-white text-sm leading-7">${countries?.length === 1 ? 'Country' : 'Countries'}</span>
+        <span class="shrink-0 w-[128px] lg:w-[160px] text-white text-sm leading-7">${countries?.length === 1 ? 'Country' : 'Countries'}</span>
         <span class="text-neutral-300 text-sm leading-tight">${countries.join(', ')}</span>
         </li>
         <li class="flex items-center">
-          <span class="w-[64px] lg:w-[160px] text-white text-sm leading-7">Source</span>
+          <span class="shrink-0 w-[128px] lg:w-[160px] text-white text-sm leading-7">Source</span>
           <span class="text-neutral-300 text-sm leading-tight flex gap-2">${source}
             <a href="${url}" target="_blank" rel="noopener noreferrer" class="cursor-pointer font-semibold text-mod-sc-ev hover:text-mod-sc-ev-dark flex gap-2">
               DOI ${externalLinkSVG}

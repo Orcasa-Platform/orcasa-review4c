@@ -413,6 +413,8 @@ window.addEventListener('load', function () {
     // Show the main page
     elements.main.classList.remove('lg:hidden');
     elements.footerMenu.classList.remove('lg:hidden');
+
+    elements.mobileFooter.classList.remove('hidden');
   });
 
   // PUBLICATION BUTTON
@@ -919,11 +921,11 @@ window.addEventListener('load', function () {
   // Hide the publication detail panel when the close button is clicked
   elements.closePublicationDetailPanelButton.addEventListener('click', () => {
     window.mutations.setPublicationsOpen(false);
-    elements.publicationDetailPanel.classList.add('lg:hidden');
+    elements.publicationDetailPanel.classList.add('hidden');
     elements.publicationDetailPanelContent.innerHTML = '';
 
     // Display back publication panel and map
-    elements.publicationPanel.classList.remove('lg:hidden');
+    elements.publicationPanel.classList.remove('hidden');
     elements.map.classList.remove('lg:hidden');
   });
 });
