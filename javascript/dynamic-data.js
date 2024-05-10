@@ -160,7 +160,7 @@ window.addEventListener('load', function () {
       `
       <div class="flex flex-col mb-2 py-4 border-b border-slate-600 gap-3">
         <header class="w-full text-base">
-          Impact of <span class="font-semibold"> ${name} </span> on Soil Organic Carbon for ${landUseName}
+          Impact of <span class="font-semibold"> ${name} </span> on Soil Organic Carbon for <span class="font-bold">${landUseName}</span>
         </header>
         <div
           class="text-neutral-300 text-sm leading-7">
@@ -172,7 +172,7 @@ window.addEventListener('load', function () {
       : `
       <div class="flex flex-col p-6 bg-white mb-2 rounded-lg text-gray-700">
         <header class="mb-4 flex w-full justify-between items-end">
-          <div>Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for ${landUseName}</div>
+          <div>Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for <span class="font-bold">${landUseName}</span></div>
           <div class="text-gray-500 text-xs">Click in one intervention below to see more details</div>
         </header>
         <div
@@ -538,8 +538,12 @@ window.addEventListener('load', function () {
 
   const updateNumbers = (metadata) => {
     const { totalPublications, totalMetaAnalysis } = metadata;
-    elements.metaAnalysisNumber.innerHTML = totalMetaAnalysis ? formatNumber(totalMetaAnalysis) : 0;
-    elements.publicationsNumber.innerHTML = totalPublications ? formatNumber(totalPublications) : 0;
+
+    const landUsesData = window.getters.landUses();
+    const landUseSlug = window.getters.landUse();
+    const landUse = landUsesData.find(({ slug }) => slug === landUseSlug);
+
+    elements.resultsSentence.innerHTML = `Showing ${totalMetaAnalysis ? formatNumber(totalMetaAnalysis) : 0} meta-analyses and ${totalPublications ? formatNumber(totalPublications) : 0} primary studies${landUseSlug === 'all' ? '.' : ` related to <span class="font-bold">${landUse?.name ?? '−'}</span>.`}`;
   };
 
   const populateYearChart = (years) => {

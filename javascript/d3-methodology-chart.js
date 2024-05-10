@@ -25,6 +25,20 @@ window.createMethodologyChart = (data) => {
     .attr("transform",
           `translate(${margin.left},${margin.top})`);
 
+  // x axis label
+  svg.append("text")
+    .attr("class", "label-x text-xs text-neutral-300 fill-current")
+    .attr("x", width - margin.right)
+    .attr("y", height + 25)
+    .text("Year");
+
+  // y axis label
+  svg.append("text")
+  .attr("class", "label-y text-xs text-neutral-300 fill-current")
+    .attr("y", 6)
+    .attr("x", 0 - margin.left)
+    .text("Number of publications");
+
   // Get the min and max years between the publicationsData and the metaAnalysisData
   const minYear = Math.floor(d3.min(publicationsData.concat(metaAnalysisData), d => d.date.getFullYear()) / 10) * 10;
   const maxYear = Math.ceil(d3.max(publicationsData.concat(metaAnalysisData), d => d.date.getFullYear()) / 10) * 10;
