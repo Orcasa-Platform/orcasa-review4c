@@ -327,10 +327,7 @@ const createSVGChart = (slug, data) => {
     .text("Negative effect")
 
   xGridElement.selectAll(".tick line")
-    .attr("stroke-opacity", (d) => {
-      console.log(d)
-      return d === 0 ? 1 : 0.2
-    })
+    .attr("stroke-opacity", (d) => d === 0 ? 1 : 0.2)
     .attr("stroke-dasharray", (d) =>  d === 0 ? '0' : "2,1")
     .attr("stroke", (d) => d === 0 ? gray800 : gray700)
 
