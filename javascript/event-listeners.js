@@ -37,7 +37,7 @@ window.recalculateActiveFilters = (dropdownId, options) => {
 window.addEventListener('load', function () {
   // SHARED CODE
   const resetPublicationsFilters = () => {
-    for (let dropdown of elements.dropdowns) {
+    for (let dropdown of isMobile() ? elements.mobileDropdowns : elements.dropdowns) {
       const selected = dropdown.querySelector('.dropdown-selected');
       const options = dropdown.querySelector('.dropdown-options');
       const inputs = options.querySelectorAll('input');
@@ -917,6 +917,34 @@ window.addEventListener('load', function () {
 
     // Activate all Select All buttons and disable all Clear buttons
     for (let dropdown of elements.dropdowns) {
+      const selectAllButton = dropdown.querySelector('.btn-select-all');
+      const clearButton = dropdown.querySelector('.btn-clear');
+
+      selectAllButton.removeAttribute('disabled');
+      clearButton.setAttribute('disabled', '');
+    }
+  });
+
+  // RESET FILTERS MOBILE
+  elements.resetFiltersMobileButton.addEventListener('click', () => {
+    resetPublicationsFilters();
+    window.mutations.setLandUse('all');
+    window.mutations.setFilter(null);
+    // Select the all button on the land use select
+
+    window.initLandUseSelectMobile();
+
+    window.resetMobileSelect('main-intervention');
+    window.resetMobileSelect('intervention');
+    window.resetMobileSelect('sub-type');
+    window.reloadPublications();
+    // Reset the active filters badge
+    window.mutations.setActiveFilters([]);
+    elements.filtersButtonBadge.textContent = '';
+    elements.filtersButtonBadge.classList.add('hidden');
+
+    // Activate all Select All buttons and disable all Clear buttons
+    for (let dropdown of isMobile() ? elements.mobileDropdowns : elements.dropdowns) {
       const selectAllButton = dropdown.querySelector('.btn-select-all');
       const clearButton = dropdown.querySelector('.btn-clear');
 

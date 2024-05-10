@@ -75,6 +75,7 @@ const elements = {
   yearRange: document.getElementById('year-range'),
   search: document.getElementById('search'),
   resetFiltersButton: document.getElementById('reset-filters'),
+  resetFiltersMobileButton: document.getElementById('reset-filters-mobile'),
   labelsSwitch: document.getElementById('labels-switch'),
   boundariesSwitch: document.getElementById('boundaries-switch'),
 }

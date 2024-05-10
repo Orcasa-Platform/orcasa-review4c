@@ -351,6 +351,18 @@ const initSelectActions = ({ filters = false, select } = {}) => {
   });
 };
 
+window.initLandUseSelectMobile = () => {
+  const landUsesData = window.getters.landUses();
+  const landUseList = elements.publicationFiltersMobile.querySelector('#dropdown-select-land-use');
+  landUseList.innerHTML = '';
+  const currentLandUse = window.getters.landUse();
+  landUsesData.forEach(landUse => {
+    landUseList.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: currentLandUse });
+  });
+
+  loadData(currentLandUse);
+};
+
 // Load data on first load or when the user clicks on an main intervention menu button
 window.loadData = (landUseSlug) => {
   const landUsesData = window.getters.landUses();
@@ -939,17 +951,9 @@ window.addEventListener('load', function () {
     // Start with all years selected
     window.mutations.setPublicationFilters('years', availableYears.map(c => c.journal_id));
 
-    // Land use select
+    // Land use select initialization
     if (isMobile()) {
-      const landUsesData = window.getters.landUses();
-      const landUseList = publicationFilters.querySelector('#dropdown-select-land-use');
-      landUseList.innerHTML = '';
-      const currentLandUse = window.getters.landUse();
-      landUsesData.forEach(landUse => {
-        landUseList.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: currentLandUse });
-      });
-
-      loadData(currentLandUse);
+      window.initLandUseSelectMobile()
     }
   };
 
