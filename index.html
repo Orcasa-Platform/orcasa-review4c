@@ -1132,36 +1132,30 @@
               class="w-full h-10 px-4 py-2 text-white text-sm rounded-lg bg-gray-700 rounded-lg shadow border border-gray-500 justify-start items-center inline-flex hover:border-gray-500 focus:ring-mod-sc-ev focus:outline-none">
             </select>
           </div>
-          <div id="intervention">
-            <label for="intervention"
-              class="text-neutral-300 text-sm mb-1">Intervention</label>
-            <div
-              class="relative mobile-dropdown flex-col flex"
-              id="dropdown-select-intervention">
-              <button
-                type="button"
-                class="btn-dropdown flex"
-                disabled>
-                <span
-                  id="intervention-selected"
-                  aria-placeholder="Select"
-                  class="dropdown-selected">Select</span>
-              </button>
-              <input type="search" placeholder="Search…"
-                class="input-search flex hidden" />
-              <fieldset
-                class="dropdown-options hidden">
-                <div
-                  class="flex justify-end px-1 border-b border-gray-500">
-                  <button type="button"
-                    class="btn-select-all btn-link">Select all</button>
-                  <button type="button"
-                    class="btn-clear btn-link" disabled>Clear</button>
-                </div>
-                <ul class="flex flex-col">
-                </ul>
-              </fieldset>
-            </div>
+          <div id="main-intervention" class="hidden">
+            <!-- Native select for mobile -->
+            <label for="dropdown-select-main-intervention"
+              class="lg:hidden text-neutral-300 text-sm block">Main
+              intervention</label>
+            <select id="dropdown-select-main-intervention"
+              class="w-full h-10 px-4 py-2 text-white text-sm rounded-lg bg-gray-700 rounded-lg shadow border border-gray-500 justify-start items-center inline-flex hover:border-gray-500 focus:ring-mod-sc-ev focus:outline-none">
+            </select>
+          </div>
+          <div id="intervention" class="hidden">
+            <!-- Native select for mobile -->
+            <label for="dropdown-select-intervention"
+              class="lg:hidden text-neutral-300 text-sm block">Intervention</label>
+            <select id="dropdown-select-intervention"
+              class="w-full h-10 px-4 py-2 text-white text-sm rounded-lg bg-gray-700 rounded-lg shadow border border-gray-500 justify-start items-center inline-flex hover:border-gray-500 focus:ring-mod-sc-ev focus:outline-none">
+            </select>
+          </div>
+          <div id="sub-type" class="hidden">
+            <!-- Native select for mobile -->
+            <label for="dropdown-select-sub-type"
+              class="lg:hidden text-neutral-300 text-sm block">Sub type</label>
+            <select id="dropdown-select-sub-type"
+              class="w-full h-10 px-4 py-2 text-white text-sm rounded-lg bg-gray-700 rounded-lg shadow border border-gray-500 justify-start items-center inline-flex hover:border-gray-500 focus:ring-mod-sc-ev focus:outline-none">
+            </select>
           </div>
         </div>
       </div>

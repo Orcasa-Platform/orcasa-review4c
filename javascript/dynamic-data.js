@@ -434,6 +434,9 @@ const createCards = (data, landUseName) => {
   });
 
   if (isMobile()) {
+    // Save data for filters
+    window.mutations.setChartData(existingData);
+
     if (existingData.length === 0) {
       elements.chartCardsMobile.innerHTML = `<p class="font-semibold text-neutral-300 text-lg h-full flex items-center justify-center">No data</p>`;
     } else {
@@ -590,7 +593,6 @@ const loadDataAndSetButtons = () => {
 
 window.addEventListener('resize', function () {
   loadDataAndSetButtons();
-  window.loadPublications(true);
 });
 
 window.addEventListener('load', function () {
@@ -638,16 +640,148 @@ window.addEventListener('load', function () {
     loadData(slug);
   });
 
+  // Initialize event listeners if they were not already initialized
+  if (!window.getters.mainInterventionSelectActionsInitialized()) {
+    initSelectActions({ filters: true, select: 'mainIntervention'});
+    window.mutations.setMainInterventionActionsInitialized(true);
+  }
+
+  window.resetMobileSelect = (id) => {
+    const selectMobile = elements.publicationFiltersMobile.querySelector(`#${id}`);
+    selectMobile.classList.add('hidden');
+  }
+
+  window.loadMainInterventionMobileSelect = (selected) => {
+    // Initialize the main intervention dropdown
+    const mainInterventionMobile = publicationFilters.querySelector('#main-intervention');
+    mainInterventionMobile.classList.remove('hidden');
+
+    const mainInterventionSelect = publicationFilters.querySelector('#dropdown-select-main-intervention');
+    const landUsesData = window.getters.landUses();
+    const mainInterventionData = landUsesData?.find(({ slug }) => slug === selected).mainInterventions;
+
+    mainInterventionSelect.innerHTML = '';
+    mainInterventionSelect.innerHTML += option({ name: 'All', slug: 'all', dropdownSlug: 'main-intervention', selectedSlug: selected });
+    mainInterventionData.forEach(mainIntervention => {
+      mainInterventionSelect.innerHTML += option({ name: startCase(mainIntervention), slug: mainIntervention, dropdownSlug: 'main-intervention', selectedSlug: selected });
+    });
+  }
+
+  window.loadInterventionMobileSelect = (selected) => {
+    // Initialize the main intervention dropdown
+    const interventionMobile = publicationFilters.querySelector('#intervention');
+    interventionMobile.classList.remove('hidden');
+
+    const interventionSelect = publicationFilters.querySelector('#dropdown-select-intervention');
+    const landUsesData = window.getters.chartData();
+    const interventionsData = landUsesData?.find(({ slug }) => slug === selected)?.interventions;
+    interventionSelect.innerHTML = '';
+    interventionSelect.innerHTML += option({ name: 'All', slug: 'all', dropdownSlug: 'intervention', selectedSlug: selected });
+    if (interventionsData) {
+      interventionsData.forEach(intervention => {
+        interventionSelect.innerHTML += option({ name: intervention.title, slug: intervention.slug, dropdownSlug: 'intervention', selectedSlug: selected });
+      });
+    }
+    window.mutations.setFilter({ type: 'intervention', intervention: selected, value: selected, mainIntervention: selected });
+  }
+
+  window.loadSubTypeMobileSelect = (selected) => {
+    // Initialize the sub-types dropdown
+    const subTypeMobile = publicationFilters.querySelector('#sub-type');
+    subTypeMobile.classList.remove('hidden');
+
+    const subTypeSelect = publicationFilters.querySelector('#dropdown-select-sub-type');
+    const landUsesData = window.getters.chartData();
+    const selectedMainIntervention = window.getters.filter()?.mainIntervention;
+    const interventionsData = landUsesData?.find(({ slug }) => slug === selectedMainIntervention)?.interventions;
+    const subTypesData = interventionsData?.find(({ slug }) => slug === selected)?.subTypes;
+    subTypeSelect.innerHTML = '';
+    subTypeSelect.innerHTML += option({ name: 'All', slug: 'all', dropdownSlug: 'sub-type', selectedSlug: selected });
+    if (subTypesData) {
+      subTypesData.forEach(subType => {
+        subTypeSelect.innerHTML += option({ name: subType.title, slug: subType.slug, dropdownSlug: 'sub-type', selectedSlug: selected });
+      });
+    }
+
+    window.mutations.setFilter({ type: 'sub-type', intervention: selected, value: selected, mainIntervention: selected });
+  }
+
   // LAND USE SELECT MOBILE on filters
   const publicationFilters = isMobile() ? elements.publicationFiltersMobile : elements.publicationFilters;
   const landUseSelectMobile = publicationFilters.querySelector('#dropdown-select-land-use');
-  if(landUseSelectMobile) {
+  if (landUseSelectMobile) {
     landUseSelectMobile.addEventListener('change', function(event) {
-      const slug = event.target.value;
-      window.mutations.setLandUse(slug);
-      loadData(slug);
+      const selected = event.target.value;
+
+      if (selected === 'all') {
+        window.resetMobileSelect('main-intervention');
+        window.resetMobileSelect('intervention');
+        window.resetMobileSelect('sub-type');
+        window.mutations.setFilter(null);
+      } else {
+        window.resetMobileSelect('main-intervention');
+        window.resetMobileSelect('intervention');
+        window.resetMobileSelect('sub-type');
+        window.mutations.setFilter(null);
+        window.loadMainInterventionMobileSelect(selected);
+      }
+
+      window.mutations.setLandUse(selected);
+      loadData(selected);
 
       // Reload publications
+      window.reloadPublications();
+    });
+  }
+
+  const mainInterventionMobile = publicationFilters.querySelector('#dropdown-select-main-intervention');
+  if(mainInterventionMobile) {
+    mainInterventionMobile.addEventListener('change', function(event) {
+      const selected = event.target.value;
+      if (selected === 'all') {
+        window.resetMobileSelect('intervention');
+        window.resetMobileSelect('sub-type');
+        window.mutations.setFilter(null);
+      } else {
+        window.resetMobileSelect('sub-type');
+        window.loadInterventionMobileSelect(selected);
+        const interventionMobile = publicationFilters.querySelector('#intervention');
+        interventionMobile.classList.remove('hidden');
+        window.mutations.setFilter({ mainIntervention: selected });
+      }
+      window.reloadPublications();
+    });
+  }
+
+  const interventionMobile = publicationFilters.querySelector('#dropdown-select-intervention');
+  if(interventionMobile) {
+    interventionMobile.addEventListener('change', function(event) {
+      const selected = event.target.value;
+      const mainIntervention = window.getters.filter()?.mainIntervention;
+      if (selected === 'all') {
+        window.resetMobileSelect('sub-type');
+        window.mutations.setFilter({ mainIntervention });
+      } else {
+        window.loadSubTypeMobileSelect(selected);
+        const interventionMobile = publicationFilters.querySelector('#intervention');
+        interventionMobile.classList.remove('hidden');
+        window.mutations.setFilter({ type: 'intervention', value: selected, mainIntervention, intervention: selected });
+      }
+      window.reloadPublications();
+    });
+  }
+
+  const subTypeMobile = publicationFilters.querySelector('#dropdown-select-sub-type');
+  if(subTypeMobile) {
+    subTypeMobile.addEventListener('change', function(event) {
+      const selected = event.target.value;
+      const mainIntervention = window.getters.filter()?.mainIntervention;
+      const intervention = window.getters.filter()?.intervention;
+      if (selected === 'all') {
+        window.mutations.setFilter({ type: 'intervention', value: selected, mainIntervention, intervention });
+      } else {
+        window.mutations.setFilter({ type: 'sub-type', value: selected, mainIntervention, intervention });
+       }
       window.reloadPublications();
     });
   }

@@ -127,6 +127,7 @@ window.addEventListener('load', function () {
       window.loadPublications();
       // Hide the main page and footer
       elements.main.classList.add('hidden');
+      elements.chartCardsMobile.classList.add('hidden');
       elements.mobileFooter.innerHTML = '';
 
       const filterButton = footerButton('Filters', 'btn-mobile-footer-filters');
