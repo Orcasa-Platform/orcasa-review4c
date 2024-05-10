@@ -31,16 +31,11 @@ const updateChartAndButtons = ({ slug, title, data, resetAllCharts }) => {
       }
     });
   }
-  createSVGChart(slug, data);
-  updateButtons(title, data)
+  if (slug !== 'all') {
+    createSVGChart(slug, data);
+    updateButtons(title, data)
+  }
 }
-
-const updateMapLayerSelection = (chartSlug, interventionSlug, subTypeSlug) => {
-  // We can't have a main intervention without an intervention
-  window.mutations.setMainIntervention(interventionSlug ? chartSlug : null);
-  window.mutations.setIntervention(interventionSlug);
-  window.mutations.setSubType(subTypeSlug);
-};
 
 const click = (_, title, chartSlug, data, isIntervention) => {
   const currentSelection = window.getters.filter();
@@ -57,7 +52,6 @@ const click = (_, title, chartSlug, data, isIntervention) => {
       active: false,
     }));
     updateChartAndButtons({ slug: chartSlug, title: null, data: updatedData })
-    updateMapLayerSelection(null, null, null);
     return;
   }
 
@@ -80,7 +74,6 @@ const click = (_, title, chartSlug, data, isIntervention) => {
       };
     });
     updateChartAndButtons({ slug: chartSlug, title: currentTitle, data: updatedData })
-    updateMapLayerSelection(chartSlug, activeInterventionItem.slug, null);
     return;
   }
 
@@ -105,7 +98,6 @@ const click = (_, title, chartSlug, data, isIntervention) => {
   window.mutations.setFilter({ type: isIntervention ? 'intervention' : 'sub-type', value: slug, mainIntervention: chartSlug, intervention: !isIntervention && data.find((item) => item.active).slug });
   // Rerender to show sub-types or filter opacity of error bars
   updateChartAndButtons({ slug: chartSlug, title, data: updatedData, resetAllCharts: isIntervention })
-  updateMapLayerSelection(chartSlug, isIntervention ? slug : activeInterventionItem.slug, isIntervention ? null : slug)
 };
 
 // Create the SVG container
@@ -349,6 +341,12 @@ const createSVGChart = (slug, data) => {
   }
 
   const currentSelection = window.getters.filter();
+
+  const isHighlighted = (d) =>  !currentSelection ||
+    currentSelection.mainIntervention !== slug ||
+    !currentSelection.value ||
+    (currentSelection.mainIntervention === slug && currentSelection.value === d.slug);
+
   // Create error bars
   svg.selectAll(".error-bar")
     .data(dataWithSubTypes)
@@ -362,7 +360,7 @@ const createSVGChart = (slug, data) => {
 
       g
         .append("line")
-        .attr("class", (!currentSelection || currentSelection.mainIntervention !== slug) || currentSelection.value === d.slug ? "stroke-gray-700" : "stroke-gray-200")
+        .attr("class", isHighlighted(d) ? "stroke-gray-700" : "stroke-gray-200")
         .attr("stroke-width", "2")
         .attr("x1", xScale(d.low < 0 ? 0 : d.low))
         .attr("x2", xScale(Math.max(d.high, 0)))
@@ -374,8 +372,8 @@ const createSVGChart = (slug, data) => {
 
         g
         .append("line")
-        .attr("class", (!currentSelection || currentSelection.mainIntervention !== slug) || currentSelection.value === d.slug ? "stroke-darkRed-600" : "stroke-gray-200")
-                .attr("stroke-width", "2")
+        .attr("class", isHighlighted(d) ? "stroke-darkRed-600" : "stroke-gray-200")
+        .attr("stroke-width", "2")
         .attr("x1", xScale(Math.min(d.low, 0)))
         .attr("x2", xScale(d.high > 0 ? 0 : d.high))
         .attr("y1", y)
@@ -391,7 +389,7 @@ const createSVGChart = (slug, data) => {
     .enter()
     .append("circle")
     .attr("class", (d) => {
-      return `data-point ${(!currentSelection || currentSelection.mainIntervention !== slug) || currentSelection.value === d.slug ? "fill-gray-700" : "fill-gray-200"}`;
+         return `data-point ${isHighlighted(d) ? "fill-gray-700" : "fill-gray-200"}`;
     })
     .attr("cx", d => xScale(d.value))
     .attr("cy", d => calculateY({ interventionItem: d }) + yScale.bandwidth() / 2)

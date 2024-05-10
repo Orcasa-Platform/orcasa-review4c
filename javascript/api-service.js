@@ -42,7 +42,7 @@ const getFilters = async (filter) => {
 const getPathname = (baseURL, landUse, sectionParams) => {
   const filteredSectionParams = sectionParams?.filter(Boolean);
   const landUsePath = landUse === 'all' ? '' : `${landUse}/`;
-  const sectionPath = filteredSectionParams?.length ? `/${filteredSectionParams.join("/")}/` : '';
+  const sectionPath = filteredSectionParams?.length ? `${filteredSectionParams.join("/")}/` : '';
   return `${baseURL}/${landUsePath}${sectionPath}index.json`;
 }
 
@@ -145,7 +145,6 @@ const getPublications = async ({ landUse, mainIntervention, intervention, subTyp
     if (!page) return data;
     return data.slice(PAGE_SIZE * (page - 1), PAGE_SIZE * page);
   };
-
   return getURL(url).then((data) => {
     const updatedData = data;
     const metadata = getMetadata(updatedData);

@@ -61,9 +61,6 @@
     <script
       src="https://unpkg.com/supercluster@8.0.1/dist/supercluster.min.js"></script>
 
-    <!-- Popper library for dropdowns -->
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-
     <!-- This style tag defines the custom grouped classes for tailwind -->
     <!-- On the first case btn-primary will apply all the subsequent classes when applied to an element -->
     <!-- If the code is integrated with Symfony this script could be moved to a different file -->
@@ -79,10 +76,10 @@
           @apply transition-all text-mod-sc-ev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-mod-sc-ev-dark focus-visible:outline-black mt-0 flex text-base font-semibold;
         }
         .btn-filter {
-          @apply h-11 lg:h-9 px-4 py-2 rounded-lg inline-flex justify-center items-center gap-2 text-sm transition-all bg-transparent border border-white/25 aria-pressed:bg-white aria-pressed:bg-opacity-10 aria-pressed:text-white focus-visible:outline focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-white hover:bg-gray-500 focus-visible:outline-mod-sc-ev-dark;
+          @apply h-11 lg:h-9 px-4 py-2 rounded-lg justify-center items-center gap-2 text-sm transition-all bg-transparent border border-white/25 aria-pressed:bg-white aria-pressed:bg-opacity-10 aria-pressed:text-white focus-visible:outline focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none hover:text-white hover:bg-gray-500 focus-visible:outline-mod-sc-ev-dark;
         }
 
-        .btn-land-use-option {
+        .btn-select-option {
           @apply w-full h-10 justify-between items-center flex px-4 py-2 bg-gray-650 gap-2 text-white text-sm leading-tight focus-visible:outline-mod-sc-ev;
         }
 
@@ -100,7 +97,11 @@
         }
 
         .btn-link {
-          @apply p-3 font-semibold text-mod-sc-ev transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:text-gray-500 disabled:pointer-events-none hover:text-mod-sc-ev-dark focus-visible:outline-mod-sc-ev;
+          @apply p-3 font-semibold text-mod-sc-ev text-sm transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:text-gray-500 disabled:pointer-events-none hover:text-mod-sc-ev-dark focus-visible:outline-mod-sc-ev;
+        }
+
+        .btn-mobile-footer {
+          @apply flex-1 h-full inline-flex items-center justify-center text-base lg:text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:pointer-events-none disabled:opacity-50 px-4;
         }
 
         .svg-btn-publication-detail {
@@ -117,6 +118,11 @@
 
         .navbar-item-active {
           @apply bg-mod-sc-ev hover:bg-mod-sc-ev hover:text-white;
+        }
+
+        .mobile-footer {
+          @apply lg:hidden fixed z-30 h-14 w-full bottom-0 transform divide-x bg-mod-sc-ev text-white;
+          padding-bottom: env(safe-area-inset-bottom);
         }
 
         .btn-theme-light {
@@ -136,7 +142,7 @@
         }
 
         .btn-dropdown {
-          @apply px-4 py-2 text-white rounded-lg h-10 bg-main border border-gray-500 justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev;
+          @apply px-4 py-2 text-white text-sm rounded-lg h-10 bg-main border border-gray-500 justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed;
         }
 
         .btn-close {
@@ -152,11 +158,11 @@
         }
 
         .publication-panel {
-          @apply absolute top-2 bottom-2 px-12 py-10 w-full max-w-[582px] left-[90px] h-[calc(100vh-16px)] rounded-lg rounded-r-none bg-main transition-transform z-20 !mt-0 overflow-auto text-white space-y-8;
+          @apply absolute top-0 lg:top-2 lg:bottom-2 px-4 lg:px-12 py-10 w-full lg:max-w-[582px] lg:left-[90px] h-[calc(100vh-16px)] lg:rounded-lg lg:rounded-r-none bg-main transition-transform z-20 !mt-0 overflow-auto text-white space-y-8;
         }
 
         .methodology-panel {
-          @apply absolute left-[90px] top-0 px-12 py-10 w-[calc(100%-90px)] h-screen bg-main text-white transition-transform z-20 !mt-0 overflow-auto;
+          @apply absolute left-0 lg:left-[90px] top-0 px-4 lg:px-12 py-10 w-full lg:w-[calc(100%-90px)] h-screen bg-main text-white transition-transform z-20 !mt-0 overflow-auto;
         }
 
         .publication-detail-panel {
@@ -164,7 +170,11 @@
         }
 
         .filters-panel {
-          @apply absolute left-[calc(582px+90px)] p-12 pt-4 w-[320px] h-screen bg-main transition-transform z-20 overflow-auto text-white;
+          @apply absolute lg:top-2 lg:bottom-2 left-[calc(582px+90px)] p-12 pt-4 w-[320px] h-screen lg:h-[calc(100vh-16px)] bg-main transition-transform z-20 overflow-auto text-white;
+        }
+
+        .filters-panel-mobile {
+          @apply px-4 bg-main overflow-auto text-white;
         }
 
         .input-search {
@@ -172,7 +182,7 @@
         }
 
         .dropdown-options {
-          @apply z-30 rounded-lg border-none shadow bg-gray-650 transition-all overflow-auto absolute w-full mt-[50px] min-h-[100px] max-h-[200px];
+          @apply z-30 rounded-lg border border-gray-500 shadow bg-gray-650 transition-all overflow-auto absolute w-full mt-[50px] min-h-[100px] max-h-[200px];
         }
 
         .btn-basemap {
@@ -189,6 +199,22 @@
 
         .land-use-menu-mobile-scroll {
           @apply flex-row overflow-x-auto min-h-[68px] whitespace-nowrap;
+        }
+
+        .cupertino-pane-wrapper {
+          @apply z-50 mb-14;
+
+          .pane {
+            @apply max-w-none;
+          }
+
+          .cupertino-pane {
+            @apply bg-main;
+          }
+
+          .draggable {
+            @apply bg-main;
+          }
         }
       }
     </style>
@@ -271,7 +297,7 @@
     <!-- MOBILE MENU -->
     <div
       id="mobile-menu"
-      class="fixed left-0 top-0 z-50 h-screen w-screen transform bg-gray-700 text-white animate-in slide-in-from-right-full overflow-hidden -translate-x-full">
+      class="fixed left-0 top-0 z-50 h-screen w-screen transform bg-gray-700 text-white animate-in slide-in-from-right-full overflow-x-hidden overflow-y-auto -translate-x-full">
       <button type="button" id="btn-close-mobile-menu"
         class="absolute right-4 top-4">
         <svg
@@ -327,16 +353,9 @@
                 based on peer-reviewed scientific evidence.</span></h2>
             <div class="flex flex-col gap-1 hidden"
               id="land-use-select-container">
-              <!-- Native select for mobile -->
-              <label for="land-use-select-mobile"
-                class="lg:hidden text-neutral-300 text-sm">Land use</label>
-              <select id="land-use-select-mobile"
-                class="lg:hidden w-[290px] h-10 text-white rounded-lg bg-gray-700 rounded-lg shadow border border-gray-500 justify-start items-center inline-flex hover:border-gray-500">
-              </select>
-              <!-- Custom select for desktop -->
-              <div id="land-use-select" class="hidden lg:block">
+              <div id="land-use-select" class="hidden lg:block font-sans">
                 <label for="btn-land-use-select"
-                  class="text-neutral-300 text-sm mb-1 font-serif">Land
+                  class="text-neutral-300 text-sm mb-1">Land
                   use</label>
                 <div
                   class="relative select flex-col flex"
@@ -358,7 +377,7 @@
                 </div>
               </div>
               <div
-                class="text-neutral-300 text-xs leading-tight font-serif">The
+                class="text-neutral-300 text-xs leading-tight font-sans">The
                 numbers
                 refer to the primary studies reviewed.</div>
             </div>
@@ -372,7 +391,7 @@
             <div>
               <div class="text-center text-white mb-6">Select one type of land
                 use to explore its impacts:</div>
-              <div class="mb-4"
+              <div class="mb-4 flex gap-3"
                 id="land-use-menu"></div>
               <div
                 class="text-center text-gray-300 text-xs leading-tight">The
@@ -380,7 +399,7 @@
             </div>
           </div>
 
-          <div id="chart-cards" class="hidden">
+          <div id="chart-cards" class="flex-1 hidden">
           </div>
           <div id="chart-tooltip"
             class="p-1 bg-slate-700 text-white text-xs absolute hidden rounded z-50"></div>
@@ -572,16 +591,111 @@
               </fieldset>
             </div>
           </div>
+          <div id="land-use-select-filters" class="hidden lg:block select">
+            <label for="btn-land-use-select-filters"
+              class="text-neutral-300 text-sm mb-1 font-sans">Land
+              use</label>
+            <div
+              class="relative select flex-col flex"
+              id="dropdown-select-land-use">
+              <button
+                type="button"
+                id="btn-land-use-select-filters"
+                class="btn-dropdown flex">
+                <span
+                  id="land-use-selected-filters"
+                  aria-placeholder="Select"
+                  class="dropdown-selected">
+                </span>
+              </button>
+              <fieldset
+                class="flex flex-col hidden absolute z-30 rounded-lg border-none shadow bg-gray-650 overflow-auto w-full min-h-[100px]"
+                id="land-use-dropdown-options-filters">
+              </fieldset>
+            </div>
+          </div>
+          <div id="main-intervention-select-filters"
+            class="hidden lg:block lg:hidden select">
+            <label for="btn-main-intervention-select-filters"
+              class="text-neutral-300 text-sm mb-1 font-sans">Main
+              intervention</label>
+            <div
+              class="relative select flex-col flex"
+              id="dropdown-select-main-intervention">
+              <button
+                type="button"
+                id="btn-main-intervention-select-filters"
+                class="btn-dropdown flex">
+                <span
+                  id="main-intervention-selected-filters"
+                  aria-placeholder="Select"
+                  class="dropdown-selected">All
+                </span>
+              </button>
+              <fieldset
+                class="flex flex-col hidden absolute z-30 rounded-lg border-none shadow bg-gray-650 overflow-auto w-full min-h-[100px]"
+                id="main-intervention-dropdown-options-filters">
+              </fieldset>
+            </div>
+          </div>
+          <div id="intervention-select-filters"
+            class="hidden lg:block lg:hidden select">
+            <label for="btn-intervention-select-filters"
+              class="text-neutral-300 text-sm mb-1 font-sans">
+              Intervention</label>
+            <div
+              class="relative select flex-col flex"
+              id="dropdown-select-intervention">
+              <button
+                type="button"
+                id="btn-intervention-select-filters"
+                class="btn-dropdown flex">
+                <span
+                  id="intervention-selected-filters"
+                  aria-placeholder="Select"
+                  class="dropdown-selected">All
+                </span>
+              </button>
+              <fieldset
+                class="flex flex-col hidden absolute z-30 rounded-lg border-none shadow bg-gray-650 overflow-auto w-full min-h-[100px]"
+                id="intervention-dropdown-options-filters">
+              </fieldset>
+            </div>
+          </div>
+          <div id="sub-type-select-filters"
+            class="hidden lg:block lg:hidden select">
+            <label for="btn-sub-type-select-filters"
+              class="text-neutral-300 text-sm mb-1 font-sans">
+              Sub-type</label>
+            <div
+              class="relative select flex-col flex"
+              id="dropdown-select-sub-type">
+              <button
+                type="button"
+                id="btn-sub-type-select-filters"
+                class="btn-dropdown flex">
+                <span
+                  id="sub-type-selected-filters"
+                  aria-placeholder="Select"
+                  class="dropdown-selected">All
+                </span>
+              </button>
+              <fieldset
+                class="flex flex-col hidden absolute z-30 rounded-lg border-none shadow bg-gray-650 overflow-auto w-full min-h-[100px]"
+                id="sub-type-dropdown-options-filters">
+              </fieldset>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- PUBLICATION PANEL -->
     <div id="publication-panel"
-      class="hidden lg:block publication-panel -translate-x-full bg-no-repeat"
+      class="hidden lg:block publication-panel lg:-translate-x-full bg-no-repeat"
       style="background-image: url('/assets/images/publications-background.svg')">
       <button
-        class="group flex items-center mb-8 text-white"
+        class="group hidden lg:flex items-center mb-8 text-white"
         id="btn-close-publication-panel">
         <svg
           xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -597,7 +711,7 @@
 
       <!-- PUBLICATION HEADER -->
       <h2
-        class="font-serif text-xl">Publications</h2>
+        class="font-serif text-2xl lg:text-xl">Publications</h2>
       <div class="flex justify-between items-center gap-2">
         <div id="search" class="flex-1">
           <div class="relative w-full">
@@ -614,11 +728,11 @@
         <button
           type="button"
           id="btn-filters"
-          class="btn-primary flex items-center justify-center gap-2 h-10 !duration-500">
+          class="btn-primary hidden lg:flex items-center justify-center gap-2 h-10 !duration-500">
           <i class="h-6 w-6 stroke-1" data-lucide="filter"></i>
           Filters
           <div id="btn-filters-badge"
-            class="w-[22px] h-[22px] p-1 bg-yellow-700 rounded-full flex-col justify-center items-center flex text-gray-700 text-2xs font-medium transition-colors duration-500 hidden">
+            class="w-[22px] h-[22px] p-1 bg-green-700 text-white rounded-full flex-col justify-center items-center flex text-2xs font-medium transition-colors duration-500 hidden">
           </div>
         </button>
       </div>
@@ -627,7 +741,7 @@
         <button
           type="button"
           id="btn-sort-publications"
-          class="btn-filter flex items-center justify-between !px-4 !py-2 min-w-[82px]">
+          class="btn-filter hidden lg:flex items-center justify-between !px-4 !py-2 min-w-[82px]">
           <i class="h-4 w-4 stroke-1" data-lucide="arrow-up-narrow-wide"></i>
           Sort
         </button>
@@ -672,10 +786,10 @@
 
     <!-- METHODOLOGY PANEL -->
     <div id="methodology-panel"
-      class="methodology-panel -translate-x-full space-y-6 block hidden bg-cover bg-no-repeat"
+      class="methodology-panel hidden lg:-translate-x-full space-y-6 lg:block bg-cover bg-no-repeat"
       style="background-image: url('/assets/images/methodology-background.svg')">
       <button
-        class="group flex items-center mb-8"
+        class="group hidden lg:flex items-center mb-8"
         id="btn-close-methodology-panel">
         <svg
           xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -688,9 +802,9 @@
           back
         </span>
       </button>
-      <div class="flex flex-wrap gap-16">
-        <div class="flex-1 flex flex-col gap-6 min-w-[506px]">
-          <h3 class="text-4xl font-serif">Methodology</h3>
+      <div class="flex flex-wrap flex-col lg:flex-row gap-16">
+        <div class="flex-1 flex flex-col gap-6 lg:min-w-[506px]">
+          <h3 class="text-2xl lg:text-4xl font-serif">Methodology</h3>
           <div class="text-neutral-300 text-sm leading-7 space-y-1">
             <p>We conducted a literature
               search to retrieve all peer-reviewed meta- analyses that reported
@@ -723,7 +837,7 @@
               </ul>
             </p>
           </div>
-          <div class="flex flex-wrap">
+          <div class="flex flex-wrap flex-col lg:flex-row">
             <div class="flex-grow"
               id="methodology-chart"></div>
             <div id="methodology-legend"
@@ -813,6 +927,231 @@
               class="text-teal-500 text-sm font-semibold">Julien
               Demenois (Cirad)</a>
 
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE FOOTER -->
+
+    <nav
+      id="mobile-footer" class="mobile-footer flex">
+      <button type="button" id="btn-mobile-footer-publications"
+        class="btn-mobile-footer">
+        Publications
+      </button>
+      <button type="button" id="btn-mobile-footer-methodology"
+        class="btn-mobile-footer">
+        Methodology
+      </button>
+    </nav>
+
+    <div
+      id="mobile-banner"
+      class="hidden safe-area-inset-bottom fixed bottom-0 pb-14 bg-gray-800 z-10 h-fit min-h-[60px] w-full lg:hidden z-20">-
+      <div
+        class="relative z-10 h-[230px] bg-gray-800 text-white">
+        <div
+          class="flex justify-center gap-6 self-stretch px-4 pb-6 pt-4">
+          <div
+            class="font-serif text-base leading-relaxed">
+            <span>Navigate in a
+            </span>
+            <span class="font-semibold leading-normal">desktop
+              screen</span>
+            <span> for a complete experience.</span>
+          </div>
+          <button
+            id="btn-banner-close"
+            class="inline-flex items-center justify-center text-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:pointer-events-none disabled:opacity-50 font-sans rounded-lg border border-gray-500 hover:bg-gray-600 text-white hover:text-white focus-visible:ring-offset-gray-700 h-10 px-4 py-0 box-content">Close</button>
+        </div>
+        <div
+          class="flex items-end gap-8">
+          <img alt loading="lazy" width="75" height="75" decoding="async"
+            data-nimg="1" class="h-[75px]"
+            src="/assets/images/mobile-banner-icons.webp">
+        </div>
+        <img
+          alt="Desktop screen mockup of the website" loading="lazy"
+          width="546"
+          height="286" decoding="async"
+          class="absolute bottom-0 -right-[20%] -mb-[120px] h-[286px] w-[546px] object-contain pl-[30px]"
+          src="/assets/images/desktop-mockup.png" />
+      </div>
+    </div>
+
+    <!-- MOBILE -->
+    <div class="cupertino-pane">
+      <!-- PUBLICATION FILTERS MOBILE -->
+      <div
+        id="publication-filters-mobile"
+        class="filters-panel-mobile flex flex-col w-full justify-between space-y-[40px] mt-[14px] pb-8">
+        <button
+          id="reset-filters"
+          class="flex items-center justify-center text-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:pointer-events-none disabled:opacity-50 font-sans bg-gray-650 hover:bg-gray-600 rounded-lg text-sm px-2 py-1 flex items-center gap-1 self-end rounded-2xl pr-1 text-sm text-gray-50 hover:bg-gray-500 disabled:text-gray-300 disabled:opacity-100"
+          type="button">
+          Reset all
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+            fill="none" class="h-5 w-5"><path stroke="#fff"
+              stroke-linecap="round" stroke-linejoin="round"
+              d="m7.75 7.75 4.5 4.5m0-4.5-4.5 4.5M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0"></path></svg>
+        </button>
+        <div class="flex flex-col gap-6">
+          <div id="type-publication">
+            <label for="type-publication"
+              class="text-neutral-300 text-sm mb-1">Publication type</label>
+            <div
+              class="relative mobile-dropdown flex-col flex"
+              id="dropdown-select-type-publication">
+              <button
+                type="button"
+                class="btn-dropdown flex">
+                <span
+                  id="type-publication-selected"
+                  aria-placeholder="Select"
+                  class="dropdown-selected">Select
+                </span>
+              </button>
+              <input type="search" placeholder="Search"
+                class="input-search flex hidden" />
+              <fieldset
+                class="dropdown-options hidden">
+                <div
+                  class="flex justify-end px-1 border-b border-gray-500">
+                  <button type="button"
+                    class="btn-select-all btn-link">Select all</button>
+                  <button type="button"
+                    class="btn-clear btn-link" disabled>Clear</button>
+                </div>
+                <ul class="flex flex-col">
+                </ul>
+              </fieldset>
+            </div>
+          </div>
+          <div id="year">
+            <label for="year"
+              class="text-neutral-300 text-sm mb-1">Year</label>
+            <div
+              class="relative mobile-dropdown flex-col flex"
+              id="dropdown-select-year">
+              <button
+                type="button"
+                class="btn-dropdown flex">
+                <span
+                  id="year-selected"
+                  aria-placeholder="Select"
+                  class="dropdown-selected">Select
+                </span>
+              </button>
+              <input type="search" placeholder="Search…"
+                class="input-search flex hidden" />
+              <fieldset
+                class="dropdown-options hidden">
+                <div
+                  class="flex justify-end px-1 border-b border-gray-500">
+                  <button type="button"
+                    class="btn-select-all btn-link">Select all</button>
+                  <button type="button"
+                    class="btn-clear btn-link" disabled>Clear</button>
+                </div>
+                <ul class="flex flex-col">
+                </ul>
+              </fieldset>
+            </div>
+          </div>
+          <div id="journal">
+            <label for="journal"
+              class="text-neutral-300 text-sm mb-1">Journal</label>
+            <div
+              class="relative mobile-dropdown flex-col flex"
+              id="dropdown-select-journal">
+              <button
+                type="button"
+                class="btn-dropdown flex">
+                <span
+                  id="journal-selected"
+                  aria-placeholder="Select"
+                  class="dropdown-selected">Select</span>
+              </button>
+              <input type="search" placeholder="Search…"
+                class="input-search flex hidden" />
+              <fieldset
+                class="dropdown-options hidden">
+                <div
+                  class="flex justify-end px-1 border-b border-gray-500">
+                  <button type="button"
+                    class="btn-select-all btn-link">Select all</button>
+                  <button type="button"
+                    class="btn-clear btn-link" disabled>Clear</button>
+                </div>
+                <ul class="flex flex-col">
+                </ul>
+              </fieldset>
+            </div>
+          </div>
+          <div id="country">
+            <label for="country"
+              class="text-neutral-300 text-sm mb-1">Country</label>
+            <div
+              class="relative mobile-dropdown flex-col flex"
+              id="dropdown-select-country">
+              <button
+                type="button"
+                class="btn-dropdown flex">
+                <span
+                  id="country-selected"
+                  aria-placeholder="Select"
+                  class="dropdown-selected">Select</span>
+              </button>
+              <input type="search" placeholder="Search…"
+                class="input-search flex hidden" />
+              <fieldset
+                class="dropdown-options hidden">
+                <div
+                  class="flex justify-end px-1 border-b border-gray-500">
+                  <button type="button"
+                    class="btn-select-all btn-link">Select all</button>
+                  <button type="button"
+                    class="btn-clear btn-link" disabled>Clear</button>
+                </div>
+                <ul class="flex flex-col">
+                </ul>
+              </fieldset>
+            </div>
+          </div>
+
+          <div id="land-use">
+            <!-- Native select for mobile -->
+            <label for="dropdown-select-land-use"
+              class="lg:hidden text-neutral-300 text-sm block">Land use</label>
+            <select id="dropdown-select-land-use"
+              class="w-full h-10 px-4 py-2 text-white text-sm rounded-lg bg-gray-700 rounded-lg shadow border border-gray-500 justify-start items-center inline-flex hover:border-gray-500 focus:ring-mod-sc-ev focus:outline-none">
+            </select>
+          </div>
+          <div id="main-intervention" class="hidden">
+            <!-- Native select for mobile -->
+            <label for="dropdown-select-main-intervention"
+              class="lg:hidden text-neutral-300 text-sm block">Main
+              intervention</label>
+            <select id="dropdown-select-main-intervention"
+              class="w-full h-10 px-4 py-2 text-white text-sm rounded-lg bg-gray-700 rounded-lg shadow border border-gray-500 justify-start items-center inline-flex hover:border-gray-500 focus:ring-mod-sc-ev focus:outline-none">
+            </select>
+          </div>
+          <div id="intervention" class="hidden">
+            <!-- Native select for mobile -->
+            <label for="dropdown-select-intervention"
+              class="lg:hidden text-neutral-300 text-sm block">Intervention</label>
+            <select id="dropdown-select-intervention"
+              class="w-full h-10 px-4 py-2 text-white text-sm rounded-lg bg-gray-700 rounded-lg shadow border border-gray-500 justify-start items-center inline-flex hover:border-gray-500 focus:ring-mod-sc-ev focus:outline-none">
+            </select>
+          </div>
+          <div id="sub-type" class="hidden">
+            <!-- Native select for mobile -->
+            <label for="dropdown-select-sub-type"
+              class="lg:hidden text-neutral-300 text-sm block">Sub type</label>
+            <select id="dropdown-select-sub-type"
+              class="w-full h-10 px-4 py-2 text-white text-sm rounded-lg bg-gray-700 rounded-lg shadow border border-gray-500 justify-start items-center inline-flex hover:border-gray-500 focus:ring-mod-sc-ev focus:outline-none">
+            </select>
           </div>
         </div>
       </div>
@@ -1013,6 +1352,15 @@
 
     <!-- RIVE ANIMATION FOR INTRO PAGE -->
     <script src="https://unpkg.com/@rive-app/canvas@2.7.0"></script>
+
+    <!-- POPPER LIBRARY FOR DROPDOWNS -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+
+    <!-- CUPERTINO-PANE LIBRARY FOR MOBILE DRAWER (FILTERS) -->
+    <script
+      src="https://unpkg.com/cupertino-pane/dist/cupertino-pane.js"></script>
+    <script
+      src="https://unpkg.com/cupertino-pane/dist/cupertino-pane.min.js"></script>
 
     <script>
       const r = new rive.Rive({
