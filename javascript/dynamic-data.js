@@ -511,6 +511,8 @@ const createMobileChart = (slug, data) => {
           // Set the button as pressed
           Array.from(chartMobileButtons).filter(b => b !== element).map(b => b.setAttribute('aria-pressed', 'false'));
           element.setAttribute('aria-pressed', 'true');
+
+          window.mutations.setFilter({ type: 'intervention', value: interventionName, mainIntervention: mainInterventionSlug, intervention: interventionName });
         });
       };
     }
@@ -651,20 +653,22 @@ window.addEventListener('load', function () {
     selectMobile.classList.add('hidden');
   }
 
-  window.loadMainInterventionMobileSelect = (selected) => {
+  window.loadMainInterventionMobileSelect = (selectedLandUse) => {
     // Initialize the main intervention dropdown
     const mainInterventionMobile = publicationFilters.querySelector('#main-intervention');
     mainInterventionMobile.classList.remove('hidden');
 
     const mainInterventionSelect = publicationFilters.querySelector('#dropdown-select-main-intervention');
     const landUsesData = window.getters.landUses();
-    const mainInterventionData = landUsesData?.find(({ slug }) => slug === selected).mainInterventions;
-
-    mainInterventionSelect.innerHTML = '';
-    mainInterventionSelect.innerHTML += option({ name: 'All', slug: 'all', dropdownSlug: 'main-intervention', selectedSlug: selected });
-    mainInterventionData.forEach(mainIntervention => {
-      mainInterventionSelect.innerHTML += option({ name: startCase(mainIntervention), slug: mainIntervention, dropdownSlug: 'main-intervention', selectedSlug: selected });
-    });
+    const mainInterventionData = landUsesData?.find(({ slug }) => slug === selectedLandUse)?.mainInterventions;
+    const selectedMainIntervention = window.getters.filter()?.mainIntervention;
+    if (mainInterventionData) {
+      mainInterventionSelect.innerHTML = '';
+      mainInterventionSelect.innerHTML += option({ name: 'All', slug: 'all', dropdownSlug: 'main-intervention', selectedSlug: selectedMainIntervention });
+      mainInterventionData.forEach(mainIntervention => {
+        mainInterventionSelect.innerHTML += option({ name: startCase(mainIntervention), slug: mainIntervention, dropdownSlug: 'main-intervention', selectedSlug: selectedMainIntervention });
+      });
+    }
   }
 
   window.loadInterventionMobileSelect = (selected) => {

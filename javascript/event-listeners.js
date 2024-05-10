@@ -136,6 +136,18 @@ window.addEventListener('load', function () {
         mobileFiltersDrawer.present({ animate: true })
       });
       elements.mobileFooter.appendChild(filterButton);
+
+      // Show the mobile select filters
+      const selectedLandUse = window.getters.landUse();
+      if(selectedLandUse && selectedLandUse !== 'all') {
+        window.loadMainInterventionMobileSelect(selectedLandUse);
+        const selectedMainIntervention = window.getters.filter()?.mainIntervention;
+
+        if (selectedMainIntervention) {
+          window.loadInterventionMobileSelect(selectedMainIntervention);
+        }
+      }
+
     });
   };
 
