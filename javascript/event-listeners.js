@@ -145,6 +145,11 @@ window.addEventListener('load', function () {
 
         if (selectedMainIntervention) {
           window.loadInterventionMobileSelect(selectedMainIntervention);
+
+          const selectedIntervention = window.getters.filter()?.intervention;
+          if (selectedIntervention) {
+            window.loadSubTypeMobileSelect(selectedIntervention);
+          }
         }
       }
 
