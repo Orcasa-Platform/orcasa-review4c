@@ -815,8 +815,12 @@ window.addEventListener('load', function () {
 
   const updateNumbers = (metadata) => {
     const { totalPublications, totalMetaAnalysis } = metadata;
-    elements.metaAnalysisNumber.innerHTML = totalMetaAnalysis ? formatNumber(totalMetaAnalysis) : 0;
-    elements.publicationsNumber.innerHTML = totalPublications ? formatNumber(totalPublications) : 0;
+
+    const landUsesData = window.getters.landUses();
+    const landUseSlug = window.getters.landUse();
+    const landUse = landUsesData.find(({ slug }) => slug === landUseSlug);
+
+    elements.resultsSentence.innerHTML = `Showing ${totalMetaAnalysis ? formatNumber(totalMetaAnalysis) : 0} meta-analyses and ${totalPublications ? formatNumber(totalPublications) : 0} primary studies${landUseSlug === 'all' ? '.' : ` related to <span class="font-bold">${landUse?.name ?? '−'}</span>.`}`;
   };
 
   const populateYearChart = (years) => {

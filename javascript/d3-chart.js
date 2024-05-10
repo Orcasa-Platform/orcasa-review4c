@@ -144,7 +144,7 @@ const createSVGChart = (slug, data) => {
 
   const xTickValues = [-150, -120, -90, -60,  -30, 0, 30, 60, 90, 120, 150];
   // Draw intermediate ticks without labels
-  const xTickTicks = [-150, -135, -120, -105, -90, -75, -60, -45, -30, 0, 15, 30, 45,  60, 75, 90, 105, 120, 135, 150];
+  const xTickTicks = [-150, -135, -120, -105, -90, -75, -60, -45, -30, -15, 0, 15, 30, 45,  60, 75, 90, 105, 120, 135, 150];
   const yTickWidth = widthValue + RIGHT_AXIS_PADDING - width - 70;
 
   // Remove any existing chart
@@ -319,9 +319,10 @@ const createSVGChart = (slug, data) => {
     .text("Negative effect")
 
   xGridElement.selectAll(".tick line")
-    .attr("stroke-opacity", 0.2)
-    .attr("stroke-dasharray", (d) => d === 0 ? 'none' : "2,1")
-    .attr("stroke", gray700);
+    .attr("stroke-opacity", (d) => d === 0 ? 1 : 0.2)
+    .attr("stroke-dasharray", (d) =>  d === 0 ? '0' : "2,1")
+    .attr("stroke", (d) => d === 0 ? gray800 : gray700)
+
 
   xGridElement.select(".domain").remove();
   const getOpacity = (d) => (!selected || selected?.type !== 'subType' || selected?.value === d.title) ? 1 : 0.5;
@@ -360,6 +361,7 @@ const createSVGChart = (slug, data) => {
       g
         .append("line")
         .attr("class", isHighlighted(d) ? "stroke-gray-700" : "stroke-gray-200")
+        .attr("stroke-width", "2")
         .attr("x1", xScale(d.low < 0 ? 0 : d.low))
         .attr("x2", xScale(Math.max(d.high, 0)))
         .attr("y1", y)
@@ -371,6 +373,7 @@ const createSVGChart = (slug, data) => {
         g
         .append("line")
         .attr("class", isHighlighted(d) ? "stroke-darkRed-600" : "stroke-gray-200")
+        .attr("stroke-width", "2")
         .attr("x1", xScale(Math.min(d.low, 0)))
         .attr("x2", xScale(d.high > 0 ? 0 : d.high))
         .attr("y1", y)

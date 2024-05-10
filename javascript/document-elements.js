@@ -62,6 +62,7 @@ const elements = {
   mobileFooter: document.getElementById('mobile-footer'),
   publicationsNumber: document.getElementById('publications-number'),
   metaAnalysisNumber: document.getElementById('meta-analysis-number'),
+  resultsSentence: document.getElementById('results-sentence'),
   legendTexts: document.querySelectorAll('.legend-text'),
   initialMain: document.getElementById('initial-main'),
   chartCards: document.getElementById('chart-cards'),
