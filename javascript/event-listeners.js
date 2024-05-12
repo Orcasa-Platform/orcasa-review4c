@@ -22,12 +22,13 @@ window.recalculateActiveFilters = (dropdownId, options) => {
   const landUseFiltersCount = [selectedLandUse, isMainInterventionSelected, isInterventionSelected, isSubTypeSelected].filter(Boolean).length;
   const filtersActiveNumber = window.getters.activeFilters().length + landUseFiltersCount;
 
+  const filtersButtonBadge = isMobile() ? document.getElementById('btn-filters-badge-mobile') : elements.filtersButtonBadge;
   if (filtersActiveNumber > 0) {
-    elements.filtersButtonBadge.textContent = filtersActiveNumber;
-    elements.filtersButtonBadge.classList.remove('hidden');
+    filtersButtonBadge.textContent = filtersActiveNumber;
+    filtersButtonBadge.classList.remove('hidden');
   } else {
-    elements.filtersButtonBadge.textContent = '';
-    elements.filtersButtonBadge.classList.add('hidden');
+    filtersButtonBadge.textContent = '';
+    filtersButtonBadge.classList.add('hidden');
   }
 };
 
@@ -116,7 +117,12 @@ window.addEventListener('load', function () {
     footerButtonElement.id = id;
 
     footerButtonElement.classList.add('btn-mobile-footer');
+    footerButtonElement.classList.add('flex');
     footerButtonElement.textContent = label;
+    const filtersBadgeElement = document.createElement('div');
+    filtersBadgeElement.id = 'btn-filters-badge-mobile';
+    filtersBadgeElement.classList.add('p-1', 'rounded-full', 'flex-col', 'justify-center', 'items-center', 'h-7', 'w-7', 'flex', 'text-sm', 'font-semibold', 'transition-colors', 'duration-500', 'bg-green-700', 'text-white', 'ml-2', 'hidden');
+    footerButtonElement.appendChild(filtersBadgeElement);
     return footerButtonElement;
   };
 
@@ -151,6 +157,8 @@ window.addEventListener('load', function () {
         });
         elements.mobileFooter.appendChild(filterButton);
       }
+
+      window.recalculateActiveFilters();
 
       // Show the mobile select filters
       const selectedLandUse = window.getters.landUse();
@@ -936,11 +944,11 @@ window.addEventListener('load', function () {
     window.resetMobileSelect('intervention');
     window.resetMobileSelect('sub-type');
     window.reloadPublications();
+
     // Reset the active filters badge
     window.mutations.setActiveFilters([]);
-    elements.filtersButtonBadge.textContent = '';
-    elements.filtersButtonBadge.classList.add('hidden');
 
+    window.recalculateActiveFilters();
     // Activate all Select All buttons and disable all Clear buttons
     for (let dropdown of isMobile() ? elements.mobileDropdowns : elements.dropdowns) {
       const selectAllButton = dropdown.querySelector('.btn-select-all');
