@@ -114,28 +114,43 @@ window.addEventListener('load', function () {
     const footerButtonElement = document.createElement('button');
     footerButtonElement.type = 'button';
     footerButtonElement.id = id;
+
     footerButtonElement.classList.add('btn-mobile-footer');
     footerButtonElement.textContent = label;
     return footerButtonElement;
   };
 
   // MOBILE FOOTER BUTTONS
-  if(elements.mobileFooterPublicationsButton) {
+  if (elements.mobileFooterPublicationsButton) {
     elements.mobileFooterPublicationsButton.addEventListener("click", function() {
+
       window.mutations.setPublicationsOpen(true);
       elements.publicationPanel.classList.remove('hidden');
       window.loadPublications();
       // Hide the main page and footer
       elements.main.classList.add('hidden');
       elements.chartCardsMobile.classList.add('hidden');
-      elements.mobileFooter.innerHTML = '';
 
-      const filterButton = footerButton('Filters', 'btn-mobile-footer-filters');
-      filterButton.addEventListener("click", function() {
-        // Show the filters vault
-        mobileFiltersDrawer.present({ animate: true })
-      });
-      elements.mobileFooter.appendChild(filterButton);
+      // Hide the main page footer buttons
+      const mainPageFooterButtons = document.getElementsByClassName('btn-mobile-footer-main');
+      for (let button of mainPageFooterButtons) {
+        button.classList.add('hidden');
+      }
+      // Show the filters footer button
+      const publicationsFilterButton = document.getElementById('btn-mobile-footer-filters');
+      if(publicationsFilterButton) {
+        publicationsFilterButton.classList.remove('hidden');
+      }
+
+      const existingFiltersButton = document.getElementById('btn-mobile-footer-filters')
+      if (!existingFiltersButton) {
+        const filterButton = footerButton('Filters', 'btn-mobile-footer-filters');
+        filterButton.addEventListener("click", function() {
+          // Show the filters vault
+          mobileFiltersDrawer.present({ animate: true })
+        });
+        elements.mobileFooter.appendChild(filterButton);
+      }
 
       // Show the mobile select filters
       const selectedLandUse = window.getters.landUse();
@@ -568,13 +583,11 @@ window.addEventListener('load', function () {
     // Recalculate active filters on the filters button to show land use
     window.recalculateActiveFilters();
 
-    if(!isMobile()) {
-      // Load LAND USE SELECT on filters dropdown
-      loadLandUseSelect();
-      window.loadMainInterventionSelect();
-      window.loadInterventionSelect();
-      window.loadSubTypeSelect();
-    }
+    // Load LAND USE SELECT on filters dropdown
+    loadLandUseSelect();
+    window.loadMainInterventionSelect();
+    window.loadInterventionSelect();
+    window.loadSubTypeSelect();
 
     // Hide the main page
     elements.main.classList.add('lg:hidden');
@@ -593,74 +606,96 @@ window.addEventListener('load', function () {
     window.mutations.setPublicationPage(1);
 
     window.mutations.setPublicationsOpen(false);
-    elements.publicationPanel.classList.add('lg:-translate-x-full');
-
-    const isFiltersPanelOpen = window.getters.filtersOpen();
-    if (isFiltersPanelOpen) {
-      closeFiltersPanel();
-    }
-
-    // Set filters button color to green just in case the filters panel was opened
-    setFiltersButtonColor('green');
-
-    // Restore main page
-    elements.main.classList.remove('lg:hidden');
-    elements.map.classList.add('lg:hidden');
-    elements.footerMenu.classList.remove('lg:hidden');
 
     const landUse = window.getters.landUse();
-    const landUses = window.getters.landUses();
 
-    if (landUse === 'all') {
-      elements.initialMain.classList.remove('lg:hidden');
-      elements.chartCards.classList.add('hidden');
-      elements.chartCardsMobile.classList.add('hidden');
-      elements.landUseSelectContainer.classList.add('hidden');
+    if(isMobile()) {
+      elements.publicationPanel.classList.add('hidden');
+      // Hide filters button
+      const publicationsFilterButton = document.getElementById('btn-mobile-footer-filters');
+      if (publicationsFilterButton) {
+        publicationsFilterButton.classList.add('hidden');
+      }
+      // Show the main page footer buttons
+      const mainPageFooterButtons = document.getElementsByClassName('btn-mobile-footer-main');
+      for (let button of mainPageFooterButtons) {
+        button.classList.remove('hidden');
+      }
+
+      if (landUse) {
+        elements.chartCardsMobile.classList.remove('hidden');
+
+        // Reset filters, only keep except for land use
+        window.mutations.setFilter(null);
+        window.reloadPublications();
+      }
     } else {
-      elements.initialMain.classList.add('lg:hidden');
-      elements.chartCards.classList.remove('hidden');
-      elements.chartCardsMobile.classList.remove('hidden');
+      const isFiltersPanelOpen = window.getters.filtersOpen();
+      if (isFiltersPanelOpen) {
+        closeFiltersPanel();
+      }
 
-      elements.landUseSelectContainer.classList.remove('hidden');
-      const selectedLandUse = landUses.find(l => l.slug === landUse);
-      const selectedLandUseLabel = `${selectedLandUse.name} (${formatNumber(selectedLandUse.publications)})`;
-      elements.landUseSelectButton.innerHTML = selectedLandUseLabel;
+      // Set filters button color to green just in case the filters panel was opened
+      setFiltersButtonColor('green');
 
-      elements.landUseOptions.innerHTML = '';
+      elements.publicationPanel.classList.add('lg:-translate-x-full');
+      // Restore main page
+      elements.main.classList.remove('lg:hidden');
+      elements.map.classList.add('lg:hidden');
+      elements.footerMenu.classList.remove('lg:hidden');
 
-      landUses.filter(l => l.name !== 'All').forEach(landUse => {
-        elements.landUseOptions.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: landUse, mobile: false, filters: true, publicationNumbers: true });
-      });
+      const landUses = window.getters.landUses();
+
+      if (landUse === 'all') {
+        elements.initialMain.classList.remove('lg:hidden');
+        elements.chartCards.classList.add('hidden');
+        elements.chartCardsMobile.classList.add('hidden');
+        elements.landUseSelectContainer.classList.add('hidden');
+      } else {
+        elements.initialMain.classList.add('lg:hidden');
+        elements.chartCards.classList.remove('hidden');
+        elements.chartCardsMobile.classList.remove('hidden');
+
+        elements.landUseSelectContainer.classList.remove('hidden');
+        const selectedLandUse = landUses.find(l => l.slug === landUse);
+        const selectedLandUseLabel = `${selectedLandUse.name} (${formatNumber(selectedLandUse.publications)})`;
+        elements.landUseSelectButton.innerHTML = selectedLandUseLabel;
+
+        elements.landUseOptions.innerHTML = '';
+
+        landUses.filter(l => l.name !== 'All').forEach(landUse => {
+          elements.landUseOptions.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: landUse, mobile: false, filters: true, publicationNumbers: true });
+        });
+      }
+
+      // Reload the chart with the correspondant opened items
+      const currentData = window.getters.chartData();
+      const currentMainIntervention = window.getters.filter()?.mainIntervention;
+      const currentIntervention = window.getters.filter()?.type === 'intervention' && window.getters.filter()?.value;
+      const currentSubType = window.getters.filter()?.type === 'sub-type' && window.getters.filter()?.value;
+
+      if (!currentIntervention) {
+        updateChartAndButtons({ slug: 'all', resetAllCharts: true });
+      } else {
+        // If a intervention is selected, we need to update the data marking it as active
+        // If a sub-type is selected, we need to update the data marking it as active
+        const updatedMainInterventionData = currentData?.[currentMainIntervention]?.map(intervention => {
+          return (intervention.slug === currentIntervention) ?
+            {
+              ...intervention,
+              active: true,
+              subTypes: intervention.subTypes.map(subType => ({
+                ...subType,
+                active: subType.slug === currentSubType,
+              }))
+            } :
+            {...intervention, subtypes: intervention.subTypes.map(subType => ({...subType, active: false })), active: false };
+        });
+        const currentSubTypeTitle = currentIntervention && currentSubType && updatedMainInterventionData.find(intervention => intervention.slug === currentIntervention)?.subTypes.find(subType => subType.slug === currentSubType)?.title;
+        const currentInterventionTitle = currentIntervention && updatedMainInterventionData.find(intervention => intervention.slug === currentIntervention)?.title;
+        updateChartAndButtons({ slug: currentMainIntervention, title: currentSubTypeTitle || currentInterventionTitle , data: updatedMainInterventionData, resetAllCharts: true });
+      }
     }
-
-    // Reload the chart with the correspondant opened items
-    const currentData = window.getters.chartData();
-    const currentMainIntervention = window.getters.filter()?.mainIntervention;
-    const currentIntervention = window.getters.filter()?.type === 'intervention' && window.getters.filter()?.value;
-    const currentSubType = window.getters.filter()?.type === 'sub-type' && window.getters.filter()?.value;
-
-    if (!currentIntervention) {
-      updateChartAndButtons({ slug: 'all', resetAllCharts: true });
-    } else {
-      // If a intervention is selected, we need to update the data marking it as active
-      // If a sub-type is selected, we need to update the data marking it as active
-      const updatedMainInterventionData = currentData?.[currentMainIntervention]?.map(intervention => {
-        return (intervention.slug === currentIntervention) ?
-          {
-            ...intervention,
-            active: true,
-            subTypes: intervention.subTypes.map(subType => ({
-              ...subType,
-              active: subType.slug === currentSubType,
-            }))
-          } :
-          {...intervention, subtypes: intervention.subTypes.map(subType => ({...subType, active: false })), active: false };
-      });
-      const currentSubTypeTitle = currentIntervention && currentSubType && updatedMainInterventionData.find(intervention => intervention.slug === currentIntervention)?.subTypes.find(subType => subType.slug === currentSubType)?.title;
-      const currentInterventionTitle = currentIntervention && updatedMainInterventionData.find(intervention => intervention.slug === currentIntervention)?.title;
-      updateChartAndButtons({ slug: currentMainIntervention, title: currentSubTypeTitle || currentInterventionTitle , data: updatedMainInterventionData, resetAllCharts: true });
-    }
-
   });
 
   // FILTERS BUTTON
