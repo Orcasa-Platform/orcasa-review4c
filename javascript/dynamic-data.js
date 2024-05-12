@@ -848,6 +848,7 @@ window.addEventListener('load', function () {
 
       // Reload publications
       window.reloadPublications();
+      window.recalculateActiveFilters();
     });
   }
 
