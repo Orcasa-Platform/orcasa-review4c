@@ -636,6 +636,9 @@ window.addEventListener('load', function () {
         // Reset filters, only keep except for land use
         window.mutations.setFilter(null);
         window.reloadPublications();
+        window.resetMobileSelect('main-intervention');
+        window.resetMobileSelect('intervention');
+        window.resetMobileSelect('sub-type');
       }
     } else {
       const isFiltersPanelOpen = window.getters.filtersOpen();
