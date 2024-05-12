@@ -630,7 +630,7 @@ window.addEventListener('load', function () {
         button.classList.remove('hidden');
       }
 
-      if (landUse) {
+      if (landUse && landUse !== 'all') {
         elements.chartCardsMobile.classList.remove('hidden');
 
         // Reset filters, only keep except for land use
@@ -639,6 +639,8 @@ window.addEventListener('load', function () {
         window.resetMobileSelect('main-intervention');
         window.resetMobileSelect('intervention');
         window.resetMobileSelect('sub-type');
+      } else {
+        elements.landUseMenuMobile.classList.remove('land-use-menu-mobile-scroll');
       }
     } else {
       const isFiltersPanelOpen = window.getters.filtersOpen();
