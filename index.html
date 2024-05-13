@@ -174,7 +174,8 @@
         }
 
         .filters-panel-mobile {
-          @apply px-4 bg-main overflow-auto text-white;
+          /* Specify a max height of the initial height of the opened drawer (506px) */
+          @apply px-4 bg-main overflow-auto text-white max-h-[506px];
         }
 
         .input-search {
@@ -986,7 +987,7 @@
       <!-- PUBLICATION FILTERS MOBILE -->
       <div
         id="publication-filters-mobile"
-        class="filters-panel-mobile flex flex-col w-full justify-between space-y-[40px] mt-[14px] pb-8">
+        class="filters-panel-mobile flex flex-col w-full justify-between space-y-[40px] mt-[14px] pb-8 !overflow-y-auto">
         <button
           id="reset-filters-mobile"
           class="flex items-center justify-center text-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:pointer-events-none disabled:opacity-50 font-sans bg-gray-650 hover:bg-gray-600 rounded-lg text-sm px-2 py-1 flex items-center gap-1 self-end rounded-2xl pr-1 text-sm text-gray-50 hover:bg-gray-500 disabled:text-gray-300 disabled:opacity-100"
