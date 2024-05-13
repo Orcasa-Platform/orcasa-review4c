@@ -48,10 +48,10 @@ const getHTMLPopup = (feature) => {
 
   return `
     <div class="p-6 h-full flex flex-col gap-y-6">
-      <h4 class="shrink-0 text-slate-700 text-lg font-serif">
+      <h4 class="shrink-0 text-slate-700 text-xl font-serif">
         Publications in <span class="font-semibold">${country_name}</span>
       </h4>
-      <button type="button" id="popup-close-button" class="btn-close absolute right-6 top-4">
+      <button type="button" id="popup-close-button" class="btn-close absolute right-3 top-3">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-gray-700">
           <path d="M18 6 6 18"></path>
@@ -59,17 +59,17 @@ const getHTMLPopup = (feature) => {
         </svg>
         <span class="sr-only">Close popup</span>
       </button>
-      <div class="grow overflow-y-auto overflow-x-hidden font-sans text-base">
+      <div class="grow overflow-y-auto overflow-x-hidden font-sans text-base min-h-[88px]">
         <div class="w-full space-y-3">
           ${outcomesList}
         </div>
-        <div class="flex w-full mt-6 pt-6 border-t border-gray-200 items-center gap-6">
-          <div class="text-slate-700 text-sm">Learn more about concrete practices on the ground:</div>
-          <a href="/practices" rel="noreferrer" class="flex px-4 py-2 rounded-lg border border-neutral-300 justify-center items-center gap-2 bg-white hover:bg-gray-50">
-              <i class="w-4 h-4 relative" data-lucide="tractor"></i>
-              <div class="text-slate-700 text-sm font-normal font-['Roboto'] leading-snug">Practices</div>
-          </a>
-          </div>
+      </div>
+      <div class="bg-white flex w-full pt-6 border-t border-gray-200 items-center gap-6">
+        <div class="text-slate-700 text-sm">Learn more about concrete practices on the ground:</div>
+        <a href="/practices" rel="noreferrer" class="flex px-4 py-2 rounded-lg border border-neutral-300 justify-center items-center gap-2 bg-white hover:bg-gray-50">
+            <i class="w-4 h-4 relative" data-lucide="tractor"></i>
+            <div class="text-slate-700 text-sm font-normal font-['Roboto'] leading-snug">Practices</div>
+        </a>
         </div>
       </div>
     </div>
