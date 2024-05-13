@@ -321,7 +321,7 @@ const createSVGChart = (slug, data) => {
   xGridElement.selectAll(".tick line")
     .attr("stroke-opacity", (d) => d === 0 ? 1 : 0.2)
     .attr("stroke-dasharray", (d) =>  d === 0 ? '0' : "2,1")
-    .attr("stroke", (d) => d === 0 ? gray800 : gray700)
+    .attr("stroke", (d) => d === 0 ? neutral300 : gray700)
 
 
   xGridElement.select(".domain").remove();
