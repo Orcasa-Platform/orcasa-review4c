@@ -616,11 +616,23 @@ const createMobileChart = (slug, data) => {
             // Add event listeners after the HTML is inserted
             document.querySelectorAll('.btn-chart-sub-type').forEach(button => {
               button.addEventListener('click', function() {
+                const isSubTypePressed = button.getAttribute('aria-pressed') === 'true';
                 const mainInterventionSlug = button.getAttribute('data-main-intervention-slug');
                 const subTypeSlug = button.getAttribute('data-sub-type-slug');
                 const interventionSlug = button.getAttribute('data-intervention-slug');
 
-                window.mutations.setFilter({ type: 'sub-type', value: subTypeSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
+                if (isSubTypePressed) {
+                  button.setAttribute('aria-pressed', 'false');
+
+                  // Leave intervention selected
+                  window.mutations.setFilter({ type: 'intervention', value: interventionSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
+                } else {
+                  // Set aria-pressed to true
+                  Array.from(document.querySelectorAll('.btn-chart-sub-type')).map(b => b.setAttribute('aria-pressed', 'false'));
+                  button.setAttribute('aria-pressed', 'true');
+
+                  window.mutations.setFilter({ type: 'sub-type', value: subTypeSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
+                }
               });
             });
           }
