@@ -527,24 +527,24 @@ const createMobileChart = (slug, data) => {
     if (chartMobileButtons) {
       for (let element of chartMobileButtons) {
         element.addEventListener("click", function() {
+          const chartDescriptions = document.querySelectorAll('[id^="chart-description-"]');
+
+          // Hide other chart descriptions
+          Array.from(chartDescriptions).map(d => d.classList.add('hidden'));
+
           // If the button is already pressed
           if (element.getAttribute('aria-pressed') === 'true') {
-            const chartDescription = chartElement.getElementsByClassName('chart-description')?.[0];
-            if (chartDescription) {
-              chartDescription.classList.add('hidden');
-            }
-
             element.setAttribute('aria-pressed', 'false');
 
             const subTypeContainers = document.querySelectorAll('.sub-type-container');
             Array.from(subTypeContainers).map(d => d.innerHTML = '');
 
             window.mutations.setFilter(null);
-          } else {
-            // Hide other chart descriptions
-            const chartDescriptions = document.querySelectorAll('[id^="chart-description-"]');
-            Array.from(chartDescriptions).map(d => d.classList.add('hidden'));
 
+            // Set all data-actives to false
+            const chartItems = document.querySelectorAll('[id^="chart-item-"]');
+            Array.from(chartItems).map(d => d.setAttribute('data-active', 'false'));
+          } else {
             // Fill and show the chart description
 
             const mainInterventionSlug = element.getAttribute('data-main-intervention-slug');
@@ -616,11 +616,23 @@ const createMobileChart = (slug, data) => {
             // Add event listeners after the HTML is inserted
             document.querySelectorAll('.btn-chart-sub-type').forEach(button => {
               button.addEventListener('click', function() {
+                const isSubTypePressed = button.getAttribute('aria-pressed') === 'true';
                 const mainInterventionSlug = button.getAttribute('data-main-intervention-slug');
                 const subTypeSlug = button.getAttribute('data-sub-type-slug');
                 const interventionSlug = button.getAttribute('data-intervention-slug');
 
-                window.mutations.setFilter({ type: 'sub-type', value: subTypeSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
+                if (isSubTypePressed) {
+                  button.setAttribute('aria-pressed', 'false');
+
+                  // Leave intervention selected
+                  window.mutations.setFilter({ type: 'intervention', value: interventionSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
+                } else {
+                  // Set aria-pressed to true
+                  Array.from(document.querySelectorAll('.btn-chart-sub-type')).map(b => b.setAttribute('aria-pressed', 'false'));
+                  button.setAttribute('aria-pressed', 'true');
+
+                  window.mutations.setFilter({ type: 'sub-type', value: subTypeSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
+                }
               });
             });
           }
