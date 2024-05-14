@@ -109,6 +109,13 @@ window.addEventListener('load', function () {
     elements.mobileMenu.classList.add('-translate-x-full');
   });
 
+  // BANNER PRACTICES
+  const isBannerPracticesClosed = localStorage.getItem('BANNER_PRACTICES_CLOSED');
+  if (!isBannerPracticesClosed) {
+    elements.bannerPractices.classList.remove('hidden');
+  }
+
+
   // MOBILE FOOTER
 
   const footerButton = (label, id) => {
@@ -215,6 +222,12 @@ window.addEventListener('load', function () {
     localStorage.setItem('FILTERS_DISCLAIMER_CLOSED', 'true');
   });
 
+  // BANNER PRACTICES
+
+  elements.bannerPracticesCloseButton.addEventListener("click", function() {
+    elements.bannerPractices.classList.add('lg:hidden');
+    localStorage.setItem('BANNER_PRACTICES_CLOSED', 'true');
+  });
   // MAP SETTINGS
 
   elements.mapSettingsButton.addEventListener("click", function() {
