@@ -112,7 +112,7 @@ window.addEventListener('load', function () {
   // BANNER PRACTICES
   const isBannerPracticesClosed = localStorage.getItem('BANNER_PRACTICES_CLOSED');
   if (!isBannerPracticesClosed) {
-    elements.bannerPractices.classList.remove('hidden');
+    elements.bannerPractices.classList.remove('lg:hidden');
   }
 
 
@@ -225,7 +225,7 @@ window.addEventListener('load', function () {
   // BANNER PRACTICES
 
   elements.bannerPracticesCloseButton.addEventListener("click", function() {
-    elements.bannerPractices.classList.add('hidden');
+    elements.bannerPractices.classList.add('lg:hidden');
     localStorage.setItem('BANNER_PRACTICES_CLOSED', 'true');
   });
 
