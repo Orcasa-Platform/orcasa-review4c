@@ -112,7 +112,7 @@ window.addEventListener('load', function () {
   // BANNER PRACTICES
   const isBannerPracticesClosed = localStorage.getItem('BANNER_PRACTICES_CLOSED');
   if (!isBannerPracticesClosed) {
-    elements.bannerPractices.classList.remove('hidden');
+    elements.bannerPractices.classList.remove('lg:hidden');
   }
 
 
