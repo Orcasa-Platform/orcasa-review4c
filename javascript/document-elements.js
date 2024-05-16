@@ -9,6 +9,8 @@ const elements = {
   mobileBanner: document.getElementById('mobile-banner'),
   bannerPractices: document.getElementById('banner-practices'),
   bannerPracticesCloseButton: document.getElementById('btn-banner-practices-close'),
+  filtersDisclaimer: document.getElementById('filters-disclaimer'),
+  filtersDisclaimerCloseButton: document.getElementById('btn-filters-disclaimer-close'),
   mobileMenuClose: document.getElementById('btn-close-mobile-menu'),
   footerMenu: document.getElementById('footer-menu'),
   sidebarToggle: document.getElementById('sidebar-toggle'),
