@@ -7,6 +7,8 @@ const elements = {
   mobileMenuButton: document.getElementById('btn-mobile-menu'),
   bannerCloseButton: document.getElementById('btn-banner-close'),
   mobileBanner: document.getElementById('mobile-banner'),
+  filtersDisclaimer: document.getElementById('filters-disclaimer'),
+  filtersDisclaimerCloseButton: document.getElementById('btn-filters-disclaimer-close'),
   mobileMenuClose: document.getElementById('btn-close-mobile-menu'),
   footerMenu: document.getElementById('footer-menu'),
   sidebarToggle: document.getElementById('sidebar-toggle'),

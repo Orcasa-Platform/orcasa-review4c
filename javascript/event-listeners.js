@@ -208,6 +208,13 @@ window.addEventListener('load', function () {
     }
   });
 
+  // FILTERS DISCLAIMER
+
+  elements.filtersDisclaimerCloseButton.addEventListener("click", function() {
+    elements.filtersDisclaimer.classList.add('lg:hidden');
+    localStorage.setItem('FILTERS_DISCLAIMER_CLOSED', 'true');
+  });
+
   // MAP SETTINGS
 
   elements.mapSettingsButton.addEventListener("click", function() {
@@ -804,6 +811,11 @@ window.addEventListener('load', function () {
       });
 
       options.addEventListener('change', ({ target }) => {
+        const filtersDisclaimerClosed = localStorage.getItem('FILTERS_DISCLAIMER_CLOSED');
+        if (!filtersDisclaimerClosed) {
+          elements.filtersDisclaimer.classList.remove('lg:hidden');
+        }
+
         if (target.type !== 'checkbox') {
           return;
         }
@@ -853,6 +865,11 @@ window.addEventListener('load', function () {
       selectAllButton.addEventListener('click', () => {
         selectAllButton.setAttribute('disabled', '');
         clearButton.removeAttribute('disabled');
+
+        const filtersDisclaimerClosed = localStorage.getItem('FILTERS_DISCLAIMER_CLOSED');
+        if (!filtersDisclaimerClosed) {
+          elements.filtersDisclaimer.classList.remove('lg:hidden');
+        }
 
         const inputs = options.querySelectorAll('input');
 
