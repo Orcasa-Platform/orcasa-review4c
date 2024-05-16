@@ -228,6 +228,7 @@ window.addEventListener('load', function () {
     elements.bannerPractices.classList.add('lg:hidden');
     localStorage.setItem('BANNER_PRACTICES_CLOSED', 'true');
   });
+
   // MAP SETTINGS
 
   elements.mapSettingsButton.addEventListener("click", function() {
