@@ -215,13 +215,6 @@ window.addEventListener('load', function () {
     }
   });
 
-  // FILTERS DISCLAIMER
-
-  elements.filtersDisclaimerCloseButton.addEventListener("click", function() {
-    elements.filtersDisclaimer.classList.add('hidden');
-    localStorage.setItem('FILTERS_DISCLAIMER_CLOSED', 'true');
-  });
-
   // BANNER PRACTICES
 
   elements.bannerPracticesCloseButton.addEventListener("click", function() {
