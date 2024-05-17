@@ -513,18 +513,24 @@ const createMobileChart = (slug, data) => {
     const selectedIntervention = window.getters.filter()?.type === 'intervention' ? window.getters.filter()?.value : window.getters.filter()?.intervention;
     const chart = `<div class="flex flex-col justify-between mt-4 gap-[12px]">
       ${sortedData.map(({ title, value, publications, slug: interventionSlug }) => {
+        const fixedValue = value.toFixed(1);
+
         const isSelected = selectedIntervention === interventionSlug;
+
+        const mainInterventionName = startCase(slug);
+        const chartDescriptionText =  descriptionText(mainInterventionName, name, fixedValue)
+
         return (`
         <div class="flex flex-col gap-4 data-[active=true]:border-y data-[active=true]:border-y-gray-650 data-[active=true]:p-4 data-[active=true]:-mx-4" data-active="${isSelected}" id="chart-item-${slug}-${title}">
           <div class="w-full flex text-white items-center justify-between" >
             <span class="text-base w-16 font-semibold ${value > 0 ? 'text-darkRed-500' : ''}">
               ${value.toFixed(1)}%
             </span>
-            <button type="button" class="btn-filter flex-1 btn-chart-mobile" aria-pressed="${isSelected}" id="btn-${kebabCase(title)}" data-main-intervention-slug="${slug}" data-intervention-slug="${interventionSlug}" data-intervention-name="${title}" data-fixed-value="${value.toFixed(1)}" title="${title} (${formatNumber(publications)})">
+            <button type="button" class="btn-filter flex-1 btn-chart-mobile" aria-pressed="${isSelected}" id="btn-${kebabCase(title)}" data-main-intervention-slug="${slug}" data-intervention-slug="${interventionSlug}" data-intervention-name="${title}" data-fixed-value="${fixedValue}" title="${title} (${formatNumber(publications)})">
               <span class="underline">${title}</span> (${formatNumber(publications)})
             </button>
           </div>
-          <div class="chart-description text-base ${isSelected ? '' : 'hidden'}" id="chart-description-${slug}-${title}"></div>
+          <div class="chart-description text-base ${isSelected ? '' : 'hidden'}" id="chart-description-${slug}-${title}">${isSelected ? chartDescriptionText : ''}</div>
           <div class="sub-type-container flex flex-col gap-4"></div>
         </div>`);
       }).join('')
@@ -533,123 +539,146 @@ const createMobileChart = (slug, data) => {
 
     chartElement.innerHTML = chart;
 
-    // Mobile chart buttons click
-    const chartMobileButtons = chartElement.getElementsByClassName('btn-chart-mobile');
-    if (chartMobileButtons) {
-      for (let element of chartMobileButtons) {
-        element.addEventListener("click", function() {
-          const chartDescriptions = document.querySelectorAll('[id^="chart-description-"]');
+    const addSubTypesToChartItem = (chartItem, mainInterventionSlug, interventionName, interventionSlug) => {
+      // Remove all existing sub-types
+      const subTypeContainers = document.querySelectorAll('.sub-type-container');
+      const subTypeContainer = chartItem.querySelector('.sub-type-container');
 
-          // Hide other chart descriptions
-          Array.from(chartDescriptions).map(d => d.classList.add('hidden'));
+      const selectedIntervention = window.getters.filter()?.type === 'intervention' ? window.getters.filter()?.value : window.getters.filter()?.intervention;
 
-          // If the button is already pressed
-          if (element.getAttribute('aria-pressed') === 'true') {
-            element.setAttribute('aria-pressed', 'false');
+      // Add the sub-types to the chart-item
+      const subTypesData = sortedData.find(d => d.title === interventionName)?.subTypes;
 
-            const subTypeContainers = document.querySelectorAll('.sub-type-container');
-            Array.from(subTypeContainers).map(d => d.innerHTML = '');
+      if (subTypesData) {
+        const subTypesHTML = subTypesData.map(({ title, value, publications, slug }) => {
+          const isSelected = interventionSlug === selectedIntervention && window.getters.filter()?.type === 'sub-type' && window.getters.filter()?.value === slug;
+          return (`
+          <div class="flex flex-col gap-4 data-[active=true]:border-y data-[active=true]:border-y-gray-650 data-[active=true]:p-4 data-[active=true]:-mx-4" id="chart-sub-type-${mainInterventionSlug}-${interventionName}-${title}">
+            <div class="w-full flex text-white items-center justify-between" >
+              <span class="text-base w-16 font-semibold ${value > 0 ? '' : 'text-darkRed-500'}">
+                ${value.toFixed(1)}%
+              </span>
+              <button type="button" class="btn-filter flex-1 btn-chart-mobile btn-chart-sub-type" aria-pressed="${isSelected}" id="btn-${kebabCase(title)}" data-main-intervention-slug="${mainInterventionSlug}"
+                data-intervention-slug=${interventionSlug} data-sub-type-slug="${slug}" title="${title}"
+              >
+                <span class="underline">${title}</span> (${formatNumber(publications)})
+              </button>
+            </div>
+          </div>`)
+        }).join('');
 
-            window.mutations.setFilter(null);
-
-            // Set all data-actives to false
-            const chartItems = document.querySelectorAll('[id^="chart-item-"]');
-            Array.from(chartItems).map(d => d.setAttribute('data-active', 'false'));
+        Array.from(subTypeContainers).map(d => {
+          if(d === subTypeContainer) {
+            subTypeContainer.innerHTML = subTypesHTML;
           } else {
-            // Fill and show the chart description
-
-            const mainInterventionSlug = element.getAttribute('data-main-intervention-slug');
-            const mainInterventionName = startCase(mainInterventionSlug);
-            const interventionSlug = element.getAttribute('data-intervention-slug');
-            const interventionName = element.getAttribute('data-intervention-name');
-            const fixedValue = element.getAttribute('data-fixed-value');
-
-            const chartDescription = document.getElementById(`chart-description-${mainInterventionSlug}-${interventionName}`);
-            const chartDescriptionText =  descriptionText(mainInterventionName, interventionName, fixedValue)
-
-            chartDescription.innerHTML = chartDescriptionText;
-            chartDescription.classList.remove('hidden');
-
-
-            // Set all chart items to inactive
-            const chartItems = document.querySelectorAll('[id^="chart-item-"]');
-            Array.from(chartItems).map(d => d.setAttribute('data-active', 'false'));
-
-            // Set the clicked chart item as active
-            const chartItem = document.getElementById(`chart-item-${mainInterventionSlug}-${interventionName}`);
-            chartItem.setAttribute('data-active', 'true');
-
-            // Set the button as pressed
-            Array.from(chartMobileButtons).map(b => {
-              if (b === element) {
-                element.setAttribute('aria-pressed', 'true');
-              } else {
-                b.setAttribute('aria-pressed', 'false')
-              }
-            });
-
-            // // Remove all existing sub-types
-            const subTypeContainers = document.querySelectorAll('.sub-type-container');
-            const subTypeContainer = chartItem.querySelector('.sub-type-container');
-
-
-            // Add the sub-types to the chart-item
-            const subTypesData = sortedData.find(d => d.title === interventionName)?.subTypes;
-
-            if (subTypesData) {
-              const subTypesHTML = subTypesData.map(({ title, value, publications, slug }) => {
-                return (`
-                <div class="flex flex-col gap-4 data-[active=true]:border-y data-[active=true]:border-y-gray-650 data-[active=true]:p-4 data-[active=true]:-mx-4" data-active="false" id="chart-sub-type-${mainInterventionSlug}-${interventionName}-${title}">
-                  <div class="w-full flex text-white items-center justify-between" >
-                    <span class="text-base w-16 font-semibold ${value > 0 ? '' : 'text-darkRed-500'}">
-                      ${value.toFixed(1)}%
-                    </span>
-                    <button type="button" class="btn-filter flex-1 btn-chart-mobile btn-chart-sub-type" aria-pressed="false" id="btn-${kebabCase(title)}" data-main-intervention-slug="${mainInterventionSlug}"
-                     data-intervention-slug=${interventionSlug} data-sub-type-slug="${slug}" title="${title}"
-                    >
-                      <span class="underline">${title}</span> (${formatNumber(publications)})
-                    </button>
-                  </div>
-                </div>`)
-              }).join('');
-
-                Array.from(subTypeContainers).map(d => {
-                  if(d === subTypeContainer) {
-                    subTypeContainer.innerHTML = subTypesHTML;
-                  } else {
-                    d.innerHTML = ''
-                  }
-                });
-            }
-
-            window.mutations.setFilter({ type: 'intervention', value: interventionSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
-
-            // Add event listeners after the HTML is inserted
-            document.querySelectorAll('.btn-chart-sub-type').forEach(button => {
-              if(!button._eventListeners?.click) {
-                button.addEventListener('click', function() {
-                  const isSubTypePressed = button.getAttribute('aria-pressed') === 'true';
-                  const mainInterventionSlug = button.getAttribute('data-main-intervention-slug');
-                  const subTypeSlug = button.getAttribute('data-sub-type-slug');
-                  const interventionSlug = button.getAttribute('data-intervention-slug');
-
-                  if (isSubTypePressed) {
-                    button.setAttribute('aria-pressed', 'false');
-
-                    // Leave intervention selected
-                    window.mutations.setFilter({ type: 'intervention', value: interventionSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
-                  } else {
-                    // Set aria-pressed to true
-                    Array.from(document.querySelectorAll('.btn-chart-sub-type')).map(b => b.setAttribute('aria-pressed', 'false'));
-                    button.setAttribute('aria-pressed', 'true');
-
-                    window.mutations.setFilter({ type: 'sub-type', value: subTypeSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
-                  }
-                });
-              };
-            });
+            d.innerHTML = ''
           }
         });
+      }
+
+      // Add event listeners after the HTML is inserted
+      document.querySelectorAll('.btn-chart-sub-type').forEach(button => {
+        if(!button._eventListeners?.click) {
+          button.addEventListener('click', function() {
+            const isSubTypePressed = button.getAttribute('aria-pressed') === 'true';
+            const mainInterventionSlug = button.getAttribute('data-main-intervention-slug');
+            const subTypeSlug = button.getAttribute('data-sub-type-slug');
+            const interventionSlug = button.getAttribute('data-intervention-slug');
+
+            if (isSubTypePressed) {
+              button.setAttribute('aria-pressed', 'false');
+
+              // Leave intervention selected
+              window.mutations.setFilter({ type: 'intervention', value: interventionSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
+            } else {
+              // Set aria-pressed to true
+              Array.from(document.querySelectorAll('.btn-chart-sub-type')).map(b => b.setAttribute('aria-pressed', 'false'));
+              button.setAttribute('aria-pressed', 'true');
+
+              window.mutations.setFilter({ type: 'sub-type', value: subTypeSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
+            }
+          });
+        };
+      });
+    };
+
+    // Add subtypes if one intervention is selected
+    if (selectedIntervention) {
+      const selectedInterventionData = sortedData.find(d => d.slug === selectedIntervention);
+      if (selectedInterventionData) {
+        addSubTypesToChartItem(chartElement, slug, selectedInterventionData.title, selectedIntervention);
+      }
+    }
+
+    // Mobile chart buttons click
+    let chartMobileButtons = chartElement.getElementsByClassName('btn-chart-mobile');
+    // Filter so we don't pick the sub-type buttons
+    chartMobileButtons = Array.from(chartMobileButtons).filter(b => !b.classList.contains('btn-chart-sub-type'));
+
+
+    if (chartMobileButtons) {
+      for (let element of chartMobileButtons) {
+        if(!element._eventListeners?.click) {
+          element.addEventListener("click", function() {
+            // Deselect style in other buttons
+            const chartMobileButtons = document.getElementsByClassName('btn-chart-mobile');
+            Array.from(chartMobileButtons).map(d => {
+              d.setAttribute('aria-pressed', 'false');
+            });
+
+            const chartDescriptions = document.querySelectorAll('[id^="chart-description-"]');
+            // Hide other chart descriptions
+            Array.from(chartDescriptions).map(d => d.classList.add('hidden'));
+            // If the button is already pressed
+            if (element.getAttribute('aria-pressed') === 'true') {
+              element.setAttribute('aria-pressed', 'false');
+
+              const subTypeContainers = document.querySelectorAll('.sub-type-container');
+              Array.from(subTypeContainers).map(d => d.innerHTML = '');
+
+              window.mutations.setFilter(null);
+
+              // Set all data-actives to false
+              const chartItems = document.querySelectorAll('[id^="chart-item-"]');
+              Array.from(chartItems).map(d => d.setAttribute('data-active', 'false'));
+            } else {
+              // Fill and show the chart description
+
+              const mainInterventionSlug = element.getAttribute('data-main-intervention-slug');
+              const mainInterventionName = startCase(mainInterventionSlug);
+              const interventionSlug = element.getAttribute('data-intervention-slug');
+              const interventionName = element.getAttribute('data-intervention-name');
+              const fixedValue = element.getAttribute('data-fixed-value');
+              const chartDescription = document.getElementById(`chart-description-${mainInterventionSlug}-${interventionName}`);
+              const chartDescriptionText =  descriptionText(mainInterventionName, interventionName, fixedValue)
+
+              chartDescription.innerHTML = chartDescriptionText;
+              chartDescription.classList.remove('hidden');
+
+
+              // Set all chart items to inactive
+              const chartItems = document.querySelectorAll('[id^="chart-item-"]');
+              Array.from(chartItems).map(d => d.setAttribute('data-active', 'false'));
+
+              // Set the clicked chart item as active
+              const chartItem = document.getElementById(`chart-item-${mainInterventionSlug}-${interventionName}`);
+              chartItem.setAttribute('data-active', 'true');
+
+              // Set the button as pressed
+              Array.from(chartMobileButtons).map(b => {
+                if (b === element) {
+                  element.setAttribute('aria-pressed', 'true');
+                } else {
+                  b.setAttribute('aria-pressed', 'false')
+                }
+              });
+
+              addSubTypesToChartItem(chartItem, mainInterventionSlug, interventionName, interventionSlug);
+
+              window.mutations.setFilter({ type: 'intervention', value: interventionSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
+            }
+          });
+        }
       };
     }
   };
@@ -752,7 +781,6 @@ window.addEventListener('resize', function () {
       window.loadPublicationsOpen();
 
       // Load  both mobile and desktop filters
-      // Missing dropdowns on mobile, why
       window.loadDropdowns();
 
       if (currentIsMobile) {
