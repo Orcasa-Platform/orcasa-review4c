@@ -214,7 +214,7 @@
           }
 
           .cupertino-pane {
-            @apply bg-main;
+            @apply bg-main !overflow-hidden;
           }
 
           .draggable {
@@ -1424,12 +1424,12 @@
       src="https://unpkg.com/cupertino-pane/dist/cupertino-pane.min.js"></script>
 
     <script>
-      const r = new rive.Rive({
+      window.riveAnimation = new rive.Rive({
         src: "/assets/animations/filters_animation.riv",
         canvas: document.getElementById("canvas"),
         autoplay: true,
         onLoad: () => {
-          r.resizeDrawingSurfaceToCanvas();
+          riveAnimation.resizeDrawingSurfaceToCanvas();
         },
       });
     </script>

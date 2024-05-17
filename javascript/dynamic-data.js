@@ -251,29 +251,31 @@ const initSelectActions = ({ filters = false, select } = {}) => {
     }
   });
 
-  selectButton.addEventListener('click', function() {
-    toggleSelect();
-  });
+  if(!selectButton._eventListeners?.click) {
+    selectButton.addEventListener('click', toggleSelect);
+  }
 
-  selectButton.addEventListener('keydown', function(event) {
-    if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === ' ') {
-      event.preventDefault(); // Prevent scrolling
-      if (options) {
-        if (selectOptions.classList.contains('hidden')) {
-          selectOptions.classList.remove('hidden');
+  if(!selectButton._eventListeners?.keydown) {
+    selectButton.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === ' ') {
+        event.preventDefault(); // Prevent scrolling
+        if (options) {
+          if (selectOptions.classList.contains('hidden')) {
+            selectOptions.classList.remove('hidden');
+          }
+          options[0].focus();
         }
-        options[0].focus();
       }
-    }
-  });
+    });
+  }
 
+  // Desktop options
   const selectOption = (target) => {
     // Get the slug of the selected land use
     const slug = target.getAttribute('data-slug');
     const filter = window.getters.filter();
     const selectedMainIntervention = filter?.mainIntervention;
     const selectedIntervention = filter?.type === 'intervention' ? filter?.value : filter?.intervention;
-
     if (select === 'landUse') {
       window.mutations.setLandUse(slug);
       window.mutations.setFilter(null);
@@ -341,39 +343,41 @@ const initSelectActions = ({ filters = false, select } = {}) => {
     }
     target.setAttribute('selected', 'true');
   };
-
-  selectOptions.addEventListener('click', function({ target }) {
-    let buttonTarget = target;
-    // Check if the target is a child of the button
-    if (buttonTarget.nodeName !== 'BUTTON' && this.contains(buttonTarget)) {
-      // Get the button
-      buttonTarget = target.parentNode;
-    }
-    selectOption(buttonTarget);
-  });
-
-  selectOptions.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      selectOption(event.target);
-    } else if (event.key === 'ArrowDown') {
-      event.preventDefault(); // Prevent scrolling
-      const nextButton = event.target.nextElementSibling;
-      if (nextButton) {
-        nextButton.focus();
+  if(!selectOptions._eventListeners?.click) {
+    selectOptions.addEventListener('click', function({ target }) {
+      let buttonTarget = target;
+      // Check if the target is a child of the button
+      if (buttonTarget.nodeName !== 'BUTTON' && this.contains(buttonTarget)) {
+        // Get the button
+        buttonTarget = target.parentNode;
       }
-    } else if (event.key === 'ArrowUp') {
-      event.preventDefault(); // Prevent scrolling
-      const prevButton = event.target.previousElementSibling;
-      if (prevButton) {
-        prevButton.focus();
+      selectOption(buttonTarget);
+    });
+  }
+  if(!selectOptions._eventListeners?.keydown) {
+    selectOptions.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        selectOption(event.target);
+      } else if (event.key === 'ArrowDown') {
+        event.preventDefault(); // Prevent scrolling
+        const nextButton = event.target.nextElementSibling;
+        if (nextButton) {
+          nextButton.focus();
+        }
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault(); // Prevent scrolling
+        const prevButton = event.target.previousElementSibling;
+        if (prevButton) {
+          prevButton.focus();
+        }
+      } else if (event.key === 'Escape') {
+        selectOptions.classList.add('hidden');
+      } else if (event.key === 'Tab') {
+        selectOptions.classList.add('hidden');
       }
-    } else if (event.key === 'Escape') {
-      selectOptions.classList.add('hidden');
-    } else if (event.key === 'Tab') {
-      selectOptions.classList.add('hidden');
-    }
-  });
+    });
+  };
 };
 
 window.initLandUseSelectMobile = () => {
@@ -417,7 +421,6 @@ window.loadData = (landUseSlug) => {
     </div>`;
   }
   Array.from(elements.legendTexts).map(text => text.innerHTML = name);
-
   // Load main intervention charts
   if (landUse.mainInterventions) {
     loadMainInterventionCharts(landUse);
@@ -472,7 +475,11 @@ const createCards = (data, landUseName) => {
 
   if (isMobile()) {
     // Save data for filters
-    window.mutations.setChartData(existingData);
+    const existingChartData = existingData.reduce((acc, curr) => {
+      acc[curr.slug] = curr.interventions;
+      return acc;
+    }, {});
+    window.mutations.setChartData(existingChartData);
 
     if (existingData.length === 0) {
       elements.chartCardsMobile.innerHTML = `<p class="font-semibold text-neutral-300 text-lg h-full flex items-center justify-center">No data</p>`;
@@ -615,25 +622,27 @@ const createMobileChart = (slug, data) => {
 
             // Add event listeners after the HTML is inserted
             document.querySelectorAll('.btn-chart-sub-type').forEach(button => {
-              button.addEventListener('click', function() {
-                const isSubTypePressed = button.getAttribute('aria-pressed') === 'true';
-                const mainInterventionSlug = button.getAttribute('data-main-intervention-slug');
-                const subTypeSlug = button.getAttribute('data-sub-type-slug');
-                const interventionSlug = button.getAttribute('data-intervention-slug');
+              if(!button._eventListeners?.click) {
+                button.addEventListener('click', function() {
+                  const isSubTypePressed = button.getAttribute('aria-pressed') === 'true';
+                  const mainInterventionSlug = button.getAttribute('data-main-intervention-slug');
+                  const subTypeSlug = button.getAttribute('data-sub-type-slug');
+                  const interventionSlug = button.getAttribute('data-intervention-slug');
 
-                if (isSubTypePressed) {
-                  button.setAttribute('aria-pressed', 'false');
+                  if (isSubTypePressed) {
+                    button.setAttribute('aria-pressed', 'false');
 
-                  // Leave intervention selected
-                  window.mutations.setFilter({ type: 'intervention', value: interventionSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
-                } else {
-                  // Set aria-pressed to true
-                  Array.from(document.querySelectorAll('.btn-chart-sub-type')).map(b => b.setAttribute('aria-pressed', 'false'));
-                  button.setAttribute('aria-pressed', 'true');
+                    // Leave intervention selected
+                    window.mutations.setFilter({ type: 'intervention', value: interventionSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
+                  } else {
+                    // Set aria-pressed to true
+                    Array.from(document.querySelectorAll('.btn-chart-sub-type')).map(b => b.setAttribute('aria-pressed', 'false'));
+                    button.setAttribute('aria-pressed', 'true');
 
-                  window.mutations.setFilter({ type: 'sub-type', value: subTypeSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
-                }
-              });
+                    window.mutations.setFilter({ type: 'sub-type', value: subTypeSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
+                  }
+                });
+              };
             });
           }
         });
@@ -644,12 +653,12 @@ const createMobileChart = (slug, data) => {
 
 const loadDataAndSetButtons = () => {
   // Create a button for each land use
-  const button = ({ slug, name, publications, index }) =>
+  const button = ({ slug, name, publications }, selectedLandUse) =>
     `<button
       type="button"
       data-slug=${slug}
       class="btn-filter flex btn-land-use"
-      aria-pressed="${index === 0 ? "true" : "false"}"
+      aria-pressed="${selectedLandUse === slug ? "true" : "false"}"
     >
       <span class="text-base">
         ${name}
@@ -663,13 +672,14 @@ const loadDataAndSetButtons = () => {
   getMainInterventionChartData().then(data => {
     const landUseMenu = isMobile() ? elements.landUseMenuMobile : elements.landUseMenu;
     if (landUseMenu && data) {
+      const selectedLandUse = window.getters.landUse();
       const landUses = Object.entries(data).map(([key, value], i) => ({ slug: key, ...value, index: i }));
       window.mutations.setLandUses(landUses);
       landUseMenu.innerHTML = '';
       landUses.filter(l => l.name !== 'All').forEach(landUse => {
-        landUseMenu.innerHTML += button(landUse);
+        landUseMenu.innerHTML += button(landUse, selectedLandUse);
       });
-      loadData(landUses[0].slug);
+      loadData(selectedLandUse || landUses[0].slug);
       return landUses;
     }
   }).then((landUses) => {
@@ -690,7 +700,7 @@ const loadDataAndSetButtons = () => {
           // Only for mobile
           Array.from(landUseButtons).filter(b => b !== element).map(b => b.setAttribute('aria-pressed', 'false'));
           const studiesDisclaimer = document.getElementById('primary-studies-disclaimer')
-          if(studiesDisclaimer) {
+          if (studiesDisclaimer) {
             studiesDisclaimer.classList.add('hidden');
           }
 
@@ -717,7 +727,41 @@ const loadDataAndSetButtons = () => {
 };
 
 window.addEventListener('resize', function () {
-  loadDataAndSetButtons();
+  const currentIsMobile = isMobile();
+  const hasChangedBreakpoint = window.getters.isMobile() !== currentIsMobile;
+  const isPublicationsOpen = window.getters.publicationsOpen();
+  const isMethodologyOpen = window.getters.methodologyOpen();
+  if (hasChangedBreakpoint) {
+    loadDataAndSetButtons();
+    // Close filters panel to avoid problems
+    if (currentIsMobile) {
+      window.closeFiltersPanel();
+    } else {
+      window.mobileFiltersDrawer.destroy({animate: true});
+    }
+
+
+    if (isPublicationsOpen) {
+      window.loadPublicationsOpen();
+
+      // Load  both mobile and desktop filters
+      // Missing dropdowns on mobile, why
+      window.loadDropdowns();
+
+      if (currentIsMobile) {
+        // Also initialize the rest of the mobile filters
+        window.initLandUseMobileDropdowns()
+      }
+
+      window.recalculateActiveFilters();
+    }
+
+
+    if (isMethodologyOpen) {
+      window.loadMethodologyOpen();
+    }
+  }
+  window.mutations.setIsMobile(currentIsMobile);
 });
 
 window.addEventListener('load', function () {
@@ -758,12 +802,14 @@ window.addEventListener('load', function () {
   });
 
   // LAND USE SELECT on main page
-  elements.landUseSelect.addEventListener('change', function() {
-    const slug = elements.landUseSelect.value;
-    window.mutations.setLandUse(slug);
-    window.mutations.setFilter(null);
-    loadData(slug);
-  });
+  if(!elements.landUseSelect._eventListeners?.change) {
+    elements.landUseSelect.addEventListener('change', function() {
+      const slug = elements.landUseSelect.value;
+      window.mutations.setLandUse(slug);
+      window.mutations.setFilter(null);
+      loadData(slug);
+    });
+  }
 
   // Initialize event listeners if they were not already initialized
   if (!window.getters.mainInterventionSelectActionsInitialized()) {
@@ -777,9 +823,12 @@ window.addEventListener('load', function () {
   }
 
   window.loadMainInterventionMobileSelect = (selectedLandUse) => {
+    const publicationFilters = getPublicationFilters();
     // Initialize the main intervention dropdown
     const mainInterventionMobile = publicationFilters.querySelector('#main-intervention');
-    mainInterventionMobile.classList.remove('hidden');
+    if(mainInterventionMobile) {
+      mainInterventionMobile.classList.remove('hidden');
+    }
 
     const mainInterventionSelect = publicationFilters.querySelector('#dropdown-select-main-intervention');
     const landUsesData = window.getters.landUses();
@@ -795,13 +844,16 @@ window.addEventListener('load', function () {
   }
 
   window.loadInterventionMobileSelect = (selectedMainIntervention) => {
+    const publicationFilters = getPublicationFilters();
     // Initialize the intervention dropdown
     const interventionMobile = publicationFilters.querySelector('#intervention');
-    interventionMobile.classList.remove('hidden');
+    if (interventionMobile) {
+      interventionMobile.classList.remove('hidden');
+    }
 
     const interventionSelect = publicationFilters.querySelector('#dropdown-select-intervention');
     const mainInterventionsData = window.getters.chartData();
-    const interventionsData = mainInterventionsData?.find(({ slug }) => slug === selectedMainIntervention)?.interventions;
+    const interventionsData = mainInterventionsData?.[selectedMainIntervention];
     const selectedIntervention = window.getters.filter()?.intervention;
 
     interventionSelect.innerHTML = '';
@@ -813,15 +865,20 @@ window.addEventListener('load', function () {
     }
   }
 
+  const getPublicationFilters = () => isMobile() ? elements.publicationFiltersMobile : elements.publicationFilters;
+
   window.loadSubTypeMobileSelect = (selectedIntervention) => {
+    const publicationFilters = getPublicationFilters();
     // Initialize the sub-types dropdown
     const subTypeMobile = publicationFilters.querySelector('#sub-type');
-    subTypeMobile.classList.remove('hidden');
+    if(subTypeMobile) {
+      subTypeMobile.classList.remove('hidden');
+    }
 
     const subTypeSelect = publicationFilters.querySelector('#dropdown-select-sub-type');
     const landUseData = window.getters.chartData();
     const selectedMainIntervention = window.getters.filter()?.mainIntervention;
-    const interventionsData = landUseData?.find(({ slug }) => slug === selectedMainIntervention)?.interventions;
+    const interventionsData = landUseData?.[selectedMainIntervention];
     const subTypesData = interventionsData?.find(({ slug }) => slug === selectedIntervention)?.subTypes;
     const selectedSubType =  window.getters.filter()?.type === 'sub-type' && window.getters.filter()?.value;
     subTypeSelect.innerHTML = '';
@@ -836,36 +893,38 @@ window.addEventListener('load', function () {
   }
 
   // LAND USE SELECT MOBILE on filters
-  const publicationFilters = isMobile() ? elements.publicationFiltersMobile : elements.publicationFilters;
+  const publicationFilters = getPublicationFilters();
   const landUseSelectMobile = publicationFilters.querySelector('#dropdown-select-land-use');
   if (landUseSelectMobile) {
-    landUseSelectMobile.addEventListener('change', function(event) {
-      const selected = event.target.value;
+    if(!(elements.landUseSelectMobile._eventListeners?.click)) {
+      landUseSelectMobile.addEventListener('change', function(event) {
+        const selected = event.target.value;
 
-      if (selected === 'all') {
-        window.resetMobileSelect('main-intervention');
-        window.resetMobileSelect('intervention');
-        window.resetMobileSelect('sub-type');
-        window.mutations.setFilter(null);
-      } else {
-        window.resetMobileSelect('main-intervention');
-        window.resetMobileSelect('intervention');
-        window.resetMobileSelect('sub-type');
-        window.mutations.setFilter(null);
-        window.loadMainInterventionMobileSelect(selected);
-      }
+        if (selected === 'all') {
+          window.resetMobileSelect('main-intervention');
+          window.resetMobileSelect('intervention');
+          window.resetMobileSelect('sub-type');
+          window.mutations.setFilter(null);
+        } else {
+          window.resetMobileSelect('main-intervention');
+          window.resetMobileSelect('intervention');
+          window.resetMobileSelect('sub-type');
+          window.mutations.setFilter(null);
+          window.loadMainInterventionMobileSelect(selected);
+        }
 
-      window.mutations.setLandUse(selected);
-      loadData(selected);
+        window.mutations.setLandUse(selected);
+        loadData(selected);
 
-      // Reload publications
-      window.reloadPublications();
-      window.recalculateActiveFilters();
-    });
+        // Reload publications
+        window.reloadPublications();
+        window.recalculateActiveFilters();
+      });
+    }
   }
 
   const mainInterventionMobile = publicationFilters.querySelector('#dropdown-select-main-intervention');
-  if(mainInterventionMobile) {
+  if (mainInterventionMobile && !mainInterventionMobile._eventListeners?.change) {
     mainInterventionMobile.addEventListener('change', function(event) {
       const selectedMainIntervention = event.target.value;
       if (selectedMainIntervention === 'all') {
@@ -884,10 +943,11 @@ window.addEventListener('load', function () {
   }
 
   const interventionMobile = publicationFilters.querySelector('#dropdown-select-intervention');
-  if(interventionMobile) {
+  if(interventionMobile && !interventionMobile._eventListeners?.change) {
     interventionMobile.addEventListener('change', function(event) {
       const selected = event.target.value;
       const mainIntervention = window.getters.filter()?.mainIntervention;
+
       if (selected === 'all') {
         window.resetMobileSelect('sub-type');
         window.mutations.setFilter({ mainIntervention });
@@ -895,6 +955,11 @@ window.addEventListener('load', function () {
         window.loadSubTypeMobileSelect(selected);
         const interventionMobile = publicationFilters.querySelector('#intervention');
         interventionMobile.classList.remove('hidden');
+
+        // Reset the subtype selecting the All option
+        const subTypeSelect = publicationFilters.querySelector('#dropdown-select-sub-type');
+        subTypeSelect.value = 'all';
+
         window.mutations.setFilter({ type: 'intervention', value: selected, mainIntervention, intervention: selected });
       }
       window.reloadPublications();
@@ -902,7 +967,7 @@ window.addEventListener('load', function () {
   }
 
   const subTypeMobile = publicationFilters.querySelector('#dropdown-select-sub-type');
-  if(subTypeMobile) {
+  if(subTypeMobile && !subTypeMobile._eventListeners?.change) {
     subTypeMobile.addEventListener('change', function(event) {
       const selected = event.target.value;
       const mainIntervention = window.getters.filter()?.mainIntervention;
@@ -916,7 +981,7 @@ window.addEventListener('load', function () {
     });
   }
 
-  // Populate filters
+
   const appendListElement = (parent, value, label, slug) => {
     const listElement = document.createElement('li');
     listElement.classList.add('max-w-[265px]');
@@ -1012,6 +1077,7 @@ window.addEventListener('load', function () {
     }
   };
 
+  // Populate filters
   const populateFilters = (metadata) => {
     const countries = window.getters.countries();
     const journals = window.getters.journals();
@@ -1020,9 +1086,7 @@ window.addEventListener('load', function () {
       { value: 'primary-study', label: 'Primary study' },
       { value: 'meta-analysis', label: 'Meta-analysis' },
     ];
-
-    const publicationFilters = isMobile() ? elements.publicationFiltersMobile : elements.publicationFilters;
-
+    const publicationFilters = getPublicationFilters();
     const publicationTypesList = publicationFilters.querySelector('#dropdown-select-type-publication ul')
     publicationTypesList.innerHTML = '';
     publicationTypes.forEach(({ value, label }) => {

@@ -1,3 +1,17 @@
+// Hack event listeners prototype to keep track of them
+Element.prototype._addEventListener = Element.prototype.addEventListener;
+Element.prototype.addEventListener = function(type, listener, options) {
+    if (!this._eventListeners) {
+        this._eventListeners = {};
+    }
+    if (!this._eventListeners[type]) {
+        this._eventListeners[type] = [];
+    }
+    this._eventListeners[type].push(listener);
+    this._addEventListener(type, listener, options);
+};
+
+
 // SHARED
 
 window.recalculateActiveFilters = (dropdownId, options) => {
@@ -133,6 +147,46 @@ window.addEventListener('load', function () {
     return footerButtonElement;
   };
 
+  window.initLandUseMobileDropdowns = () => {
+    const selectedLandUse = window.getters.landUse();
+    if (selectedLandUse && selectedLandUse !== 'all') {
+      window.loadMainInterventionMobileSelect(selectedLandUse);
+      const selectedMainIntervention = window.getters.filter()?.mainIntervention;
+
+      if (selectedMainIntervention) {
+        window.loadInterventionMobileSelect(selectedMainIntervention);
+
+        const selectedIntervention = window.getters.filter()?.intervention;
+        if (selectedIntervention) {
+          window.loadSubTypeMobileSelect(selectedIntervention);
+        }
+      }
+    }
+  };
+
+  window.showFilterButton = () => {
+    // Hide the main page footer buttons
+    const mainPageFooterButtons = document.getElementsByClassName('btn-mobile-footer-main');
+    for (let button of mainPageFooterButtons) {
+      button.classList.add('hidden');
+    }
+    // Show the filters footer button
+    const publicationsFilterButton = document.getElementById('btn-mobile-footer-filters');
+    if (publicationsFilterButton) {
+      publicationsFilterButton.classList.remove('hidden');
+    }
+
+    const existingFiltersButton = document.getElementById('btn-mobile-footer-filters')
+    if (!existingFiltersButton) {
+      const filterButton = footerButton('Filters', 'btn-mobile-footer-filters');
+      filterButton.addEventListener("click", function() {
+        // Show the filters vault
+        mobileFiltersDrawer.present({ animate: true })
+      });
+      elements.mobileFooter.appendChild(filterButton);
+    }
+  }
+
   // MOBILE FOOTER BUTTONS
   if (elements.mobileFooterPublicationsButton) {
     elements.mobileFooterPublicationsButton.addEventListener("click", function() {
@@ -144,57 +198,37 @@ window.addEventListener('load', function () {
       elements.main.classList.add('hidden');
       elements.chartCardsMobile.classList.add('hidden');
 
-      // Hide the main page footer buttons
-      const mainPageFooterButtons = document.getElementsByClassName('btn-mobile-footer-main');
-      for (let button of mainPageFooterButtons) {
-        button.classList.add('hidden');
-      }
-      // Show the filters footer button
-      const publicationsFilterButton = document.getElementById('btn-mobile-footer-filters');
-      if(publicationsFilterButton) {
-        publicationsFilterButton.classList.remove('hidden');
-      }
-
-      const existingFiltersButton = document.getElementById('btn-mobile-footer-filters')
-      if (!existingFiltersButton) {
-        const filterButton = footerButton('Filters', 'btn-mobile-footer-filters');
-        filterButton.addEventListener("click", function() {
-          // Show the filters vault
-          mobileFiltersDrawer.present({ animate: true })
-        });
-        elements.mobileFooter.appendChild(filterButton);
-      }
+      window.showFilterButton();
 
       window.recalculateActiveFilters();
 
-      // Show the mobile select filters
-      const selectedLandUse = window.getters.landUse();
-      if(selectedLandUse && selectedLandUse !== 'all') {
-        window.loadMainInterventionMobileSelect(selectedLandUse);
-        const selectedMainIntervention = window.getters.filter()?.mainIntervention;
-
-        if (selectedMainIntervention) {
-          window.loadInterventionMobileSelect(selectedMainIntervention);
-
-          const selectedIntervention = window.getters.filter()?.intervention;
-          if (selectedIntervention) {
-            window.loadSubTypeMobileSelect(selectedIntervention);
-          }
-        }
+      if (isMobile()) {
+        // Show the mobile select filters
+        initLandUseMobileDropdowns();
       }
-
     });
   };
 
-  if(elements.mobileFooterMethodologyButton) {
-    elements.mobileFooterMethodologyButton.addEventListener("click", function() {
-      window.mutations.setMethodologyOpen(true);
-      window.renderMethodologyChart();
-      elements.methodologyPanel.classList.remove('hidden');
+  window.loadMethodologyOpen = () => {
+    window.mutations.setMethodologyOpen(true);
+    window.renderMethodologyChart();
+    elements.methodologyPanel.classList.remove('hidden');
+
+    if (isMobile()) {
       // Hide the main page and footer
       elements.main.classList.add('hidden');
       elements.mobileFooter.classList.add('hidden');
-    });
+    } else {
+      elements.methodologyPanel.classList.remove('lg:-translate-x-full');
+
+      // Hide the main page
+      elements.main.classList.add('lg:hidden');
+      elements.footerMenu.classList.add('lg:hidden');
+    }
+  };
+
+  if(elements.mobileFooterMethodologyButton) {
+    elements.mobileFooterMethodologyButton.addEventListener("click", loadMethodologyOpen);
   };
 
   // LEGEND
@@ -438,16 +472,7 @@ window.addEventListener('load', function () {
   });
 
   // METHODOLOGY PAGE
-  elements.methodologyButton.addEventListener("click", function() {
-    window.mutations.setMethodologyOpen(true);
-    window.renderMethodologyChart();
-    elements.methodologyPanel.classList.remove('lg:-translate-x-full');
-
-    elements.methodologyPanel.classList.remove('hidden');
-    // Hide the main page
-    elements.main.classList.add('lg:hidden');
-    elements.footerMenu.classList.add('lg:hidden');
-  });
+  elements.methodologyButton.addEventListener("click", loadMethodologyOpen);
 
   elements.closeMethodologyPanelButton.addEventListener("click", function() {
     elements.methodologyPanel.classList.add('lg:-translate-x-full');
@@ -462,11 +487,12 @@ window.addEventListener('load', function () {
   });
 
   // PUBLICATION BUTTON
-  const closeFiltersPanel = () => {
+  window.closeFiltersPanel = () => {
     window.mutations.setFiltersOpen(false);
     elements.filtersPanel.classList.add('-translate-x-full', 'hidden');
     elements.filtersButton.classList.remove('!bg-yellow-500');
     elements.filtersButton.classList.remove('!text-gray-700');
+    setFiltersButtonColor('green');
   };
 
   const loadLandUseSelect = () => {
@@ -604,13 +630,22 @@ window.addEventListener('load', function () {
     }
   };
 
-  elements.publicationButton.addEventListener("click", function() {
+  window.loadPublicationsOpen = () => {
+    const isCurrentlyMobile = isMobile();
     window.mutations.setPublicationsOpen(true);
-    elements.publicationPanel.classList.remove('lg:-translate-x-full');
+    if (isCurrentlyMobile) {
+      elements.publicationPanel.classList.remove('hidden');
+      window.showFilterButton();
+    } else {
+      elements.publicationPanel.classList.remove('lg:-translate-x-full');
+    }
+
     window.loadPublications();
 
-    // Recalculate active filters on the filters button to show land use
-    window.recalculateActiveFilters();
+    if(!isCurrentlyMobile) {
+      // Recalculate active filters on the filters button to show land use
+      window.recalculateActiveFilters();
+    }
 
     // Load LAND USE SELECT on filters dropdown
     loadLandUseSelect();
@@ -618,14 +653,106 @@ window.addEventListener('load', function () {
     window.loadInterventionSelect();
     window.loadSubTypeSelect();
 
-    // Hide the main page
-    elements.main.classList.add('lg:hidden');
-    elements.map.classList.remove('lg:hidden');
+    if (isCurrentlyMobile) {
+      // Load mobile dropdowns
+      window.initLandUseMobileDropdowns()
+    }
+    if (!isCurrentlyMobile) {
+      // Hide the main page
+      elements.main.classList.add('lg:hidden');
+      elements.map.classList.remove('lg:hidden');
+      window.loadMap();
 
-    window.loadMap();
+      elements.footerMenu.classList.add('lg:hidden');
+    }
+  };
 
-    elements.footerMenu.classList.add('lg:hidden');
-  });
+  elements.publicationButton.addEventListener("click", window.loadPublicationsOpen);
+
+  const reloadChart = () => {
+    const currentData = window.getters.chartData();
+    const currentMainIntervention = window.getters.filter()?.mainIntervention;
+    const currentIntervention = window.getters.filter()?.type === 'intervention' && window.getters.filter()?.value;
+    const currentSubType = window.getters.filter()?.type === 'sub-type' && window.getters.filter()?.value;
+
+    if (!currentIntervention) {
+      updateChartAndButtons({ slug: 'all', resetAllCharts: true });
+    } else {
+      // If a intervention is selected, we need to update the data marking it as active
+      // If a sub-type is selected, we need to update the data marking it as active
+      const updatedMainInterventionData = currentData?.[currentMainIntervention]?.map(intervention => {
+        return (intervention.slug === currentIntervention) ?
+          {
+            ...intervention,
+            active: true,
+            subTypes: intervention.subTypes.map(subType => ({
+              ...subType,
+              active: subType.slug === currentSubType,
+            }))
+          } :
+          {...intervention, subtypes: intervention.subTypes.map(subType => ({...subType, active: false })), active: false };
+      });
+      const currentSubTypeTitle = currentIntervention && currentSubType && updatedMainInterventionData.find(intervention => intervention.slug === currentIntervention)?.subTypes.find(subType => subType.slug === currentSubType)?.title;
+      const currentInterventionTitle = currentIntervention && updatedMainInterventionData.find(intervention => intervention.slug === currentIntervention)?.title;
+      updateChartAndButtons({ slug: currentMainIntervention, title: currentSubTypeTitle || currentInterventionTitle , data: updatedMainInterventionData, resetAllCharts: true });
+    }
+  };
+
+  const restoreMainPage = () => {
+    const landUse = window.getters.landUse();
+    const isFiltersPanelOpen = window.getters.filtersOpen();
+    if (isFiltersPanelOpen) {
+      window.closeFiltersPanel();
+    }
+
+    // Set filters button color to green just in case the filters panel was opened
+    setFiltersButtonColor('green');
+
+    const landUses = window.getters.landUses();
+
+    if (landUse === 'all') {
+      elements.initialMain.classList.remove('lg:hidden');
+      elements.chartCards.classList.add('hidden');
+      elements.chartCardsMobile.classList.add('hidden');
+      elements.landUseSelectContainer.classList.add('hidden');
+    } else {
+      elements.initialMain.classList.add('lg:hidden');
+      elements.chartCards.classList.remove('hidden');
+      elements.chartCardsMobile.classList.remove('hidden');
+
+      elements.landUseSelectContainer.classList.remove('hidden');
+      const selectedLandUse = landUses.find(l => l.slug === landUse);
+      const selectedLandUseLabel = `${selectedLandUse.name} (${formatNumber(selectedLandUse.publications)})`;
+      elements.landUseSelectButton.innerHTML = selectedLandUseLabel;
+
+      elements.landUseOptions.innerHTML = '';
+
+      landUses.filter(l => l.name !== 'All').forEach(landUse => {
+        elements.landUseOptions.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: landUse, mobile: false, filters: true, publicationNumbers: true });
+      });
+    }
+  };
+
+  const restoreMainPageMobile = () => {
+    const landUse = window.getters.landUse();
+    if (landUse && landUse !== 'all') {
+      elements.chartCardsMobile.classList.remove('hidden');
+
+      const landUseButtons = elements.landUseMenuMobile.querySelectorAll('.btn-land-use');
+      landUseButtons.forEach(btn => {
+        btn.setAttribute('aria-pressed', btn.getAttribute('data-slug') === landUse);
+      });
+
+      // Reset filters, only keep land use
+      window.mutations.setFilter(null);
+      window.reloadPublications();
+      window.resetMobileSelect('main-intervention');
+      window.resetMobileSelect('intervention');
+      window.resetMobileSelect('sub-type');
+    } else {
+      elements.landUseMenuMobile.classList.remove('land-use-menu-mobile-scroll');
+    }
+  };
 
   elements.closePublicationPanelButton.addEventListener("click", function() {
     // We reset the whole publications view without reloading the publications
@@ -636,100 +763,35 @@ window.addEventListener('load', function () {
 
     window.mutations.setPublicationsOpen(false);
 
-    const landUse = window.getters.landUse();
+    // Hide the publication panel and restore main page in desktop (mobile needs it because of the resize handling)
 
-    if(isMobile()) {
-      elements.publicationPanel.classList.add('hidden');
-      // Hide filters button
-      const publicationsFilterButton = document.getElementById('btn-mobile-footer-filters');
-      if (publicationsFilterButton) {
-        publicationsFilterButton.classList.add('hidden');
-      }
-      // Show the main page footer buttons
-      const mainPageFooterButtons = document.getElementsByClassName('btn-mobile-footer-main');
-      for (let button of mainPageFooterButtons) {
-        button.classList.remove('hidden');
-      }
+    elements.publicationPanel.classList.add('lg:-translate-x-full');
+    // Restore main page
 
-      if (landUse && landUse !== 'all') {
-        elements.chartCardsMobile.classList.remove('hidden');
+    elements.main.classList.remove('lg:hidden');
+    elements.map.classList.add('lg:hidden');
+    elements.footerMenu.classList.remove('lg:hidden');
 
-        // Reset filters, only keep except for land use
-        window.mutations.setFilter(null);
-        window.reloadPublications();
-        window.resetMobileSelect('main-intervention');
-        window.resetMobileSelect('intervention');
-        window.resetMobileSelect('sub-type');
-      } else {
-        elements.landUseMenuMobile.classList.remove('land-use-menu-mobile-scroll');
-      }
-    } else {
-      const isFiltersPanelOpen = window.getters.filtersOpen();
-      if (isFiltersPanelOpen) {
-        closeFiltersPanel();
-      }
+    elements.publicationPanel.classList.add('hidden');
 
-      // Set filters button color to green just in case the filters panel was opened
-      setFiltersButtonColor('green');
-
-      elements.publicationPanel.classList.add('lg:-translate-x-full');
-      // Restore main page
-      elements.main.classList.remove('lg:hidden');
-      elements.map.classList.add('lg:hidden');
-      elements.footerMenu.classList.remove('lg:hidden');
-
-      const landUses = window.getters.landUses();
-
-      if (landUse === 'all') {
-        elements.initialMain.classList.remove('lg:hidden');
-        elements.chartCards.classList.add('hidden');
-        elements.chartCardsMobile.classList.add('hidden');
-        elements.landUseSelectContainer.classList.add('hidden');
-      } else {
-        elements.initialMain.classList.add('lg:hidden');
-        elements.chartCards.classList.remove('hidden');
-        elements.chartCardsMobile.classList.remove('hidden');
-
-        elements.landUseSelectContainer.classList.remove('hidden');
-        const selectedLandUse = landUses.find(l => l.slug === landUse);
-        const selectedLandUseLabel = `${selectedLandUse.name} (${formatNumber(selectedLandUse.publications)})`;
-        elements.landUseSelectButton.innerHTML = selectedLandUseLabel;
-
-        elements.landUseOptions.innerHTML = '';
-
-        landUses.filter(l => l.name !== 'All').forEach(landUse => {
-          elements.landUseOptions.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: landUse, mobile: false, filters: true, publicationNumbers: true });
-        });
-      }
-
-      // Reload the chart with the correspondant opened items
-      const currentData = window.getters.chartData();
-      const currentMainIntervention = window.getters.filter()?.mainIntervention;
-      const currentIntervention = window.getters.filter()?.type === 'intervention' && window.getters.filter()?.value;
-      const currentSubType = window.getters.filter()?.type === 'sub-type' && window.getters.filter()?.value;
-
-      if (!currentIntervention) {
-        updateChartAndButtons({ slug: 'all', resetAllCharts: true });
-      } else {
-        // If a intervention is selected, we need to update the data marking it as active
-        // If a sub-type is selected, we need to update the data marking it as active
-        const updatedMainInterventionData = currentData?.[currentMainIntervention]?.map(intervention => {
-          return (intervention.slug === currentIntervention) ?
-            {
-              ...intervention,
-              active: true,
-              subTypes: intervention.subTypes.map(subType => ({
-                ...subType,
-                active: subType.slug === currentSubType,
-              }))
-            } :
-            {...intervention, subtypes: intervention.subTypes.map(subType => ({...subType, active: false })), active: false };
-        });
-        const currentSubTypeTitle = currentIntervention && currentSubType && updatedMainInterventionData.find(intervention => intervention.slug === currentIntervention)?.subTypes.find(subType => subType.slug === currentSubType)?.title;
-        const currentInterventionTitle = currentIntervention && updatedMainInterventionData.find(intervention => intervention.slug === currentIntervention)?.title;
-        updateChartAndButtons({ slug: currentMainIntervention, title: currentSubTypeTitle || currentInterventionTitle , data: updatedMainInterventionData, resetAllCharts: true });
-      }
+    // Hide filters button
+    const publicationsFilterButton = document.getElementById('btn-mobile-footer-filters');
+    if (publicationsFilterButton) {
+      publicationsFilterButton.classList.add('hidden');
     }
+
+    // Show the main page footer buttons
+    const mainPageFooterButtons = document.getElementsByClassName('btn-mobile-footer-main');
+    for (let button of mainPageFooterButtons) {
+      button.classList.remove('hidden');
+    }
+
+    // MOBILE
+    restoreMainPageMobile();
+    // DESKTOP
+    restoreMainPage();
+    // Reload the chart with the correspondant opened items
+    reloadChart();
   });
 
   // FILTERS BUTTON
@@ -739,7 +801,7 @@ window.addEventListener('load', function () {
 
     // Toggle filters panel
     if (buttonState) {
-      closeFiltersPanel();
+      window.closeFiltersPanel();
       setFiltersButtonColor('green');
     } else {
       window.mutations.setFiltersOpen(true);
@@ -747,9 +809,7 @@ window.addEventListener('load', function () {
     }
   });
 
-  elements.closeFiltersPanelButton.addEventListener("click", function() {
-    closeFiltersPanel();
-  });
+  elements.closeFiltersPanelButton.addEventListener("click", window.closeFiltersPanel);
 
   // PUBLICATIONS PANEL
 
@@ -765,7 +825,6 @@ window.addEventListener('load', function () {
   // DROPDOWNS
   window.loadDropdowns = () => {
     const dropdowns = isMobile() ? elements.mobileDropdowns : elements.dropdowns;
-
     for (let dropdown of dropdowns) {
       const button = dropdown.querySelector('.btn-dropdown');
       const searchInput = dropdown.querySelector('.input-search');
@@ -798,138 +857,148 @@ window.addEventListener('load', function () {
         options.classList.toggle('hidden');
       }
 
-      button.addEventListener('click', () => {
-        const openDropdownsInitial = window.getters.openDropdowns();
-        window.mutations.setOpenDropdown(dropdown.id, !openDropdownsInitial.includes(dropdown.id));
-        toggleDropdown();
-      });
-
-      // Detect clicks outside the dropdown
-      document.addEventListener('click', (event) => {
-        const openDropdowns = window.getters.openDropdowns();
-        const isClickInsideDropdown = dropdown.contains(event.target);
-        if (openDropdowns.includes(dropdown.id) && !isClickInsideDropdown) {
-          window.mutations.setOpenDropdown(dropdown.id, false);
+      // Dont add event listeners if they were already added
+      if(!button._eventListeners?.click) {
+        button.addEventListener('click', () => {
+          const openDropdownsInitial = window.getters.openDropdowns();
+          window.mutations.setOpenDropdown(dropdown.id, !openDropdownsInitial.includes(dropdown.id));
           toggleDropdown();
-        }
-      });
-
-      // Detect focus outside the dropdown
-      document.addEventListener('focusin', (event) => {
-        const openDropdowns = window.getters.openDropdowns();
-        const isFocusInsideDropdown = dropdown.contains(event.target);
-        if (openDropdowns.includes(dropdown.id) && !isFocusInsideDropdown) {
-          window.mutations.setOpenDropdown(dropdown.id, false);
-          toggleDropdown();
-        }
-      });
-
-      options.addEventListener('change', ({ target }) => {
-        const filtersDisclaimerClosed = localStorage.getItem('FILTERS_DISCLAIMER_CLOSED');
-        if (!filtersDisclaimerClosed) {
-          elements.filtersDisclaimer.classList.remove('lg:hidden');
-        }
-
-        if (target.type !== 'checkbox') {
-          return;
-        }
-        // If any option is checked, we remove disabled from the clear button
-        const anyOptionChecked = [...options.querySelectorAll('input')].some(input => input.checked);
-        if (anyOptionChecked) {
-          clearButton.removeAttribute('disabled');
-        } else {
-          clearButton.setAttribute('disabled', '');
-        }
-
-        // If all options are checked, we add disabled to the select all button
-        const allOptionsChecked = [...options.querySelectorAll('input')].every(input => input.checked);
-        if (allOptionsChecked) {
-          selectAllButton.setAttribute('disabled', '');
-        } else {
-          selectAllButton.removeAttribute('disabled');
-        }
-
-        const selectedValues = [];
-        const selectedLabels = [];
-
-        options.querySelectorAll('input').forEach(input => {
-          if (input.checked) {
-            selectedValues.push(input.value);
-            const label = document.querySelector(`label[for="${input.id}"]`);
-            selectedLabels.push(label.textContent);
-          }
         });
 
-        const placeholder = selected.attributes['aria-placeholder'].value;
-        if (selectedValues.length === 0) {
+        // Detect clicks outside the dropdown
+        document.addEventListener('click', (event) => {
+          const openDropdowns = window.getters.openDropdowns();
+          const isClickInsideDropdown = dropdown.contains(event.target);
+          if (openDropdowns.includes(dropdown.id) && !isClickInsideDropdown) {
+            window.mutations.setOpenDropdown(dropdown.id, false);
+            toggleDropdown();
+          }
+        });
+        // Detect focus outside the dropdown
+        document.addEventListener('focusin', (event) => {
+          const openDropdowns = window.getters.openDropdowns();
+          const isFocusInsideDropdown = dropdown.contains(event.target);
+          if (openDropdowns.includes(dropdown.id) && !isFocusInsideDropdown) {
+            window.mutations.setOpenDropdown(dropdown.id, false);
+            toggleDropdown();
+          }
+        });
+      };
+
+      if(!options._eventListeners?.change) {
+        options.addEventListener('change', ({ target }) => {
+          const filtersDisclaimerClosed = localStorage.getItem('FILTERS_DISCLAIMER_CLOSED');
+          if (!filtersDisclaimerClosed) {
+            elements.filtersDisclaimer.classList.remove('lg:hidden');
+          }
+
+          if (target.type !== 'checkbox') {
+            return;
+          }
+          // If any option is checked, we remove disabled from the clear button
+          const anyOptionChecked = [...options.querySelectorAll('input')].some(input => input.checked);
+          if (anyOptionChecked) {
+            clearButton.removeAttribute('disabled');
+          } else {
+            clearButton.setAttribute('disabled', '');
+          }
+
+          // If all options are checked, we add disabled to the select all button
+          const allOptionsChecked = [...options.querySelectorAll('input')].every(input => input.checked);
+          if (allOptionsChecked) {
+            selectAllButton.setAttribute('disabled', '');
+          } else {
+            selectAllButton.removeAttribute('disabled');
+          }
+
+          const selectedValues = [];
+          const selectedLabels = [];
+
+          options.querySelectorAll('input').forEach(input => {
+            if (input.checked) {
+              selectedValues.push(input.value);
+              const label = document.querySelector(`label[for="${input.id}"]`);
+              selectedLabels.push(label.textContent);
+            }
+          });
+
+          const placeholder = selected.attributes['aria-placeholder'].value;
+          if (selectedValues.length === 0) {
+            selected.textContent = placeholder;
+            window.mutations.setPublicationFilters(dropdown.id, []);
+          } else {
+            const label = document.querySelector(`label[for="${selected?.id?.replace('-selected', '')}"]`);
+            selected.textContent = `${label?.textContent} (${formatNumber(selectedLabels.length)})`;
+            window.mutations.setPublicationFilters(dropdown.id, selectedValues);
+          };
+
+          window.recalculateActiveFilters(dropdown.id, options);
+
+          // Reload publications
+          window.reloadPublications();
+        });
+      };
+
+      if(!selectAllButton._eventListeners?.click) {
+        selectAllButton.addEventListener('click', () => {
+          selectAllButton.setAttribute('disabled', '');
+          clearButton.removeAttribute('disabled');
+
+          const filtersDisclaimerClosed = localStorage.getItem('FILTERS_DISCLAIMER_CLOSED');
+          if (!filtersDisclaimerClosed) {
+            elements.filtersDisclaimer.classList.remove('lg:hidden');
+          }
+
+          const inputs = options.querySelectorAll('input');
+
+          inputs.forEach(input => {
+            input.checked = true;
+          });
+
+          const placeholder = selected.attributes['aria-placeholder'].value;
+          selected.textContent = `${placeholder} (${formatNumber(inputs.length)})`;
+
+          const inputValues = [...inputs].map(input => input.value);
+          window.mutations.setPublicationFilters(dropdown.id, inputValues);
+
+          window.recalculateActiveFilters(dropdown.id, options);
+
+          window.reloadPublications();
+        });
+      };
+
+      if(!clearButton._eventListeners?.click) {
+        clearButton.addEventListener('click', () => {
+          clearButton.setAttribute('disabled', '');
+          selectAllButton.removeAttribute('disabled');
+
+          options.querySelectorAll('input').forEach(input => {
+            input.checked = false;
+          });
+
+          const placeholder = selected.attributes['aria-placeholder'].value;
           selected.textContent = placeholder;
           window.mutations.setPublicationFilters(dropdown.id, []);
-        } else {
-          const label = document.querySelector(`label[for="${selected?.id?.replace('-selected', '')}"]`);
-          selected.textContent = `${label?.textContent} (${formatNumber(selectedLabels.length)})`;
-          window.mutations.setPublicationFilters(dropdown.id, selectedValues);
-        };
 
-        window.recalculateActiveFilters(dropdown.id, options);
+          window.recalculateActiveFilters(dropdown.id, options);
 
-        // Reload publications
-        window.reloadPublications();
-      });
-
-      selectAllButton.addEventListener('click', () => {
-        selectAllButton.setAttribute('disabled', '');
-        clearButton.removeAttribute('disabled');
-
-        const filtersDisclaimerClosed = localStorage.getItem('FILTERS_DISCLAIMER_CLOSED');
-        if (!filtersDisclaimerClosed) {
-          elements.filtersDisclaimer.classList.remove('lg:hidden');
-        }
-
-        const inputs = options.querySelectorAll('input');
-
-        inputs.forEach(input => {
-          input.checked = true;
+          window.reloadPublications();
         });
+      };
 
-        const placeholder = selected.attributes['aria-placeholder'].value;
-        selected.textContent = `${placeholder} (${formatNumber(inputs.length)})`;
+      if(!searchInput._eventListeners?.input) {
+        searchInput.addEventListener('input', ({ target: { value: keyword } }) => {
+          options.querySelectorAll('li').forEach(option => {
+            const { textContent } = option.querySelector('label');
 
-        const inputValues = [...inputs].map(input => input.value);
-        window.mutations.setPublicationFilters(dropdown.id, inputValues);
-
-        window.recalculateActiveFilters(dropdown.id, options);
-
-        window.reloadPublications();
-      });
-
-      clearButton.addEventListener('click', () => {
-        clearButton.setAttribute('disabled', '');
-        selectAllButton.removeAttribute('disabled');
-
-        options.querySelectorAll('input').forEach(input => {
-          input.checked = false;
+            if (keyword.length === 0 || textContent.toLowerCase().includes(keyword.toLowerCase())) {
+              option.classList.remove('hidden');
+            } else {
+              option.classList.add('hidden');
+            }
+          })
         });
-
-        const placeholder = selected.attributes['aria-placeholder'].value;
-        selected.textContent = placeholder;
-        window.mutations.setPublicationFilters(dropdown.id, []);
-
-        window.recalculateActiveFilters(dropdown.id, options);
-
-        window.reloadPublications();
-      });
-
-      searchInput.addEventListener('input', ({ target: { value: keyword } }) => {
-        options.querySelectorAll('li').forEach(option => {
-          const { textContent } = option.querySelector('label');
-
-          if (keyword.length === 0 || textContent.toLowerCase().includes(keyword.toLowerCase())) {
-            option.classList.remove('hidden');
-          } else {
-            option.classList.add('hidden');
-          }
-        })
-      });
+      };
     }
   }
 
@@ -944,56 +1013,66 @@ window.addEventListener('load', function () {
   );
 
   // RESET FILTERS
-  elements.resetFiltersButton.addEventListener('click', () => {
-    resetPublicationsFilters();
+  if(!(elements.resetFiltersButton._eventListeners?.click)) {
+    elements.resetFiltersButton.addEventListener('click', () => {
+      resetPublicationsFilters();
 
-    window.mutations.setLandUse('all');
-    window.mutations.setFilter(null);
-    resetMainInterventionSelect();
-    window.reloadPublications();
+      window.mutations.setLandUse('all');
+      // Reset land use select
+      loadLandUseSelect();
 
-    // Reset the active filters badge
-    window.mutations.setActiveFilters([]);
-    elements.filtersButtonBadge.textContent = '';
-    elements.filtersButtonBadge.classList.add('hidden');
+      setAllMainInterventionOption();
+      window.resetInterventionSelect();
 
-    // Activate all Select All buttons and disable all Clear buttons
-    for (let dropdown of elements.dropdowns) {
-      const selectAllButton = dropdown.querySelector('.btn-select-all');
-      const clearButton = dropdown.querySelector('.btn-clear');
+      window.mutations.setFilter(null);
+      resetMainInterventionSelect();
 
-      selectAllButton.removeAttribute('disabled');
-      clearButton.setAttribute('disabled', '');
-    }
-  });
+      window.reloadPublications();
 
+      // Reset the active filters badge
+      window.mutations.setActiveFilters([]);
+      elements.filtersButtonBadge.textContent = '';
+      elements.filtersButtonBadge.classList.add('hidden');
+
+      // Activate all Select All buttons and disable all Clear buttons
+      for (let dropdown of elements.dropdowns) {
+        const selectAllButton = dropdown.querySelector('.btn-select-all');
+        const clearButton = dropdown.querySelector('.btn-clear');
+
+        selectAllButton.removeAttribute('disabled');
+        clearButton.setAttribute('disabled', '');
+      }
+    });
+  }
   // RESET FILTERS MOBILE
-  elements.resetFiltersMobileButton.addEventListener('click', () => {
-    resetPublicationsFilters();
-    window.mutations.setLandUse('all');
-    window.mutations.setFilter(null);
-    // Select the all button on the land use select
+  if(!(elements.resetFiltersMobileButton._eventListeners?.click)) {
+    elements.resetFiltersMobileButton.addEventListener('click', () => {
+      resetPublicationsFilters();
+      window.mutations.setLandUse('all');
+      window.mutations.setFilter(null);
+      // Select the all button on the land use select
 
-    window.initLandUseSelectMobile();
+      window.initLandUseSelectMobile();
 
-    window.resetMobileSelect('main-intervention');
-    window.resetMobileSelect('intervention');
-    window.resetMobileSelect('sub-type');
-    window.reloadPublications();
+      window.resetMobileSelect('main-intervention');
+      window.resetMobileSelect('intervention');
+      window.resetMobileSelect('sub-type');
+      window.reloadPublications();
 
-    // Reset the active filters badge
-    window.mutations.setActiveFilters([]);
+      // Reset the active filters badge
+      window.mutations.setActiveFilters([]);
 
-    window.recalculateActiveFilters();
-    // Activate all Select All buttons and disable all Clear buttons
-    for (let dropdown of isMobile() ? elements.mobileDropdowns : elements.dropdowns) {
-      const selectAllButton = dropdown.querySelector('.btn-select-all');
-      const clearButton = dropdown.querySelector('.btn-clear');
+      window.recalculateActiveFilters();
+      // Activate all Select All buttons and disable all Clear buttons
+      for (let dropdown of isMobile() ? elements.mobileDropdowns : elements.dropdowns) {
+        const selectAllButton = dropdown.querySelector('.btn-select-all');
+        const clearButton = dropdown.querySelector('.btn-clear');
 
-      selectAllButton.removeAttribute('disabled');
-      clearButton.setAttribute('disabled', '');
-    }
-  });
+        selectAllButton.removeAttribute('disabled');
+        clearButton.setAttribute('disabled', '');
+      }
+    });
+  };
 
   // PUBLICATION DETAIL PANEL
 

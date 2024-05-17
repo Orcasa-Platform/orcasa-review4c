@@ -47,8 +47,8 @@ const getPathname = (baseURL, landUse, sectionParams) => {
 }
 
 // GeoJSON layers on the map
-const getLayer = async (landUseSlug = 'all', mainInterventionSlug, interventionSlug, subTypeSlug) => {
-  const url = getPathname(BASE_LAYERS_URL, landUseSlug, [mainInterventionSlug, interventionSlug, subTypeSlug]);
+const getLayer = async (landUseSlug = 'all') => {
+  const url = getPathname(BASE_LAYERS_URL, landUseSlug);
   return getURL(url);
 }
 

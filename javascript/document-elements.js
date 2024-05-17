@@ -78,7 +78,6 @@ const elements = {
   publicationsContainer: document.getElementById('publications-container'),
   publicationFilters: document.getElementById('publication-filters'),
   publicationFiltersMobile: document.getElementById('publication-filters-mobile'),
-  typePublication: document.getElementById('type-publication'),
   yearRange: document.getElementById('year-range'),
   search: document.getElementById('search'),
   resetFiltersButton: document.getElementById('reset-filters'),
