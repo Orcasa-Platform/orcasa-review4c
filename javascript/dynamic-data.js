@@ -449,7 +449,7 @@ const createCards = (data, landUseName) => {
     `
     <div class="flex flex-col mb-2 py-4 border-b border-slate-600 gap-3">
       <header class="w-full text-base">
-        Impact of <span class="font-semibold"> ${name} </span> on Soil Organic Carbon for ${landUseName}
+        Impact of <span class="font-semibold"> ${name} </span> on Soil Organic Carbon for <span class="font-semibold">${landUseName}</span>
       </header>
       <div
         class="text-neutral-300 text-sm leading-7">
@@ -461,7 +461,7 @@ const createCards = (data, landUseName) => {
     : `
     <div class="flex flex-col p-6 bg-white mb-2 rounded-lg text-gray-700">
       <header class="mb-4 flex w-full justify-between items-end">
-        <div>Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for ${landUseName}</div>
+        <div>Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for <span class="font-semibold">${landUseName}</span></div>
         <div class="text-gray-500 text-xs">Click in one intervention below to see more details</div>
       </header>
       <div
@@ -510,20 +510,24 @@ const createMobileChart = (slug, data) => {
   });
 
   if (chartElement) {
+    const selectedIntervention = window.getters.filter()?.type === 'intervention' ? window.getters.filter()?.value : window.getters.filter()?.intervention;
     const chart = `<div class="flex flex-col justify-between mt-4 gap-[12px]">
-      ${sortedData.map(({ title, value, publications, slug: interventionSlug }) => (`
-        <div class="flex flex-col gap-4 data-[active=true]:border-y data-[active=true]:border-y-gray-650 data-[active=true]:p-4 data-[active=true]:-mx-4" data-active="false" id="chart-item-${slug}-${title}">
+      ${sortedData.map(({ title, value, publications, slug: interventionSlug }) => {
+        const isSelected = selectedIntervention === interventionSlug;
+        return (`
+        <div class="flex flex-col gap-4 data-[active=true]:border-y data-[active=true]:border-y-gray-650 data-[active=true]:p-4 data-[active=true]:-mx-4" data-active="${isSelected}" id="chart-item-${slug}-${title}">
           <div class="w-full flex text-white items-center justify-between" >
             <span class="text-base w-16 font-semibold ${value > 0 ? 'text-darkRed-500' : ''}">
               ${value.toFixed(1)}%
             </span>
-            <button type="button" class="btn-filter flex-1 btn-chart-mobile" aria-pressed="false" id="btn-${kebabCase(title)}" data-main-intervention-slug="${slug}" data-intervention-slug="${interventionSlug}" data-intervention-name="${title}" data-fixed-value="${value.toFixed(1)}" title="${title} (${formatNumber(publications)})">
+            <button type="button" class="btn-filter flex-1 btn-chart-mobile" aria-pressed="${isSelected}" id="btn-${kebabCase(title)}" data-main-intervention-slug="${slug}" data-intervention-slug="${interventionSlug}" data-intervention-name="${title}" data-fixed-value="${value.toFixed(1)}" title="${title} (${formatNumber(publications)})">
               <span class="underline">${title}</span> (${formatNumber(publications)})
             </button>
           </div>
-          <div class="chart-description text-base hidden" id="chart-description-${slug}-${title}"></div>
+          <div class="chart-description text-base ${isSelected ? '' : 'hidden'}" id="chart-description-${slug}-${title}"></div>
           <div class="sub-type-container flex flex-col gap-4"></div>
-        </div>`)).join('')
+        </div>`);
+      }).join('')
       }
     </div>`;
 
@@ -740,6 +744,9 @@ window.addEventListener('resize', function () {
       window.mobileFiltersDrawer.destroy({animate: true});
     }
 
+    // Update the charts
+    const landUse = window.getters.landUse();
+    loadData(landUse);
 
     if (isPublicationsOpen) {
       window.loadPublicationsOpen();
