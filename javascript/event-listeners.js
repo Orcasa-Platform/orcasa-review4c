@@ -823,6 +823,30 @@ window.addEventListener('load', function () {
   });
 
   // DROPDOWNS
+  window.toggleDropdown = (button, searchInput, options) => {
+    button.classList.toggle('hidden');
+    searchInput.classList.toggle('hidden');
+    if (searchInput.classList.contains('hidden')) {
+      searchInput.value = '';
+      options.querySelectorAll('li').forEach(option => option.classList.remove('hidden'));
+    } else {
+      searchInput.focus();
+    }
+
+    Popper.createPopper(searchInput, options, {
+      modifiers: [
+        {
+          name: 'offset',
+          options: {
+            offset: [0, 8],
+          },
+        },
+      ],
+    });
+
+    options.classList.toggle('hidden');
+  }
+
   window.loadDropdowns = () => {
     const dropdowns = isMobile() ? elements.mobileDropdowns : elements.dropdowns;
     for (let dropdown of dropdowns) {
@@ -833,36 +857,13 @@ window.addEventListener('load', function () {
       const selectAllButton = dropdown.querySelector('.btn-select-all');
       const clearButton = dropdown.querySelector('.btn-clear');
 
-      const toggleDropdown = () => {
-        button.classList.toggle('hidden');
-        searchInput.classList.toggle('hidden');
-        if (searchInput.classList.contains('hidden')) {
-          searchInput.value = '';
-          options.querySelectorAll('li').forEach(option => option.classList.remove('hidden'));
-        } else {
-          searchInput.focus();
-        }
-
-        Popper.createPopper(searchInput, options, {
-          modifiers: [
-            {
-              name: 'offset',
-              options: {
-                offset: [0, 8],
-              },
-            },
-          ],
-        });
-
-        options.classList.toggle('hidden');
-      }
 
       // Dont add event listeners if they were already added
       if(!button._eventListeners?.click) {
         button.addEventListener('click', () => {
           const openDropdownsInitial = window.getters.openDropdowns();
           window.mutations.setOpenDropdown(dropdown.id, !openDropdownsInitial.includes(dropdown.id));
-          toggleDropdown();
+          window.toggleDropdown(button, searchInput, options);
         });
 
         // Detect clicks outside the dropdown
@@ -871,16 +872,17 @@ window.addEventListener('load', function () {
           const isClickInsideDropdown = dropdown.contains(event.target);
           if (openDropdowns.includes(dropdown.id) && !isClickInsideDropdown) {
             window.mutations.setOpenDropdown(dropdown.id, false);
-            toggleDropdown();
+            window.toggleDropdown(button, searchInput, options);
           }
         });
+
         // Detect focus outside the dropdown
         document.addEventListener('focusin', (event) => {
           const openDropdowns = window.getters.openDropdowns();
           const isFocusInsideDropdown = dropdown.contains(event.target);
           if (openDropdowns.includes(dropdown.id) && !isFocusInsideDropdown) {
             window.mutations.setOpenDropdown(dropdown.id, false);
-            toggleDropdown();
+            window.toggleDropdown(button, searchInput, options);
           }
         });
       };

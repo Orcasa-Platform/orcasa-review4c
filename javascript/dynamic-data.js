@@ -774,6 +774,19 @@ window.addEventListener('resize', function () {
     // Close filters panel to avoid problems
     if (currentIsMobile) {
       window.closeFiltersPanel();
+
+      // Close dropdowns
+      elements.landUseOptions.classList.add('hidden');
+      for (let dropdown of elements.dropdowns) {
+        const button = dropdown.querySelector('.btn-dropdown');
+        const searchInput = dropdown.querySelector('.input-search');
+        const options = dropdown.querySelector('.dropdown-options');
+
+        if (!options.classList.contains('hidden')) {
+          window.mutations.setOpenDropdown(dropdown.id, false);
+          window.toggleDropdown(button, searchInput, options);
+        }
+      }
     } else {
       window.mobileFiltersDrawer.destroy({animate: true});
     }
