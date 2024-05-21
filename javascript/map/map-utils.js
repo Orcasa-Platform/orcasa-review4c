@@ -16,16 +16,6 @@ const addSquareIcon = (map) => {
   window.map.addImage('square', { width, height: width, data}, { sdf: true } );
 }
 
-const zoomButtonStyling = () => {
-  const zoomInIcon = document.querySelector('button.mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon');
-  const zoomInSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 min-w-[20px]"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>`
-
-  const zoomOutIcon = document.querySelector('button.mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon');
-  const zoomOutSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 min-w-[20px]"><path d="M5 12h14"></path></svg>`;
-  zoomInIcon.innerHTML = zoomInSVG;
-  zoomOutIcon.innerHTML = zoomOutSVG;
-};
-
 const DEFAULT_SIDEBAR_WIDTH = 550;
 const DEFAULT_NAV_WIDTH = 90;
 

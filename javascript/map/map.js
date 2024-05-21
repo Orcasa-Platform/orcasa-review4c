@@ -22,7 +22,6 @@ window.loadMap = function() {
 
   window.map.on('load', function() {
     addSquareIcon(map);
-    zoomButtonStyling();
 
     // disable map rotation using right click + drag
     window.map.dragRotate.disable();
