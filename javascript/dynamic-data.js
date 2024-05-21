@@ -437,8 +437,25 @@ const loadMainInterventionCharts = (landUse) => {
   const { name: landUseName, mainInterventions, slug: landUseSlug } = landUse;
   const mainInterventionPromises = mainInterventions.map((mainInterventionSlug) => getMainInterventionChartData(landUseSlug, mainInterventionSlug));
   Promise.all(mainInterventionPromises).then((data) => {
-    window.mutations.setMainInterventions(data);
-    createCards(data, landUseName);
+    const activeFilters = window.getters.filter();
+    let updatedData = data;
+    if (activeFilters) {
+      const { intervention } = activeFilters;
+      if (intervention) {
+        // Set the intervention on the data as active
+        updatedData = data.map(d => {
+          d.interventions = d.interventions.map(interventionData => {
+            if (interventionData.slug === intervention) {
+              interventionData.active = true;
+            }
+            return interventionData;
+          });
+          return d;
+        });
+      }
+    }
+    window.mutations.setMainInterventions(updatedData);
+    createCards(updatedData, landUseName);
   });
 };
 
@@ -546,10 +563,8 @@ const createMobileChart = (slug, data) => {
     const addSubTypesToChartItem = (chartItem, mainInterventionSlug, interventionName, interventionSlug) => {
       // Remove all existing sub-types
       const subTypeContainers = document.querySelectorAll('.sub-type-container');
-      const subTypeContainer = chartItem.querySelector('.sub-type-container');
 
       const selectedIntervention = window.getters.filter()?.type === 'intervention' ? window.getters.filter()?.value : window.getters.filter()?.intervention;
-
       // Add the sub-types to the chart-item
       const subTypesData = sortedData.find(d => d.title === interventionName)?.subTypes;
 
@@ -570,10 +585,9 @@ const createMobileChart = (slug, data) => {
             </div>
           </div>`)
         }).join('');
-
         Array.from(subTypeContainers).map(d => {
-          if(d === subTypeContainer) {
-            subTypeContainer.innerHTML = subTypesHTML;
+          if (d.parentElement.id === `chart-item-${mainInterventionSlug}-${interventionName}`) {
+            d.innerHTML = subTypesHTML;
           } else {
             d.innerHTML = ''
           }
