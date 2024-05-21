@@ -317,9 +317,9 @@ const initSelectActions = ({ filters = false, select } = {}) => {
         window.mutations.setFilter({ type: 'sub-type', value: slug, mainIntervention: filter.mainIntervention, intervention: selectedIntervention });
       }
     }
-
     if (filters) {
-      window.reloadPublications();
+      // Load instead of reload to reset the filters
+      window.loadPublications();
     }
 
     // Recalculate the active filters on the filters button
@@ -343,6 +343,7 @@ const initSelectActions = ({ filters = false, select } = {}) => {
     }
     target.setAttribute('selected', 'true');
   };
+
   if(!selectOptions._eventListeners?.click) {
     selectOptions.addEventListener('click', function({ target }) {
       let buttonTarget = target;
@@ -354,6 +355,7 @@ const initSelectActions = ({ filters = false, select } = {}) => {
       selectOption(buttonTarget);
     });
   }
+
   if(!selectOptions._eventListeners?.keydown) {
     selectOptions.addEventListener('keydown', function(event) {
       if (event.key === 'Enter' || event.key === ' ') {
@@ -766,6 +768,7 @@ window.addEventListener('resize', function () {
   const isMethodologyOpen = window.getters.methodologyOpen();
   if (hasChangedBreakpoint) {
     loadDataAndSetButtons();
+
     // Close filters panel to avoid problems
     if (currentIsMobile) {
       window.closeFiltersPanel();
@@ -790,7 +793,6 @@ window.addEventListener('resize', function () {
 
       window.recalculateActiveFilters();
     }
-
 
     if (isMethodologyOpen) {
       window.loadMethodologyOpen();
