@@ -280,6 +280,8 @@ const initSelectActions = ({ filters = false, select } = {}) => {
       window.mutations.setLandUse(slug);
       window.mutations.setFilter(null);
       loadData(slug);
+      // Load also map data only if we change the land use
+      addDataLayer(map, slug);
 
       if (slug === 'all') {
         window.resetMainInterventionSelect();
