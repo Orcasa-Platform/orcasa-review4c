@@ -7,7 +7,7 @@
             "title": "Warming",
             "slug": "warming",
             "value": -5.23,
-            "low": -11.54,
+            "low": -111.54,
             "high": 11.63,
             "publications": 24,
             "subTypes": [
@@ -34,7 +34,7 @@
             "slug": "fire",
             "value": 11.43,
             "low": -23.65,
-            "high": 31.23,
+            "high": 131.23,
             "publications": 5712,
             "subTypes": [
                 {
