@@ -7,7 +7,7 @@ const publicationDetailButton = (id) =>`
     data-id="${id}"
   >
     ${publicationDetailButtonSVG}
-    <span class="pointer-events-none text-gray-500 text-xs opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 translate-x-0 group-hover:-translate-x-1/3 group-focus:-translate-x-1/3">Learn more</span>
+    <span class="pointer-events-none text-gray-500 text-xs lg:opacity-0 transition group-hover:opacity-100 group-focus:opacity-100 min-w-fit duration-500 -translate-x-1/4 lg:translate-x-0 group-hover:-translate-x-1/4 group-focus:-translate-x-1/4">Learn more</span>
   </button>
 `;
 
@@ -48,12 +48,12 @@ const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
 }
 
 const cardTagTemplate = ({ label, title, classNames }) => (
-    `<span class="flex px-2 py-1 rounded-2xl border border-mod-sc-ev justify-start items-center text-mod-sc-ev text-xs font-medium leading-[14px] ${classNames ? classNames : ''}" ${title ? `title="${title}"` : ''} >
+    `<span class="flex px-2 py-0.5 rounded-2xl border border-mod-sc-ev justify-start items-center text-mod-sc-ev text-2xs font-medium leading-[14px] ${classNames ? classNames : ''}" ${title ? `title="${title}"` : ''} >
       <span class="truncate">${label}</span>
     </span>`);
 
 const publicationCardTemplate = ({ isMetaAnalysis, journals, year, countries, globalQuality, id, title, authors, description, source, url, metaAnalysis, 'methodology-and-attributes': methodologyAndAttributes }) => `
-<div class="flex flex-col p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} rounded-lg mb-4 space-y-6 border border-gray-100">
+<div class="flex flex-col p-6 ${isMetaAnalysis ? 'bg-green-50' : 'bg-gray-50'} rounded-lg mb-2 space-y-4 border border-gray-100">
   <div class="h-6 justify-start items-center gap-6 inline-flex">
     <div class="w-full h-6 gap-1 flex text-gray-700 text-xs">
       ${isMetaAnalysis ? cardTagTemplate({ label: 'Meta-analysis' }) : ''}
@@ -65,12 +65,12 @@ const publicationCardTemplate = ({ isMetaAnalysis, journals, year, countries, gl
     </div>
   </div>
   <header class="mb-6 text-gray-700 space-y-2">
-    <div class="font-serif text-slate-700 text-base leading-relaxed">
+    <div class="font-serif text-slate-700 text-lg lg:text-base leading-relaxed">
       ${title}
     </div>
     <div class="text-slate-700 text-xs leading-[18px] italic">${authors}</div>
   </header>
-  <div class="text-sm leading-7 text-slate-500">${ellipsis(description, 230)}</div>
+  <div class="text-xs leading-5 text-slate-500">${ellipsis(description, 230)}</div>
   <div class="h-6 justify-end items-center gap-4 flex">
     <div class="pr-1 justify-center items-center gap-1 flex">
       ${publicationDetailButton(id)}
@@ -86,10 +86,10 @@ const externalLinkSVG = `<svg viewBox="0 0 22 22" class="w-4 h-4" stroke="curren
 </svg>`;
 
 const publicationDetailTemplate = ({ isMetaAnalysis, journals, year, countries, title, authors, landUse, description, source, url, metaAnalysis, 'methodology-and-attributes': methodologyAndAttributes }) => `
-<div class="flex flex-col lg:flex-row gap-4 lg:gap-16">
+<div class="flex flex-col lg:flex-row gap-4 lg:gap-16 pb-4 lg:pb-0">
   <div class="flex-1 space-y-4 lg:space-y-6">
     <header class="space-y-4 lg:space-y-6">
-      <div class="font-serif text-2xl lg:text-3xl leading-10">
+      <div class="font-serif text-2xl lg:text-4xl leading-10">
         ${title}
       </div>
       <div class="text-sm leading-normal italic">${authors}</div>

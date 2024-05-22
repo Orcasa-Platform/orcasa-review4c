@@ -13,6 +13,7 @@ tailwind.config = {
       },
       fontSize: {
         '3.5xl': ['32px', '48px'],
+        '4xl': ['36px', '52px'],
         '2xs': ['10px', '16px'],
       },
       colors: {

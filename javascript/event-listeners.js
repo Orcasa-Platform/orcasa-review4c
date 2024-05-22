@@ -458,14 +458,14 @@ window.addEventListener('load', function () {
       // Closing sidebar
       elements.publicationPanel.classList.add('lg:-translate-x-full');
       elements.sidebarToggle.classList.add('rotate-180', '!rounded-l-lg', '!rounded-r-none');
-      elements.sidebarToggleContainer.classList.add('!left-[90px]');
+      elements.sidebarToggleContainer.classList.add('!left-[40px]');
 
       fitMap(map, { sidebarOpen: false });
     } else {
       // Opening sidebar
       elements.publicationPanel.classList.remove('lg:-translate-x-full');
       elements.sidebarToggle.classList.remove('rotate-180', '!rounded-l-lg', '!rounded-r-none');
-      elements.sidebarToggleContainer.classList.remove('!left-[90px]');
+      elements.sidebarToggleContainer.classList.remove('!left-[40px]');
 
       fitMap(map, { sidebarOpen: true });
     }
