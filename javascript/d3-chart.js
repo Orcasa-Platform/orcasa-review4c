@@ -20,16 +20,18 @@ const updateChartAndButtons = ({ slug, title, data, resetAllCharts }) => {
   if (resetAllCharts) {
     // All the other charts should close their sub-types
     const chartData = window.getters.chartData();
-    Object.keys(chartData).forEach((key) => {
-      if (key !== slug) {
-        const data = chartData[key];
-        const updatedData = data.map(d => ({
-          ...d,
-          active: false,
-        }));
-        createSVGChart(key, updatedData);
-      }
-    });
+    if (chartData) {
+      Object.keys(chartData).forEach((key) => {
+        if (key !== slug) {
+          const data = chartData[key];
+          const updatedData = data.map(d => ({
+            ...d,
+            active: false,
+          }));
+          createSVGChart(key, updatedData);
+        }
+      });
+    }
   }
   if (slug !== 'all') {
     createSVGChart(slug, data);

@@ -214,7 +214,7 @@
           }
 
           .cupertino-pane {
-            @apply bg-main;
+            @apply bg-main !overflow-hidden;
           }
 
           .draggable {
@@ -276,7 +276,7 @@
       </div>
     </div>
     <div id="banner-practices"
-      class="hidden lg:flex lg:hidden absolute top-[336px] left-[82px] w-[202px] h-[76px] shadow justify-center items-center z-40">
+      class="hidden lg:flex lg:hidden absolute top-[336px] left-[82px] w-[222px] h-[76px] shadow justify-center items-center z-50">
       <svg class="absolute -left-1 top-[32px]" width="6" height="12"
         viewBox="0 0 6 12" fill="none"
         xmlns="http://www.w3.org/2000/svg">
@@ -1424,12 +1424,12 @@
       src="https://unpkg.com/cupertino-pane/dist/cupertino-pane.min.js"></script>
 
     <script>
-      const r = new rive.Rive({
+      window.riveAnimation = new rive.Rive({
         src: "/assets/animations/filters_animation.riv",
         canvas: document.getElementById("canvas"),
         autoplay: true,
         onLoad: () => {
-          r.resizeDrawingSurfaceToCanvas();
+          riveAnimation.resizeDrawingSurfaceToCanvas();
         },
       });
     </script>
@@ -1454,8 +1454,25 @@
           @apply !rounded-lg !rounded-b-none;
         }
 
+        .mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon {
+          background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 min-w-[20px]"><path d="M6 10h8"></path><path d="M10 6v8"></path></svg>') !important;
+        }
+
+        .mapboxgl-ctrl-zoom-in:disabled .mapboxgl-ctrl-icon {
+          background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="%233C4363" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 min-w-[20px]"><path d="M6 10h8"></path><path d="M10 6v8"></path></svg>') !important;
+        }
+
+
         .mapboxgl-ctrl-zoom-out {
-          @apply !rounded-lg !rounded-t-none;
+          @apply !rounded-lg !rounded-t-none h-[28px];
+        }
+
+        .mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon {
+          background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 min-w-[20px]"><path d="M6 10h8"></path></svg>') !important;
+        }
+
+        .mapboxgl-ctrl-zoom-out:disabled .mapboxgl-ctrl-icon {
+          background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="%233C4363" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 min-w-[20px]"><path d="M6 10h8"></path></svg>') !important;
         }
 
         .mapboxgl-ctrl button:not(:disabled):hover {
@@ -1463,11 +1480,11 @@
         }
 
         .mapboxgl-ctrl-icon {
-          @apply !flex justify-center items-center p-1.5 bg-no-repeat bg-center bg-contain !bg-none;
+          @apply !flex justify-center items-center p-1.5 bg-no-repeat bg-center bg-contain;
         }
 
         .mapboxgl-ctrl-group button+button {
-          @apply border-gray-500;
+          @apply border-gray-500 -mt-px;
         }
 
         .mapboxgl-popup {

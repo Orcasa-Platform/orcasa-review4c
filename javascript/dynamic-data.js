@@ -251,33 +251,37 @@ const initSelectActions = ({ filters = false, select } = {}) => {
     }
   });
 
-  selectButton.addEventListener('click', function() {
-    toggleSelect();
-  });
+  if(!selectButton._eventListeners?.click) {
+    selectButton.addEventListener('click', toggleSelect);
+  }
 
-  selectButton.addEventListener('keydown', function(event) {
-    if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === ' ') {
-      event.preventDefault(); // Prevent scrolling
-      if (options) {
-        if (selectOptions.classList.contains('hidden')) {
-          selectOptions.classList.remove('hidden');
+  if(!selectButton._eventListeners?.keydown) {
+    selectButton.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === ' ') {
+        event.preventDefault(); // Prevent scrolling
+        if (options) {
+          if (selectOptions.classList.contains('hidden')) {
+            selectOptions.classList.remove('hidden');
+          }
+          options[0].focus();
         }
-        options[0].focus();
       }
-    }
-  });
+    });
+  }
 
+  // Desktop options
   const selectOption = (target) => {
     // Get the slug of the selected land use
     const slug = target.getAttribute('data-slug');
     const filter = window.getters.filter();
     const selectedMainIntervention = filter?.mainIntervention;
     const selectedIntervention = filter?.type === 'intervention' ? filter?.value : filter?.intervention;
-
     if (select === 'landUse') {
       window.mutations.setLandUse(slug);
       window.mutations.setFilter(null);
       loadData(slug);
+      // Load also map data only if we change the land use
+      addDataLayer(map, slug);
 
       if (slug === 'all') {
         window.resetMainInterventionSelect();
@@ -315,9 +319,9 @@ const initSelectActions = ({ filters = false, select } = {}) => {
         window.mutations.setFilter({ type: 'sub-type', value: slug, mainIntervention: filter.mainIntervention, intervention: selectedIntervention });
       }
     }
-
     if (filters) {
-      window.reloadPublications();
+      // Load instead of reload to reset the filters
+      window.loadPublications();
     }
 
     // Recalculate the active filters on the filters button
@@ -342,38 +346,42 @@ const initSelectActions = ({ filters = false, select } = {}) => {
     target.setAttribute('selected', 'true');
   };
 
-  selectOptions.addEventListener('click', function({ target }) {
-    let buttonTarget = target;
-    // Check if the target is a child of the button
-    if (buttonTarget.nodeName !== 'BUTTON' && this.contains(buttonTarget)) {
-      // Get the button
-      buttonTarget = target.parentNode;
-    }
-    selectOption(buttonTarget);
-  });
+  if(!selectOptions._eventListeners?.click) {
+    selectOptions.addEventListener('click', function({ target }) {
+      let buttonTarget = target;
+      // Check if the target is a child of the button
+      if (buttonTarget.nodeName !== 'BUTTON' && this.contains(buttonTarget)) {
+        // Get the button
+        buttonTarget = target.parentNode;
+      }
+      selectOption(buttonTarget);
+    });
+  }
 
-  selectOptions.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      selectOption(event.target);
-    } else if (event.key === 'ArrowDown') {
-      event.preventDefault(); // Prevent scrolling
-      const nextButton = event.target.nextElementSibling;
-      if (nextButton) {
-        nextButton.focus();
+  if(!selectOptions._eventListeners?.keydown) {
+    selectOptions.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        selectOption(event.target);
+      } else if (event.key === 'ArrowDown') {
+        event.preventDefault(); // Prevent scrolling
+        const nextButton = event.target.nextElementSibling;
+        if (nextButton) {
+          nextButton.focus();
+        }
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault(); // Prevent scrolling
+        const prevButton = event.target.previousElementSibling;
+        if (prevButton) {
+          prevButton.focus();
+        }
+      } else if (event.key === 'Escape') {
+        selectOptions.classList.add('hidden');
+      } else if (event.key === 'Tab') {
+        selectOptions.classList.add('hidden');
       }
-    } else if (event.key === 'ArrowUp') {
-      event.preventDefault(); // Prevent scrolling
-      const prevButton = event.target.previousElementSibling;
-      if (prevButton) {
-        prevButton.focus();
-      }
-    } else if (event.key === 'Escape') {
-      selectOptions.classList.add('hidden');
-    } else if (event.key === 'Tab') {
-      selectOptions.classList.add('hidden');
-    }
-  });
+    });
+  };
 };
 
 window.initLandUseSelectMobile = () => {
@@ -417,7 +425,6 @@ window.loadData = (landUseSlug) => {
     </div>`;
   }
   Array.from(elements.legendTexts).map(text => text.innerHTML = name);
-
   // Load main intervention charts
   if (landUse.mainInterventions) {
     loadMainInterventionCharts(landUse);
@@ -430,8 +437,25 @@ const loadMainInterventionCharts = (landUse) => {
   const { name: landUseName, mainInterventions, slug: landUseSlug } = landUse;
   const mainInterventionPromises = mainInterventions.map((mainInterventionSlug) => getMainInterventionChartData(landUseSlug, mainInterventionSlug));
   Promise.all(mainInterventionPromises).then((data) => {
-    window.mutations.setMainInterventions(data);
-    createCards(data, landUseName);
+    const activeFilters = window.getters.filter();
+    let updatedData = data;
+    if (activeFilters) {
+      const { intervention } = activeFilters;
+      if (intervention) {
+        // Set the intervention on the data as active
+        updatedData = data.map(d => {
+          d.interventions = d.interventions.map(interventionData => {
+            if (interventionData.slug === intervention) {
+              interventionData.active = true;
+            }
+            return interventionData;
+          });
+          return d;
+        });
+      }
+    }
+    window.mutations.setMainInterventions(updatedData);
+    createCards(updatedData, landUseName);
   });
 };
 
@@ -446,7 +470,7 @@ const createCards = (data, landUseName) => {
     `
     <div class="flex flex-col mb-2 py-4 border-b border-slate-600 gap-3">
       <header class="w-full text-base">
-        Impact of <span class="font-semibold"> ${name} </span> on Soil Organic Carbon for ${landUseName}
+        Impact of <span class="font-semibold"> ${name} </span> on Soil Organic Carbon for <span class="font-semibold">${landUseName}</span>
       </header>
       <div
         class="text-neutral-300 text-sm leading-7">
@@ -458,7 +482,7 @@ const createCards = (data, landUseName) => {
     : `
     <div class="flex flex-col p-6 bg-white mb-2 rounded-lg text-gray-700">
       <header class="mb-4 flex w-full justify-between items-end">
-        <div>Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for ${landUseName}</div>
+        <div>Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for <span class="font-semibold">${landUseName}</span></div>
         <div class="text-gray-500 text-xs">Click in one intervention below to see more details</div>
       </header>
       <div
@@ -472,7 +496,11 @@ const createCards = (data, landUseName) => {
 
   if (isMobile()) {
     // Save data for filters
-    window.mutations.setChartData(existingData);
+    const existingChartData = existingData.reduce((acc, curr) => {
+      acc[curr.slug] = curr.interventions;
+      return acc;
+    }, {});
+    window.mutations.setChartData(existingChartData);
 
     if (existingData.length === 0) {
       elements.chartCardsMobile.innerHTML = `<p class="font-semibold text-neutral-300 text-lg h-full flex items-center justify-center">No data</p>`;
@@ -503,140 +531,172 @@ const createMobileChart = (slug, data) => {
   });
 
   if (chartElement) {
+    const selectedIntervention = window.getters.filter()?.type === 'intervention' ? window.getters.filter()?.value : window.getters.filter()?.intervention;
     const chart = `<div class="flex flex-col justify-between mt-4 gap-[12px]">
-      ${sortedData.map(({ title, value, publications, slug: interventionSlug }) => (`
-        <div class="flex flex-col gap-4 data-[active=true]:border-y data-[active=true]:border-y-gray-650 data-[active=true]:p-4 data-[active=true]:-mx-4" data-active="false" id="chart-item-${slug}-${title}">
+      ${sortedData.map(({ title, value, publications, slug: interventionSlug }) => {
+        const fixedValue = value.toFixed(1);
+
+        const isSelected = selectedIntervention === interventionSlug;
+
+        const mainInterventionName = startCase(slug);
+        const chartDescriptionText =  descriptionText(mainInterventionName, name, fixedValue)
+
+        return (`
+        <div class="flex flex-col gap-4 data-[active=true]:border-y data-[active=true]:border-y-gray-650 data-[active=true]:p-4 data-[active=true]:-mx-4" data-active="${isSelected}" id="chart-item-${slug}-${title}">
           <div class="w-full flex text-white items-center justify-between" >
             <span class="text-base w-16 font-semibold ${value > 0 ? 'text-darkRed-500' : ''}">
               ${value.toFixed(1)}%
             </span>
-            <button type="button" class="btn-filter flex-1 btn-chart-mobile" aria-pressed="false" id="btn-${kebabCase(title)}" data-main-intervention-slug="${slug}" data-intervention-slug="${interventionSlug}" data-intervention-name="${title}" data-fixed-value="${value.toFixed(1)}" title="${title} (${formatNumber(publications)})">
+            <button type="button" class="btn-filter flex-1 btn-chart-mobile" aria-pressed="${isSelected}" id="btn-${kebabCase(title)}" data-main-intervention-slug="${slug}" data-intervention-slug="${interventionSlug}" data-intervention-name="${title}" data-fixed-value="${fixedValue}" title="${title} (${formatNumber(publications)})">
               <span class="underline">${title}</span> (${formatNumber(publications)})
             </button>
           </div>
-          <div class="chart-description text-base hidden" id="chart-description-${slug}-${title}"></div>
+          <div class="chart-description text-base ${isSelected ? '' : 'hidden'}" id="chart-description-${slug}-${title}">${isSelected ? chartDescriptionText : ''}</div>
           <div class="sub-type-container flex flex-col gap-4"></div>
-        </div>`)).join('')
+        </div>`);
+      }).join('')
       }
     </div>`;
 
     chartElement.innerHTML = chart;
 
-    // Mobile chart buttons click
-    const chartMobileButtons = chartElement.getElementsByClassName('btn-chart-mobile');
-    if (chartMobileButtons) {
-      for (let element of chartMobileButtons) {
-        element.addEventListener("click", function() {
-          const chartDescriptions = document.querySelectorAll('[id^="chart-description-"]');
+    const addSubTypesToChartItem = (chartItem, mainInterventionSlug, interventionName, interventionSlug) => {
+      // Remove all existing sub-types
+      const subTypeContainers = document.querySelectorAll('.sub-type-container');
 
-          // Hide other chart descriptions
-          Array.from(chartDescriptions).map(d => d.classList.add('hidden'));
+      const selectedIntervention = window.getters.filter()?.type === 'intervention' ? window.getters.filter()?.value : window.getters.filter()?.intervention;
+      // Add the sub-types to the chart-item
+      const subTypesData = sortedData.find(d => d.title === interventionName)?.subTypes;
 
-          // If the button is already pressed
-          if (element.getAttribute('aria-pressed') === 'true') {
-            element.setAttribute('aria-pressed', 'false');
-
-            const subTypeContainers = document.querySelectorAll('.sub-type-container');
-            Array.from(subTypeContainers).map(d => d.innerHTML = '');
-
-            window.mutations.setFilter(null);
-
-            // Set all data-actives to false
-            const chartItems = document.querySelectorAll('[id^="chart-item-"]');
-            Array.from(chartItems).map(d => d.setAttribute('data-active', 'false'));
+      if (subTypesData) {
+        const subTypesHTML = subTypesData.map(({ title, value, publications, slug }) => {
+          const isSelected = interventionSlug === selectedIntervention && window.getters.filter()?.type === 'sub-type' && window.getters.filter()?.value === slug;
+          return (`
+          <div class="flex flex-col gap-4 data-[active=true]:border-y data-[active=true]:border-y-gray-650 data-[active=true]:p-4 data-[active=true]:-mx-4" id="chart-sub-type-${mainInterventionSlug}-${interventionName}-${title}">
+            <div class="w-full flex text-white items-center justify-between" >
+              <span class="text-base w-16 font-semibold ${value > 0 ? '' : 'text-darkRed-500'}">
+                ${value.toFixed(1)}%
+              </span>
+              <button type="button" class="btn-filter flex-1 btn-chart-mobile btn-chart-sub-type" aria-pressed="${isSelected}" id="btn-${kebabCase(title)}" data-main-intervention-slug="${mainInterventionSlug}"
+                data-intervention-slug=${interventionSlug} data-sub-type-slug="${slug}" title="${title}"
+              >
+                <span class="underline">${title}</span> (${formatNumber(publications)})
+              </button>
+            </div>
+          </div>`)
+        }).join('');
+        Array.from(subTypeContainers).map(d => {
+          if (d.parentElement.id === `chart-item-${mainInterventionSlug}-${interventionName}`) {
+            d.innerHTML = subTypesHTML;
           } else {
-            // Fill and show the chart description
-
-            const mainInterventionSlug = element.getAttribute('data-main-intervention-slug');
-            const mainInterventionName = startCase(mainInterventionSlug);
-            const interventionSlug = element.getAttribute('data-intervention-slug');
-            const interventionName = element.getAttribute('data-intervention-name');
-            const fixedValue = element.getAttribute('data-fixed-value');
-
-            const chartDescription = document.getElementById(`chart-description-${mainInterventionSlug}-${interventionName}`);
-            const chartDescriptionText =  descriptionText(mainInterventionName, interventionName, fixedValue)
-
-            chartDescription.innerHTML = chartDescriptionText;
-            chartDescription.classList.remove('hidden');
-
-
-            // Set all chart items to inactive
-            const chartItems = document.querySelectorAll('[id^="chart-item-"]');
-            Array.from(chartItems).map(d => d.setAttribute('data-active', 'false'));
-
-            // Set the clicked chart item as active
-            const chartItem = document.getElementById(`chart-item-${mainInterventionSlug}-${interventionName}`);
-            chartItem.setAttribute('data-active', 'true');
-
-            // Set the button as pressed
-            Array.from(chartMobileButtons).map(b => {
-              if (b === element) {
-                element.setAttribute('aria-pressed', 'true');
-              } else {
-                b.setAttribute('aria-pressed', 'false')
-              }
-            });
-
-            // // Remove all existing sub-types
-            const subTypeContainers = document.querySelectorAll('.sub-type-container');
-            const subTypeContainer = chartItem.querySelector('.sub-type-container');
-
-
-            // Add the sub-types to the chart-item
-            const subTypesData = sortedData.find(d => d.title === interventionName)?.subTypes;
-
-            if (subTypesData) {
-              const subTypesHTML = subTypesData.map(({ title, value, publications, slug }) => {
-                return (`
-                <div class="flex flex-col gap-4 data-[active=true]:border-y data-[active=true]:border-y-gray-650 data-[active=true]:p-4 data-[active=true]:-mx-4" data-active="false" id="chart-sub-type-${mainInterventionSlug}-${interventionName}-${title}">
-                  <div class="w-full flex text-white items-center justify-between" >
-                    <span class="text-base w-16 font-semibold ${value > 0 ? '' : 'text-darkRed-500'}">
-                      ${value.toFixed(1)}%
-                    </span>
-                    <button type="button" class="btn-filter flex-1 btn-chart-mobile btn-chart-sub-type" aria-pressed="false" id="btn-${kebabCase(title)}" data-main-intervention-slug="${mainInterventionSlug}"
-                     data-intervention-slug=${interventionSlug} data-sub-type-slug="${slug}" title="${title}"
-                    >
-                      <span class="underline">${title}</span> (${formatNumber(publications)})
-                    </button>
-                  </div>
-                </div>`)
-              }).join('');
-
-                Array.from(subTypeContainers).map(d => {
-                  if(d === subTypeContainer) {
-                    subTypeContainer.innerHTML = subTypesHTML;
-                  } else {
-                    d.innerHTML = ''
-                  }
-                });
-            }
-
-            window.mutations.setFilter({ type: 'intervention', value: interventionSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
-
-            // Add event listeners after the HTML is inserted
-            document.querySelectorAll('.btn-chart-sub-type').forEach(button => {
-              button.addEventListener('click', function() {
-                const isSubTypePressed = button.getAttribute('aria-pressed') === 'true';
-                const mainInterventionSlug = button.getAttribute('data-main-intervention-slug');
-                const subTypeSlug = button.getAttribute('data-sub-type-slug');
-                const interventionSlug = button.getAttribute('data-intervention-slug');
-
-                if (isSubTypePressed) {
-                  button.setAttribute('aria-pressed', 'false');
-
-                  // Leave intervention selected
-                  window.mutations.setFilter({ type: 'intervention', value: interventionSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
-                } else {
-                  // Set aria-pressed to true
-                  Array.from(document.querySelectorAll('.btn-chart-sub-type')).map(b => b.setAttribute('aria-pressed', 'false'));
-                  button.setAttribute('aria-pressed', 'true');
-
-                  window.mutations.setFilter({ type: 'sub-type', value: subTypeSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
-                }
-              });
-            });
+            d.innerHTML = ''
           }
         });
+      }
+
+      // Add event listeners after the HTML is inserted
+      document.querySelectorAll('.btn-chart-sub-type').forEach(button => {
+        if(!button._eventListeners?.click) {
+          button.addEventListener('click', function() {
+            const isSubTypePressed = button.getAttribute('aria-pressed') === 'true';
+            const mainInterventionSlug = button.getAttribute('data-main-intervention-slug');
+            const subTypeSlug = button.getAttribute('data-sub-type-slug');
+            const interventionSlug = button.getAttribute('data-intervention-slug');
+
+            if (isSubTypePressed) {
+              button.setAttribute('aria-pressed', 'false');
+
+              // Leave intervention selected
+              window.mutations.setFilter({ type: 'intervention', value: interventionSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
+            } else {
+              // Set aria-pressed to true
+              Array.from(document.querySelectorAll('.btn-chart-sub-type')).map(b => b.setAttribute('aria-pressed', 'false'));
+              button.setAttribute('aria-pressed', 'true');
+
+              window.mutations.setFilter({ type: 'sub-type', value: subTypeSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
+            }
+          });
+        };
+      });
+    };
+
+    // Add subtypes if one intervention is selected
+    if (selectedIntervention) {
+      const selectedInterventionData = sortedData.find(d => d.slug === selectedIntervention);
+      if (selectedInterventionData) {
+        addSubTypesToChartItem(chartElement, slug, selectedInterventionData.title, selectedIntervention);
+      }
+    }
+
+    // Mobile chart buttons click
+    let chartMobileButtons = chartElement.getElementsByClassName('btn-chart-mobile');
+    // Filter so we don't pick the sub-type buttons
+    chartMobileButtons = Array.from(chartMobileButtons).filter(b => !b.classList.contains('btn-chart-sub-type'));
+
+
+    if (chartMobileButtons) {
+      for (let element of chartMobileButtons) {
+        if(!element._eventListeners?.click) {
+          element.addEventListener("click", function() {
+            // Deselect style in other buttons
+            const chartMobileButtons = document.getElementsByClassName('btn-chart-mobile');
+            Array.from(chartMobileButtons).map(d => {
+              d.setAttribute('aria-pressed', 'false');
+            });
+
+            const chartDescriptions = document.querySelectorAll('[id^="chart-description-"]');
+            // Hide other chart descriptions
+            Array.from(chartDescriptions).map(d => d.classList.add('hidden'));
+            // If the button is already pressed
+            if (element.getAttribute('aria-pressed') === 'true') {
+              element.setAttribute('aria-pressed', 'false');
+
+              const subTypeContainers = document.querySelectorAll('.sub-type-container');
+              Array.from(subTypeContainers).map(d => d.innerHTML = '');
+
+              window.mutations.setFilter(null);
+
+              // Set all data-actives to false
+              const chartItems = document.querySelectorAll('[id^="chart-item-"]');
+              Array.from(chartItems).map(d => d.setAttribute('data-active', 'false'));
+            } else {
+              // Fill and show the chart description
+
+              const mainInterventionSlug = element.getAttribute('data-main-intervention-slug');
+              const mainInterventionName = startCase(mainInterventionSlug);
+              const interventionSlug = element.getAttribute('data-intervention-slug');
+              const interventionName = element.getAttribute('data-intervention-name');
+              const fixedValue = element.getAttribute('data-fixed-value');
+              const chartDescription = document.getElementById(`chart-description-${mainInterventionSlug}-${interventionName}`);
+              const chartDescriptionText =  descriptionText(mainInterventionName, interventionName, fixedValue)
+
+              chartDescription.innerHTML = chartDescriptionText;
+              chartDescription.classList.remove('hidden');
+
+
+              // Set all chart items to inactive
+              const chartItems = document.querySelectorAll('[id^="chart-item-"]');
+              Array.from(chartItems).map(d => d.setAttribute('data-active', 'false'));
+
+              // Set the clicked chart item as active
+              const chartItem = document.getElementById(`chart-item-${mainInterventionSlug}-${interventionName}`);
+              chartItem.setAttribute('data-active', 'true');
+
+              // Set the button as pressed
+              Array.from(chartMobileButtons).map(b => {
+                if (b === element) {
+                  element.setAttribute('aria-pressed', 'true');
+                } else {
+                  b.setAttribute('aria-pressed', 'false')
+                }
+              });
+
+              addSubTypesToChartItem(chartItem, mainInterventionSlug, interventionName, interventionSlug);
+
+              window.mutations.setFilter({ type: 'intervention', value: interventionSlug, mainIntervention: mainInterventionSlug, intervention: interventionSlug });
+            }
+          });
+        }
       };
     }
   };
@@ -644,12 +704,12 @@ const createMobileChart = (slug, data) => {
 
 const loadDataAndSetButtons = () => {
   // Create a button for each land use
-  const button = ({ slug, name, publications, index }) =>
+  const button = ({ slug, name, publications }, selectedLandUse) =>
     `<button
       type="button"
       data-slug=${slug}
       class="btn-filter flex btn-land-use"
-      aria-pressed="${index === 0 ? "true" : "false"}"
+      aria-pressed="${selectedLandUse === slug ? "true" : "false"}"
     >
       <span class="text-base">
         ${name}
@@ -663,13 +723,14 @@ const loadDataAndSetButtons = () => {
   getMainInterventionChartData().then(data => {
     const landUseMenu = isMobile() ? elements.landUseMenuMobile : elements.landUseMenu;
     if (landUseMenu && data) {
+      const selectedLandUse = window.getters.landUse();
       const landUses = Object.entries(data).map(([key, value], i) => ({ slug: key, ...value, index: i }));
       window.mutations.setLandUses(landUses);
       landUseMenu.innerHTML = '';
       landUses.filter(l => l.name !== 'All').forEach(landUse => {
-        landUseMenu.innerHTML += button(landUse);
+        landUseMenu.innerHTML += button(landUse, selectedLandUse);
       });
-      loadData(landUses[0].slug);
+      loadData(selectedLandUse || landUses[0].slug);
       return landUses;
     }
   }).then((landUses) => {
@@ -690,7 +751,7 @@ const loadDataAndSetButtons = () => {
           // Only for mobile
           Array.from(landUseButtons).filter(b => b !== element).map(b => b.setAttribute('aria-pressed', 'false'));
           const studiesDisclaimer = document.getElementById('primary-studies-disclaimer')
-          if(studiesDisclaimer) {
+          if (studiesDisclaimer) {
             studiesDisclaimer.classList.add('hidden');
           }
 
@@ -717,7 +778,56 @@ const loadDataAndSetButtons = () => {
 };
 
 window.addEventListener('resize', function () {
-  loadDataAndSetButtons();
+  const currentIsMobile = isMobile();
+  const hasChangedBreakpoint = window.getters.isMobile() !== currentIsMobile;
+  const isPublicationsOpen = window.getters.publicationsOpen();
+  const isMethodologyOpen = window.getters.methodologyOpen();
+  if (hasChangedBreakpoint) {
+    loadDataAndSetButtons();
+
+    // Close filters panel to avoid problems
+    if (currentIsMobile) {
+      window.closeFiltersPanel();
+
+      // Close dropdowns
+      elements.landUseOptions.classList.add('hidden');
+      for (let dropdown of elements.dropdowns) {
+        const button = dropdown.querySelector('.btn-dropdown');
+        const searchInput = dropdown.querySelector('.input-search');
+        const options = dropdown.querySelector('.dropdown-options');
+
+        if (!options.classList.contains('hidden')) {
+          window.mutations.setOpenDropdown(dropdown.id, false);
+          window.toggleDropdown(button, searchInput, options);
+        }
+      }
+    } else {
+      window.mobileFiltersDrawer.destroy({animate: true});
+    }
+
+    // Update the charts
+    const landUse = window.getters.landUse();
+    loadData(landUse);
+
+    if (isPublicationsOpen) {
+      window.loadPublicationsOpen();
+
+      // Load  both mobile and desktop filters
+      window.loadDropdowns();
+
+      if (currentIsMobile) {
+        // Also initialize the rest of the mobile filters
+        window.initLandUseMobileDropdowns()
+      }
+
+      window.recalculateActiveFilters();
+    }
+
+    if (isMethodologyOpen) {
+      window.loadMethodologyOpen();
+    }
+  }
+  window.mutations.setIsMobile(currentIsMobile);
 });
 
 window.addEventListener('load', function () {
@@ -758,12 +868,14 @@ window.addEventListener('load', function () {
   });
 
   // LAND USE SELECT on main page
-  elements.landUseSelect.addEventListener('change', function() {
-    const slug = elements.landUseSelect.value;
-    window.mutations.setLandUse(slug);
-    window.mutations.setFilter(null);
-    loadData(slug);
-  });
+  if(!elements.landUseSelect._eventListeners?.change) {
+    elements.landUseSelect.addEventListener('change', function() {
+      const slug = elements.landUseSelect.value;
+      window.mutations.setLandUse(slug);
+      window.mutations.setFilter(null);
+      loadData(slug);
+    });
+  }
 
   // Initialize event listeners if they were not already initialized
   if (!window.getters.mainInterventionSelectActionsInitialized()) {
@@ -777,9 +889,12 @@ window.addEventListener('load', function () {
   }
 
   window.loadMainInterventionMobileSelect = (selectedLandUse) => {
+    const publicationFilters = getPublicationFilters();
     // Initialize the main intervention dropdown
     const mainInterventionMobile = publicationFilters.querySelector('#main-intervention');
-    mainInterventionMobile.classList.remove('hidden');
+    if(mainInterventionMobile) {
+      mainInterventionMobile.classList.remove('hidden');
+    }
 
     const mainInterventionSelect = publicationFilters.querySelector('#dropdown-select-main-intervention');
     const landUsesData = window.getters.landUses();
@@ -795,13 +910,16 @@ window.addEventListener('load', function () {
   }
 
   window.loadInterventionMobileSelect = (selectedMainIntervention) => {
+    const publicationFilters = getPublicationFilters();
     // Initialize the intervention dropdown
     const interventionMobile = publicationFilters.querySelector('#intervention');
-    interventionMobile.classList.remove('hidden');
+    if (interventionMobile) {
+      interventionMobile.classList.remove('hidden');
+    }
 
     const interventionSelect = publicationFilters.querySelector('#dropdown-select-intervention');
     const mainInterventionsData = window.getters.chartData();
-    const interventionsData = mainInterventionsData?.find(({ slug }) => slug === selectedMainIntervention)?.interventions;
+    const interventionsData = mainInterventionsData?.[selectedMainIntervention];
     const selectedIntervention = window.getters.filter()?.intervention;
 
     interventionSelect.innerHTML = '';
@@ -813,15 +931,20 @@ window.addEventListener('load', function () {
     }
   }
 
+  const getPublicationFilters = () => isMobile() ? elements.publicationFiltersMobile : elements.publicationFilters;
+
   window.loadSubTypeMobileSelect = (selectedIntervention) => {
+    const publicationFilters = getPublicationFilters();
     // Initialize the sub-types dropdown
     const subTypeMobile = publicationFilters.querySelector('#sub-type');
-    subTypeMobile.classList.remove('hidden');
+    if(subTypeMobile) {
+      subTypeMobile.classList.remove('hidden');
+    }
 
     const subTypeSelect = publicationFilters.querySelector('#dropdown-select-sub-type');
     const landUseData = window.getters.chartData();
     const selectedMainIntervention = window.getters.filter()?.mainIntervention;
-    const interventionsData = landUseData?.find(({ slug }) => slug === selectedMainIntervention)?.interventions;
+    const interventionsData = landUseData?.[selectedMainIntervention];
     const subTypesData = interventionsData?.find(({ slug }) => slug === selectedIntervention)?.subTypes;
     const selectedSubType =  window.getters.filter()?.type === 'sub-type' && window.getters.filter()?.value;
     subTypeSelect.innerHTML = '';
@@ -836,36 +959,38 @@ window.addEventListener('load', function () {
   }
 
   // LAND USE SELECT MOBILE on filters
-  const publicationFilters = isMobile() ? elements.publicationFiltersMobile : elements.publicationFilters;
+  const publicationFilters = getPublicationFilters();
   const landUseSelectMobile = publicationFilters.querySelector('#dropdown-select-land-use');
   if (landUseSelectMobile) {
-    landUseSelectMobile.addEventListener('change', function(event) {
-      const selected = event.target.value;
+    if(!(elements.landUseSelectMobile._eventListeners?.click)) {
+      landUseSelectMobile.addEventListener('change', function(event) {
+        const selected = event.target.value;
 
-      if (selected === 'all') {
-        window.resetMobileSelect('main-intervention');
-        window.resetMobileSelect('intervention');
-        window.resetMobileSelect('sub-type');
-        window.mutations.setFilter(null);
-      } else {
-        window.resetMobileSelect('main-intervention');
-        window.resetMobileSelect('intervention');
-        window.resetMobileSelect('sub-type');
-        window.mutations.setFilter(null);
-        window.loadMainInterventionMobileSelect(selected);
-      }
+        if (selected === 'all') {
+          window.resetMobileSelect('main-intervention');
+          window.resetMobileSelect('intervention');
+          window.resetMobileSelect('sub-type');
+          window.mutations.setFilter(null);
+        } else {
+          window.resetMobileSelect('main-intervention');
+          window.resetMobileSelect('intervention');
+          window.resetMobileSelect('sub-type');
+          window.mutations.setFilter(null);
+          window.loadMainInterventionMobileSelect(selected);
+        }
 
-      window.mutations.setLandUse(selected);
-      loadData(selected);
+        window.mutations.setLandUse(selected);
+        loadData(selected);
 
-      // Reload publications
-      window.reloadPublications();
-      window.recalculateActiveFilters();
-    });
+        // Load publications instead of reload to repopulate the filters
+        window.loadPublications();
+        window.recalculateActiveFilters();
+      });
+    }
   }
 
   const mainInterventionMobile = publicationFilters.querySelector('#dropdown-select-main-intervention');
-  if(mainInterventionMobile) {
+  if (mainInterventionMobile && !mainInterventionMobile._eventListeners?.change) {
     mainInterventionMobile.addEventListener('change', function(event) {
       const selectedMainIntervention = event.target.value;
       if (selectedMainIntervention === 'all') {
@@ -879,15 +1004,16 @@ window.addEventListener('load', function () {
         interventionMobile.classList.remove('hidden');
         window.mutations.setFilter({ mainIntervention: selectedMainIntervention });
       }
-      window.reloadPublications();
+      window.loadPublications();
     });
   }
 
   const interventionMobile = publicationFilters.querySelector('#dropdown-select-intervention');
-  if(interventionMobile) {
+  if(interventionMobile && !interventionMobile._eventListeners?.change) {
     interventionMobile.addEventListener('change', function(event) {
       const selected = event.target.value;
       const mainIntervention = window.getters.filter()?.mainIntervention;
+
       if (selected === 'all') {
         window.resetMobileSelect('sub-type');
         window.mutations.setFilter({ mainIntervention });
@@ -895,14 +1021,19 @@ window.addEventListener('load', function () {
         window.loadSubTypeMobileSelect(selected);
         const interventionMobile = publicationFilters.querySelector('#intervention');
         interventionMobile.classList.remove('hidden');
+
+        // Reset the subtype selecting the All option
+        const subTypeSelect = publicationFilters.querySelector('#dropdown-select-sub-type');
+        subTypeSelect.value = 'all';
+
         window.mutations.setFilter({ type: 'intervention', value: selected, mainIntervention, intervention: selected });
       }
-      window.reloadPublications();
+      window.loadPublications();
     });
   }
 
   const subTypeMobile = publicationFilters.querySelector('#dropdown-select-sub-type');
-  if(subTypeMobile) {
+  if(subTypeMobile && !subTypeMobile._eventListeners?.change) {
     subTypeMobile.addEventListener('change', function(event) {
       const selected = event.target.value;
       const mainIntervention = window.getters.filter()?.mainIntervention;
@@ -912,11 +1043,11 @@ window.addEventListener('load', function () {
       } else {
         window.mutations.setFilter({ type: 'sub-type', value: selected, mainIntervention, intervention });
        }
-      window.reloadPublications();
+      window.loadPublications();
     });
   }
 
-  // Populate filters
+
   const appendListElement = (parent, value, label, slug) => {
     const listElement = document.createElement('li');
     listElement.classList.add('max-w-[265px]');
@@ -1012,6 +1143,7 @@ window.addEventListener('load', function () {
     }
   };
 
+  // Populate filters
   const populateFilters = (metadata) => {
     const countries = window.getters.countries();
     const journals = window.getters.journals();
@@ -1020,9 +1152,7 @@ window.addEventListener('load', function () {
       { value: 'primary-study', label: 'Primary study' },
       { value: 'meta-analysis', label: 'Meta-analysis' },
     ];
-
-    const publicationFilters = isMobile() ? elements.publicationFiltersMobile : elements.publicationFilters;
-
+    const publicationFilters = getPublicationFilters();
     const publicationTypesList = publicationFilters.querySelector('#dropdown-select-type-publication ul')
     publicationTypesList.innerHTML = '';
     publicationTypes.forEach(({ value, label }) => {

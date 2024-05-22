@@ -22,7 +22,6 @@ window.loadMap = function() {
 
   window.map.on('load', function() {
     addSquareIcon(map);
-    zoomButtonStyling();
 
     // disable map rotation using right click + drag
     window.map.dragRotate.disable();
@@ -45,14 +44,7 @@ window.loadMap = function() {
   window.mutations.setLabels(true);
   window.mutations.setBoundaries(true);
 
-  const { landUse } = window.state;
-  // Filter from chart or select filters
-  const chartFilter = window.state.filter;
-  const mainIntervention = chartFilter?.mainIntervention;
-  const intervention = chartFilter?.type === 'intervention' ?  chartFilter?.value : chartFilter?.intervention;
-  const subType = chartFilter?.type === 'sub-type' ? chartFilter?.value : undefined;
-
-  addDataLayer(map, landUse, mainIntervention, intervention, subType);
+  addDataLayer(map, window.state.landUse);
 
   new Promise((resolve) => {
     if (window.map.isStyleLoaded()) {

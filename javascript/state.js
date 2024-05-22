@@ -34,6 +34,7 @@ window.addEventListener('load', function () {
     mainInterventionSelectActionsInitialized: false,
     interventionSelectActionsInitialized: false,
     subTypeSelectActionsInitialized: false,
+    isMobile: isMobile(),
   };
 
   window.mutations = {
@@ -136,13 +137,16 @@ window.addEventListener('load', function () {
     },
     setSubTypeActionsInitialized(value) {
       state.subTypeSelectActionsInitialized = value;
+    },
+    setIsMobile(value) {
+      state.isMobile = value;
     }
   };
 
   window.getters = {
     sidebarOpen: () => state.sidebarOpen,
-    publicationsOpen: () => state.publicationOpen,
-    methodologyOpen: () => state.publicationOpen,
+    publicationsOpen: () => state.publicationsOpen,
+    methodologyOpen: () => state.methodologyOpen,
     filtersOpen: () => state.filtersOpen,
     publicationDetailOpen: () => state.publicationDetailOpen,
     publicationsSort: () => state.publicationsSort,
@@ -166,6 +170,7 @@ window.addEventListener('load', function () {
     landUseSelectActionsInitialized: () => state.landUseSelectActionsInitialized,
     mainInterventionSelectActionsInitialized: () => state.mainInterventionSelectActionsInitialized,
     interventionSelectActionsInitialized: () => state.interventionSelectActionsInitialized,
-    subTypeSelectActionsInitialized: () => state.subTypeSelectActionsInitialized
+    subTypeSelectActionsInitialized: () => state.subTypeSelectActionsInitialized,
+    isMobile: () => state.isMobile,
   };
 });
