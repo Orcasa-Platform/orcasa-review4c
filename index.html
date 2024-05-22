@@ -109,7 +109,7 @@
         }
 
         .svg-btn-publication-detail {
-          @apply pointer-events-none text-gray-700 bg-gray-50 rounded-lg h-[32px] w-[32px] p-2 transition-colors group-hover:bg-mod-sc-ev group-hover:text-white group-focus:bg-mod-sc-ev group-focus:text-white ;
+          @apply pointer-events-none text-white lg:text-gray-700 bg-mod-sc-ev lg:bg-gray-100 rounded-lg h-[32px] w-[32px] p-2 transition-colors group-hover:bg-mod-sc-ev group-hover:text-white group-focus:bg-mod-sc-ev group-focus:text-white;
         }
 
         .checkbox {
@@ -162,15 +162,15 @@
         }
 
         .publication-panel {
-          @apply absolute top-14 lg:top-2 lg:bottom-2 p-4 lg:px-12 lg:py-10 w-full lg:max-w-[582px] lg:left-[90px] h-[calc(100vh-56px)] lg:h-[calc(100vh-16px)] lg:rounded-lg lg:rounded-r-none bg-main transition-transform z-20 !mt-0 overflow-auto text-white space-y-8;
+          @apply absolute top-14 lg:top-2 lg:bottom-2 p-4 lg:p-10 w-full lg:max-w-[582px] lg:left-[90px] h-[calc(100vh-56px)] lg:h-[calc(100vh-16px)] lg:rounded-lg lg:rounded-r-none bg-main transition-transform z-20 !mt-0 overflow-auto text-white space-y-4 lg:space-y-8;
         }
 
         .methodology-panel {
-          @apply absolute left-0 lg:left-[90px] top-14 lg:top-0 p-4 lg:px-12 lg:py-10 w-full lg:w-[calc(100%-90px)] h-[calc(100vh-56px)] lg:h-screen bg-main text-white transition-transform z-20 !mt-0 overflow-auto;
+          @apply absolute left-0  lg:left-[90px] top-14 lg:top-2 lg:bottom-2 p-4 lg:p-10 w-full lg:w-[calc(100%-90px)] h-[calc(100vh-56px)] lg:h-[calc(100vh-16px)] lg:rounded-lg lg:rounded-r-none bg-main text-white transition-transform z-20 !mt-0 overflow-auto;
         }
 
         .publication-detail-panel {
-          @apply absolute left-0 lg:left-[90px] top-14 lg:top-0 p-4 lg:px-12 lg:py-10 w-full lg:w-[calc(100%-90px)] h-[calc(100vh-56px)] lg:h-screen bg-main text-white transition-transform z-40 !mt-0 overflow-auto space-y-6 bg-[length:0px] lg:bg-cover lg:bg-no-repeat;
+          @apply absolute left-0 lg:left-[90px] top-14 lg:top-2 lg:bottom-2 p-4 lg:p-10 w-full lg:w-[calc(100%-90px)] h-[calc(100vh-56px)] lg:h-[calc(100vh-16px)] lg:rounded-lg lg:rounded-r-none bg-main text-white transition-transform z-40 !mt-0 overflow-auto space-y-6 bg-[length:0px] lg:bg-cover lg:bg-no-repeat;
         }
 
         .filters-panel {
@@ -753,7 +753,7 @@
         <div id="search" class="flex-1">
           <div class="relative w-full">
             <input
-              class="relative w-full h-10 p-4 rounded-xl bg-main border border-white/25 pl-11 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev min-w-full placeholder:text-neutral-300"
+              class="relative w-full h-10 p-4 rounded-lg bg-main border border-gray-500 pl-11 focus:border-gray-400 focus:shadow-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mod-sc-ev min-w-full placeholder:text-gray-200"
               type="search" placeholder="Search publication">
             <div
               class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -765,7 +765,7 @@
         <button
           type="button"
           id="btn-filters"
-          class="btn-primary hidden lg:flex items-center justify-center gap-2 h-10 !duration-500">
+          class="btn-primary hidden lg:flex items-center justify-center gap-2 !h-10 !duration-500">
           <i class="h-6 w-6 stroke-1" data-lucide="filter"></i>
           Filters
           <div id="btn-filters-badge"
@@ -774,7 +774,8 @@
         </button>
       </div>
       <div class="flex items-center justify-between gap-2">
-        <div id="results-sentence" class="text-neutral-300 text-sm"></div>
+        <div id="results-sentence"
+          class="text-neutral-300 text-sm lg:text-xs"></div>
         <button
           type="button"
           id="btn-sort-publications"
@@ -783,7 +784,7 @@
           Sort
         </button>
       </div>
-      <div id="publications-container" class="!mt-4">
+      <div id="publications-container" class="!mt-6 lg:!mt-4">
       </div>
     </div>
 
@@ -909,7 +910,8 @@
                 <h4 class="text-xl font-serif">Related
                   scientific work</i>
               </div>
-              <ul class="space-y-4 text-mod-sc-ev text-sm font-semibold">
+              <ul
+                class="space-y-4 text-mod-sc-ev text-sm font-semibold leading-7">
                 <li>
                   <a
                     href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vge-xGEAAAAJ&citation_for_view=vge-xGEAAAAJ:NhqRSupF_l8C"
@@ -985,9 +987,9 @@
 
     <div
       id="mobile-banner"
-      class="hidden safe-area-inset-bottom fixed bottom-0 pb-14 bg-gray-800 z-10 h-fit min-h-[60px] w-full lg:hidden z-20">-
+      class="hidden safe-area-inset-bottom fixed bottom-0 pb-14 bg-gray-800 z-10 h-fit min-h-[60px] w-full lg:hidden z-20">
       <div
-        class="relative z-10 h-[230px] bg-gray-800 text-white">
+        class="relative z-10 h-[234px] bg-gray-800 text-white">
         <div
           class="flex justify-center gap-6 self-stretch px-4 pb-6 pt-4">
           <div
@@ -1275,12 +1277,13 @@
     <div class="flex-col space-y-2 absolute right-8 top-9 hidden lg:flex">
       <button
         id="map-settings-button"
-        class="relative flex justify-center h-7 w-7 items-center transition-colors rounded-lg text-white border hover:bg-gray-500 hover:border-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:cursor-default disabled:pointer-events-none disabled:bg-gray-150 disabled:border-gray-150 disabled:text-gray-300 btn-theme-dark"
+        class="relative flex justify-center h-[30px] w-[30px] -mt-px -mr-px items-center transition-colors rounded-lg text-white border hover:bg-gray-500 hover:border-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:cursor-default disabled:pointer-events-none disabled:bg-gray-150 disabled:border-gray-150 disabled:text-gray-300 btn-theme-dark"
         aria-label="Map settings" type="button" data-state="open"
         aria-haspopup="dialog" aria-expanded="true">
         <!-- Map settings icons can not be imported as it has to change color -->
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
           viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.25"
           stroke-linecap="round" stroke-linejoin="round"
           class="w-5 h-5">
           <path
@@ -1451,7 +1454,7 @@
         }
 
         .mapboxgl-ctrl-zoom-in {
-          @apply !rounded-lg !rounded-b-none;
+          @apply !rounded-lg !rounded-b-none !h-[29px];
         }
 
         .mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon {
