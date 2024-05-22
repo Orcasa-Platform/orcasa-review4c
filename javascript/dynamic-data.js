@@ -982,8 +982,8 @@ window.addEventListener('load', function () {
         window.mutations.setLandUse(selected);
         loadData(selected);
 
-        // Reload publications
-        window.reloadPublications();
+        // Load publications instead of reload to repopulate the filters
+        window.loadPublications();
         window.recalculateActiveFilters();
       });
     }
@@ -1004,7 +1004,7 @@ window.addEventListener('load', function () {
         interventionMobile.classList.remove('hidden');
         window.mutations.setFilter({ mainIntervention: selectedMainIntervention });
       }
-      window.reloadPublications();
+      window.loadPublications();
     });
   }
 
@@ -1028,7 +1028,7 @@ window.addEventListener('load', function () {
 
         window.mutations.setFilter({ type: 'intervention', value: selected, mainIntervention, intervention: selected });
       }
-      window.reloadPublications();
+      window.loadPublications();
     });
   }
 
@@ -1043,7 +1043,7 @@ window.addEventListener('load', function () {
       } else {
         window.mutations.setFilter({ type: 'sub-type', value: selected, mainIntervention, intervention });
        }
-      window.reloadPublications();
+      window.loadPublications();
     });
   }
 
