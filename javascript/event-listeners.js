@@ -1029,7 +1029,9 @@ window.addEventListener('load', function () {
       window.mutations.setFilter(null);
       resetMainInterventionSelect();
 
-      window.reloadPublications();
+      window.loadPublications();
+      // Reset map layer
+      addDataLayer(map, 'all');
 
       // Reset the active filters badge
       window.mutations.setActiveFilters([]);
