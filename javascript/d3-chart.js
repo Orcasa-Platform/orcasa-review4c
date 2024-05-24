@@ -338,8 +338,8 @@ const createSVGChart = (slug, data) => {
       .style("top", top - TOP_PADDING + "px")
       .style("left", (event.clientX - chart.node().getBoundingClientRect().left) + "px")
       .classed('hidden', false);
-
-    chartTooltip.html(`<div>${d.value.toFixed(1)}% [Confidence interval -${d.low.toFixed(1)}%, +${d.high.toFixed(1)}%]</div>`);
+    const addPlusIfPositive = (d) => d > 0 ? `+${d}` : d;
+    chartTooltip.html(`<div>${d.value.toFixed(1)}% [Confidence interval ${addPlusIfPositive(d.low.toFixed(1))}%, ${addPlusIfPositive(d.high.toFixed(1))}%]</div>`);
   }
 
   const currentSelection = window.getters.filter();
