@@ -292,13 +292,13 @@ const createSVGChart = (slug, data) => {
   // Draw the positive effect arrow
   arrowGroup.append("path")
   .attr("class", "stroke-gray-200")
-  .attr("d", `M${centralPosition + 100},${arrowY} L${xScale(155)},${arrowY} m-3,-3 l3,3 l-3,3`)
+  .attr("d", `M${centralPosition + 100},${arrowY} L${xScale(105)},${arrowY} m-3,-3 l3,3 l-3,3`)
   .attr("fill", "none")
 
   // Draw the negative effect arrow
   arrowGroup.append("path")
   .attr("class", "stroke-gray-200")
-  .attr("d", `M${centralPosition - 105},${arrowY} L${xScale(-155)},${arrowY} m5,-5 l-5,5 l5,5`)
+  .attr("d", `M${centralPosition - 105},${arrowY} L${xScale(-105)},${arrowY} m5,-5 l-5,5 l5,5`)
   .attr("fill", "none")
 
   // Add the Positive Effect label
