@@ -369,6 +369,21 @@ const createSVGChart = (slug, data) => {
         .on("mouseover", addTooltip)
         .on("mouseout", () => chartTooltip.classed('hidden', true));
 
+        if (d.high > 100) {
+          g
+          .append("line")
+          .attr("class", isHighlighted(d) ? "stroke-gray-700" : "stroke-gray-200")
+          .attr("stroke-width", "2")
+          .attr("stroke-dasharray", "3,2")
+          .attr("x1", xScale(100))
+          .attr("x2", xScale(104))
+          .attr("y1", y)
+          .attr("y2", y)
+          .attr("opacity", getOpacity)
+          .on("mouseover", addTooltip)
+          .on("mouseout", () => chartTooltip.classed('hidden', true));
+        }
+
         g
         .append("line")
         .attr("class", isHighlighted(d) ? "stroke-darkRed-600" : "stroke-gray-200")
@@ -380,6 +395,21 @@ const createSVGChart = (slug, data) => {
         .attr("opacity", getOpacity)
         .on("mouseover", addTooltip)
         .on("mouseout", () => chartTooltip.classed('hidden', true));
+
+        if (d.low < -100) {
+          g
+          .append("line")
+          .attr("class", isHighlighted(d) ? "stroke-darkRed-600" : "stroke-gray-200")
+          .attr("stroke-width", "2")
+          .attr("stroke-dasharray", "3,2")
+          .attr("x1", xScale(-103))
+          .attr("x2", xScale(-100))
+          .attr("y1", y)
+          .attr("y2", y)
+          .attr("opacity", getOpacity)
+          .on("mouseover", addTooltip)
+          .on("mouseout", () => chartTooltip.classed('hidden', true));
+        }
     });
 
   // Create data points
