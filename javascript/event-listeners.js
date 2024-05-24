@@ -726,9 +726,8 @@ window.addEventListener('load', function () {
       elements.landUseSelectButton.innerHTML = selectedLandUseLabel;
 
       elements.landUseOptions.innerHTML = '';
-
-      landUses.filter(l => l.name !== 'All').forEach(landUse => {
-        elements.landUseOptions.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: landUse, mobile: false, filters: true, publicationNumbers: true });
+      landUses.forEach(landUse => {
+        elements.landUseOptions.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: selectedLandUse?.slug, mobile: false, filters: true, publicationNumbers: true });
       });
     }
   };

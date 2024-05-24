@@ -150,6 +150,7 @@ const publicationDetailTemplate = ({ isMetaAnalysis, journals, year, countries, 
 
   // Create an option for each land use
   const option = ({ dropdownSlug = "land-use", slug, name, publications, selectedSlug, mobile = true, publicationNumbers = false }) => {
+    console.log('selectyed', selectedSlug, slug, selectedSlug === slug)
     return mobile ? `<option
       data-slug=${slug}
       value=${slug}
@@ -285,6 +286,12 @@ const initSelectActions = ({ filters = false, select } = {}) => {
 
       if (slug === 'all') {
         window.resetMainInterventionSelect();
+
+        // Bring back the main intervention panel and hide the land use dropdown and charts
+        elements.initialMain.classList.remove('lg:hidden');
+        elements.chartCards.classList.add('hidden');
+        elements.chartCardsMobile.classList.add('hidden');
+        elements.landUseSelectContainer.classList.add('hidden');
       } else {
         window.loadMainInterventionSelect();
       }
@@ -765,7 +772,7 @@ const loadDataAndSetButtons = () => {
 
           elements.landUseOptions.innerHTML = '';
 
-          landUses.filter(l => l.name !== 'All').forEach(landUse => {
+          landUses.forEach(landUse => {
             elements.landUseOptions.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: slug, mobile: false, publicationNumbers: true});
           });
         });
