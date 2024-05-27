@@ -164,8 +164,8 @@ const addDataLayer = async (map, landUseSlug="all") => {
   };
 
   // Add the listener to recompute the clusters and execute it once to render the initial view
-  window.map.on('move', mapListener);
-  window.map.on('moveend', mapListener);
+  window.map?.on('move', mapListener);
+  window.map?.on('moveend', mapListener);
 
   mapListener();
 };

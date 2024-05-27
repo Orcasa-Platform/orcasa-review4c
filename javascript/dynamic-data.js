@@ -150,7 +150,6 @@ const publicationDetailTemplate = ({ isMetaAnalysis, journals, year, countries, 
 
   // Create an option for each land use
   const option = ({ dropdownSlug = "land-use", slug, name, publications, selectedSlug, mobile = true, publicationNumbers = false }) => {
-    console.log('selectyed', selectedSlug, slug, selectedSlug === slug)
     return mobile ? `<option
       data-slug=${slug}
       value=${slug}
@@ -709,33 +708,78 @@ const createMobileChart = (slug, data) => {
   };
 };
 
-const loadDataAndSetButtons = () => {
-  // Create a button for each land use
-  const button = ({ slug, name, publications }, selectedLandUse) =>
-    `<button
-      type="button"
-      data-slug=${slug}
-      class="btn-filter flex btn-land-use"
-      aria-pressed="${selectedLandUse === slug ? "true" : "false"}"
-    >
-      <span class="text-base">
-        ${name}
-      </span>
-      <span class="text-xs">
-      (${formatNumber(publications)})
-      </span>
-      </button>
-    `;
+// Create a button for each land use
+const landUseButtonHTML = ({ slug, name, publications }, selectedLandUse) =>
+  `<button
+    type="button"
+    data-slug=${slug}
+    class="btn-filter flex btn-land-use"
+    aria-pressed="${selectedLandUse === slug ? "true" : "false"}"
+  >
+    <span class="text-base">
+      ${name}
+    </span>
+    <span class="text-xs">
+    (${formatNumber(publications)})
+    </span>
+    </button>
+  `;
 
+const initAllLandUseButton = (allButton) => {
+  const landUseButtons = isMobile() ? elements.landUseMenuMobile.querySelectorAll('.btn-land-use') : document.getElementsByClassName('btn-land-use');
+  window.mutations.setLandUse('all');
+  window.mutations.setFilter(null);
+
+  elements.landUseMenuMobile.classList.remove('land-use-menu-mobile-scroll');
+  elements.chartCardsMobile.classList.add('hidden');
+
+  loadData('all');
+  allButton.setAttribute('aria-pressed', 'true');
+  Array.from(landUseButtons).filter(b => b !== allButton).map(b => b.setAttribute('aria-pressed', 'false'));
+  const studiesDisclaimer = document.getElementById('primary-studies-disclaimer')
+  if (studiesDisclaimer) {
+    studiesDisclaimer.classList.remove('hidden');
+  }
+
+  // Show desktop initial main
+  elements.initialMain.classList.remove('lg:hidden');
+  // Hide desktop land use select
+  elements.landUseSelectContainer.classList.add('hidden');
+  // Remove the all button
+  allButton.remove();
+}
+
+const prependAllButtonMobile = (landUses) => {
+  const landUseMenuMobile = elements.landUseMenuMobile;
+  const allLandUseButton = landUseMenuMobile && landUseMenuMobile.querySelector('.btn-land-use[data-slug="all"]');
+
+  const allLandUse = landUses.find(l => l.name === 'All');
+  const selectedLandUse = window.getters.landUse();
+  if (!allLandUseButton) {
+    landUseMenuMobile.insertAdjacentHTML("afterBegin", landUseButtonHTML(allLandUse, selectedLandUse));
+    const allButton = landUseMenuMobile.querySelector('.btn-land-use[data-slug="all"]');
+
+    // init the event listener
+    if(!allButton._eventListeners?.click) {
+      allButton.addEventListener('click', function() {
+        initAllLandUseButton(allButton);
+      });
+    }
+  }
+};
+
+const loadDataAndSetButtons = () => {
   getMainInterventionChartData().then(data => {
     const landUseMenu = isMobile() ? elements.landUseMenuMobile : elements.landUseMenu;
     if (landUseMenu && data) {
       const selectedLandUse = window.getters.landUse();
       const landUses = Object.entries(data).map(([key, value], i) => ({ slug: key, ...value, index: i }));
       window.mutations.setLandUses(landUses);
+
       landUseMenu.innerHTML = '';
-      landUses.filter(l => l.name !== 'All').forEach(landUse => {
-        landUseMenu.innerHTML += button(landUse, selectedLandUse);
+      const landUsesData = selectedLandUse === 'all' ? landUses.filter(l => l.slug !== 'all') : landUses;
+      landUsesData.forEach(landUse => {
+        landUseMenu.innerHTML += landUseButtonHTML(landUse, selectedLandUse);
       });
       loadData(selectedLandUse || landUses[0].slug);
       return landUses;
@@ -743,39 +787,50 @@ const loadDataAndSetButtons = () => {
   }).then((landUses) => {
     // Add event listeners to the land use buttons
     const landUseButtons = document.getElementsByClassName('btn-land-use');
-    // LAND USE BUTTONS
+
+    // LAND USE BUTTONS INIT
     if (landUseButtons) {
       for (let element of elements.landUseButtons) {
-        element.addEventListener("click", function() {
-          elements.landUseMenuMobile.classList.add('land-use-menu-mobile-scroll');
-          const slug = element.getAttribute('data-slug');
-          window.mutations.setLandUse(slug);
-          window.mutations.setFilter(null);
-          loadData(slug);
-
-          element.setAttribute('aria-pressed', 'true');
-
-          // Only for mobile
-          Array.from(landUseButtons).filter(b => b !== element).map(b => b.setAttribute('aria-pressed', 'false'));
-          const studiesDisclaimer = document.getElementById('primary-studies-disclaimer')
-          if (studiesDisclaimer) {
-            studiesDisclaimer.classList.add('hidden');
-          }
-
-          // Show the chart cards of the selected land use
-          elements.initialMain.classList.add('lg:hidden');
-          elements.chartCards.classList.remove('hidden');
-          elements.chartCardsMobile.classList.remove('hidden');
-
-          elements.landUseSelectContainer.classList.remove('hidden');
-          elements.landUseSelectButton.innerHTML = element.innerText;
-
-          elements.landUseOptions.innerHTML = '';
-
-          landUses.forEach(landUse => {
-            elements.landUseOptions.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: slug, mobile: false, publicationNumbers: true});
+        const isAllButton = element.getAttribute('data-slug') === 'all';
+        if (isAllButton) {
+          element.addEventListener("click", function() {
+            initAllLandUseButton(element)
           });
-        });
+        } else {
+          element.addEventListener("click", function() {
+            elements.landUseMenuMobile.classList.add('land-use-menu-mobile-scroll');
+            const slug = element.getAttribute('data-slug');
+            window.mutations.setLandUse(slug);
+            window.mutations.setFilter(null);
+            loadData(slug);
+
+            element.setAttribute('aria-pressed', 'true');
+
+            // Only for mobile
+            Array.from(landUseButtons).filter(b => b !== element).map(b => b.setAttribute('aria-pressed', 'false'));
+            const studiesDisclaimer = document.getElementById('primary-studies-disclaimer')
+            if (studiesDisclaimer) {
+              studiesDisclaimer.classList.add('hidden');
+            }
+
+            if (isMobile() && slug !== 'all') {
+              prependAllButtonMobile(landUses);
+            }
+
+            // Show the chart cards of the selected land use
+            elements.initialMain.classList.add('lg:hidden');
+            elements.chartCards.classList.remove('hidden');
+            elements.chartCardsMobile.classList.remove('hidden');
+
+            elements.landUseSelectContainer.classList.remove('hidden');
+            elements.landUseSelectButton.innerHTML = element.innerText;
+
+            elements.landUseOptions.innerHTML = '';
+            landUses.forEach(landUse => {
+              elements.landUseOptions.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: slug, mobile: false, publicationNumbers: true});
+            });
+          });
+        }
       };
     }
 
@@ -815,6 +870,16 @@ window.addEventListener('resize', function () {
     // Update the charts
     const landUse = window.getters.landUse();
     loadData(landUse);
+
+    if (currentIsMobile) {
+      if (landUse === 'all') {
+        elements.landUseMenuMobile.classList.remove('land-use-menu-mobile-scroll');
+        const primaryStudiesDisclaimer = document.getElementById('primary-studies-disclaimer');
+        if (primaryStudiesDisclaimer) {
+          primaryStudiesDisclaimer.classList.remove('hidden');
+        }
+      }
+    }
 
     if (isPublicationsOpen) {
       window.loadPublicationsOpen();
