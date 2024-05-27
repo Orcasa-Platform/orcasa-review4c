@@ -273,6 +273,7 @@ const createSVGChart = (slug, data) => {
   // Create x grid
   const xGrid = d3.axisBottom(xScale)
     .tickSize(-height + margin.top + margin.bottom - activeItemsTextOffset)
+    .tickValues(xTickValues)
     .tickFormat("");
 
   // Draw x grid
