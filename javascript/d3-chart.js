@@ -144,9 +144,7 @@ const createSVGChart = (slug, data) => {
   const width = widthValue - margin.left - margin.right - 100;
   const height = heightValue - margin.top - margin.bottom - LOWER_LABELS_PADDING;
 
-  const xTickValues = [-150, -120, -90, -60,  -30, 0, 30, 60, 90, 120, 150];
-  // Draw intermediate ticks without labels
-  const xTickTicks = [-150, -135, -120, -105, -90, -75, -60, -45, -30, -15, 0, 15, 30, 45,  60, 75, 90, 105, 120, 135, 150];
+  const xTickValues = [-100, -75, -50, -25, 0, 25, 50, 75, 100];
   const yTickWidth = widthValue + RIGHT_AXIS_PADDING - width - 70;
 
   // Remove any existing chart
@@ -164,7 +162,7 @@ const createSVGChart = (slug, data) => {
 
   // Create x scale
   const xScale = d3.scaleLinear()
-    .domain([-150, 150])
+    .domain([-100, 100])
     .range([0, width]);
 
     const domainTitles = sortedData.map(d => d.active ? [d.title].concat(d.subTypes.map(dt => dt.title)) : d.title).flat();
@@ -274,8 +272,8 @@ const createSVGChart = (slug, data) => {
 
   // Create x grid
   const xGrid = d3.axisBottom(xScale)
-    .tickValues(xTickTicks)
     .tickSize(-height + margin.top + margin.bottom - activeItemsTextOffset)
+    .tickValues(xTickValues)
     .tickFormat("");
 
   // Draw x grid
@@ -295,13 +293,13 @@ const createSVGChart = (slug, data) => {
   // Draw the positive effect arrow
   arrowGroup.append("path")
   .attr("class", "stroke-gray-200")
-  .attr("d", `M${centralPosition + 100},${arrowY} L${xScale(155)},${arrowY} m-3,-3 l3,3 l-3,3`)
+  .attr("d", `M${centralPosition + 100},${arrowY} L${xScale(105)},${arrowY} m-3,-3 l3,3 l-3,3`)
   .attr("fill", "none")
 
   // Draw the negative effect arrow
   arrowGroup.append("path")
   .attr("class", "stroke-gray-200")
-  .attr("d", `M${centralPosition - 105},${arrowY} L${xScale(-155)},${arrowY} m5,-5 l-5,5 l5,5`)
+  .attr("d", `M${centralPosition - 105},${arrowY} L${xScale(-105)},${arrowY} m5,-5 l-5,5 l5,5`)
   .attr("fill", "none")
 
   // Add the Positive Effect label
@@ -365,24 +363,54 @@ const createSVGChart = (slug, data) => {
         .attr("class", isHighlighted(d) ? "stroke-gray-700" : "stroke-gray-200")
         .attr("stroke-width", "2")
         .attr("x1", xScale(d.low < 0 ? 0 : d.low))
-        .attr("x2", xScale(Math.max(d.high, 0)))
+        .attr("x2", d.high > 100  ? xScale(100) : xScale((Math.max(d.high, 0))))
         .attr("y1", y)
         .attr("y2", y)
         .attr("opacity", getOpacity)
         .on("mouseover", addTooltip)
         .on("mouseout", () => chartTooltip.classed('hidden', true));
 
+        if (d.high > 100) {
+          g
+          .append("line")
+          .attr("class", isHighlighted(d) ? "stroke-gray-700" : "stroke-gray-200")
+          .attr("stroke-width", "2")
+          .attr("stroke-dasharray", "3,2")
+          .attr("x1", xScale(100))
+          .attr("x2", xScale(104))
+          .attr("y1", y)
+          .attr("y2", y)
+          .attr("opacity", getOpacity)
+          .on("mouseover", addTooltip)
+          .on("mouseout", () => chartTooltip.classed('hidden', true));
+        }
+
         g
         .append("line")
         .attr("class", isHighlighted(d) ? "stroke-darkRed-600" : "stroke-gray-200")
         .attr("stroke-width", "2")
-        .attr("x1", xScale(Math.min(d.low, 0)))
+        .attr("x1", d.low < -100 ? xScale(-100) : xScale((Math.min(d.low, 0))))
         .attr("x2", xScale(d.high > 0 ? 0 : d.high))
         .attr("y1", y)
         .attr("y2", y)
         .attr("opacity", getOpacity)
         .on("mouseover", addTooltip)
         .on("mouseout", () => chartTooltip.classed('hidden', true));
+
+        if (d.low < -100) {
+          g
+          .append("line")
+          .attr("class", isHighlighted(d) ? "stroke-darkRed-600" : "stroke-gray-200")
+          .attr("stroke-width", "2")
+          .attr("stroke-dasharray", "3,2")
+          .attr("x1", xScale(-103))
+          .attr("x2", xScale(-100))
+          .attr("y1", y)
+          .attr("y2", y)
+          .attr("opacity", getOpacity)
+          .on("mouseover", addTooltip)
+          .on("mouseout", () => chartTooltip.classed('hidden', true));
+        }
     });
 
   // Create data points
