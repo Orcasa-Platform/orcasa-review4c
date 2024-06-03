@@ -1200,7 +1200,7 @@ window.addEventListener('load', function () {
     elements.yearRange.innerHTML = `
       <div>
         <div class="relative w-full h-full px-1">
-          <div class="flex gap-1 items-end justify-between h-[125px]">
+          <div class="flex ${yearKeys?.length < 15 ? 'gap-1' : 'gap-px'} items-end justify-between h-[125px]">
             ${yearsElements}
           </div>
           <div class="absolute bottom-0 left-0 w-full h-full pointer-events-none">
