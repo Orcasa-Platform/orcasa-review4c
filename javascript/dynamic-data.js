@@ -291,6 +291,14 @@ const initSelectActions = ({ filters = false, select } = {}) => {
         elements.chartCards.classList.add('hidden');
         elements.chartCardsMobile.classList.add('hidden');
         elements.landUseSelectContainer.classList.add('hidden');
+
+        // Clear the pressed state on the landMenu buttons
+        const landMenuButtons = elements.landUseMenu.getElementsByTagName('button');
+        if(landMenuButtons) {
+          Array.from(landMenuButtons).map(b => b.setAttribute('aria-pressed', 'false'));
+        }
+
+
       } else {
         window.loadMainInterventionSelect();
       }
