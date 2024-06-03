@@ -715,6 +715,11 @@ window.addEventListener('load', function () {
       elements.chartCards.classList.add('hidden');
       elements.chartCardsMobile.classList.add('hidden');
       elements.landUseSelectContainer.classList.add('hidden');
+
+      const landUseButtons = elements.landUseMenu.querySelectorAll('.btn-land-use');
+      landUseButtons.forEach(btn => {
+        btn.setAttribute('aria-pressed', false);
+      });
     } else {
       elements.initialMain.classList.add('lg:hidden');
       elements.chartCards.classList.remove('hidden');
@@ -726,19 +731,31 @@ window.addEventListener('load', function () {
       elements.landUseSelectButton.innerHTML = selectedLandUseLabel;
 
       elements.landUseOptions.innerHTML = '';
-
-      landUses.filter(l => l.name !== 'All').forEach(landUse => {
-        elements.landUseOptions.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: landUse, mobile: false, filters: true, publicationNumbers: true });
+      landUses.forEach(landUse => {
+        elements.landUseOptions.innerHTML += option({...landUse, dropdownSlug: 'land-use', selectedSlug: selectedLandUse?.slug, mobile: false, filters: true, publicationNumbers: true });
       });
     }
   };
 
   const restoreMainPageMobile = () => {
     const landUse = window.getters.landUse();
-    if (landUse && landUse !== 'all') {
+    const landUseButtons = elements.landUseMenuMobile.querySelectorAll('.btn-land-use');
+
+    if (landUse && landUse === 'all') {
+      elements.landUseMenuMobile.classList.remove('land-use-menu-mobile-scroll');
+
+      landUseButtons.forEach(btn => {
+        btn.setAttribute('aria-pressed', false);
+      });
+
+      // Remove All button from the init menu
+      const allButton = elements.landUseMenuMobile.querySelector('.btn-land-use[data-slug="all"]');
+      if (allButton) {
+        allButton.remove();
+      }
+    } else {
       elements.chartCardsMobile.classList.remove('hidden');
 
-      const landUseButtons = elements.landUseMenuMobile.querySelectorAll('.btn-land-use');
       landUseButtons.forEach(btn => {
         btn.setAttribute('aria-pressed', btn.getAttribute('data-slug') === landUse);
       });
@@ -749,8 +766,6 @@ window.addEventListener('load', function () {
       window.resetMobileSelect('main-intervention');
       window.resetMobileSelect('intervention');
       window.resetMobileSelect('sub-type');
-    } else {
-      elements.landUseMenuMobile.classList.remove('land-use-menu-mobile-scroll');
     }
   };
 
