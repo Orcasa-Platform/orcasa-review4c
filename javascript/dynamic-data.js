@@ -1176,11 +1176,17 @@ window.addEventListener('load', function () {
     const barTooltipContent = document.getElementById('bar-tooltip-content');
 
     const addTooltip = (event, year, yearBar) =>  {
+      // Yearbar is the parent of the tooltip
       const barRect = yearBar.getBoundingClientRect();
+      const barContainer = yearBar.parentElement;
+
       const TOP_PADDING = 28;
       const bottom = barRect.height + TOP_PADDING;
-      const leftOffset = elements.yearRange.getBoundingClientRect().left + barRect.width;
-      const left = barRect.left - leftOffset;
+
+      const TOOLTIP_WIDTH = 48;
+      const ARROW_WIDTH = 5;
+      const left = barRect.left - barContainer.getBoundingClientRect().left - TOOLTIP_WIDTH / 2 + ARROW_WIDTH / 2 + barRect.width / 2;
+
 
       // Put on top of the bar
       barTooltip.style.bottom = `${bottom}px`;
@@ -1200,7 +1206,7 @@ window.addEventListener('load', function () {
     elements.yearRange.innerHTML = `
       <div>
         <div class="relative w-full h-full px-1">
-          <div class="flex gap-1 items-end justify-between h-[125px]">
+          <div class="flex ${yearKeys?.length < 15 ? 'gap-1' : 'gap-px'} items-end justify-between h-[125px]">
             ${yearsElements}
           </div>
           <div class="absolute bottom-0 left-0 w-full h-full pointer-events-none">
