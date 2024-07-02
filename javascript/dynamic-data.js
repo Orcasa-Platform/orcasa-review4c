@@ -40,7 +40,7 @@ const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
 
     return `<div class="flex justify-between items-center border border-b border-main divide-x divide-main">
       <span class="text-neutral-300 text-xs py-4 px-6">${label}</span>
-      <span class="text-white flex items-center justify-center text-xs leading-7 px-6 py-4 w-[128px] shrink-0">${renderValue(value)}</span>
+      <span class="text-white flex items-center justify-center text-xs leading-7 px-6 py-4 w-[128px] shrink-0 break-all">${renderValue(value)}</span>
     </div>`;
   }).join('');
 
