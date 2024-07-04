@@ -588,7 +588,7 @@ const createMobileChart = (slug, data) => {
           return (`
           <div class="flex flex-col gap-4 data-[active=true]:border-y data-[active=true]:border-y-gray-650 data-[active=true]:p-4 data-[active=true]:-mx-4" id="chart-sub-type-${mainInterventionSlug}-${interventionName}-${title}">
             <div class="w-full flex text-white items-center justify-between" >
-              <span class="text-base w-16 font-semibold ${value < 0 ? '' : 'text-darkRed-500'}">
+              <span class="text-base w-16 font-semibold ${value < 0 ? 'text-darkRed-500' : ''}">
                 ${value.toFixed(1)}%
               </span>
               <button type="button" class="btn-filter flex-1 btn-chart-mobile btn-chart-sub-type" aria-pressed="${isSelected}" id="btn-${kebabCase(title)}" data-main-intervention-slug="${mainInterventionSlug}"
