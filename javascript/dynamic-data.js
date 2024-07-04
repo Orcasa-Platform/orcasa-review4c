@@ -35,12 +35,12 @@ const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
       if (value === '-') {
         return '<img src="/assets/icons/blank.svg" alt="no icon" class="w-6 h-6" />';
       }
-      return `<span class="pr-2">${value}</span>`;
+      return `<span class="pr-2 w-full break-words">${value}</span>`;
     };
 
     return `<div class="flex justify-between items-center border border-b border-main divide-x divide-main">
       <span class="text-neutral-300 text-xs py-4 px-6">${label}</span>
-      <span class="text-white flex items-center justify-center text-xs leading-7 px-6 py-4 w-[128px] shrink-0 break-all">${renderValue(value)}</span>
+      <span class="text-white flex items-center justify-center text-xs leading-7 px-6 py-4 w-[128px] shrink-0">${renderValue(value)}</span>
     </div>`;
   }).join('');
 
