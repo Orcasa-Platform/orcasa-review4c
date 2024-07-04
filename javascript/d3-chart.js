@@ -128,12 +128,12 @@ const createSVGChart = (slug, data) => {
   ).flat();
 
   const ITEM_HEIGHT = 40;
-  const ACTIVE_ITEMS_TEXT_HEIGHT = 78;
+  const ACTIVE_ITEMS_TEXT_HEIGHT = 90;
   const activeItemsTextOffset = activeData ? ACTIVE_ITEMS_TEXT_HEIGHT : 0;
   const heightValue = (sortedData.length + (activeData?.subTypes?.length ?? 0)) * ITEM_HEIGHT + 50;
   const widthValue = window.innerWidth >= 1536 ? 1040 : 800;
 
-  const RIGHT_AXIS_PADDING = 200;
+  const RIGHT_AXIS_PADDING = 250;
   const AXIS_PADDING = 20;
 
   const margin = { top: 0, right: 0, bottom: 0, left: 0 };
@@ -337,7 +337,7 @@ const createSVGChart = (slug, data) => {
       .style("left", (event.clientX - chart.node().getBoundingClientRect().left) + "px")
       .classed('hidden', false);
     const addPlusIfPositive = (d) => d > 0 ? `+${d}` : d;
-    chartTooltip.html(`<div>${d.value.toFixed(1)}% [Confidence interval ${addPlusIfPositive(d.low.toFixed(1))}%, ${addPlusIfPositive(d.high.toFixed(1))}%]</div>`);
+    chartTooltip.html(`<div><span class="${d.value < 0 ? 'text-darkRed-400' : ''}">${d.value.toFixed(1)}%</span> [Confidence interval <span class="${d.low < 0 ? 'text-darkRed-400' : ''}">${addPlusIfPositive(d.low.toFixed(1))}%</span>, <span class="${d.high < 0 ? 'text-darkRed-400' : ''}">${addPlusIfPositive(d.high.toFixed(1))}%</span>]</div>`);
   }
 
   const currentSelection = window.getters.filter();
@@ -419,7 +419,15 @@ const createSVGChart = (slug, data) => {
     .enter()
     .append("circle")
     .attr("class", (d) => {
-         return `data-point ${isHighlighted(d) ? "fill-gray-700" : "fill-gray-200"}`;
+      if (isHighlighted(d)) {
+        if (d.value < 0) {
+          return "fill-darkRed-600";
+        }
+
+        return "fill-gray-700";
+      }
+
+      return "fill-gray-200";
     })
     .attr("cx", d => xScale(d.value))
     .attr("cy", d => calculateY({ interventionItem: d }) + yScale.bandwidth() / 2)
