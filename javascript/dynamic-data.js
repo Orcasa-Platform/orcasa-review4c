@@ -35,7 +35,7 @@ const methodologyAndAttributesTemplate = (methodologyAndAttributes) => {
       if (value === '-') {
         return '<img src="/assets/icons/blank.svg" alt="no icon" class="w-6 h-6" />';
       }
-      return `<span class="pr-2">${value}</span>`;
+      return `<span class="pr-2 w-full break-words">${value}</span>`;
     };
 
     return `<div class="flex justify-between items-center border border-b border-main divide-x divide-main">
