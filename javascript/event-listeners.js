@@ -69,6 +69,8 @@ window.addEventListener('load', function () {
 
     window.mutations.setSearch('');
     elements.search.querySelector('input').value = '';
+
+    window.mutations.setActiveFilters([]);
   };
 
   const resetPublicationsSort = () => {
