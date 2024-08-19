@@ -279,6 +279,10 @@ const initSelectActions = ({ filters = false, select } = {}) => {
     if (select === 'landUse') {
       window.mutations.setLandUse(slug);
       window.mutations.setFilter(null);
+
+      // Reset filters when we select a new land use
+      window.resetPublicationsFilters();
+
       loadData(slug);
       // Load also map data only if we change the land use
       addDataLayer(map, slug);
@@ -1061,6 +1065,9 @@ window.addEventListener('load', function () {
 
         window.mutations.setLandUse(selected);
         loadData(selected);
+
+        // Reset the other filters filters when we select a new land use
+        window.resetPublicationsFilters();
 
         // Load publications instead of reload to repopulate the filters
         window.loadPublications();
