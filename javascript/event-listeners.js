@@ -51,7 +51,7 @@ window.recalculateActiveFilters = (dropdownId, options) => {
 
 window.addEventListener('load', function () {
   // SHARED CODE
-  const resetPublicationsFilters = () => {
+  window.resetPublicationsFilters = () => {
     for (let dropdown of isMobile() ? elements.mobileDropdowns : elements.dropdowns) {
       const selected = dropdown.querySelector('.dropdown-selected');
       const options = dropdown.querySelector('.dropdown-options');
@@ -773,7 +773,7 @@ window.addEventListener('load', function () {
 
   elements.closePublicationPanelButton.addEventListener("click", function() {
     // We reset the whole publications view without reloading the publications
-    resetPublicationsFilters();
+    window.resetPublicationsFilters();
     resetPublicationsSort();
     // We reset the pagination
     window.mutations.setPublicationPage(1);
@@ -1034,7 +1034,7 @@ window.addEventListener('load', function () {
   // RESET FILTERS
   if(!(elements.resetFiltersButton._eventListeners?.click)) {
     elements.resetFiltersButton.addEventListener('click', () => {
-      resetPublicationsFilters();
+      window.resetPublicationsFilters();
 
       window.mutations.setLandUse('all');
       // Reset land use select
@@ -1068,7 +1068,7 @@ window.addEventListener('load', function () {
   // RESET FILTERS MOBILE
   if(!(elements.resetFiltersMobileButton._eventListeners?.click)) {
     elements.resetFiltersMobileButton.addEventListener('click', () => {
-      resetPublicationsFilters();
+      window.resetPublicationsFilters();
       window.mutations.setLandUse('all');
       window.mutations.setFilter(null);
       // Select the all button on the land use select
