@@ -501,7 +501,7 @@ const createCards = (data, landUseName) => {
     <div class="flex flex-col p-6 bg-white mb-2 rounded-lg text-gray-700">
       <header class="mb-4 flex w-full justify-between items-end">
         <div>Impact of <span class="font-semibold">${name}</span> on Soil Organic Carbon for <span class="font-semibold">${landUseName}</span></div>
-        <div class="text-gray-500 text-xs">Click in one intervention below to see more details</div>
+        <div class="text-gray-500 text-xs">Click on one intervention below to see more details</div>
       </header>
       <div
         class="text-2xs">
