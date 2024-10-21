@@ -131,6 +131,20 @@ window.addEventListener('load', function () {
     elements.bannerPractices.classList.remove('lg:hidden');
   }
 
+  // SURVEY
+  if (SURVEY_URL) {
+    elements.surveyBtn.classList.remove('lg:hidden');
+
+    const shouldBeOpen = localStorage.getItem('SURVEY_TOOLTIP_CLOSED') !== 'true';
+    const isTimeLimited = !!window.SURVEY_TOOLTIP_EXPANDED_UNTIL;
+    const isStillExpanded = isTimeLimited
+      ? +new Date() < +new Date(window.SURVEY_TOOLTIP_EXPANDED_UNTIL)
+      : false;
+
+    if (shouldBeOpen && isStillExpanded) {
+      elements.surveyTooltip.classList.remove('lg:hidden');
+    }
+  }
 
   // MOBILE FOOTER
 
@@ -263,6 +277,17 @@ window.addEventListener('load', function () {
   elements.bannerPracticesCloseButton.addEventListener("click", function() {
     elements.bannerPractices.classList.add('lg:hidden');
     localStorage.setItem('BANNER_PRACTICES_CLOSED', 'true');
+  });
+
+  // SURVEY TOOLTIP
+
+  elements.surveyBtn.addEventListener("click", function() {
+    elements.surveyTooltip.classList.remove('lg:hidden');
+  });
+
+  elements.surveyTooltipCloseBtn.addEventListener("click", function() {
+    elements.surveyTooltip.classList.add('lg:hidden');
+    localStorage.setItem('SURVEY_TOOLTIP_CLOSED', 'true');
   });
 
   // MAP SETTINGS
