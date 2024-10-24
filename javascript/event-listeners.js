@@ -135,14 +135,15 @@ window.addEventListener('load', function () {
   if (SURVEY_URL) {
     elements.surveyBtn.classList.remove('lg:hidden');
 
-    const shouldBeOpen = localStorage.getItem('SURVEY_TOOLTIP_CLOSED') !== 'true';
-    const isTimeLimited = !!window.SURVEY_TOOLTIP_EXPANDED_UNTIL;
+    const shouldBeOpen = localStorage.getItem('SURVEY_DIALOG_CLOSED') !== 'true';
+    const isTimeLimited = !!window.SURVEY_DIALOG_EXPANDED_UNTIL;
     const isStillExpanded = isTimeLimited
-      ? +new Date() < +new Date(window.SURVEY_TOOLTIP_EXPANDED_UNTIL)
+      ? +new Date() < +new Date(window.SURVEY_DIALOG_EXPANDED_UNTIL)
       : false;
 
     if (shouldBeOpen && isStillExpanded) {
-      elements.surveyTooltip.classList.remove('lg:hidden');
+      elements.surveyDialog.classList.remove('hidden');
+      elements.surveyDialogOverlay.classList.remove('hidden');
     }
   }
 
@@ -279,15 +280,31 @@ window.addEventListener('load', function () {
     localStorage.setItem('BANNER_PRACTICES_CLOSED', 'true');
   });
 
-  // SURVEY TOOLTIP
+  // SURVEY DIALOG
+
+  function onCloseSurveyDialog () {
+    elements.surveyDialog.classList.add('hidden');
+    elements.surveyDialogOverlay.classList.add('hidden');
+
+    if (elements.surveyDialogCheckbox.dataset["state"] === "checked") {
+      localStorage.setItem('SURVEY_DIALOG_CLOSED', 'true');
+    }
+  }
 
   elements.surveyBtn.addEventListener("click", function() {
-    elements.surveyTooltip.classList.remove('lg:hidden');
+    elements.surveyDialog.classList.remove('hidden');
+    elements.surveyDialogOverlay.classList.remove('hidden');
   });
 
-  elements.surveyTooltipCloseBtn.addEventListener("click", function() {
-    elements.surveyTooltip.classList.add('lg:hidden');
-    localStorage.setItem('SURVEY_TOOLTIP_CLOSED', 'true');
+  elements.surveyDialogCloseBtn.addEventListener("click", onCloseSurveyDialog);
+  elements.surveyDialogOverlay.addEventListener("click", onCloseSurveyDialog);
+  elements.surveyDialogBtn.addEventListener("click", onCloseSurveyDialog);
+
+  elements.surveyDialogCheckbox.addEventListener("click", function() {
+    elements.surveyDialogCheckbox.dataset["state"] =
+      elements.surveyDialogCheckbox.dataset["state"] === "unchecked"
+        ? "checked"
+        : "unchecked";
   });
 
   // MAP SETTINGS

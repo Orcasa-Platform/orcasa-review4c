@@ -35,7 +35,6 @@ window.addEventListener('load', function () {
     interventionSelectActionsInitialized: false,
     subTypeSelectActionsInitialized: false,
     isMobile: isMobile(),
-    surveyTooltipOpen: false,
   };
 
   window.mutations = {
@@ -141,9 +140,6 @@ window.addEventListener('load', function () {
     },
     setIsMobile(value) {
       state.isMobile = value;
-    },
-    setSurveyTooltipOpen(value) {
-      state.surveyTooltipOpen = value;
     }
   };
 
@@ -176,6 +172,5 @@ window.addEventListener('load', function () {
     interventionSelectActionsInitialized: () => state.interventionSelectActionsInitialized,
     subTypeSelectActionsInitialized: () => state.subTypeSelectActionsInitialized,
     isMobile: () => state.isMobile,
-    surveyTooltipOpen: () => state.surveyTooltipOpen,
   };
 });

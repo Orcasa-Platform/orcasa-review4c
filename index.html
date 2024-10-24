@@ -229,6 +229,38 @@
     </style>
   </head>
   <body class="text-main bg-main lg:bg-gray-800">
+    <div
+      class="hidden fixed inset-0 z-[60] bg-slate-800/80"
+      style="pointer-events: auto;"
+      id="survey-dialog-overlay"
+      aria-hidden="true"
+    ></div>
+    <div
+      role="dialog"
+      id="survey-dialog"
+      class="hidden fixed left-[50%] top-[50%] z-[60] grid max-h-[568px] w-[90%] translate-x-[-50%] translate-y-[-50%] gap-4 overflow-auto rounded-2xl bg-white shadow-lg duration-200 md:w-full lg:w-[680px] h-auto max-w-[520px]"
+      style="pointer-events: auto;"
+    >
+      <div class="flex flex-col gap-6 overflow-y-auto p-12">
+        <p class="font-serif text-2xl">Help us improve Impact4Soil!</p>
+        <p class="text-sm">Share your feedback or your contact details by filling out the survey or emailing us at <a href="mailto:impact4soil@groupes.renater.fr" class="font-semibold text-mod-sc-ev">impact4soil@groupes.renater.fr</a>.</p>
+        <div class="flex flex-col-reverse gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div class="flex items-center gap-2">
+            <button type="button" role="checkbox" aria-checked="false" data-state="unchecked" class="peer h-4 w-4 rounded-md border border-gray-400 ring-offset-background transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mod-sc-ev disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-mod-sc-ev data-[state=checked]:bg-mod-sc-ev data-[state=checked]:text-primary-foreground hover:data-[state=checked]:bg-mod-sc-ev shrink-0 hover:border-gray-400" id="survey-dialog-checkbox">
+              <span class="flex items-center justify-center text-white" style="pointer-events: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="6" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 3 2 2 4-4"></path></svg>
+              </span>
+            </button>
+            <label class="peer-disabled:cursor-not-allowed peer-disabled:text-gray-300 text-sm" for="survey-dialog-checkbox">Don't show this message again.</label>
+          </div>
+          <a id="survey-dialog-btn" href="https://groupes.renater.fr/limesurvey/index.php/622186" target="_blank" rel="noreferrer noopener" class="inline-flex items-center justify-center text-base lg:text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mod-sc-ev disabled:pointer-events-none disabled:opacity-50 font-sans h-10 text-white rounded-lg bg-mod-sc-ev hover:bg-mod-sc-ev-dark h-10 px-4 py-0 box-content shrink-0">Fill out survey</a>
+        </div>
+      </div>
+      <button type="button" id="survey-dialog-close-btn" class="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-lg bg-gray-50 text-gray-700 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mod-sc-ev focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x h-4 w-4"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        <span class="sr-only">Close</span>
+      </button>
+    </div>
     <!-- NAVBAR -->
     <div
       id="navbar"
@@ -305,29 +337,6 @@
               stroke-linejoin="round" />
           </svg>
         </button>
-      </div>
-    </div>
-    <div id="survey-tooltip"
-      class="hidden lg:hidden lg:flex absolute top-[calc(100vh_-_112px)] left-[95px] w-[360px] shadow justify-center items-center z-50">
-      <svg class="absolute -left-1 top-[66px]" width="6" height="12"
-        viewBox="0 0 6 12" fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 6.375L6 0.375L6 11.625L0 6.375Z" fill="#2BB3A7" />
-      </svg>
-      <div
-        class="px-3 py-2 bg-gradient-to-r from-mod-sc-ev to-cyan-600 rounded border-l-4 border-mod-sc-ev justify-start items-start flex text-white text-xs leading-5 flex-wrap gap-2">
-          <p class="flex-grow font-serif text-base">Help us improve Impact4Soil</p>
-          <button id="survey-tooltip-close-btn"
-            class="w-4 h-4 hover:opacity-50">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 4L4 12" stroke="white" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M4 4L12 12" stroke="white" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-          </button>
-          <div class="basis-full">Share your feedback or your contact details by filling out the <a href="https://groupes.renater.fr/limesurvey/index.php/622186" class="font-semibold" target="_blank" rel="noreferrer noopener">survey</a> or emailing us at <a href="mailto:impact4soil@groupes.renater.fr" class="font-semibold">impact4soil@groupes.renater.fr</a></div>
       </div>
     </div>
 
