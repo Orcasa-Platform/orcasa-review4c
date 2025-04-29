@@ -416,11 +416,31 @@
           class="space-y-6 px-12 py-10 text-slate-700 z-20 text-white flex flex-col h-full">
           <div
             class="flex font-serif items-center justify-between">
-            <h2 class="leading-[30px] text-xl max-w-[545px]"><span>Explore
-                the </span><span
-                class="text-mod-sc-ev font-semibold">impacts
-                of different interventions on Soil Organic Carbon</span><span>
-                based on peer-reviewed scientific evidence.</span></h2>
+            <div class="max-w-[545px]">
+              <h2 class="leading-[30px] text-xl inline">
+                <span>Explore
+                  the </span><span
+                  class="text-mod-sc-ev font-semibold">impacts
+                  of different interventions on Soil Organic Carbon</span><span>
+                  based on peer-reviewed scientific evidence.</span></h2>
+                  <div class="inline relative mt-0.5" id="btn-info-main-tooltip">
+                    <button type="button" aria-label="Info"
+                      class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mod-sc-ev">
+                      <span class="sr-only">Info</span>
+                      <img src="/assets/icons/info-button.svg" alt="Info button">
+                    </button>
+                  </div>
+                  <div id="info-main-tooltip"
+                    class="hidden p-2 bg-slate-700 text-white text-sm font-normal absolute rounded z-50 top-6 left-32 max-w-[340px] min-w-[240px] -ml-24 leading-7">
+                  <div>Click on the <span class="font-semibold">Methodology</span> button at the bottom of the page to learn
+                    more about this module.</div>
+                  <span
+                    class="absolute bottom-0 transform translate-y-full left-28">
+                    <img src="/assets/icons/arrow-bottom.svg"
+                      alt="Arrow">
+                  </span>
+              </div>
+            </div>
             <div class="flex flex-col gap-1 hidden"
               id="land-use-select-container">
               <div id="land-use-select" class="hidden lg:block font-sans">
