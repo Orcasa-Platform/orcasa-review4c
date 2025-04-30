@@ -416,11 +416,36 @@
           class="space-y-6 px-12 py-10 text-slate-700 z-20 text-white flex flex-col h-full">
           <div
             class="flex font-serif items-center justify-between">
-            <h2 class="leading-[30px] text-xl max-w-[545px]"><span>Explore
-                the </span><span
-                class="text-mod-sc-ev font-semibold">impacts
-                of different interventions on Soil Organic Carbon</span><span>
-                based on peer-reviewed scientific evidence.</span></h2>
+            <div class="max-w-[545px]">
+              <h2 class="leading-[30px] text-xl inline">
+                <span>Explore
+                  the </span><span
+                  class="text-mod-sc-ev font-semibold">impacts
+                  of different interventions on Soil Organic Carbon</span><span>
+                  based on peer-reviewed scientific evidence.</span></h2>
+                  <div class="inline relative mt-0.5" id="btn-info-main-tooltip">
+                    <button type="button" aria-label="Info"
+                      class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mod-sc-ev">
+                      <span class="sr-only">Info</span>
+                      <img src="/assets/icons/info-main-button.svg" alt="Info button">
+                    </button>
+                  </div>
+                  <div id="info-main-tooltip"
+                    class="hidden p-2 bg-slate-700 text-white text-sm font-normal absolute rounded z-50 top-6 left-32 max-w-[340px] min-w-[240px] -ml-24 leading-7">
+                  <div>Click on the <span class="font-semibold">Methodology</span> button at the bottom of the page to learn
+                    more about this module.</div>
+                  <span
+                    class="absolute bottom-0 transform translate-y-full left-28">
+                    <img src="/assets/icons/arrow-bottom.svg"
+                      alt="Arrow">
+                  </span>
+                </div>
+              <a class="btn-filter !p-0 !h-8 cursor-pointer max-w-[140px] mt-2 flex items-center gap-1" target="_blank" rel="noopener noreferrer" href="https://vimeo.com/1060783373">
+                Watch tutorial
+                <i class="inline w-4 h-4 stroke-current"
+                data-lucide="external-link"></i>
+              </a>
+            </div>
             <div class="flex flex-col gap-1 hidden"
               id="land-use-select-container">
               <div id="land-use-select" class="hidden lg:block font-sans">
@@ -736,7 +761,7 @@
             class="hidden lg:block lg:hidden select">
             <label for="btn-sub-type-select-filters"
               class="text-neutral-300 text-sm mb-1 font-sans">
-              Sub-type</label>
+              Land management practices</label>
             <div
               class="relative select flex-col flex"
               id="dropdown-select-sub-type">
@@ -877,35 +902,57 @@
         <div class="flex-1 flex flex-col gap-6 lg:min-w-[506px]">
           <h3 class="text-2xl lg:text-4xl font-serif">Methodology</h3>
           <div class="text-neutral-300 text-sm leading-7 space-y-1">
-            <p>We conducted a literature
+            <p>
+              This module aggregates more than 13,000 scientific papers published between the beginning of the
+              20th century till now and more than 200 meta-analysis.
+            </p>
+            <p>
+              You can have access to quantitative information by land use type: cropland, grassland, forest land,
+              wetlands or other lands (following the classification of the <a href="https://www.ipcc.ch/" target="_blank" rel="noreferrer noopener" class="cursor-pointer font-semibold text-mod-sc-ev hover:text-mod-sc-ev-dark inline">IPCC - International Panel on Climate
+              Change)</a>. For each land use type, you have access to the impact of climate change, of land use
+              change, and of management. These impacts are broken down by interventions or driving factors
+              (drivers).
+            </p>
+            <p>
+              Warning: Interventions in Scientific evidence come from different sources than the land
+              management practices described in Practices.
+            </p>
+            <p>
+              You also have access to the list of scientific papers and meta-analysis of each land use type by clicking
+              on Publications.
+            </p>
+            <p>
+            To achieve this result, we conducted a literature
               search to retrieve all peer-reviewed meta- analyses that reported
               at
-              least one quantification on Soil organic Carbon, expressed as a
-              concentration (g C kg-1 soil or equivalent) or a stock (t C ha-1
+              least one quantification on soil organic carbon, expressed as either a
+              concentration (g C kg⁻¹ soil or equivalent) or a stock (t C ha⁻¹
               or
-              equivalent). We then extracted all quantification presented in the
-              meta-analyses and combined them to reach a global overview of the
+              equivalent). We then extracted all quantifications presented in the
+              meta-analyses and combined them to obtain a global overview of the
               impacts of multiple interventions on soil organic carbon, with
               high
-              statistical power. We also characterized the methodological
+              statistical power. Additionally, we assessed the methodological
               quality
-              of the meta-analyses, and listed all the primary studies
-              synthethized in the meta-analyses to clearly identify and present
+              of the meta-analyses, and compiled all the primary studies
+              synthetized within them to clearly identify and present
               potential bias and limitation in the current scientific
               knowledge.
             </p>
             <p>
-              <div>Please note the following elements:</div>
+              <div>Please note the following:</div>
               <ul class="leading-7 list-disc list-inside">
                 <li>
-                  A publication can be linked to one or more countries and thus
-                  appear several times on the map.
+                  A publication can be linked to one or more countries and may therefore appear multiple times on the map.
                 </li>
                 <li>
-                  On the graphs, only the most relevant subcategories are
+                  In the graphs, only the most relevant subcategories are
                   displayed.
                 </li>
               </ul>
+            </p>
+            <p>
+              All the sources studied are described in the <span class="font-bold">Related Scientific Work</span> section.
             </p>
           </div>
           <div class="flex flex-wrap flex-col lg:flex-row">
@@ -1221,7 +1268,7 @@
           <div id="sub-type" class="hidden">
             <!-- Native select for mobile -->
             <label for="dropdown-select-sub-type"
-              class="lg:hidden text-neutral-300 text-sm block">Sub type</label>
+              class="lg:hidden text-neutral-300 text-sm block">Land management practices</label>
             <select id="dropdown-select-sub-type"
               class="w-full h-10 px-4 py-2 text-white text-sm rounded-lg bg-gray-700 rounded-lg shadow border border-gray-500 justify-start items-center inline-flex hover:border-gray-500 focus:ring-mod-sc-ev focus:outline-none">
             </select>

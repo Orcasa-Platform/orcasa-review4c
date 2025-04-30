@@ -266,6 +266,24 @@ window.addEventListener('load', function () {
     }
   });
 
+  // Main info tooltip
+
+  elements.infoMainTooltipButton.addEventListener("mouseenter", function() {
+    elements.infoMainTooltipContent.classList.remove('hidden');
+  });
+
+  elements.infoMainTooltipButton.addEventListener("mouseleave", function() {
+    elements.infoMainTooltipContent.classList.add('hidden');
+  });
+
+  elements.infoMainTooltipButton.addEventListener("click", function() {
+    if(elements.infoMainTooltipContent.classList.contains('hidden')) {
+      elements.infoMainTooltipContent.classList.remove('hidden');
+    } else {
+      elements.infoMainTooltipContent.classList.add('hidden');
+    }
+  });
+
   // FILTERS DISCLAIMER
 
   elements.filtersDisclaimerCloseButton.addEventListener("click", function() {
